@@ -19,7 +19,7 @@ jobs:
     - name: run deploy script on remote server
       uses: fifsky/ssh-action@master
       with:
-        command: ./deploy-notes
+        command: ./notes/deploy.sh
         host: ${{ secrets.HOST }}
         user: ubuntu
         key: ${{ secrets.PRIVATE_KEY}}
