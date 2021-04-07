@@ -50,12 +50,15 @@ Everything in a circuit can be modelled as either a source, or a node.
   - In reality, will have some internal resistance and therefore a maximum power limit
 
 ### Dependant sources
+
 ![](img/dependant-sources.jpg)
+
 - Diamond-shaped 
 - Sources depend on values in other parts of the circuit
 - Model real sources more accurately
   
 ### Nodes
+
 ![](img/nodes.jpg)
 
 All **passive** elements: generate no electrical power.   
@@ -90,6 +93,7 @@ Resistors in parallel: $\frac{1}{R_t} = \frac{1}{R_1} + \frac{1}{R_2}$
 Resistors dissipate electrical power, so there is a *drop* in voltage accross them, in the direction of current flow. Therefore, the voltage *rise* is in *opposition to the direction of current*
 
 ## Voltage dividers
+
 ![](img/divider.jpg)
 
 Using two resistors to divide a voltage
