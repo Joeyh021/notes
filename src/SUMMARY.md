@@ -9,7 +9,7 @@
 - [CS132](./cs132/index.md)
 - [CS141](./cs141/index.md)
 - [ES191](./es191/index.md)
-  - [1](./es191/1.md)
+  - [Circuit Symbols & Conventions](./es191/symbols-and-conventions.md)
 
 - [ES193](./es193/index.md)
   - [1](./es193/1.md)

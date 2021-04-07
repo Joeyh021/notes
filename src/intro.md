@@ -1,9 +1,9 @@
 # Introduction
 
-This book is a collection of all my notes from the first year of my degree - computer systems engineering.    
+This book is a collection of all my notes from the first year of my degree (computer systems engineering).    
 
 It exists for a few purposes:
-- To consolidate my knowledge
+- To consolidate knowledge
 - To aid revision
 - To act as a reference during exams  
 
@@ -12,7 +12,7 @@ It exists for a few purposes:
 - [ ] CS126
 - [ ] CS134
 - [ ] CS141
-- [ ] ES191 (in progress)
+- [ ] ES191 (in the works)
 - [ ] ES193
 - [ ] ES197
 
