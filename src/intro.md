@@ -18,4 +18,4 @@ It exists for a few purposes:
 
 
 ## Contributing
-If you wish to contribute to this, either to make any additions or just to fix any mistakes I've made, feel free. The sources are all available on my [Github](https://github.com/Joeyh021/https://github.com/Joeyh021/First-Year-Notes).
+If you wish to contribute to this, either to make any additions or just to fix any mistakes I've made, feel free. The sources are all available on my [Github](https://github.com/Joeyh021/First-Year-Notes).
