@@ -5,5 +5,5 @@ This one aims to be fairly comprehensive, so let me know if you think anything i
 
 ## Other Useful Resources
 
-- [Khan Academy - Circuit Sign Conventions](https://www.khanacademy.org/science/electrical-engineering/ee-circuit-analysis-topic/circuit-elements/a/ee-sign-convention)
-- [Spinning Numbers](https://spinningnumbers.org/)
+- <https://www.khanacademy.org/science/electrical-engineering/ee-circuit-analysis-topic/circuit-elements/a/ee-sign-convention>
+- <https://spinningnumbers.org/>
