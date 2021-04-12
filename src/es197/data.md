@@ -7,7 +7,7 @@
 
 ### White Box 
 - A white box model is a physical modelling approach, used where all the information about a system and its components is known.
-- For example: "What is the voltage accross a 10 $\Omega$ resistor?
+- For example: "What is the voltage accross a 10 $\Omega$ resistor?"
   - The value of the resistor is known, so a mathematical model can be developed using knowledge of physics (Ohm's law in this case)
   - The model is then tested against data gathered from the system
 
