@@ -23,3 +23,7 @@
 - [ES193](./es193/index.md)
 
 - [ES197](./es197/index.md)
+  - [Translational Mechanical Systems](./es197/mech1.md)
+  - [Rotational Mechanical Systems](./es197/mech2.md)
+  - [Electrical Systems](./es197/electrical.md)
+  - [Thermal Systems](./es197/thermal.md)

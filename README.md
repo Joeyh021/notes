@@ -12,9 +12,9 @@ It exists for a few purposes:
 - [ ] CS126
 - [ ] CS134
 - [ ] CS141
-- [ ] ES191 (in the works)
+- [ ] ES191 (in progress)
 - [ ] ES193
-- [ ] ES197
+- [ ] ES197 (in progress)
 
 
 ## Contributing
