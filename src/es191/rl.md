@@ -86,7 +86,51 @@ $$I(t) = I_0 e^{-\frac{t}{\tau}}$$
 
 RC circuits and RL circuits are similar in some respects, but different in others.
 
-### RC
+### RC Equations
 
-### RL
+$$I = C \frac{dV}{dt}$$
+$$V_{in} = IR + V_C = RC \frac{dV}{dt} + V_C$$
+$$V_C(t) = V_{in} + (V_0 - V_{in})e^{-frac{t}{\tau}}$$
+$$\tau = RC$$
+
+### RL Equations
+
+$$V = L \frac{dI}{dt}$$
+$$V_{in} = IR + V_L = IR + L \frac{d}{dt}I_L$$
+$$I_L(t) = \frac{V_{in}}{R} + (I_0 - \frac{V_{in}}{R}) e^{-\frac{t}{\tau}}$$
+$$\tau = \frac{L}{R}$$
+
 ## Examples
+In the circuit below, the switch is opened at time $t=0$. Find:
+- $I(t)$ for $t > 0$
+- $I_0(t)$ for $t > 0$
+- $V_0(t)$ for $t > 0$
+
+![](./img/rl-ex-1.png)
+
+### $I(t)$
+
+Looking for something of the form $I_L(t) = \frac{V_{in}}{R} + (I_0 - \frac{V_{in}}{R}) e^{-\frac{t}{\tau}}$
+
+In steady state, before the switch is opened, all of the current flows through the inductor as it is short circuit, meaning $I_0 = 20 \, A$.
+
+When the switch is opened there is no energy supplied to the circuit, so the inductor discharges through the right hand half of the circuit. The inductor can see a resistance of $R_{eq} = 2 + 10 || 40$:
+
+$$R = 2 + \frac{1}{\frac{1}{10} + \frac{1}{40}} = 10 \, \Omega$$
+
+There is no input voltage, so:
+$$I_L(t) = 0 + (I_0 - 0) e^{-\frac{t}{\tau}}$$
+$$\tau = \frac{2}{10} = 0.25$$
+$$I(t) = 20 e^{-5t}$$
+
+### $I_0(t)$
+
+This can simply be calculated using the current divider rule:
+
+$$I_0(t) = -20e^{-5t} \times \frac{10}{10 + 40} = -4 e^{-5t}$$
+
+### $V_0(t)$
+
+Using ohm's law:
+
+$$V_0(t) = I_0(t)R = 40 \times -4 e^{-5t} = -160 e^{-5t} $$
