@@ -27,3 +27,4 @@
   - [Rotational Mechanical Systems](./es197/mech2.md)
   - [Electrical Systems](./es197/electrical.md)
   - [Thermal Systems](./es197/thermal.md)
+  - [Data Driven Models](./es197/data.md)
