@@ -10,10 +10,10 @@
     - Do no affect environment
   - Output
     - System does not depend on
-    - Affects Environment 
-- Mathematical models of dynamic systems are used to describe and predict behaviour 
-- Models are *all, always* approximations
-  
+    - Affects Environment
+- Mathematical models of dynamic systems are used to describe and predict behaviour
+- Models are _all, always_ approximations
+
 ### Lumped vs Distributed Systems
 
 - In a lumped system, properties are concentrated at 1 or 2 points in an element
@@ -36,14 +36,15 @@
 
 ### Discrete vs Continuous Models
 
-- In discrete time systems, model is a *difference* equation
+- In discrete time systems, model is a _difference_ equation
   - output happens at discrete time steps
-- In continuous systems, model is a *differential* equation
+- In continuous systems, model is a _differential_ equation
   - output is a continuous function of the input
 
 ## Rotational Systems
 
 Rotational systems are modelled using two basic variables:
+
 - Torque $\tau$ measured in $Nm$
   - A twisting force
   - Analogous to force in Newtons
@@ -54,6 +55,7 @@ Rotational systems are modelled using two basic variables:
 ## Element Laws
 
 ### Moment of Inertia
+
 - Rotational mass about an axis
 - Stores kinetic energy in a reversible form
 - Shown as rotating disc with inertia $J$, units $Kgm^{-2}$
@@ -66,9 +68,10 @@ $$\tau (t) = J \frac{d^2}{dt^2}\theta(t) = J \ddot{\theta}(t)$$
 Energy Stored:
 $$W = \frac{1}{2} J \omega^2$$
 
-***The force $J \ddot{\theta}$ acts in the opposite direction to the direction the mass is spinning***
+**_The force $J \ddot{\theta}$ acts in the opposite direction to the direction the mass is spinning_**
 
 ### Rotational Spring
+
 - Stores potential energy by twisting
 - Reversible energy store
 - Produced torque proportional to the angular displacement at either end of spring
@@ -84,6 +87,7 @@ Stored Energy:
 $$W = \frac{1}{2} k (\theta_1(t) - \theta_2(t))^2$$
 
 ### Rotational Damper
+
 - Dissapates energy as heat
 - Non-reversible
 - Energy dissapated $\propto$ angular velocity
@@ -113,6 +117,7 @@ Form an equation to model the system shown below.
 ![](./img/rot-ex.png)
 
 4 torques acting upon the disk:
+
 - Stiffness element, $\tau=k\theta$
 - Friction element, $\tau=B\dot{\theta}$
 - Input torque $\tau(t)$
@@ -123,4 +128,7 @@ Form an equation to model the system shown below.
 The forces sum to zero, so:
 
 $$ \tau(t) - k\theta - B\dot{\theta} - J\ddot{\theta} = 0$$
-$$\tau(t) = J\ddot{\theta}(t) + B\dot{\theta}(t)  + k\theta(t)
+
+$$
+\tau(t) = J\ddot{\theta}(t) + B\dot{\theta}(t)  + k\theta(t)
+$$

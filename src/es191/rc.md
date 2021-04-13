@@ -12,7 +12,9 @@ Capacitors are reactive elements in circuits that store charge. They work by cre
 - When discharging, the plates discharge and the charges recombine, forming a current
 
 ### Equations
+
 Capacitance of a specific capacitor, where
+
 - $A$ = the area of the two plates
 - $d$ = the separation of the two plates
 - $\epsilon_r$ = the relative electric permittivity of the insulator
@@ -49,11 +51,11 @@ $$C_t = C_1 + C_2$$
 
 ### Charging and Discharging
 
-- When a voltage is applied to a capacitor, an electric field is formed between the two plates, and the dielectric becomes polarised. 
+- When a voltage is applied to a capacitor, an electric field is formed between the two plates, and the dielectric becomes polarised.
 - As the capacitor charges, the charges in the dielectric separate which forms a displacement current. At time $t=0$, the capacitor behaves as a **short circuit**
 - Capacitors charge exponentially, so the time at which one is fully charged is describes as time $t=\infty$. At this time, the capacitor can take no more charge, so it behaves as an **open circuit**
 - When discharging, the displaced charges flow round the circuit back to the other side of the capacitor.
-- The charge decays exponentially over time. 
+- The charge decays exponentially over time.
 
 ## Step Response
 
@@ -80,25 +82,26 @@ $$V(t) = V_0e^{- \frac{t}{\tau}}$$
 
 ### Time constant
 
-$\tau = RC$ is the *time constant* of the circuit, which describes the rate at which it charges/discharges. 1 time constant is the time in seconds for which it takes the charge of a capacitor to rise by a factor of $1- e^{-1}$ (approx 63%). As charging and discharging are exponential, a capacitor will only be fully charged when $t=\infty$. However, in practical terms, a capacitor can be considered charged at $t = 5\tau$.
+$\tau = RC$ is the _time constant_ of the circuit, which describes the rate at which it charges/discharges. 1 time constant is the time in seconds for which it takes the charge of a capacitor to rise by a factor of $1- e^{-1}$ (approx 63%). As charging and discharging are exponential, a capacitor will only be fully charged when $t=\infty$. However, in practical terms, a capacitor can be considered charged at $t = 5\tau$.
 
 ## Example
+
 In the circuit below, determine equations for the response of the capacitor when the switch is moved to position 2.
 
 ![](./img/rc-ex-1.png)
 
-$V_0$ is equal to the voltage accross the capacitor at time $t=0$, which is the same as the voltage accross the 5 $k\, \Omega$ resistor. When capacitors are fully charged, they are open circuit, so it is not conducing current, making the two voltages equal. 
+$V_0$ is equal to the voltage accross the capacitor at time $t=0$, which is the same as the voltage accross the 5 $k\, \Omega$ resistor. When capacitors are fully charged, they are open circuit, so it is not conducing current, making the two voltages equal.
 
 ![](./img/rc-ex-1.1.png)
 
 $$V_0 = 24 \times \frac{5}{3+5} = 15V$$
 
-$V_{in}$ is equal to the voltage of the charging circuit as seen by the capacitor. This can be calculated as the thevenin equivalent of the circuit when the switch is in the right position. 
+$V_{in}$ is equal to the voltage of the charging circuit as seen by the capacitor. This can be calculated as the thevenin equivalent of the circuit when the switch is in the right position.
 
 ![](./img/rc-ex-1.2.png)
 
 $$V_{th} = -75 \times \frac{160k}{160k + 40k} = -60 \, V$$
-$$R_{th} = 8k + \frac{160k \times 40k}{160k + 40k} = 40 k\Omega$$  
+$$R_{th} = 8k + \frac{160k \times 40k}{160k + 40k} = 40 k\Omega$$
 
 The time constant of the circuit:
 
@@ -112,21 +115,22 @@ The current can be calculated using $I = C \frac{d}{dt} V$:
 $$I_c(t) = C \frac{d}{dt} V_c(t) = 0.5m \times \frac{d}{dt}( -60 + 75 e^{-0.05t}) = -1.87e^{-0.05t} \,mA$$
 
 ## Another Example
+
 For the circuit shown below:
+
 - Determine Thevenin circuit as seen by capacitor in position 1
 - Calculate the time constant of the circuit for time $t > 0$
 - Derive an equation for $V_c(t)$ for $t > 0$
 - Calculate the time taken for the capacitor voltage to fall to zero
-- Derive an equation for $I_c(t)$ for $t > 0$ 
+- Derive an equation for $I_c(t)$ for $t > 0$
 
 ![](./img/rc-ex-2.png)
 
-###  t < 0 
+### t < 0
 
 ![](./img/rc-ex2.1.png)
 
 The Thevenin voltage of the left hand bit of the circuit can be calculated by KCL:
-
 
 $$\frac{V_{th} - 40}{20k} + \frac{V_{th}}{60k} - 8 = 0$$
 $$V_{th} = 150 \, V $$

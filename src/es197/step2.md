@@ -1,4 +1,5 @@
 # Second Order Step Response
+
 How 2nd order systems (those with 2 energy storing elements) respond to step inputs.
 
 ## Standard form
@@ -8,25 +9,26 @@ $$\frac{1}{\omega_n^2} \frac{d^2}{dt^2}y(t) + \frac{2\zeta}{\omega_n} \frac{d}{d
 - $\omega_n$ is the undamped frequency of the system response
   - Indicates the speed of the response
 - $\zeta$ is the damping factor
-  - Indicates the shape of the response 
+  - Indicates the shape of the response
 
 ## Forced Response
+
 - Forces response is the response to a non-zero input, namely
   - Step
   - Sinusoidal
 - Initial conditions are zero, it $y(0) = 0$, $\frac{d}{dt}y(0) = 0$
-- The response is the solution to a non-homogeneous second order differential equation 
+- The response is the solution to a non-homogeneous second order differential equation
 
 ## Damped Response
+
 There are 4 different cases for system response:
 
-|Damping Factor|Response|
-|--------------|--------|
-|$\zeta = 0$| No Damping|
-|$0 < \zeta < 1$| Underdamped|
-|$\zeta = 1$|Critically Damped|
-|$\zeta > 1$| Overdamped|
-
+| Damping Factor  | Response          |
+| --------------- | ----------------- |
+| $\zeta = 0$     | No Damping        |
+| $0 < \zeta < 1$ | Underdamped       |
+| $\zeta = 1$     | Critically Damped |
+| $\zeta > 1$     | Overdamped        |
 
 The response of a system to the same input with varying damping factors is shown in the graph below, from the data book. The equations are also given in the data book.
 

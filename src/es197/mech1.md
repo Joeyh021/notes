@@ -14,15 +14,18 @@
 ## Elements
 
 There are element laws to model each of the three elements involved in mechanical systems. They are modelled using two key variables:
+
 - Force $F(t)$ in newtons ($N$)
 - Displacement $x(t)$ in meters ($m$)
   - Also sometimes velocity $v(t) = \dot{x}$ in meters per second ($ms^{-1}$)
 
 When modelling systems, some assumptions are made:
+
 - Masses are all perfectly rigid
-- Springs and dampers have zero mass 
+- Springs and dampers have zero mass
 - All behaviour is assumed to be linear
-- 
+-
+
 ### Mass
 
 - Stores kinetic/potential energy
@@ -55,10 +58,12 @@ The spring constant k has units $Nm^{-1}$. Energy Stored:
 
 $$W = \frac{1}{2} k (x_1 - x_2)$$
 
-In reality, springs are not perfectly linear as per hooke's law, so approximations are made. Any mechanical element that undergoes a change in shape can be described as a *stiffness element*, and therefore modelled as a spring.
+In reality, springs are not perfectly linear as per hooke's law, so approximations are made. Any mechanical element that undergoes a change in shape can be described as a _stiffness element_, and therefore modelled as a spring.
 
 ### Damper
+
 Dampers are used to reduce oscillation and introduce friction into a system.
+
 - Dissapates energy as heat
 - Non reversible energy transfer
 - Takes energy out of the system
@@ -74,23 +79,26 @@ B is the damper constant and has units $Nsm^{-1}$
 ## Interconnection Laws
 
 Compatibility Law
+
 - Elemental velocities are identical at points of connection
 
 Equilibrium Law
+
 - Sum of external forces acting on a body equals mass x acceleration
 - All forces acting on a body in equilibrium equals zero
 
 ### Fictitious/D'alembert Forces
 
-D'alembert principle is an alternative form of Newtons' second law, stating that the force on a body is equal to mass times acceleration: $F - ma = 0$. $-ma$ is the inertial, or fictitious force. When modelling systems, the *inertial force always opposes the direction of motion.*
-
+D'alembert principle is an alternative form of Newtons' second law, stating that the force on a body is equal to mass times acceleration: $F - ma = 0$. $-ma$ is the inertial, or fictitious force. When modelling systems, the _inertial force always opposes the direction of motion._
 
 ## Example:
+
 Form a differential equation describing the system shown below.
 
 ![](./img/mech1-2.png)
 
 4 forces acting on the mass:
+
 - Spring: $F = kx$
 - Damper: $F = B\dot{x}$
 - Inertial/Fictitious force: $F = m\ddot{x}$

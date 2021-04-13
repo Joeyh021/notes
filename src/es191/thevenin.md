@@ -8,6 +8,7 @@ In practice, this can be used for reducing complex circuits to a more simple mod
 - Norton circuits contain a single current source and a resistor in parallel
 
 ## Calculating Equivalent Circuits
+
 Any linear network viewed through 2 terminals is replaced with an equivalent single voltage & resistor.
 
 - The equivalent voltage is equal to the open circuit voltage between the two terminals ($V_{oc}$/$V_{th}$)
@@ -19,11 +20,11 @@ Any linear network viewed through 2 terminals is replaced with an equivalent sin
 
 ![](./img/thve-1.png)
 
-Often, nodal/mesh analysis is needed to determine the open circuit voltage and/or short circuit current. 
+Often, nodal/mesh analysis is needed to determine the open circuit voltage and/or short circuit current.
 
 ## Maximum Power Transfer
 
-For the maximum power transfer between a source and a load resistance in a Thevenin circuit, the load resistance must be *equal to the thevenin resistance $R_{th}$*. This can be trivially proved, and is left as an exercise to the reader.
+For the maximum power transfer between a source and a load resistance in a Thevenin circuit, the load resistance must be _equal to the thevenin resistance $R_{th}$\_. This can be trivially proved, and is left as an exercise to the reader.
 
 ## Example 1
 
@@ -37,7 +38,7 @@ The open circuit voltage accross the two terminals can be calculated using the v
 
 $$V_{oc} = V_{th} = 30 \times \frac{10k}{10k + 10k} = 15 \, V$$
 
-The short circuit current can be calculated by nodal analysis. When calculating the short circuit current, it is assumed that the two terminals are connected (shorted), so current can flow between them. 
+The short circuit current can be calculated by nodal analysis. When calculating the short circuit current, it is assumed that the two terminals are connected (shorted), so current can flow between them.
 
 ![](./img/thev-4.png)
 
@@ -50,7 +51,7 @@ The voltage when the terminals are shorted is 10 V, so the short circuit current
 
 $$I_{sc} = \frac{V}{R_2} = 1\,mA$$
 
-Which gives 
+Which gives
 
 $$R_{th} = \frac{V_{th}}{I_{sc}} = \frac{15\, V}{1 \, mA} = 15 \, k\Omega$$
 
@@ -58,30 +59,30 @@ The resistance can alternatively be calculated by replacing the voltage source w
 
 ![](./img/thev-5.png)
 
-$$ R_{th} = R_2 + (R_1 || R_3) = R_2 + \frac{R_1 \cdot R_3}{R_1 + R_3} =  15 \, k\Omega$$
+$$ R\_{th} = R_2 + (R_1 || R_3) = R_2 + \frac{R_1 \cdot R_3}{R_1 + R_3} = 15 \, k\Omega$$
 
 The resulting Thevenin circuit is therefore:
 
 ![](./img/thev-6.png)
 
-## Example 2 
+## Example 2
 
 Find the Thevenin equivalent circuit of the the network as seen by the two terminals A & B, and therefore the power dissapated/absorbed by the 12V source.
 
 ![](./img/thev-7.png)
 
-### Open Circuit 
+### Open Circuit
 
 ![](./img/thev-8.png)
 
 Doing nodal analysis to determine voltages:
 
-$V_1$: 
+$V_1$:
 $$-4.8  + \frac{V_1}{7.5} + \frac{V_1 - V_2}{2.5} = 0$$
 $$4V_1 - 3 V_2 = 36$$
-$V_2$: 
+$V_2$:
 $$\frac{V_2 - V_1}{2.5} + \frac{V_2}{10} + I = 0$$
-$V_3$: 
+$V_3$:
 $$-I + \frac{V_3}{2.5} = 0$$
 
 Combining 2 & 3 by cancelling the assumed current $I$:
@@ -110,18 +111,19 @@ $$
 V_1 \\ V_2 \\ V_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 36 \\ 0 \\ 0
 \end{pmatrix}
 $$
+
 $$
 \begin{pmatrix}
 V_1 \\ V_2 \\ V_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 12.64 \\ 4.86 \\ 6.55
@@ -138,9 +140,9 @@ The same nodal analysis is needed, except this time the terminals are shorted. T
 
 $V_1$ is the exact same, $4 V_1 - 3V_3 = 36$
 
-$V_2$: 
+$V_2$:
 $$\frac{V_2 - V_1}{2.5} + \frac{V_2}{10} + I = 0$$
-$V_3$: 
+$V_3$:
 $$-I + \frac{V_3}{2.5} + \frac{V_3}{1} = 0$$
 
 2 & 3 are combined in the same way, except yielding a slightly different equation, as this time current can flow to ground from $V_3$ through the 1 \Omega Resistor.
@@ -164,18 +166,19 @@ $$
 V_1 \\ V_2 \\ V_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 36 \\ 0 \\ 0
 \end{pmatrix}
 $$
+
 $$
 \begin{pmatrix}
 V_1 \\ V_2 \\ V_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 9.82 \\ 1.1 \\ 2.42
@@ -197,5 +200,3 @@ $$R_{th} = \frac{V_{oc}}{I_{sc}} = \frac{6.55}{2.42}$$
 The power delivered to the 12V source is therefore:
 
 $$P = IV = \frac{12 - 6.55}{2.7} \times 12 = 24 \, W $$
-
-

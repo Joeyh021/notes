@@ -5,12 +5,13 @@ Similar to mechanical systems, models of electrical systems can be constructed. 
 ## Variables
 
 - Current $I(t)$ in amps (A)
-- Voltage $e(t)$ in volts (V) -- *not v for voltage, e is used in systems*
+- Voltage $e(t)$ in volts (V) -- _not v for voltage, e is used in systems_
 - Power in watts $P = I(t)\cdot e(t)$
 
 ## Elements
 
 ### Capacitors
+
 - Store electrical energy in a reversible form
 - Capacitance $C$ measured in Farads (L)
 
@@ -24,6 +25,7 @@ Energy stored:
 $$W = \frac{1}{2}Ce^2$$
 
 ### Inductors
+
 - Store magnetic energy in a reversible form
 - Inductance $L$ measured in Henries (H)
 
@@ -36,6 +38,7 @@ Energy Stored:
 $$W = \frac{1}{2}LI^2$$
 
 ### Resistors
+
 - Dissapates energy
   - Non-reversible
 - Resistance $R$ measured in Ohms ($\Omega$)
@@ -46,12 +49,14 @@ Elemental Equation (Ohm's law):
 $$e_{12}(t) = I(t) \cdot R$$
 
 ### Voltage Source
+
 - Provides an input of energy to the system.
 - Input voltage $e_i(t)$
 
 ![](./img/source.png)
 
 ## Kirchhoff's Laws
+
 - Describe how elements interconnect and transfer energy between them
 - KVL - voltages around a closed loop sum to zero
 - KCL - currents about a node sum to zero
@@ -63,6 +68,7 @@ Form a differential equation to model the following electrical system/circuit:
 ![](./img/elec-example.png)
 
 Elements:
+
 - Resistor: $e_r = IR$
 - Capacitor: $I = C \frac{d}{dt}e_c$
 - Inductor: $e_L = L \frac{d}{dt}I$

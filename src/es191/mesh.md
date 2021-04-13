@@ -11,16 +11,19 @@ Achieves a similar thing to nodal analysis, using Kirchhoff's voltage law, and m
 $$ -V_1 + V_2 - V_3 - V_4 = 0$$
 
 ### Sign convention
-- If voltage rise and current in a voltage source are in the *same direction*, the voltage is denoted as *negative*
-- If voltage rise and current are in *opposite direction*, voltage is *positive*
-- In a resistor, current *opposes* voltage rise
+
+- If voltage rise and current in a voltage source are in the _same direction_, the voltage is denoted as _negative_
+- If voltage rise and current are in _opposite direction_, voltage is _positive_
+- In a resistor, current _opposes_ voltage rise
 
 ## Steps
+
 - Identify meshes (loops) (**always clockwise**) and assign currents $I_1, I_2,$ etc to those loops
 - Apply KVL to each mesh to generate system of equations
 - Solve equations
 
 Where there are elements that are part of multiple meshes, subtract the currents of the other meshes from the mesh currently being considered to consider the total current through that circuit element.
+
 ## Example
 
 ![](./img/kvl-1.png)
@@ -64,18 +67,19 @@ $$
 I_1 \\ I_2 \\ I_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 50 \\ 0 \\ 0
 \end{pmatrix}
+
 
 $$
 
 Therefore, the impedance matrix for the system is:
 
 $$
-Z = 
+Z =
 \begin{pmatrix}
 160 & -20 & -30\\
 -20 & 210 & -10 \\
@@ -92,7 +96,7 @@ Determine the currents in the circuit shown below:
 Loop 1:
 $$-10 + 10I_1 + 5(I_1 - I_2) = 0$$
 
-Loop 2: 
+Loop 2:
 $$5(I_2 - I_1) + 20(I_2 - I_3) + V + 15I_2 = 0$$
 
 Where there is a current source, a voltage $V$ is assumed accross it.
@@ -102,10 +106,9 @@ $$2I_3 - 20 + 20(I_3 - I_2) = 0 $$
 
 There are now 3 equations with 4 unknowns. However, it can be seen from the diagram that $I_2 = 4\, A$, so the system can be solved as follows:
 
-
 $$I_2 = -4 \, A$$
 $$I_1 = \frac{10 + 5 I_2}{15} = -0.67 \, A$$
-$$I_3 = \frac{20 + 20 I_2}{22} = -2.73 \, A$$ 
+$$I_3 = \frac{20 + 20 I_2}{22} = -2.73 \, A$$
 
 ## Example with dependant sources
 
@@ -125,6 +128,7 @@ KVL round $I_3$:
 $$15I_a + 20(I_3 - I_2) + 4 (I_3 - I_1) = 0$$
 
 $I_a = I_2 - I_3$, so this can be substituted into equation 3 to obtain a fourth equation:
+
 $$
 15(I_2 - I_3) + 20(I_3 - I_2) + 4(I_3 - I_1) = 0
 $$
@@ -144,7 +148,7 @@ $$
 I_1 \\ I_2 \\ I_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 0 \\ 50 \\ 0
@@ -156,7 +160,7 @@ I_1 \\ I_2 \\ I_3
 I_1 \\ I_2 \\ I_3
 \end{pmatrix}
 
-= 
+=
 
 \begin{pmatrix}
 26 \\ 29.6 \\ 28
