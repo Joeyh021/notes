@@ -28,3 +28,8 @@
   - [Electrical Systems](./es197/electrical.md)
   - [Thermal Systems](./es197/thermal.md)
   - [Data Driven Models](./es197/data.md)
+  - [First Order Step Response](./es197/step1.md)
+  - [Second Order Step Response](./es197/step2.md)
+  - [Transfer Functions](./es197/transfer.md)
+  - [First Order Frequency Response](./es197/freq1.md)
+  - [Second Order Frequency Response](./es197/freq2.md)
