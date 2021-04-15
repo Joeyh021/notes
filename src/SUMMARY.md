@@ -4,6 +4,11 @@
 
 - [CS118](./cs118/index.md)
 
+  - [IEEE 754](./cs118/floats.md)
+  - [OOP Principles](./cs118/oop.md)
+  - [Exceptions](./cs118/exceptions.md)
+  - [Generics](./cs118/generics.md)
+
 - [CS126](./cs126/index.md)
 - [CS132](./cs132/index.md)
 - [CS141](./cs141/index.md)
