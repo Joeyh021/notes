@@ -20,8 +20,7 @@
   - [Transistors](./es191/transistors.md)
   - [Op Amps](./es191/opamps.md)
   - [Passive Filters](./es191/filters.md)
-  - [Equations](./es191/equations.md)
-
+  - [Equation Reference](./es191/equations.md)
 
 - [ES193](./es193/index.md)
 
