@@ -38,14 +38,14 @@ The response of a system to the same input with varying damping factors is shown
 
 The system is not damped at all and is just a normal sinusoidal wave.
 
-$$y(t) = H(1-cos \omega_n t)$$
+$$y(t) = H(1-\cos \omega_n t)$$
 
 ### Underdamping
 
 The amplitude of the sinusoidal output decreases slowly over time to a final "steady state" value.
 
-$$y(t) = H [ 1 - \frac{e^{-\zeta \omega_n t}}{\sqrt{1-\zeta^2}} sin(\sqrt{1-\zeta^2}\omega_nt + \phi)]$$
-$$tan \phi = \frac{\sqrt{1-\zeta^2}}{\zeta}$$
+$$y(t) = H [ 1 - \frac{e^{-\zeta \omega_n t}}{\sqrt{1-\zeta^2}} \sin(\sqrt{1-\zeta^2}\omega_nt + \phi)]$$
+$$\tan \phi = \frac{\sqrt{1-\zeta^2}}{\zeta}$$
 
 ### Critical Damping
 
@@ -56,5 +56,5 @@ $$y(t) = H (1-(\omega_nt)e^{-\omega_nt})$$
 ### Overdamping
 
 The output rises slowly to its steady state value
-$$y(t) = H [ 1 - \frac{e^{-\zeta \omega_n t}}{\sqrt{\zeta^2 -1}} sinh(\sqrt{\zeta^2-1}\omega_nt + \phi)]$$
-$$tan \phi = \frac{\sqrt{\zeta^2-1}}{\zeta}$$
+$$y(t) = H [ 1 - \frac{e^{-\zeta \omega_n t}}{\sqrt{\zeta^2 -1}} \sinh(\sqrt{\zeta^2-1}\omega_nt + \phi)]$$
+$$\tan \phi = \frac{\sqrt{\zeta^2-1}}{\zeta}$$

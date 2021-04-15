@@ -14,7 +14,7 @@ The gain and phase of the frequency response are therefore:
 
 $$|G(j\omega)| = \frac{\omega_n^2}{[(\omega_n^2 - \omega^2)^2 + 4 \zeta^2 \omega_n^2 \omega^2]^{1/2}}$$
 
-$$\phi(\omega) = \angle G(j\omega) = -tan^{-1}\frac{2 \zeta \omega_n \omega}{\omega_n^2 - \omega^2}$$
+$$\phi(\omega) = \angle G(j\omega) = -\tan^{-1}\frac{2 \zeta \omega_n \omega}{\omega_n^2 - \omega^2}$$
 
 ### Bode Plots, from Data Book
 
