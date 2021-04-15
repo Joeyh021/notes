@@ -48,3 +48,25 @@ Starting with the value 0x41C80000 = 01000001110010000000000000000000:
 - The exponent is 131, biasing (-127) gives 4
 - The mantissa is 0.5625, adding 1 (normalising) gives 1.5625
 - $2^4 \times 1.5625$ gives **25**
+
+## Special Values
+
+- Zero
+  - When both exponent and mantissa are zero, the number is zero
+  - Can have both positive and negative zero
+- Infinity
+  - Exponent is all 1s, mantissa is zero
+  - Can be either positive or negative
+- Denormalised
+  - If the exponent is all zeros but the mantissa is non-zero, then the value is a denormalised number
+  - The mantissa does _not_ have an assumed leading one
+- NaN (Not a Number)
+  - Exponent is all 1s, mantissa is non-zero
+  - Represents error values
+
+| Exponent | Mantissa | Value        |
+| -------- | -------- | ------------ |
+| 0        | 0        | $\pm 0$      |
+| 255      | 0        | $\pm \infty$ |
+| 0        | not 0    | denormalised |
+| 255      | not 0    | NaN          |
