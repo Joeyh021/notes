@@ -104,7 +104,7 @@ Where there is a current source, a voltage $V$ is assumed accross it.
 Loop 3:
 $$2I_3 - 20 + 20(I_3 - I_2) = 0 $$
 
-There are now 3 equations with 4 unknowns. However, it can be seen from the diagram that $I_2 = 4\, A$, so the system can be solved as follows:
+There are now 3 equations with 4 unknowns. However, it can be seen from the diagram that $I_2 = -4\, A$ (the direction of the current source opposes our clockwise current), so the system can be solved as follows:
 
 $$I_2 = -4 \, A$$
 $$I_1 = \frac{10 + 5 I_2}{15} = -0.67 \, A$$
