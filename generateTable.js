@@ -14,6 +14,8 @@ fs = require('fs');
 /**
  * generateTable.js
  * 
+ * npm install -y marked cheerio
+ * 
  * To add equations to the files simply make a equations div for each category followed by a `##` with the name of the category.
  * Below that, you then can add the equation title, followed by a description (optional) with the equation after that in double dollar signs. Anything after that is ignored.
  * Then to add the equation table, simply add a <equation-table></equation-table> tag. This is then replaced every time this is run. 
