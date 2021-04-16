@@ -14,7 +14,7 @@ It exists for a few purposes:
 - [ ] CS126
 - [ ] CS134
 - [ ] CS141
-- [ ] ES191 (in progress)
+- [x] ES191
 - [ ] ES193
 - [x] ES197
 
