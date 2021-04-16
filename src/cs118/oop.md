@@ -10,6 +10,7 @@ All Java classes have a constructor, which is the method called upon object inst
 - If no constructor is specified, a default constructor is generated which takes no arguments and does nothing.
 - The first call in any constructor is to the superclass constructor.
   - This can be elided, and the default constructor is called
+    - If there is no default constructor, a constructor must be called explicitly
   - Can call explicitly with `super()`
 
 ## Access Modifiers
