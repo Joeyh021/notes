@@ -10,7 +10,7 @@ It exists for a few purposes:
 
 ## Progress
 
-- [ ] CS118
+- [x] CS118
 - [ ] CS126
 - [ ] CS134
 - [ ] CS141
