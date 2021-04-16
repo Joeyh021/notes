@@ -7,5 +7,6 @@ This one aims to be fairly comprehensive, so let me know if you think anything i
 
 - <https://www.khanacademy.org/science/electrical-engineering/ee-circuit-analysis-topic/circuit-elements/a/ee-sign-convention>
 - <https://spinningnumbers.org/>
+- <https://www.electronics-tutorials.ws/opamp/opamp_1.html>
 
 ![](./img/table.png)
