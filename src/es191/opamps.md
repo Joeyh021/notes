@@ -110,3 +110,14 @@ $$f_c = \frac{1}{2 \pi R_1 C}$$
 Which is similar to the other one, just with the other resistor.
 
 ![](./img/active-highpass-graph.png)
+
+## Voltage Transfer Characteristics
+
+- The voltage transfer characteristic of an amplifier shows the output voltage as a function of the input voltage
+- The output range is equal to the range of the power supplies
+- Where the slope = 0, the amplifier is saturated
+- Where the slope > 0, the gain is positive
+- Where the slope < 0, the gain is negative
+- When the amplifier is saturated the signal becomes distorted
+
+![](./img/opamp-vtf.png)
