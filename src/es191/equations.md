@@ -16,6 +16,23 @@ Below are some of the main equations that I have found useful to have on hand.
 | [Capacitor Reactance](#capacitor-reactance)         | $X_c = \frac{1}{2\pi{}fC} = \frac{1}{jwC}$                                |
 | [Flux Density](#flux-density)                       | $D = \frac{flux}{area} = \frac{charge}{area} (?)$                         |
 
+| [Resistors](#resistors)                         |                                                 |
+| ----------------------------------------------- | ----------------------------------------------- |
+| [Resistors in Series](#resistors-in-series)     | $R_t = R_1 + R_2$                               |
+| [Resistors in Parallel](#resistors-in-parallel) | $\frac{1}{R_t} = \frac{1}{R_1} + \frac{1}{R_2}$ |
+| [Voltage Divider](#voltage-divider)             | $V_{out} = V_{in} \times \frac{Z_1}{Z_1 + Z_2}$ |
+| [Current Divider](#current-divider)             | $I_{R1} = I_T \times \frac{R_2}{R_1 + R_2}$     |
+
+| [Inductors](#inductors)                                                       |                                                                            |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [Inductors in Series](#inductors-in-series)                                   | $L_t = L_1 + L_2$                                                          |
+| [Inductors in Parallel](#inductors-in-parallel)                               | $\frac{1}{L_t} = \frac{1}{L_1} + \frac{1}{L_2}$                            |
+| [Induced Voltage](#induced-voltage)                                           | $V = -N \frac{d\Phi}{dt}$                                                  |
+| [Self Inductance](#self-inductance)                                           | $V= L \frac{dI}{dt}$                                                       |
+| [Energy Stored](#energy-stored-1)                                             | $W = \frac{1}{2}LI^2$                                                      |
+| [Step Response of RL Circuit (Current)](#step-response-of-rl-circuit-current) | $I_L(t) = \frac{V_{in}}{R} + (I_0 - \frac{V_{in}}{R}) e^{-\frac{t}{\tau}}$ |
+| [Step Response of RL Circuit (Voltage)](#step-response-of-rl-circuit-voltage) | $V_L(t) = (V_{in} - I_0R) e^{-\frac{t}{\tau}}$                             |
+
 </equation-table>
 
 
@@ -91,3 +108,67 @@ $$D = \frac{flux}{area} = \frac{charge}{area} (?)$$
 
 </div>
 
+
+<div class="equations">
+
+## Resistors
+
+### Resistors in Series
+
+$$R_t = R_1 + R_2$$
+
+### Resistors in Parallel
+
+$$\frac{1}{R_t} = \frac{1}{R_1} + \frac{1}{R_2}$$
+
+### Voltage Divider
+
+$$V_{out} = V_{in} \times \frac{Z_1}{Z_1 + Z_2}$$
+
+### Current Divider
+
+$$I_{R1} = I_T \times \frac{R_2}{R_1 + R_2}$$
+
+</div>
+
+<div class="equations">
+
+## Inductors
+
+### Inductors in Series
+Inductors act in the same way as resistors in terms of their behaviour in series and parallel.
+$$L_t = L_1 + L_2$$
+
+### Inductors in Parallel
+
+$$\frac{1}{L_t} = \frac{1}{L_1} + \frac{1}{L_2}$$
+
+### Induced Voltage
+If a coil contains N loops, the induced voltage V is given by the following equation, where Φ is the flux of the circuit.
+$$V = -N \frac{d\Phi}{dt}$$
+
+### Self Inductance
+A changing current causes a changing field, which then induced an EMF in any conductors in that field, When any current in a coil changes, it induced an EMF in the coil
+$$V= L \frac{dI}{dt}$$
+
+### Energy Stored
+The energy stored by an inductor is given by:
+$$W = \frac{1}{2}LI^2$$
+
+### Step Response of RL Circuit (Current)
+$$I_L(t) = \frac{V_{in}}{R} + (I_0 - \frac{V_{in}}{R}) e^{-\frac{t}{\tau}}$$
+- $V_{in}$ - Voltage source
+- $R$ - Resistance of the resistor
+- $I_0$ - The initial current
+- $\tau = \frac{L}{R}$
+
+### Step Response of RL Circuit (Voltage)
+Inductor voltage at time t,
+$$V_L(t) = (V_{in} - I_0R) e^{-\frac{t}{\tau}}$$
+- $V_L(t)$ - Voltage across inductor at time t
+- $V_{in}$ - Voltage source
+- $R$ - Resistance of the resistor
+- $I_0$ - The initial current
+- $\tau = \frac{L}{R}$
+
+</div>
