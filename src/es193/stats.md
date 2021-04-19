@@ -168,6 +168,188 @@ B and C are not independent events:
 - $B \cap C = \{\text{HHT,THH}\}$
 - $P(B \cap C) = 0.25 \neq 0.25 \times 0.5 = P(B)P(C)$
 
-## Discrete Probability Distributions
+## Discrete Random Variables
 
-## Continuous Probability Distribution
+For a random process with a _discrete_ sample space $S$, a discrete random variable $X$ is a function that assigns a real number to each outcome $s \in S$.
+
+- $X$ is a measure related to the random distribution.
+- Denoted $P(X = a)$
+
+Consider a weighted coin where $P(H) = 0.75$ and $P(T) = 0.25$. Tossing the coin twice gives a sample space $S = \{\text{TT, TH, HT, HH}\}$, which makes the number of heads a random variable $X(s) = \{0, 1, 2\}$. Since successive coin tosses are independent events:
+
+- $P(TT) = 0.0625$
+- $P(TH) = 0.1875$
+- $P(HT) = 0.1875$
+- $P(HH) = 0.5625$
+
+Events are also mutually exclusive, so:
+
+- $f(0) = P(TT) = 0.0625$
+- $f(1) = P(TH) + P(HT) = 0.375$
+- $f(2) = P(HH) = 0.5625$
+
+This gives a probability distribution function $f(x) = P(X=x)$ of:
+
+| $x$ | $f(x)$   |
+| --- | -------- |
+| $0$ | $0.0625$ |
+| $1$ | $0.375$  |
+| $2$ | $0.5625$ |
+
+### Cumulative Distribution Functions
+
+The cumulative probability function gives a "running probability"
+$$F_X(x_i) = P(X \leq x_i) = \sum^i_{j=1}f(x_j)$$
+
+- if $x_i \leq x_j$ then $F_X(x_i) \leq F_X(x_j)$
+- $F_X(x_1) = f(x_1)$
+- $F_X(x_n) = 1$
+
+Using coin example again:
+
+| $x$ | $F_X(x)$ |
+| --- | -------- |
+| $0$ | $0.0625$ |
+| $1$ | $0.4375$ |
+| $2$ | $1$      |
+
+### Expectation & Variance
+
+- Expectation is the average value, ie the value most likely to come up
+  - The mean of $X$
+
+$$E(X) = \sum^n_{i=1} x_if(x_i) = \mu_X$$
+
+- Variance is a measure of the spread of the data
+
+$$Var(X) = \sum^n_{i=1}(x_i - \mu_x)^2 f(x_i) = E(X^2) - (E(X))^2 = \sigma^2_X$$
+
+- Standard deviation $\sigma_X = \sqrt{Var(X)}$
+
+Using the weighted coin example once more:
+
+$$E(X) = 0 \times 0.0625 + 1 \times 0.375 + 2 \times 0.5625  = 1.5$$
+$$E(X^2) =  0^2 \times 0.0625 + 1^2 \times 0.375 + 2^2 \times 0.5625 = 2.625 $$
+$$Var(X) = E(X^2) - (E(X))^2 = 1.5 - 2.625^2 = 0.375$$
+
+### Standardised Random Variable
+
+The standardised random variable is a normalised version of the discrete random variable, obtained by the following transformation:
+$$X^* = \frac{X - \mu_X}{\sigma_X}$$
+
+- $E(X^*) = 0$
+- $Var(X^*) =1$
+
+## Binomial Distribution
+
+- The binomial distribution models random processes consisting of repeated _independent_ events
+- Each event has only 2 outcomes, success or failure
+  - $P(success) = p$
+  - $P(failure) = q = 1 - p$
+
+The probability of $k$ successes in $n$ events:
+
+$$b(k;n;p) = {n \choose k}p^k q^{n-k}, \;\; k = 0,1,2,...,n$$
+
+- Probability of no success $= q^n$
+- Probability of $\geq 1 $ successes is $1 - q^n$
+
+### Expectation & Variance
+
+$$\mu = np$$
+$$\sigma^2 = npq$$
+
+### Example
+
+A fair coin is tossed 6 times.
+$$p = q = 0.5$$
+
+Probability of exactly 2 heads out of 6
+$$b(2;6;0.5) = {6 \choose 2} \times 0.5 ^2 \times 0.5 ^4 = \frac{15}{64}$$
+
+Probability of $\geq 1$ heads
+$$1 - q^6 = 1 - 0.5 ^6 = \frac{63}{64}$$
+
+Probability of $\geq 4$ heads
+
+$$b(4;6;0.5) + b(5;6;0.5) + b(6;6;0.5) = {6 \choose 2} (\frac{1}{2})^4 (\frac{1}{2})^2 + {6 \choose 2} (\frac{1}{2})^5 (\frac{1}{2})^1 + (\frac{1}{2})^6 = \frac{11}{32}$$
+
+Expected value $E(X)$
+$$\mu = np = 6 \times 0.5 = 3$$
+
+Variance
+$$\sigma^2 = npq = 6 \times 0.5 \times 0.5 = 1.5$$
+
+## Poisson Distribution
+
+Models a random process consisting of repeated occurrence of a single event within a fixed interval. The probability of $k$ occurrences is given by
+$$p(k;\lambda) = \frac{\lambda^k}{k!}e^{-\lambda}, \;\; k = 0,1,2,...$$
+
+The poisson distribution can be used to approximate the binomial distribution with $\lambda = np$. This is only valid for large $n$ and small $p$
+
+### Expectation & Variance
+
+$$\mu = \sigma^2 = \lambda$$
+
+### Example
+
+The occurrence of typos on a page is modelled by a poisson distribution with $\lambda = 0.5$.
+
+The probability of 2 errors:
+$$p(2;0.5) = \frac{0.5^2}{2!}e^{-0.5} = 0.076$$
+
+## Continuous Random Variables
+
+Continuous random variables map events from a sample space to an interval. Probabilities are written $P(a \leq X \leq b)$, where $X$ is the random variable. $X$ is defined with a continuous function, the probability density function.
+
+- The function must be positive
+  - $f(x) \geq 0$
+- The total area under the curve of the function must be 1
+  - $\int^{\infty}_{-\infty} f(x) dx = 1$
+- $P(a \leq X \leq b) = \int^b_a f(x) dx$
+
+### Example
+
+$$
+f(x) =
+\begin{cases}
+a (x - x^2) & 0 \leq x \leq 1 \\
+0 & otherwise
+\end{cases}
+$$
+
+Require that $\int^{\infty}_{-\infty} f(x) dx = 1$, so have to find $a$:
+$$\int^{\infty}_{-\infty} f(x) dx = \int^1_0 a (x - x^2) dx = a \left[\frac{x^2}{2} - \frac{x^3}{3}\right]^1_0 = \frac{a}{6} \Rightarrow a = 6$$
+
+Calculating some probabilities:
+$$P(0 \leq X \leq 0.5) = \int_0^{0.5} f(x) dx = \int_0^{0.5} 6(x - x^2) dx = 6 \left[\frac{x^2}{2} - \frac{x^3}{3}\right]_0^{0.5} = 0.5$$
+$$P(0.25 \leq X \leq 0.75) = \int_{0.25}^{0.75} f(x) dx = \int_{0.25}^{0.75} 6(x - x^2) dx = 6 \left[\frac{x^2}{2} - \frac{x^3}{3}\right]_{0.25}^{0.75} = \frac{11}{16}$$
+
+### Cumulative Distribution Function
+
+The cumulative distribution function $F_X$ up to the point $a$ is given as
+$$F_X(a) = \int_{-\infty}^a f(x) dx$$
+
+- if $a \leq b$, then $F_X(a) \leq F_X(b)$
+- $\lim_{ x \to -\infty} F_X(x) = 0$
+- $\lim_{ x \to \infty} F_X(x) = 1$
+- $\frac{d}{dx} F_X(x) = f(x)$
+  - Derivative of cumulative distribution function is the probability distribution function
+
+Using previous example, let $F_X(x) = \int_{-\infty}^x f(t) dt$. For $x < 0$
+$$F_X(x) = 0$$
+
+For $0 \leq x \leq 1$
+$$F_X(x) = \int_0^x 6(t-t^2) dt = 6 \left[\frac{t^2}{2} - \frac{t^3}{3}\right]_0^x = 3x^2 - 2x^3$$
+
+For $x > 1$
+$$F_X(x) = \int_0^1 6(t-t^2) dt = 6 \left[\frac{t^2}{2} - \frac{t^3}{3}\right]_0^1 = 1$$
+
+### Expectation & Variance
+
+Where $X$ is a continuous random variable:
+
+$$E(X) = \int^{\infty}_{-\infty} x f(x) dx = \mu$$
+$$Var(X) = \int^{\infty}_{-\infty} (x - \mu)^2 f(x) dx = \sigma^2_X = E(X^2) - \mu^2$$
+
+## Continuous Probability Distributions
