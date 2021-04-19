@@ -28,6 +28,16 @@
 
 - [ES193](./es193/index.md)
 
+  - [Functions, Conics & Asymptotes]()
+  - [Vectors]()
+  - [Matrices]()
+  - [Simultaneous Linear Equations]()
+  - [Differentiation]()
+  - [Integration]()
+  - [Differential Equations]()
+  - [Laplace Transforms]()
+  - [Probability & Statistics](./es193/stats.md)
+
 - [ES197](./es197/index.md)
   - [Translational Mechanical Systems](./es197/mech1.md)
   - [Rotational Mechanical Systems](./es197/mech2.md)
