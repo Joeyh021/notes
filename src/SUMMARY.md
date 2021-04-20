@@ -29,7 +29,7 @@
 - [ES193](./es193/index.md)
 
   - [Functions, Conics & Asymptotes](./es193/functions.md)
-  - [Complex Numbers]()
+  - [Complex Numbers](./es193/complex.md)
   - [Vectors]()
   - [Matrices]()
   - [Simultaneous Linear Equations]()
