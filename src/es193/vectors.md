@@ -56,13 +56,49 @@ Two planes will only intersect if their normal vectors intersect.
 
 - First, check the two normals are non parallel
   - $\bm{n_1}\cdot\bm{n_2} \neq 0$
-- Set one of the variables equal to a parameter $\lambda$
-- Equate all 3 variables about this parameter to form a cartesian equation of the line which the planes intersect along
+- Equate all 3 variables about either a parameter $\lambda$ or one of $x$, $y$, or $z$ to get an equation for the line along which the planes intersect in cartesian form
 
 ### Example
 
+Find the intersection of the planes $3x + y - 4z = 4$ (1) and $-x + y = 2$ (2).
+
+(1) - (2):
+$$4x - 6z = 2 \Rightarrow z = \frac{2x-1}{3}$$
+
+(1) + 3(2):
+$$4y + 2z = 10 \Rightarrow z = \frac{2y-5}{-1}$$
+
+Equating the two with z:
+
+$$\frac{2x-1}{3} = \frac{2y-5}{-1} = z$$
+
+### Using Cross Product
+
+For two normals to planes $\bm{n_1}$ and $\bm{n_2}$, the vector $\bm{b} = \bm{n_1} \times \bm{n_2}$ will lie in both planes. The line
+
+$$\bm{r} = \bm{a} + \lambda (\bm{n_1} \times \bm{n_2}) $$
+
+lies in both planes.
+
 ## Distance from Point to Plane
+
+The shortest distance from the point $(x_0,\,y_0,\,z_0)$ to the plane $Ax + By + Cz + D = 0$ is given by:
+
+$$\frac{ |Ax_0 + By_0 + Cz_0 + D | }{\sqrt{A^2 + B^2 + C^2}}$$
 
 ## Vector/Cross Product
 
+The cross product of two vectors produces another vector, and is defined as follows
+
+$$\bm{a} \times \bm {b} = |\bm{a}||\bm{b}|\sin\theta\,\hat{\bm{n}} $$
+
+$\theta$ is the angle between the two vectors, and $\hat{\bm{n}}$ is a unit vector perpendicular to both $\bm{a}$ and $\bm{b}$. The right-hand rule convention dictates that $\hat{\bm{n}}$ should always point up (ie, if $\bm{a}$ and $\bm{b}$ are your fingers, then $\hat{\bm{n}}$ is your thumb). The cross product is not commutative, as $\bm{a} \times \bm{b}$ = $-(\bm{b} \times \bm{a})$.
+
+![](./img/cross.png)
+
+- The magnitude of the cross product $|\bm{a} \times \bm{b}|$ is equal to the area of the parallelogram formed by the two vectors.
+- Can be used to find a normal given 2 vectors/2 points in a plane
+
 ### Angular Velocity
+
+A spheroid rotates with angular velocity $\bm{\omega}$. A point $\bm{A}$ on the spheroid has velocity $\bm{v}= \bm{\omega} \times \bm{A}$
