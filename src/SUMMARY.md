@@ -28,7 +28,7 @@
 
 - [ES193](./es193/index.md)
 
-  - [Functions, Conics & Asymptotes]()
+  - [Functions, Conics & Asymptotes](./es193/functions.md)
   - [Complex Numbers]()
   - [Vectors]()
   - [Matrices]()
