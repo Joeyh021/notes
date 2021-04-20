@@ -30,8 +30,8 @@
 
   - [Functions, Conics & Asymptotes](./es193/functions.md)
   - [Complex Numbers](./es193/complex.md)
-  - [Vectors]()
-  - [Matrices]()
+  - [Vectors](./es193/vectors.md)
+  - [Matrices](./es193/matrices.md)
   - [Simultaneous Linear Equations]()
   - [Differentiation]()
   - [Integration]()
