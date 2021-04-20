@@ -352,4 +352,160 @@ Where $X$ is a continuous random variable:
 $$E(X) = \int^{\infty}_{-\infty} x f(x) dx = \mu$$
 $$Var(X) = \int^{\infty}_{-\infty} (x - \mu)^2 f(x) dx = \sigma^2_X = E(X^2) - \mu^2$$
 
-## Continuous Probability Distributions
+## Uniform Distribution
+
+A continuous distribution with p.d.f:
+
+$$
+f(x) =
+\begin{cases}
+\frac{1}{b-a} & a \leq x \leq b \\
+0 & otherwise
+\end{cases}
+$$
+
+![](./img/uniform.png)
+
+Expectation and variance:
+
+$$\mu = \frac{a+b}{2}$$
+$$\sigma^2 = \frac{(b-a)^2}{12}$$
+
+Cumulative distribution function:
+
+$$
+F_X(x) =
+\begin{cases}
+0 & -\infty < x < a\\
+\frac{x-a}{b-a} & a \leq x \leq b \\
+0 & b < x < \infty>>
+\end{cases}
+$$
+
+![](./img/uniform-cum.png)
+
+## Exponential Distribution
+
+A continuous distribution with p.d.f:
+
+$$
+f(x) =
+\begin{cases}
+0 & -\infty < x < 0 \\
+ve^{-vx} & 0 \leq x < \infty
+\end{cases}
+$$
+
+![](./img/exponential.png)
+
+Expectation and variance:
+
+$$\mu = \frac{1}{v}$$
+$$\sigma^2 = \frac{1}{v^2}$$
+
+Cumulative distribution function:
+
+$$
+F_X(x) =
+\begin{cases}
+0 & -\infty < x < 0\\
+1 - e^{-vx} & 0 \leq x < \infty \\
+\end{cases}
+$$
+
+![](./img/exponential-cum.png)
+
+- Recall that a discrete random process $X$ where a single event occurs $i$ times in a fixed interval is modelled by a Possion distribution $p(k;\lambda)$
+  - $E(X) = \lambda$
+- Consider a situation where the event occurs at a constant mean rate $v$ per unit time
+- Let $\lambda = vt$, then $P(0) = e^{-vt}$ and probability of $\geq 1$ events occurring is $1-e^{-vt}$
+- Suppose the _continuous_ random variable $Y$ is the time between occurrences of successive events
+- If there is a period of time $t$ with no events, then $Y > t$ and $P(Y > t) = e^{-vt}$
+- If $\geq 1$ events occur then $Y \leq t$ and $P(Y \leq t) = 1 - e^{-vt}$
+
+**If the number of events per interval of time is Possion distributed, then the length of time between events is exponentially distributed**
+
+### Example
+
+Calls arrive randomly at the telephone exchange at a mean rate of 2 calls per minute. The number of calls per minute $X$ is a d.r.v. which can be modelled by a Poisson distribution with $\lambda = 2$. The probability of 1 call in any given minute is:
+
+$$P(X = 1) = \frac{\lambda e^(-\lambda)}{1!} = 2e^{-2} = 0.27$$
+
+The time between consecutive calls $Y$ is a c.r.v. modelled by an exponential distribution with $v = \frac{\lambda}{t} = \frac{2}{1} = 2$. The probability of at least 1 ($\geq 1$) minute between calls is:
+$$p(1 \leq Y \leq \infty) = \int_1^{\infty} v e^{-vt}dt = \int_1^{\infty} 2 e^{-2t}dt = \left[-e^{-2t}\right]_1^{\infty} = 0.135$$
+
+## Normal Distribution
+
+A distribution with probability density function:
+
+$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2 \sigma^2}}$$
+
+Expectation $E(X) = \mu$ and variance $Var(X) = \sigma^2$. Normal distribution is denoted $N(\mu,\sigma^2)$ and is defined by its mean and variance.
+
+![](./img/normal.png)
+
+### Standardised Normal Distribution
+
+$X$ is a random variable with distribution $N(\mu,\sigma^2)$. The standardised random variable $U$ is distributed $N(0,1)$ and can be obtained with the transform:
+$$U = \frac{X - \mu}{\sigma}$$
+and has p.d.f.
+$$f(u) = \frac{1}{\sqrt{2\pi}} e^{-\frac{u^2}{2}}$$
+
+$P(X \leq b) = P(U \leq \beta)$ where $\beta = \frac{b - \mu}{\sigma}$. Values for the standard normal distribution are tabulated in the data book.
+
+### Example
+
+The length of bolts $x$ from a production process are distributed normally with $\mu = 2.5$ and $\sigma^2 = 0.01$.
+
+$$u = \frac{x - \mu}{\sigma} = \frac{x - 2.5}{0.1}$$
+The probability the length of a bolt is between 2.6 and 2.7 cm (values obtained from table lookups):
+$$P(2.6 \leq X \leq 2.7) = P(\frac{2.6- 2.5}{0.1} \leq U \leq \frac{2.7 - 2.5}{0.1}) = P(1 \leq U \leq 2)$$
+$$=  P(0 \leq U \leq 2) - P(0 \leq U \leq 1) = 0.4772 - 0.3413 = 0.1359$$
+
+### Confidence Intervals
+
+A confidence interval is the interval in which we would expect to find an estimate of a parameter, at a specified probability level. For example, the interval covering 95% of the population of $N(\mu,\sigma^2)$ is $\mu \pm 1.96 \sigma$.
+
+For a random variable $X$ with distribution $N(67.5,2.5^2)$, the standard variate $u = \frac{x - 67.5}{2.5}$. For confidence interval at 95% probability:
+
+$$Q(u) = \frac{0.95}{2} = 0.475$$
+
+Using table lookups, $u = \pm 1.96$, and:
+$$x = \mu \pm 1.96 \sigma = 67.5 \pm 1.96 \times 2.5 = 67.5 \pm 4.9$$
+
+For confidence interval at 99.9% probability:
+
+$$Q(u) = \frac{0.999}{2} = 0.4995$$
+
+Table lookups again, $u = \pm 3.3$, and:
+$$x = \mu \pm 3.3 \sigma = 67.5 \pm 3.3 \times 2.5 = 67.5 \pm 8.25$$
+
+### Normal Approximation to Binomial Distribution
+
+The normal distribution gives a close approximation to the binomial distribution, provided:
+
+- $n$ is large
+- neither $p$ nor $q$ are close to zero
+- $\mu = np$ and $\sigma^2 = npq$
+
+For example, take a random process consitsting of 64 spins of a fair coin $n = 64$ and $p = q = 0.5$. The probability of 40 heads is:
+$$P(40) = {60 \choose 40} \times 0.5^{64} = 0.01359 $$
+$$\mu = np = 32, \;\; \sigma = \sqrt{npq} = 4$$
+
+For a normal approximation, must use the interval around 40 (normal is continuous, binomial is discrete) $[39.5,40.5]$:
+
+$$P(39.5 \leq X \leq 40.5) = P(\frac{39.5 - 32}{4} \leq X \leq \frac{39.5 - 32}{4}) = 0.4832 - 0.4696 = 0.0136$$
+
+### Normal Approximation to Poisson Distribution
+
+The normal distribution gives a close approximation to the binomial distribution, provided:
+
+- $\lambda$ is large
+- $\mu = \sigma^2 = np$
+
+For example, say a radioactive decay emits a mean of 69 particles per seconds. A standard normal approximation to this is:
+
+$$u = \frac{x - \mu}{\sigma} = \frac{x-69}{\sqrt{69}}$$
+
+The probability of emitting $\leq 60$ particles in a second is therefore:
+$$P(0 \leq X \leq 60) = P(\frac{0-69}{\sqrt{69}} \leq X \leq \frac{60.5 - 69}{\sqrt{69}}) = 0.5 - 0.3473 = 0.1527$$
