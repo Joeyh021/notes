@@ -9,8 +9,40 @@
   - [Java Exceptions & Generics](./cs118/exceptions.md)
 
 - [CS126](./cs126/index.md)
+
+  - [Arrays & Linked Lists]()
+  - [Analysis of Algorithms]()
+  - [Recursive Algorithms]()
+  - [Stacks & Queues]()
+  - [Lists]()
+  - [Maps]()
+  - [Hash Tables]()
+  - [Sets]()
+  - [Trees]()
+  - [Priority Queues & Heaps]()
+  - [Skip Lists]()
+  - [Graphs]()
+
 - [CS132](./cs132/index.md)
+
+  - [Digital Logic]()
+  - [Assembly]()
+  - [Memory Systems]()
+  - [I/O]()
+  - [Microprocessor Architecture]()
+
 - [CS141](./cs141/index.md)
+
+  - [Types & Typeclasses]()
+  - [Recursion]()
+  - [Lazy Evaluation]()
+  - [Higher Order Functions]()
+  - [Equational Reasoning]()
+  - [Functors & Foldables]()
+  - [Applicative Functors]()
+  - [Monads]()
+  - [Type-Level Programming]()
+
 - [ES191](./es191/index.md)
 
   - [Circuit Symbols & Conventions](./es191/symbols-and-conventions.md)
