@@ -36,7 +36,7 @@
   - [Differentiation](./es193/diff.md)
   - [Integration](./es193/int.md)
   - [Differential Equations](./es193/diffeq.md)
-  - [Laplace Transforms]()
+  - [Laplace Transforms](./es193/laplace.md)
   - [Probability & Statistics](./es193/stats.md)
 
 - [ES197](./es197/index.md)
