@@ -35,7 +35,7 @@
   - [Simultaneous Linear Equations](./es193/equations.md)
   - [Differentiation](./es193/diff.md)
   - [Integration](./es193/int.md)
-  - [Differential Equations]()
+  - [Differential Equations](./es193/diffeq.md)
   - [Laplace Transforms]()
   - [Probability & Statistics](./es193/stats.md)
 
