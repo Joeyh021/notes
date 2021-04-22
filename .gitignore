@@ -1,3 +1,5 @@
 book
 .vscode
 .DS_store
+scripts/package.json
+scripts/node_modules/
