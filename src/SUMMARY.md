@@ -32,7 +32,7 @@
   - [Complex Numbers](./es193/complex.md)
   - [Vectors](./es193/vectors.md)
   - [Matrices](./es193/matrices.md)
-  - [Simultaneous Linear Equations]()
+  - [Simultaneous Linear Equations](./es193/equations.md)
   - [Differentiation]()
   - [Integration]()
   - [Differential Equations]()
