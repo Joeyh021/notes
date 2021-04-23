@@ -9,8 +9,40 @@
   - [Java Exceptions & Generics](./cs118/exceptions.md)
 
 - [CS126](./cs126/index.md)
+
+  - [Arrays & Linked Lists]()
+  - [Analysis of Algorithms]()
+  - [Recursive Algorithms]()
+  - [Stacks & Queues]()
+  - [Lists]()
+  - [Maps]()
+  - [Hash Tables]()
+  - [Sets]()
+  - [Trees]()
+  - [Priority Queues & Heaps]()
+  - [Skip Lists]()
+  - [Graphs]()
+
 - [CS132](./cs132/index.md)
+
+  - [Digital Logic]()
+  - [Assembly]()
+  - [Memory Systems]()
+  - [I/O]()
+  - [Microprocessor Architecture]()
+
 - [CS141](./cs141/index.md)
+
+  - [Types & Typeclasses]()
+  - [Recursion]()
+  - [Lazy Evaluation]()
+  - [Higher Order Functions]()
+  - [Equational Reasoning]()
+  - [Functors & Foldables]()
+  - [Applicative Functors]()
+  - [Monads]()
+  - [Type-Level Programming]()
+
 - [ES191](./es191/index.md)
 
   - [Circuit Symbols & Conventions](./es191/symbols-and-conventions.md)
@@ -27,6 +59,17 @@
   - [Equation Reference](./es191/equations.md)
 
 - [ES193](./es193/index.md)
+
+  - [Functions, Conics & Asymptotes](./es193/functions.md)
+  - [Complex Numbers](./es193/complex.md)
+  - [Vectors](./es193/vectors.md)
+  - [Matrices](./es193/matrices.md)
+  - [Simultaneous Linear Equations](./es193/equations.md)
+  - [Differentiation](./es193/diff.md)
+  - [Integration](./es193/int.md)
+  - [Differential Equations](./es193/diffeq.md)
+  - [Laplace Transforms](./es193/laplace.md)
+  - [Probability & Statistics](./es193/stats.md)
 
 - [ES197](./es197/index.md)
   - [Translational Mechanical Systems](./es197/mech1.md)
