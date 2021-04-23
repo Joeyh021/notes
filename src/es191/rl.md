@@ -89,6 +89,8 @@ $$V_L(t) = (V_{in} - I_0R) e^{-\frac{t}{\tau}}$$
 When discharging, the current at time $t$ is equal to:
 $$I(t) = I_0 e^{-\frac{t}{\tau}}$$
 
+Note that $\frac{V_{in}}{R}$ is equal to current $I_{in}$ / $I_{\infty}$, by ohm's law.
+
 ## RC vs RL Circuits
 
 RC circuits and RL circuits are similar in some respects, but different in others.
