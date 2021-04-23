@@ -10,7 +10,7 @@
 
 - [CS126](./cs126/index.md)
 
-  - [Arrays & Linked Lists]()
+  - [Arrays & Linked Lists](./cs126/arrays.md)
   - [Analysis of Algorithms]()
   - [Recursive Algorithms]()
   - [Stacks & Queues]()
