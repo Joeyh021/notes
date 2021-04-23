@@ -14,7 +14,7 @@
   - [Analysis of Algorithms]()
   - [Recursive Algorithms](./cs126/recursion.md)
   - [Stacks & Queues](./cs126/stacks.md)
-  - [Lists]()
+  - [Lists](./cs126/lists.md)
   - [Maps]()
   - [Hash Tables]()
   - [Sets]()
