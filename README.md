@@ -15,7 +15,7 @@ It exists for a few purposes:
 - [ ] CS134
 - [ ] CS141
 - [x] ES191
-- [ ] ES193
+- [x] ES193
 - [x] ES197
 
 ## Contributing
