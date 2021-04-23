@@ -13,7 +13,7 @@
   - [Arrays & Linked Lists](./cs126/arrays.md)
   - [Analysis of Algorithms]()
   - [Recursive Algorithms](./cs126/recursion.md)
-  - [Stacks & Queues]()
+  - [Stacks & Queues](./cs126/stacks.md)
   - [Lists]()
   - [Maps]()
   - [Hash Tables]()
