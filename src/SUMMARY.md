@@ -25,7 +25,7 @@
 
 - [CS132](./cs132/index.md)
 
-  - [Digital Logic]()
+  - [Digital Logic](./cs132/logic.md)
   - [Assembly]()
   - [Memory Systems]()
   - [I/O]()
