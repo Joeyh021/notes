@@ -17,7 +17,7 @@
   - [Lists](./cs126/lists.md)
   - [Maps](./cs126/maps.md)
   - [Hash Tables](./cs126/hash.md)
-  - [Sets]()
+  - [Sets](./cs126/sets.md)
   - [Trees]()
   - [Priority Queues & Heaps]()
   - [Skip Lists]()
