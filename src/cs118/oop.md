@@ -139,11 +139,9 @@ Encapsulation is wrapping the data and the code that acts on it into a single un
 
 ## Reference Variables
 
-There is no such thing as an object variable in Java. Only primitives (`int`,`char`,`float`...), and references. All objects are heap-allocated (`new`), and a reference to them stored. Methods are all pass by reference \*. Objects are never copied/cloned/duplicated implicitly.
+There is no such thing as an object variable in Java. Only primitives (`int`,`char`,`float`...), and references. All objects are heap-allocated (`new`), and a reference to them stored. Methods are all pass by value: either the value of the primitive, or the value of the reference. _Java is not pass by reference_ . Objects are never copied/cloned/duplicated implicitly.
 
 If a reference type is required (ie `Integer`), but a primitive is given (`(int) 1`), then the primitive will be _autoboxed_ into it's equivalent object type.
-
-\*technically, it's pass by value, but the value is of the reference.
 
 ## Abstract Classes and Interfaces
 
@@ -152,7 +150,7 @@ If a reference type is required (ie `Integer`), but a primitive is given (`(int)
   - Abstract methods have no body, ie are unimplemented.
   - The idea of them is to generalise behaviour, and leave it up to subclasses to implement
   - Abstract classes cannot be instantiated directly, though can still have constructors for subclasses to call
-- Interfaces are a special kind of class that contain only abstract methods (and fields declared `public status final`)
+- Interfaces are a special kind of class that contain only abstract methods (and fields declared `public static final`)
   - Used to define behaviour
   - Technically can contain methods, but they're default implementations
     - This raises all sorts of issues so is best avoided
