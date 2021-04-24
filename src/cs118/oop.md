@@ -157,4 +157,5 @@ If a reference type is required (ie `Integer`), but a primitive is given (`(int)
   - Don't have to declare methods abstract, it's implicit
 
 The diagram shows the inheritance hierarchy of the java collections framework, containing interfaces, abstract classes, and concrete classes.
-![s](./img/abstract.png)
+
+![](./img/abstract.png)
