@@ -16,7 +16,7 @@
   - [Stacks & Queues](./cs126/stacks.md)
   - [Lists](./cs126/lists.md)
   - [Maps](./cs126/maps.md)
-  - [Hash Tables]()
+  - [Hash Tables](./cs126/hash.md)
   - [Sets]()
   - [Trees]()
   - [Priority Queues & Heaps]()
