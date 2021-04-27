@@ -15,7 +15,7 @@ Below are some of the main equations that I have found useful to have on hand.
 | [Electric Field Strength](#electric-field-strength) | $E=\frac{F}{Q} = \frac{1}{4\pi{}\epsilon{}_0}\frac{Q}{r^2} = \frac{V}{r}$ | 
 | [Capacitor Reactance](#capacitor-reactance) | $X_c = \frac{1}{2\pi{}fC} = \frac{1}{jwC}$ | 
 | [Flux Density](#flux-density) | $D = \frac{flux}{area} = \frac{charge}{area} (?)$ | 
-| [Magnetic Field Strength of Straight Current Carrying Wire](#magnetic-field-strength-of-straight-current-carrying-wire) | ERR | 
+| [Magnetic Field Strength of Straight Current Carrying Wire](#magnetic-field-strength-of-straight-current-carrying-wire) | $B=\frac{\mu{}_0I}{2\pi{}d}$ | 
 
 | [Resistors](#resistors)  | | 
 | ----------- | -----------  | 
@@ -117,9 +117,9 @@ The amount of flux passing through a defined area that is perpendicular to the d
 $$D = \frac{flux}{area} = \frac{charge}{area} (?)$$
 
 ### Magnetic Field Strength of Straight Current Carrying Wire
-*Amperes Law:* For any closed loop path, the sum of the products of the length elements and the magnetic field in the direction of the length elements is proportional to the electric current enclosed in the loop.
+Amperes Law: For any closed loop path, the sum of the products of the length elements and the magnetic field in the direction of the length elements is proportional to the electric current enclosed in the loop.
 $$B=\frac{\mu{}_0I}{2\pi{}d}$$
-- $B$ = Magnetic field strength  at distance **D**
+- $B$ = Magnetic field strength  at distance **d**
 - $I$ = Current
 - $\mu{}_0$ = Permeability of free space = $4\pi{}\times{}10^{-7} Tm/A$
 - $d$ = distance from the wire.
