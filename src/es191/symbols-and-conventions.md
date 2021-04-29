@@ -106,7 +106,7 @@ Using two resistors to divide a voltage
 
 In the general case:
 
-$$V_{out} = V_{in} \times \frac{Z_1}{Z_1 + Z_2}$$
+$$V_{out} = V_{in} \times \frac{Z_2}{Z_1 + Z_2}$$
 
 ## Current Dividers
 
@@ -115,3 +115,4 @@ Similar deal to voltage divider
 ![](./img/current-divider.png)
 
 $$I_{R1} = I_T \times \frac{R_2}{R_1 + R_2}$$
+$$I_{R2} = I_T \times \frac{R_1}{R_1 + R_2}$$
