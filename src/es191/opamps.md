@@ -42,7 +42,7 @@ Op amps can be used to design inverting and non-inverting circuits.
 
 Using KCL at this node, it can be shown that:
 
-$$\frac{V_{out}}{V_{in}} = \frac{ - R_{in}}{R_F}$$
+$$\frac{V_{out}}{V_{in}} = \frac{ - R_F}{R_{in}}$$
 
 The gain of the amplifier is set by the ratio of the two resistors.
 
