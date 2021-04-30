@@ -15,7 +15,7 @@ Below are some of the main equations that I have found useful to have on hand.
 | [Electric Field Strength](#electric-field-strength) | $E=\frac{F}{Q} = \frac{1}{4\pi{}\epsilon{}_0}\frac{Q}{r^2} = \frac{V}{r}$ | 
 | [Capacitor Reactance](#capacitor-reactance) | $X_c = \frac{1}{2\pi{}fC} = \frac{1}{jwC}$ | 
 | [Flux Density](#flux-density) | $D = \frac{flux}{area} = \frac{charge}{area} (?)$ | 
-| [Magnetic Field Strength of Straight Current Carrying Wire](#magnetic-field-strength-of-straight-current-carrying-wire) | ERR | 
+| [Magnetic Field Strength of Straight Current Carrying Wire](#magnetic-field-strength-of-straight-current-carrying-wire) | $B=\frac{\mu{}_0I}{2\pi{}d}$ | 
 
 | [Resistors](#resistors)  | | 
 | ----------- | -----------  | 
@@ -37,12 +37,23 @@ Below are some of the main equations that I have found useful to have on hand.
 | [Thevenin and Norton Equivalent Circuits](#thevenin-and-norton-equivalent-circuits)  | | 
 | ----------- | -----------  | 
 | [Equivalent Resistance](#equivalent-resistance) | $R_{th} = \frac{V_{th}}{I_{sc}}$ | 
+| [Thevenin - Norton Conversion](#thevenin---norton-conversion) | $I_N = \frac{V_{th}}{R_{th}}$ | 
 
 | [AC Circuits](#ac-circuits)  | | 
 | ----------- | -----------  | 
 | [Instantaneous Voltage](#instantaneous-voltage) | $V = V_p , \sin(\omega t + \phi)$ | 
 | [Instantaneous Current](#instantaneous-current) | $I = I_p , \sin(\omega t + \phi)$ | 
 | [AC Phasor - As complex number](#ac-phasor---as-complex-number) | $A \sin (\omega t + \phi) = A \cos \phi + jA \sin \phi = Ae^{j\phi}$ | 
+
+| [Operational Amplifiers](#operational-amplifiers)  | | 
+| ----------- | -----------  | 
+| [Output of Inverting Amplifier](#output-of-inverting-amplifier) | $\frac{V_{out}}{V_{in}} = \frac{ - R_{in}}{R_F}$ | 
+| [Output of Non-Inverting Amplifier](#output-of-non-inverting-amplifier) | $\frac{V_{out}}{V_{in}} = 1 + \frac{ - R_{in}}{R_F}$ | 
+
+| [Filters](#filters)  | | 
+| ----------- | -----------  | 
+| [Cutoff Frequncy](#cutoff-frequncy) | $f_c = \frac{1}{2\pi{}R_2C}$ | 
+| [Gain (dB)](#gain-db) | $,20\log\frac{Vout}{Vin}$ | 
 
 </equation-table>
 
@@ -117,9 +128,9 @@ The amount of flux passing through a defined area that is perpendicular to the d
 $$D = \frac{flux}{area} = \frac{charge}{area} (?)$$
 
 ### Magnetic Field Strength of Straight Current Carrying Wire
-*Amperes Law:* For any closed loop path, the sum of the products of the length elements and the magnetic field in the direction of the length elements is proportional to the electric current enclosed in the loop.
+Amperes Law: For any closed loop path, the sum of the products of the length elements and the magnetic field in the direction of the length elements is proportional to the electric current enclosed in the loop.
 $$B=\frac{\mu{}_0I}{2\pi{}d}$$
-- $B$ = Magnetic field strength  at distance **D**
+- $B$ = Magnetic field strength  at distance **d**
 - $I$ = Current
 - $\mu{}_0$ = Permeability of free space = $4\pi{}\times{}10^{-7} Tm/A$
 - $d$ = distance from the wire.
@@ -177,7 +188,7 @@ $$W = \frac{1}{2}LI^2$$
 $$I_L(t) = \frac{V_{in}}{R} + (I_0 - \frac{V_{in}}{R}) e^{-\frac{t}{\tau}}$$
 - $V_{in}$ - Voltage source
 - $R$ - Resistance of the resistor
-- $I_0$ - The initial current
+- $I_0$ - The initial current. (If is already charged, then will be short circuit current)
 - $\tau = \frac{L}{R}$
 
 ### Step Response of RL Circuit (Voltage)
@@ -209,6 +220,13 @@ Any linear network viewed through 2 terminals is replaced with an equivalent sin
 - The value of the current source in a Norton circuit is $I_{N}$
 - The value of the resistor in either circuit is $R_{th}$
 
+### Thevenin - Norton Conversion
+Thevenin and Norton are essentially the same, but in a different form. The $R_th$ is the same for both.
+$$I_N = \frac{V_{th}}{R_{th}}$$
+- $I_N$ - Norton Current
+- $V_{th}$ - Thevevin Voltage
+- $R_{th}$ - Thevenin Resistance
+![](./img/thve-1.png)
 
 </div>
 
@@ -238,7 +256,41 @@ $$I = I_p \, \sin(\omega t + \phi)$$
 An AC phasor can be represented as a complex number.
 $$A \sin (\omega t + \phi) = A \cos \phi + jA \sin \phi = Ae^{j\phi}$$
 
+</div>
 
+<div class="equations">
+
+## Operational Amplifiers
+
+### Output of Inverting Amplifier
+The gain of the amplifier is set by the ratio of the two resistors. The negative feedback reverses the polarity of the output voltage (Hence Negative).
+$$\frac{V_{out}}{V_{in}} = \frac{ - R_{in}}{R_F}$$
+
+![](./img/inv-opamp.png)
+
+### Output of Non-Inverting Amplifier
+Non-inverting amplifiers don't invert the voltage output, and use input at the non-inverting terminal of the op amp instead.
+$$\frac{V_{out}}{V_{in}} = 1 + \frac{ - R_{in}}{R_F}$$
+
+![](./img/noninv-opamp.png)
+
+</div>
+
+<div class="equations">
+
+## Filters
+### Cutoff Frequncy
+The cutoff frequency of a filter is the point at which the gain is equal to -3 dB, which corresponds to a fall in output by a factor of $\frac{1}{\sqrt{2}}$. For the filter shown above, this is:
+$$f_c = \frac{1}{2\pi{}R_2C}$$
+
+### Gain (dB)
+Gain is measured in decibels
+$$\,20\log\frac{Vout}{Vin}$$
+
+At very low frequencies, the gain is constant (0dB)
+The capacitor has high reactance at low frequencies, and is open circuit at very low frequencies
+At very high frequencies, the gain tends towards −$\infty$ dB
+The capacitor has a very low reactance at high frequencies (short circuit)
 
 </div>
 
