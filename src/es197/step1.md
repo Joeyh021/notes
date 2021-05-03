@@ -95,7 +95,7 @@ $$
   - Oscillation (frequency & damping factor)
   - Stability
 
-For a system with time constant $T=1$, the response looks something like this:
+For a system with time constant $T=10$, the response looks something like this:
 
 ![](./img/step.png)
 
