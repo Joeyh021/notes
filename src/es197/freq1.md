@@ -4,7 +4,7 @@ Frequency response is is the response of a system to a sinusoidal/oscillating in
 
 ## Response to Sinusoidal input
 
-For a standard first order system $T=\frac{d}{dt}y(t) + y(t) = u(t)$, with a sinusoidal input $u(t) = Asin(\omega t)$:
+For a standard first order system $T\frac{d}{dt}y(t) + y(t) = u(t)$, with a sinusoidal input $u(t) = Asin(\omega t)$:
 
 $$U(s) = \mathcal{L}(u(t)) = \frac{A\omega}{s^2 + \omega^2}$$
 $$Y(s) = U(s)G(s) = \frac{A\omega}{s^2 + \omega^2} \frac{1}{Ts+1}$$
