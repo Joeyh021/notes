@@ -20,7 +20,7 @@
   - [Sets](./cs126/sets.md)
   - [Trees](./cs126/trees.md)
   - [Priority Queues & Heaps]()
-  - [Skip Lists]()
+  - [Skip Lists](./cs126/skip-lists.md)
   - [Graphs]()
 
 - [CS132](./cs132/index.md)
