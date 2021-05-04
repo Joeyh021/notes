@@ -58,7 +58,7 @@ Rotational systems are modelled using two basic variables:
 
 - Rotational mass about an axis
 - Stores kinetic energy in a reversible form
-- Shown as rotating disc with inertia $J$, units $Kgm^{-2}$
+- Shown as rotating disc with inertia $J$, units $Kgm^2$
 
 ![](./img/mech2-1.png)
 
