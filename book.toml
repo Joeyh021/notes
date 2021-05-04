@@ -6,3 +6,12 @@ src = "src"
 title = "Year 1 Notes"
 
 [preprocessor.katex]
+
+[output.html]
+default-theme = "rust"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/Joeyh021/first-year-notes"
+
+[output.html.fold]
+enable = true
+level = 1
