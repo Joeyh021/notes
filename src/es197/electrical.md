@@ -32,7 +32,7 @@ $$W = \frac{1}{2}Ce^2$$
 ![](./img/inductor.png)
 
 Elemental equation:
-$$e_{12}(t) = C \frac{d}{dt}I(t)$$
+$$e_{12}(t) = L \frac{d}{dt}I(t)$$
 
 Energy Stored:
 $$W = \frac{1}{2}LI^2$$
