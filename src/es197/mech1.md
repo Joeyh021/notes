@@ -109,4 +109,4 @@ Form a differential equation describing the system shown below.
 The forces all sum to zero:
 
 $$f(t) - kx - B\dot{x} - m\ddot{x} = 0$$
-$$f(t) = m\ddot{x} + B\dot{x} - kx$$
+$$f(t) = m\ddot{x} + B\dot{x} + kx$$
