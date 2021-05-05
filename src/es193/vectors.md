@@ -90,7 +90,14 @@ $$\frac{ |Ax_0 + By_0 + Cz_0 + D | }{\sqrt{A^2 + B^2 + C^2}}$$
 
 The cross product of two vectors produces another vector, and is defined as follows
 
-$$\bm{a} \times \bm {b} = |\bm{a}||\bm{b}|\sin\theta\,\hat{\bm{n}} $$
+$$
+\bm{a} \times \bm {b} = |\bm{a}||\bm{b}|\sin\theta\,\hat{\bm{n}} =
+\begin{vmatrix}
+\bm i & \bm j & \bm k \\
+a_x & a_y & a_z \\
+b_x & b_y & b_z \\
+\end{vmatrix}
+$$
 
 $\theta$ is the angle between the two vectors, and $\hat{\bm{n}}$ is a unit vector perpendicular to both $\bm{a}$ and $\bm{b}$. The right-hand rule convention dictates that $\hat{\bm{n}}$ should always point up (ie, if $\bm{a}$ and $\bm{b}$ are your fingers, then $\hat{\bm{n}}$ is your thumb). The cross product is not commutative, as $\bm{a} \times \bm{b}$ = $-(\bm{b} \times \bm{a})$.
 
