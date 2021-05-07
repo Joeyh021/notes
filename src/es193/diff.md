@@ -84,6 +84,21 @@ For example, for a function $z= 4x^3 + 5y^7 x$:
 $$\frac{\partial z}{\partial x} = 12x^2 + 5y^7 $$
 $$\frac{\partial z}{\partial y} = 35y^6 x$$
 
+## Implicit Partial Differentiation
+
+When a function of several variables is given and a partial derivative is required, differentiate the numerator of the partial derivative implicitly with respect to the denominator, and treat the third variable as constant. For example, find $\frac{\partial z}{\partial y}$ given $z^2 = x^2 + y^2$:
+
+$$\frac{\partial}{\partial y} z^2 = \frac{\partial}{\partial y}(x^2 + y^2)$$
+
+$$2z \frac{\partial z}{\partial y} = 2y$$
+$$\frac{\partial z}{\partial y} = \frac y z$$
+
+Another example, find $\frac{\partial z}{\partial x}$ given $z\cos z=x^2 y^3+z$
+$$\frac{\partial}{\partial x}(z \cos z)  = \frac{\partial}{\partial x} (x^2 y^3 + z)$$
+$$\frac{\partial z}{\partial x} \cos z - z \sin z \frac{\partial z}{\partial x} = 2x y^3 + \frac{\partial z}{\partial x}$$
+$$\frac{\partial z}{\partial x}(\cos z - z \sin z -1) = 2xy^3$$
+$$\frac{\partial z}{\partial x} = \frac{2xy^3}{\cos z - z \sin z -1}$$
+
 ### Higher Order Partial Derivatives
 
 Three 2nd order derivatives for functions of 2 variables. For $z = f(x,y)$:
