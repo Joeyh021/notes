@@ -37,7 +37,7 @@ $$a \frac{d^2 y}{dx^2} + b\frac{dy}{dx} + cy = f(x)$$
 The equation is _homogeneous_ if $f(x) = 0$.
 
 The _auxillary equation_ is
-$$ak^x + bk +c = 0$$
+$$ak^2 + bk +c = 0$$
 
 This gives two roots $k_1$ and $k_2$, which determine the _complementary function_:
 
