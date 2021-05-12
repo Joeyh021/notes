@@ -46,7 +46,7 @@ The steps of the cycle:
   - CU signals the necessary CPU components
   - May result in changes to data registers, ALU, I/O, etc
 
-### The 68008
+## The 68008
 
 The 68008 is an example of a CPU. The "programmer's model" is an abstraction that represents the internals of the architecture. The internal registers as shown below are part of the programmer's model.
 
@@ -79,17 +79,14 @@ The fetch-decode-execute cycle is best described using Register Transfer Languag
 - Computer's main memory is called Main Store (MS), and the contents of memory location `N` is denoted `[MS(N)]`
 - RLT does not account for the pipelining of instructions
 - Fetching an instruction in RTL:
-  - `[MAR] <- [PC]`
-    - Move contents of PC to MAR
-  - `[PC] <- [PC] + 1`
-    - Increment PC
-  - `[MBR] <- [MS([MAR])]`
-    - Read address from MAR into MBR
-    - Fetched instruction from memory
-  - `[IR] <- [MBR]`
-    - Load instruction into IR
-  - `CU <- [IR(opcode)]`
-    - Decode the instruction
+
+| RLT                    | Meaning                         |
+| ---------------------- | ------------------------------- |
+| `[MAR] <- [PC]`        | Move contents of PC to MAR      |
+| `[PC] <- [PC] + 1`     | Increment PC                    |
+| `[MBR] <- [MS([MAR])]` | Read address from MAR into MBR. |
+| `[IR] <- [MBR]` -      | Load instruction into I         |
+| `CU <- [IR(opcode)]`   | Decode the instruction          |
 
 ## Assembly Language
 
@@ -98,13 +95,167 @@ The fetch-decode-execute cycle is best described using Register Transfer Languag
 - Assembly is then assembled into machine code (binary)
 - Assembly instructions map 1:1 to processor operations
 - Uses mnemonics for instructions, ie `MOV` or `ADD`
-- Languages vary, but format tends to be similar:
+- Languages vary, but format tends to be similar: `LABEL: OPCODE OPERAND(S) | COMMENT`
+
+An example program is shown below
 
 ```
-LABEL: OPCODE OPERAND(S) | COMMENT
+    ORG  $4B0      | this program starts at hex 4B0
+    move.b #5, D0  | load D0 with number 5
+    add.b  #$A, D0 | add 10 (0x0A) to D0
+    move.b D0, ANS | move contents of D0 to ANS
+ANS: DS.B 1        | leave 1 byte of memory empty and name it ANS
+```
+
+- `#` indicates a literal
+- `$` means hexadecimal
+- `%` means binary
+- A number without a prefix is a memory address
+- `ANS` is a symbolic name
+- `ORG` (Origin) indicates where to load the program in memory
+- `DS` (Define Storage) tells the assembler where to put data
+
+### The 68008 Instruction Set
+
+- Instructions are commands that tell the processor what to do
+- 5 main kinds of instructions
+  - Logical
+    - Bitwise operations
+    - `AND`, `LSL` (Logical Shift Left)
+  - Branch
+    - Cause the processor to jump execution to a labelled address
+    - Condition is specified by testing state of CCR set by previous instruction
+    - `BRA` - branch unconditionally
+    - `BEQ` - branch if equal
+  - System Control
+- Instructions are also specified with their data type, `.b` for byte, `.w` for word, `.l` for long
+  - `move.w` moves 2 bytes
+
+#### Data Movement
+
+- Similar to RTL
 
 ```
+move.b D0,   D1 | [D1(0:7)] <- [D0(0:7)]
+move.w D0,   D1 | [D1(0:15)] <- [D0(0:15)]
+swap   D2       | swap lower and upper words
+move.l $F20, D3  | [D3(24:31)] ← [MS($F20)]
+                | [D3(16:23)] ← [MS($F21)]
+                | [D3( 8:15)] ← [MS($F22)]
+                | [D3( 0:7)] ← [MS($F23)]
+                | copied 8 bytes at a time in big endian order
+```
+
+#### Arithmetic
+
+- Maths performed on the ALU
+- The 68008, like many older processors, has no FPU, so only integer operations are supported
+
+```
+add.l   Di, Dj  | [Dj] ← [Di] + [Dj]
+addx.w  Di, Dj  | also add in x bit from CCR
+sub.b   Di, Dj  | [Dj] ← [Dj] - [Di]
+subx.b  Di, Dj  | also subtract x bit from CCR
+mulu.w  Di, Dj  | [Dj(0:31)] ← [Di(0:15)] * [Dj(0:15)]
+                | unsigned multiplication
+muls.w  Di, Dj  | signed multiplication
+```
+
+#### Logical
+
+- Perform bitwise operations on data
+- Also done by ALU
+- AND, OR, etc but also shifts and rotates
+- Logical shift (`LSL`/`LSR`) adds a 0 when shifting
+  - Bit shifted out goes into C and X
+- Arithmetic shift preserves sign bit (`ASL`/`ASR`)
+- Normal rotate (`ROL`/`ROR`) moves the top of the bit to the bottom bit and also puts the top bit into C and X
+- Rotate through X (`ROXL`/`ROXR`) rotates the value through the X register
+
+```
+AND.B #$7F, D0 | [D0] <- [D0] . [0x7F]
+OR.B  D1,  D0 | [D0] <- [D0] + [D1]
+LSL D0,    2  | [D0] <- [D0] << [2]
+```
+
+#### Branch
+
+- Cause the processor to move execution to a new pointer (jump/GOTO)
+- Instruction tests the state of the CCR bits against certain condition
+- Bits set by previous instructions
+
+```
+BRA | branch unconditionally
+BCC | branch on carry clear
+BEQ | branch on equal
+```
+
+#### System Control
+
+- Certain instructions used to issue other commands to the microprocessor
 
 ## Subroutines and Stacks
 
+- Subroutines are useful for frequently used sections of code for obvious reasons
+- Can jump and return from subroutines in assembly
+  - `JSR <label>` - Jump to Subroutine
+  - `RTS` - Return from Subroutine
+- When returning, need to know where to return to
+- The stack is used as a LIFO data structure to store return addresses
+- `JSR` pushes the contents of the PC on the stack
+- `RTS` pops the return address from the stack to the PC
+- Can nest subroutine calls and stack will keep track
+
 ## Addressing Modes
+
+- Addressing modes are how we tell the computer where to find the data it needs
+- 5 Kinds in the 68006, and many other processors have equivalents
+  - Direct
+  - Immediate
+  - Absolute
+  - Address Register Indirect
+    - 5 variations
+  - Relative
+
+### Direct Addressing
+
+- Probably the simplest
+- The address of an operand is specified by either a data or address register
+
+```
+move D3, D2 | [D2] <- [D3]
+move D3, A2 | [A2] <- [D3]
+```
+
+### Immediate Addressing
+
+- The operand forms part of the instruction (is a literal) and remains a constant
+- Note the prefix `#` specifying a literal and the prefix specifying the base of the number
+
+```
+move.b #$42, D5 | [D5] <- $42
+```
+
+### Absolute Addressing
+
+- Operand specifies the location in memory
+- Does not allow for position-independent code: will always access the exact address given
+
+```
+move.l D2, $7FFF0 | [MS(7FFF0)] <- [D2]
+```
+
+### Address Register Indirect Addressing
+
+- Uses offsets/increments/indexing to address memory based upon the address registers
+- Bad, rarely used
+- **Not examinable**
+
+### Relative Addressing
+
+- Specifies an offset relative to the program counter
+- Can be used to write position independent code
+
+```
+move 16(PC), D3 | [D3] <- [MS(PC + 16)]
+```
