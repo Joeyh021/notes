@@ -27,7 +27,7 @@
 
   - [Digital Logic](./cs132/logic.md)
   - [Assembly](./cs132/assembly.md)
-  - [Memory Systems]()
+  - [Memory Systems](./cs132/memory.md)
   - [I/O]()
   - [Microprocessor Architecture]()
 
