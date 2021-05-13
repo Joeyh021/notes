@@ -75,6 +75,37 @@ public class Comparator<E>{
 }
 ```
 
-## Implementation
+## Implementations
+
+### Unsorted List-Based Implementation
 
 A simple implementation of a priority queue can use an unsorted list
+
+- `insert()` just appends the `Entry(key,value)` to the list
+  - $O(1)$ time
+- `removeMin()` and `min()` linear search the list to find the smallest key (one with highest priority) to return
+  - Linear search takes $O(n)$ time
+
+### Sorted List-Based Implementation
+
+To improve the speed of removing items, a sorted list can instead be used. These two implementations have a tradeoff between which operations are faster, so the best one for the application is usually chosen.
+
+- `insert()` finds the correct place to insert the `Entry(key,value)` in the list to maintain the ordering
+  - Has to find place to insert, takes $O(n)$ time
+- As the list is maintained in order, the entry with the lowest key is always at the front, meaning `removeMin()` and `min()` just pop from the front
+  - Takes $O(1)$ time
+
+## Sorting Using a Priority Queue
+
+The idea of using a priority queue for sorting is that all the elements are inserted into the queue, then removed one at a time such that they are in order
+
+- Selection sort uses an unsorted queue
+  - Inserting $n$ items in each $O(1)$ time takes $O(n)$ time
+  - Removing the elements in order
+    - $O(n) + O(n-1) + O(n-2) + ... + O(1)$
+  - Overall $O(n^2)$ time
+- Insertion sort uses a sorted queue
+  - Runtimes are the opposite to unsorted
+  - Adding $n$ elements takes $O(1) + O(2) + O(3) + ... + O(n)$ time
+  - Removing $n$ elements in each $O(1)$ time takes $O(n)$ time
+  - Overall runtime of $O(n^2)$ again
