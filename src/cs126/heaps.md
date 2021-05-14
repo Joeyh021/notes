@@ -18,8 +18,44 @@
 
 ## Insertion
 
+- To insert a node `z` into a heap, you insert the node after the last node, making `z` the new last node
+  - The last node of a heap is the rightmost node of max depth
+- The heap property is then restored using the upheap algorithm
+- The just inserted node is filtered up the heap to restore the ordering
+- Moving up the branches starting from the `z`
+  - While `parent(z) > (z)`
+    - Swap `z` and `parent(z)`
+- Since a heap has height $\log\, n$, this runs in $O(\log\, n)$ time
+
 ## Removal
+
+- To remove a node `z` from the heap, replace the root node with the last node `w`
+- Remove the last node `w`
+- Restore the heap order using downheap
+- Filter the replacement node back down the tree
+  - While `w` is greater than either of its children
+    - Swap `w` with the smallest of its children
+- Also runs in $O(\log\, n)$ time
 
 ## Heap Sort
 
+For a sequence `S` of `n` elements with a total order relation on them, they can be ordered using a heap.
+
+- Insert all the elements into the heap
+- Remove them all from the heap again, they should come out in order
+- $n$ calls of insert take $O(n \log\, n)$ time
+- $n$ calls to remove take $O(n \log\, n)$ time
+- Overall runtime is $O(n \log\, n)$
+- Much faster than quadratic sorting algorithms such as insertion and selection sort
+
 ## Array-based Implementation
+
+For a heap with `n` elements, the element at position `p` is stored at cell `f(p)` such that
+
+- If `p` is the root, `f(p) = 0`
+- If `p` is the left child `q`, `f(p) = 2*f(q)+1`
+- If `p` is the right child `q`, `f(p) = 2*f(q)+2`
+
+Insert corresponds to inserting at the first free cell, and remove corresponds to removing from cell 0
+
+- A heap with `n` keys has length $O(n)$
