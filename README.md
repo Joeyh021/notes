@@ -12,7 +12,7 @@ It exists for a few purposes:
 
 - [x] CS118
 - [ ] CS126
-- [ ] CS134
+- [ ] CS132
 - [ ] CS141
 - [x] ES191
 - [x] ES193
