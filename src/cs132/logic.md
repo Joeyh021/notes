@@ -393,24 +393,135 @@ Multiplexers and De-Multiplexers are useful in many applications:
 
 ## Sequential Logic Circuits
 
+A logic circuit whose outputs are logical functions of its inputs _and_ it's current state
+
 ### Flip-Flops
+
+Flip-flops are the basic elements of sequential logic circuits. They consist of two nand gates whose outputs are fed back to the inputs to create a bi-stable circuit, meaning it's output is only stable in two states.
+
+![](./img/flipflop.png)
+
+- $\bar S$ and $\bar R$ are active low **set** and **reset** inputs
+- $Q$ is set high when $\bar S = 0$ and $\bar R = 1$
+- $Q$ is reset (to zero) when $\bar R = 0$ and $\bar S = 1$
+- If $\bar S = \bar R = 1$ then $Q$ does not change
+- If both $\bar S$ and $\bar R$ are zero, this is a hazard condition and the output is invalid
+
+| $\bar S$ | $\bar R$ | Q   | P   |
+| -------- | -------- | --- | --- |
+| 0        | 0        | X   | X   |
+| 0        | 1        | 1   | 0   |
+| 1        | 0        | 0   | 1   |
+| 1        | 1        | X   | X   |
+
+The timing diagram shows the operation of the flip flop
+
+![](./img/timing.png)
 
 ### D-Type Latch
 
+A D-type latch is a modified flip-flop circuit that is essentially a 1-bit memory cell.
+
+![](./img/dlatch.png)
+
+- Output can only change when the enable line is high
+- $D=Q$ when enabled, otherwise $Q$ does not change ($Q=Q$)
+- When enabled, data on $D$ goes to $Q$
+
+| Enable | $D$ | $Q$ | $\bar Q$ |
+| ------ | --- | --- | -------- |
+| 0      | 0   | $Q$ | $\bar Q$ |
+| 0      | 1   | $Q$ | $\bar Q$ |
+| 1      | 0   | 0   | 1        |
+| 1      | 1   | 1   | 0        |
+
 ### Clocked Flip-Flop
+
+There are other types of clocked flip-flop whose output only changes on the rising edge of the clock input.
+
+- $\uparrow$ means rising edge responding
+
+![](./img/clocked-flops.png)
 
 ### N-bit Register
 
+- A multi-bit memory circuit built up from d-type latches
+- The number on $A_{N-1}\, A_{N-2}\,...\, A_1\, A_0$ is stored in the registers when the clock rises
+- The stored number appears on the outputs $Q$
+- $Q$ cannot change unless the circuit is clocked
+- Parallel input, parallel output
+
+![](./img/nbit-reg.png)
+
 ### N-bit Shift Register
+
+- A register that stores and shifts bits taking one bit input at a time
+- Serial input, parallel output
+- When a clock transition occurs, each bit in the register will be shifted one place
+- Useful for serial to parallel conversion
+
+![](./img/shift-reg.png)
 
 ### N-bit Counter
 
+- The circles on the clock inputs are inverted on all but the first
+- Each flip-flop is triggerd on a high -> low transition of the previous flip-flop
+- Creates a counter circuit
+
+![](./img/counter.png)
+
+Output is 0000, 1000, 0100, 1100, 0010, etc...
+
+- The first bit swaps every clock
+- 2nd bit swaps every other clock
+- 3rd bit swaps every fourth clock
+- etc...
+
 ## Three State Logic
 
-### Three State Buses
+- Three state logic introduces a third state to logic - **unconnected**
+- A three-state buffer has an enable pin, which when set high, disconnects the output from the input
+- Used to prevent connecting outputs to outputs, as this can cause issues (short circuits)
+
+![](./img/3state.png)
+
+This can be used to allow different sources of data onto a common bus. Consider a 4-bit bus, where 2 4-bit inputs are connected using 3-state buffers. Only one of the buffers should be enabled at any one time.
+
+![](./img/3state-bus.png)
+
+- When $\overline{E1} = 0$, A will be placed on the bus
+- When $\overline{E2} = 0$, B will be placed on the bus
 
 ## Physical Implementations
 
+Logic gates are physical things with physical properties, and these have to be considered when designing with them. Typical voltage values for TTL (Transistor-Transistor Logic):
+
+- 5v - max voltage
+- 2.8v - minimum voltage for a logical 1
+- 2.8-0.8v - "forbidden region", ie voltages in this region are undefined
+- 0.8-0v - voltage range for a logical 0
+
 ### Propagation Delay
 
+- Logic gates have a propagation delay, the amount of time it takes for the output to reflect the input
+  - Typically a few nanoseconds or less
+- This limits the speed at which logic circuits can operate
+- Delay can be reduced by increasing density of gates on an IC
+
 ### Integrated Circuits
+
+- Elementary logic gates can be obtained in small ICs
+- Programmable deviced allow large circuits to be created inside a single chip
+  - **PAL** - Programmable Array Logic
+    - One-time programmamble
+  - **PLA** - Programmable Logic Array
+    - Contains an array of AND and OR gates to implement any logic functions
+  - **FPGA** - Field Programmable Gate Array
+    - Contains millions of configurable gates
+    - More modern
+
+#### PLA example
+
+A PLA allows for the implementation of any sum-of-products function, as it has an array of AND gates, then OR gates, with fuses that can be broken to implement a specific function.
+
+![](./img/PLA.png)
