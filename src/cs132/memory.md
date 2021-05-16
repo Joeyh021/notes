@@ -91,7 +91,7 @@ Cache has multiple levels to provide a tradeoff between speed and size.
 
 Different levels of cache exist as part of the memory hierarchy.
 
-## Memory Organisation
+## Semiconductors
 
 - RAM memory used to implement main store
 - Static RAM (SRAM) uses a flip-flop as the storage element for each bit
@@ -107,4 +107,77 @@ Different levels of cache exist as part of the memory hierarchy.
   - Capacitor charge decays so needs refreshing by periodically supplying charge
 - The interface to main memory is a critical performance bottleneck
 
+## Memory Organisation
+
+The basic element of memory is a one-bit cell with two states, capable of being read and written. Cells are built up into larger banks with combinatorial logic circuits to select which cell to read/write. The diagram shows an example of a 16x8 memory IC (16 words of 8 bytes).
+
+![](./img/memory.png)
+
+For a 16x8 memory cell:
+
+- 4 address inputs
+  - $\log_2 \,16$
+- 8 data lines
+  - word size
+
+Consider alternatively a 1Kbit device with 1024 cells
+
+- Organised as a 128x8 array
+  - 7 address pins
+  - 8 data pins
+- Or, could organise as 1024x1 array
+  - 10 address pins
+  - 1 data pins
+- Less pins but very poorly organised
+- Best to keep memory cells square to make efficient use of space
+
 ## Error Correction
+
+Errors often occur within computer systems in the transmission of data dude to noise and interference. This is bad. Digital logic already gives a high degree of immunity to noise, but when noise is at a high enough level, this collapses.
+
+Two common ways in which errors can occur:
+
+- Isolated errors
+  - Occur at random due to noise
+  - Usually singular incidences
+- Burst errors
+  - Errors usually occur in bursts
+  - A short period of time over which multiple errors occur
+  - For example, a 1ms dropout of a connection can error many bits
+
+### Majority Voting
+
+- A simple solution to correcting errors
+- Just send every bit multiple times (usually 3)
+  - The one that occurs the most is taken to be the true value
+- Slow & expensive
+
+### Parity
+
+- Parity adds an extra _parity bit_ to each byte
+- Two types of parity system
+  - Even parity
+    - The value of the extra bit is chosen to make the total number of 1s an even number
+  - Odd parity
+    - The value of the extra bit is chosen to make the total number of 1s an odd number
+- 7 bit ascii for `A` is `0100 0001`
+  - With even parity - `0100 0001`
+  - Odd parity - `1100 0001`
+- Can be easily computed in software
+- Can also be computed in hardware using a combination of XOR gates
+  - Usually faster than in software
+- Allows for easy error detection without the need to significantly change the model for communication
+- Parity bit is computed and added before data is sent, parity is checked when data is received
+- Note that if there is more than one error, the parity bit will be correct still and the error won't be detected
+  - Inadequate for detecting bursts of error
+
+### Error Correcting Codes
+
+- ECCs or checksums are values computed from the entire data
+- If any of the data changes, the checksum will also change
+- The checksum is calculated and broadcast with the data so it can be checked on reception
+- Can use row/column parity to compute an checksum
+  - Calculate parity of each row and of each column
+  - Diagram shows how parity bits detect an error in the word "Message"
+
+![](./img/parity.png)
