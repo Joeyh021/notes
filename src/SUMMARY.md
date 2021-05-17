@@ -11,7 +11,7 @@
 - [CS126](./cs126/index.md)
 
   - [Arrays & Linked Lists](./cs126/arrays.md)
-  - [Analysis of Algorithms]()
+  - [Analysis of Algorithms](./cs126/analysis.md)
   - [Recursive Algorithms](./cs126/recursion.md)
   - [Stacks & Queues](./cs126/stacks.md)
   - [Lists](./cs126/lists.md)
