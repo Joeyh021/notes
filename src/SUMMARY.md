@@ -34,7 +34,7 @@
 
 - [CS141](./cs141/index.md)
 
-  - [Types & Typeclasses]()
+  - [Types & Typeclasses](./cs141/types.md)
   - [Recursion]()
   - [Lazy Evaluation]()
   - [Higher Order Functions]()
