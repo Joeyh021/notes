@@ -35,7 +35,7 @@
 - [CS141](./cs141/index.md)
 
   - [Types & Typeclasses](./cs141/types.md)
-  - [Recursion]()
+  - [Recursion](./cs141/recursion.md)
   - [Lazy Evaluation]()
   - [Higher Order Functions]()
   - [Equational Reasoning]()
