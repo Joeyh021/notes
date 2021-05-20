@@ -36,8 +36,8 @@
 
   - [Types & Typeclasses](./cs141/types.md)
   - [Recursion](./cs141/recursion.md)
+  - [Higher Order Functions](./cs141/functions.md)
   - [Lazy Evaluation]()
-  - [Higher Order Functions]()
   - [Equational Reasoning]()
   - [Functors & Foldables]()
   - [Applicative Functors]()
