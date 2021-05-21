@@ -22,7 +22,7 @@
   - [Priority Queues](./cs126/pqs.md)
   - [Heaps](./cs126/heaps.md)
   - [Skip Lists](./cs126/skip-lists.md)
-  - [Graphs]()
+  - [Graphs](./cs126/graphs.md)
 
 - [CS132](./cs132/index.md)
 
