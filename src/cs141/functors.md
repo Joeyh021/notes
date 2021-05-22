@@ -188,7 +188,7 @@ divAndAdd :: Functor f => Int -> Int -> Maybe Int
 divAndAdd x y = fmap (5+) (safediv x y)
 ```
 
-Functor is also another typeclass that can be derived by GHC, using "-XDeriveFunctor".
+Functor is also another typeclass that can be derived by GHC, using the `-XDeriveFunctor` extension.
 
 ### The `<\$>` Operator
 
