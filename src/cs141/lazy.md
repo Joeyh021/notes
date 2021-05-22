@@ -217,7 +217,7 @@ The graph of closures representing this:
 
 ## Strictness in Haskell
 
-Things _can_ be evaluated strictly in haskell, if you want. This is prefereable in some cases for performance reasons. The `$!` operator forces strict function application. The version of the function below forces the recursive call to be evaluated first.
+Things _can_ be evaluated strictly in haskell, if you want. This is prefereable in some cases for performance reasons. The `\$!` operator forces strict function application. The version of the function below forces the recursive call to be evaluated first.
 
 ```haskell
 fac' :: Int -> Int -> Int
