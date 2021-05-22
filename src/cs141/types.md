@@ -358,15 +358,18 @@ area (Circle 5.0)
 
 The `Maybe` type is an example of a data type parametrised over some type variable `a`. It exists within the standard library, defined as `data Maybe a = Nothing | Just a`. This type is used to show that either there is no result, or some type `a`.
 
-A function using the `Maybe` type to take the head of a list, except returning `Nothing` if the list is empty.
+A function using the `Maybe` type to perform devision safely, returning `Nothing` if the divisor is 0, and the result wrapped in a `Just` if the division can be done.
 
 ```haskell
 data Maybe a = Nothing | Just a
-safehead :: [a] -> Maybe a
-safehead [] = Nothing
-safehead (x:_) = Just x
 
--- this is included in stdlib for extracting value
+safediv :: Int -> Int -> Maybe Int
+safediv x 0 = Nothing
+safediv x y = Just (x `div y)
+-- safediv 8 0 => Nothing
+-- safediv 8 4 = Just (8 `div` 4) = Just 2
+
+-- this is included in stdlib for extracting the value using pattern matching
 fromMaybe :: a -> Maybe a -> a
 fromMaybe x Nothing = x
 fromMaybe _ (Just x) = x
