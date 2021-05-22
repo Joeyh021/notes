@@ -39,7 +39,7 @@
   - [Higher Order Functions](./cs141/functions.md)
   - [Lazy Evaluation](./cs141/lazy.md)
   - [Equational Reasoning]()
-  - [Functors & Foldables]()
+  - [Functors & Foldables](./cs141/functors.md)
   - [Applicative Functors]()
   - [Monads]()
   - [Type-Level Programming]()
