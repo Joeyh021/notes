@@ -222,7 +222,7 @@ Things _can_ be evaluated strictly in haskell, if you want. This is prefereable 
 ```haskell
 fac' :: Int -> Int -> Int
 fac' 0 m = m
-fac' n m = (fac' $! (n-1)) (n*m)
+fac' n m = (fac' \$! (n-1)) (n*m)
 ```
 
 ## Infinite Data Structures
