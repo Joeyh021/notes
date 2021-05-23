@@ -159,7 +159,7 @@ Binary trees are recursively defined, so all the methods operating on them are e
 
 ## AVL Trees
 
-- AVL trees are balance binary trees
+- AVL trees are balanced binary trees
   - For every internal node $v$ of the tree, the heights of the subtrees of $v$ can differ by at most 1
 - The height of an AVL tree storing $n$ keys is $O(\log n)$
 - Balance is maintained by _rotating_ nodes every time a new one is inserted/removed
