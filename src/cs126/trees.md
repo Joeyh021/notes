@@ -76,7 +76,7 @@ A binary tree will always fulfil the following properties:
 - $h \leq i$
 - $h \leq (n-1)/2$
 - $e \leq 2^h$
-- $h /geq \log_2 e$
+- $h \geq \log_2 e$
 - $h \geq \log_2 (n+1) -1$
 
 Where:
