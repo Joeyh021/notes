@@ -14,7 +14,7 @@ class Applicative m => Monad m where
   return = pure
 ```
 
-The `>>=` operator is called _bind_, and applies a function that _returns_ a wrapped value to another wrapped value.
+The `>>=` operator is called _bind_, and applies a function that returns a wrapped value, to another wrapped value.
 
 - The left operand is some monad containing a value `a`
 - the right operand is a function of type `a -> m b`, ie it takes some `a` and returns a monad containing something of type `b`
@@ -152,3 +152,42 @@ This looks like imperative code, but is actually using monads behind the scenes.
 - A block must always end with a function call that returns a monad -
   - usually `return`, but `safediv` is used too
 - If any of the calls within the `do` block shown returns `Nothing`, the entire block will short-circuit to a `Nothing`.
+
+## Example: The `Writer` Monad
+
+The example of `Writer` as an [applicative](./cs141/applicatives#example-logging) instance can be extended to make it a `Monad` instance.
+
+```haskell
+data Writer w a = MkWriter (a,w)
+
+instance Functor (Writer w) where
+  -- fmap :: (a -> b) -> Writer w a -> Writer w b
+  fmap f (MkWriter (x,o)) = MkWriter(f x, o)
+
+instance Monoid w => Applicative (Writer w) where
+  -- pure :: Monoid w => a -> Writer w a
+  pure x = MkWriter (x, mempty)
+  -- <*> :: Monoid w => Writer w (a -> b) -> Writer w a -> Writer w b
+  MkWriter (f,o1) <*> MkWriter (x,o2) = MkWriter (f x, o1 <> o2)
+
+instance Monoid w => Monad (Writer w) where
+  -- return :: Monoid w => a -> Writer w a
+  return = MkWriter (x, mempty) --pure
+  (Writer (x, o1)) >>= f = MkWriter (y, o2 <> o1)
+                          where (MkWriter (y,o2)) = f x
+```
+
+Bind for `Writer` applies the function to the `x` value in the writer, then combines the two attached written values, and return the new value from the result of `f x` along with the combined values.
+
+Now we have a monad instance for the `Writer` monad, we can rewrite our `comp` function with `do` notation:
+
+```haskell
+comp' :: Expr -> Writer [String] Program
+comp' (Val n)    = do
+                   writeLog "compiling a value"
+                   pure [PUSH n]
+comp' (Plus l r) = do writeLog "compiling a plus"
+                   pl <- comp l
+                   pr <- comp r
+                   pure (pl ++ pr ++ [ADD])
+```
