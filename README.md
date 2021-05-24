@@ -11,7 +11,7 @@ It exists for a few purposes:
 ## Progress
 
 - [x] CS118
-- [ ] CS126
+- [x] CS126
 - [ ] CS132
 - [ ] CS141
 - [x] ES191
