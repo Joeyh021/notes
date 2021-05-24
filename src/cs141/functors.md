@@ -48,7 +48,7 @@ Binary trees are recursive data structures, that can be recursively operated on 
 ```haskell
 -- our binary tree type
 data BinTree a = Leaf | Node (BinTree a) a (BinTree a)
-    deriving Show
+ deriving Show
 
 -- simple recursive functions
 -- how big is the tree?
@@ -90,18 +90,18 @@ This abstraction does actually exist in the standard libary, as a typeclass. A t
 
 ```haskell
 class Foldable t where
-    foldr :: (a -> b -> b) -> b -> t a -> b
+  foldr :: (a -> b -> b) -> b -> t a -> b
 
 -- for lists
 -- exists in prelude
 instance Foldable [] where
-    foldr f z [] = z
-    foldr f z (x:xs) = f x (foldr f z xs)
+  foldr f z [] = z
+  foldr f z (x:xs) = f x (foldr f z xs)
 
 -- for our bintree
 instance Foldable BinTree where
-    foldr _ z Leaf         = z
-    foldr f z (Node l x r) = f x (foldr f (foldr f z r) l)
+  foldr _ z Leaf         = z
+  foldr f z (Node l x r) = f x (foldr f (foldr f z r) l)
 ```
 
 This instance of `Foldable` for `BinTree` can now be used to generalise our functions that operate on it:
@@ -137,8 +137,8 @@ divAndAdd x y = 5 + safediv x y -- doesn't work, type error
 
 -- using a case statement
 divAndAdd x y = case safediv x y of
-    Nothing -> Nothing
-    Just r -> Just (5+r)
+  Nothing -> Nothing
+  Just r -> Just (5+r)
 -- bit messy
 ```
 
@@ -158,18 +158,18 @@ It would be nice if there was some way to generalise the pattern of applying a f
 
 ```haskell
 class Functor f where
-    fmap :: (a -> b) -> f a -> f b
+  fmap :: (a -> b) -> f a -> f b
 
 instance Functor [] where
-    fmap = map
+  fmap = map
 
 instance Functor Maybe where
-    fmap f Nothing = Nothing
-    fmap f (Just x) = Just (f x)
+  fmap f Nothing = Nothing
+  fmap f (Just x) = Just (f x)
 
 instance Functor BinTree where
-    fmap f (Leaf x) = Leaf (f x)
-    fmap f (Node lr ) = Node (fmap f l) (fmap f r)
+  fmap f (Leaf x) = Leaf (f x)
+  fmap f (Node lr ) = Node (fmap f l) (fmap f r)
 ```
 
 Functors can be thought of as "boxes", and when given a function, will apply it to the value in the box, and return the result in the same box. Some examples of definitions using functors:
