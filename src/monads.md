@@ -104,7 +104,7 @@ eval (Add l r)  = eval l >>= \x ->
 eval (Div l r)  = eval l >>= \x ->
                   eval r >>= \y ->
                   x `safediv` y
-eval (If c t f) = ifA <$> eval c <*> eval t <*> eval f
+eval (If c t f) = ifA <\$> eval c <*> eval t <*> eval f
   where ifA b x y = if b /= 0 then x else y
 ```
 
