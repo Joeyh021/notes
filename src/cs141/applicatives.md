@@ -41,7 +41,7 @@ instance Functor (Maybe a) where
 
 ## The `Either` Type
 
-Either is usually used to represent the result of a computation when it could give one of two results. usually `Right` is used to represent success, and `a` is the wanted value. `Left` is used to represent error, with `e` as some error code/message.
+Either is usually used to represent the result of a computation when it could give one of two results. `Right` is used to represent success, and `a` is the wanted value. `Left` is used to represent error, with `e` as some error code/message.
 
 ```haskell
 data Either e a = Left e | Right a
@@ -117,12 +117,14 @@ The typeclass defines two functions:
 - `<*>` (the apply operator) takes some function (`a -> b`) in a box `f`, and applies it to a value `a` in a box, returning the result in the same box.
   - "box" is a rather loose analogy. It is more accurate to say "computational context".
 
+Different contexts for function application:
+
 ```haskell
--- function application
-($) :: (a -> b) -> a -> b
--- fmap
-(<$>) :: Functor f => (a -> b) -> f a -> f b
--- applicative functor
+-- vanilla function application
+(\$) :: (a -> b) -> a -> b
+-- Functor's fmap
+(<\$>) :: Functor f => (a -> b) -> f a -> f b
+-- Applicative's apply
 (<*>) :: Applicative f => f (a -> b) -> f a -> f b
 ```
 
@@ -132,12 +134,12 @@ The typeclass defines two functions:
 instance Applicative Maybe where
   pure x = Just x
   Nothing <*> _ = Nothing
-  (Just f) <*> x = f <$> x
+  (Just f) <*> x = f <\$> x
 
 instance Applicative (Either e) where
   pure = Right
   Left err <*> _ = Left err
-  Right f  <*> x = f <$> x
+  Right f  <*> x = f <\$> x
 ```
 
 The "context" of both of these types is that they represent error. All data flow in haskell has to be explicit due to its purity, so these types allow for the propagation of error.
@@ -184,7 +186,7 @@ Applicative functors, like normal functors, also have to obey certain laws:
 
 ## Left and Right Apply
 
-`<*` and `*>` are two more operators, that are defined automatically when `<*>` is defined.
+`<*` and `*>` are two more operators, both defined automatically when `<*>` is defined.
 
 ```haskell
 const :: a -> b -> a
@@ -200,22 +202,22 @@ a0 <* a1 = const <\$> a0 <*> a1
 a0 *> a1 = flip const <\$> a0 <*> a1
 ```
 
-In simple terms `\*>` is used for sequencing actions, discarding the result of the first argument. `<*` is the same, except discarding the result of the second.
+In simple terms `*>` is used for sequencing actions, discarding the result of the first argument. `<*` is the same, except discarding the result of the second.
 
 ```haskell
 Just 4 <* Just 8
-=> const <$> Just 4 <*> Just 8
+=> const <\$> Just 4 <*> Just 8
 => Just (const 4) <*> Just 8
 => Just (const 4 8)
 => Just 4
 
 Just 4 <* Nothing
-=> const <$> Just 4 <*> Nothing
+=> const <\$> Just 4 <*> Nothing
 => Just (const 4) <*> Nothing
 => Nothing
 
 Just 4 *> Just 8
-=> flip const <$> Just 4 <*> Just 8
+=> flip const <\$> Just 4 <*> Just 8
 => Just (flip const 4) <*> Just 8
 => Just (flip const 4 8)
 => Just (const 8 4)
@@ -305,7 +307,7 @@ Using this definition, the `comp` function can be tidied up nicely using `<*>`
 comp :: Expr -> Writer [String] Program
 comp (Val n) = writeLog "compiling a value" *> pure [PUSH n]
 comp (Plus l r) = writeLog "compiling a plus" *>
-    ((\p p' -> p ++ p' ++ [ADD]) <$> comp l <*> comp r)
+    ((\p p' -> p ++ p' ++ [ADD]) <\$> comp l <*> comp r)
 ```
 
 The first pattern uses `*>`. Recall that `*>` does not care about the left result, which in this case is the unit type, so only the result of the right `Writer` is used, which is the `[PUSH n]` put into a `Writer` by `pure`, with a `mempty`, or `[]` as the logged value.
