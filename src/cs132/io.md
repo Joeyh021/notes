@@ -16,6 +16,7 @@
 
 ## Polled I/O
 
+- Polling is a technique for synchronising communication between devices.
 - Most I/O devices are much slower than the CPU
 - Busy-wait polling involves constantly checking the state of the device
   - Usually the device replies with nothing
@@ -29,9 +30,11 @@
   - Wastes CPU time and power
   - Interleaving can lead to delayed responses from CPU
 
+Synchronisation methods also need some way to transfer the data, so are sometimes used in conjunction with memory-mapped I/O. Methods for synchronising devices and methods for reading/writing data are not directly comparable.
+
 ## Handshaking
 
-A form of synchronous I/O.
+Another form of synchronisation
 
 ![](./img/handshake.png)
 
