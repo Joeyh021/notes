@@ -180,6 +180,20 @@ The task of the control unit is to coordinate the actions of the CPU, namely the
   - **Microaddress** is a location within microprogram memory
   - **MicroPC** is the CU's internal program counter
   - **MicroIR** is the CU's internal microinstruction register
+- The microPC can be used in different ways depending upon implementation
+  - Holds the next microaddress
+  - Holds the microaddress of microroutine for next opcode
+- When powered initially holds microaddress 0
+  - The fetch microprogram
+- Each microinstruction sets the CU outputs to the values dictated the instruction
+  - As the microprogram executes, the CU generates control signals
+- After each microinstruction, the microPC is typically incremented, so microinstructions are stepped through in sequence
+- After a fetch, the microPC is not incremented, but is set to the output from the opcode decoding circuit (labelled OTOA in the diagram)
+- After a normal opcode microprogram, the microPC is set back to 0 (fetch)
+- When executing the microprogram for a conditional branch instruction, the microPC value is generated based upon whether the CU's Z input is set
+
+![](./img/micro-CU.png)
+
 - Advantages
   - Easy to design and implement
   - Flexible design
@@ -191,4 +205,27 @@ The task of the control unit is to coordinate the actions of the CPU, namely the
 
 ## RISC and CISC
 
+In the late 70s-early 80s, it was shown that certain instructions are used far more than others:
+
+- 45% data movement (move, store, load)
+- 29% control flow (branch, call, return)
+- 11% arithmetic (add, sub)
+
+The overhead from using a microprogram memory also became more significant as the rest of the processor became faster. This caused a shift towards RISC computing. Right now, ARM is the largest RISC computing platform. Intel serve more for backwards compatibility with a CISC instruction set. In an modern intel processor, simplest instructions are executed by a RISC core, more complex ones are microprogrammed.
+
+- RISC has simple, standard instructions whereas CISC has lots of more complex instructions
+  - x86 is often criticised as bloated
+- RISC allows for simpler, faster, more streamlined design
+- RISC instructions aim to be executed in a single cycle
+- CISC puts the focus on the hardware doing as much as possible, whereas RISC makes the software do the work
+
 ## Multicore Systems
+
+- The performance of a processor can be considered as the rate at which it executes instructions: clock speed x IPC (instructions per clock).
+- To increase performance, increase clock speed and/or IPC
+- An alternative way of increasing performance is parallel execution
+- Multithreading separates the instruction stream into threads that can execute in parallel
+- A **process** is an instance of a program running on a computer
+  - A process has **ownership** of resources: the program's virtual address space, i/o devices, other data that defines the process
+  - The process is **scheduled** by the OS to divide the execution time of the processor between threads
+  - The processor **switches** between processes using the stack
