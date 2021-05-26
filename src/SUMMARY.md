@@ -30,7 +30,7 @@
   - [Assembly](./cs132/assembly.md)
   - [Memory Systems](./cs132/memory.md)
   - [I/O](./cs132/io.md)
-  - [Microprocessor Architecture]()
+  - [Microprocessor Architecture](./cs132/architecture.md)
 
 - [CS141](./cs141/index.md)
 
