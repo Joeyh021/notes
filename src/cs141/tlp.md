@@ -8,6 +8,7 @@ The GHC language extensions used here are:
 - `-XGATDs`
 - `-XKindSignatures`
 - `-XScopedTypeVariables`
+- `-XTypeFamilies`
 
 ## Type Promotion
 
@@ -218,3 +219,95 @@ instance FromNat n => FromNat ('Succ n) where
 The arguments to these functions are irrelevant, as the info is in the types. The variable `n` refers to the same type variable as in the instance head, using scoped type variables. This hack allows for passing types to functions using proxies, and the converting them to values using reification.
 
 ## Type Families
+
+Type families allow for performing computation at the type level. A type family can be defined to allow addition of two type-level natural numbers:
+
+```haskell
+type family Add (n :: Nat) (m :: Nat) :: Nat where
+  Add 'Zero m = m
+  Add ('Succ n) m = 'Succ (Add n m)
+
+-- alternatively
+type family (n :: Nat) + (m :: Nat) :: Nat where
+  'Zero   + m = m
+  'Succ n + m = 'Succ (n + m)
+```
+
+The type family for `(+)` is whats known as a closed type family: once it's defined it cannot be redfined or added to. This type family can be used to define an append function for our vector:
+
+```haskell
+vappend :: Vector n a -> Vector m a -> Vector (n+m) a
+vappend Nil         ys = ys
+vappend (Cons x xs) ys = Cons x (vappend xs ys)
+```
+
+Importing `GHC.TypeLits` allows for the use of integer literals at type level instead of writing out long recursive type definitions for `Nat`. This means we can now do:
+
+```haskell
+data Vector (n :: Nat) a where
+  Nil :: Vector 0 a
+  Cons :: a -> Vector n a -> Vector (n+1) a
+
+vappend Nil          Nil          :: Vector 0 a
+vappend (Cons 4 Nil) Nil          :: Vector 1 Int
+vappend (Cons 4 Nil) (Cons 8 Nil) :: Vector 2 Int
+```
+
+### Associated (Open) Type Families
+
+The definition below defines a typeclass for a general collection of items:
+
+```haskell
+class Collection c where
+  empty :: c a
+  insert :: a -> c a -> c a
+  member :: a -> c a -> Bool
+
+instance Collection [] where
+  empty = []
+  insert x xs = x : xs
+  member x xs = x `elem` xs
+```
+
+However, the list instance will throw an error, as `elem` has an `Eq` constraint on it, while the `member` type from the typeclass doesn't. Another example, defining the red-black tree as an instance of `Collection` (the tree is defined in one of the lab sheets):
+
+```haskell
+instance Collection Tree where
+  empty = empty
+  insert x t = insert t x
+  member x t = member x t
+```
+
+This will raise two type errors, as both `insert` and `member` for the tree need `Ord` constraints, which `Collection` doesn't have.
+
+To fix this, we can attach an associated type family to a type class.
+
+```haskell
+class Collection c where
+  type family Elem c :: *
+
+  empty :: c
+  insert :: a -> c -> c
+  member :: a -> c -> Bool
+```
+
+For an instance of `Collection` for some type `c`, we must also define a case for c for a type level function `Elem`, this establishing a relation between `c` and some type of kind `*`.
+
+We can now define instance for list and tree, where `Eq` and `Ord` constraints are placed in instance definition.
+
+```haskell
+instance Eq a => Collection [a] where
+    type Elem [a] = a
+
+    empty = []
+    insert x xs = x : xs
+    member x xs = x `elem` xs
+
+
+instance Ord a => Collection (L.Tree a) where
+    type Elem (L.Tree a) = a
+
+    empty      = L.Leaf
+    insert x t = L.insert t x
+    member x t = L.member x t
+```
