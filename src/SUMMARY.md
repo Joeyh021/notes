@@ -42,7 +42,7 @@
   - [Functors & Foldables](./cs141/functors.md)
   - [Applicative Functors](./cs141/applicatives.md)
   - [Monads](./cs141/monads.md)
-  - [Type-Level Programming]()
+  - [Type-Level Programming](./cs141/tlp.md)
 
 - [ES191](./es191/index.md)
 
