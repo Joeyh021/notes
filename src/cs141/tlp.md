@@ -179,7 +179,7 @@ The length of the vector we want is `SNat n` at type level, which is a singleton
 We are storing data at the type level, which allows us to access the data at compile time and statically check it. If we want to access that data at runtime, for example to find the length of a vector, we need a _proxy type_. Proxy types allow for turning type level data to values, ie turning a type level natural number (`Nat`) into an `Int`. Haskell has no types at runtime (due to type erasure), so proxies are a hack around this.
 
 ```haskell
--- a type NatProxy parametrised over some type a of kind Nar
+-- a type NatProxy parametrised over some type a of kind Nat
 data NatProxy (a :: Nat) = MkProxy
 -- NatProxy :: Nat -> *
 -- MkProxy :: NatProxy a
