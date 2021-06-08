@@ -27,30 +27,36 @@ To prove the left identity is easy, as it is an exact match of one of our equati
 
 ```haskell
 add Z m
-= m -- applying add
+-- applying add
+= m
 ```
 
 The right identity is a little harder, as we can't just directly apply one of our equations. We can instead induct on `m`. First, the base case:
 
 ```haskell
 add Z Z
-= Z -- applying add
+-- applying add
+= Z
 ```
 
 Using the induction hypothesis `add m Z = m`, we need to show the inductive step holds for `S m` (`m+1`):
 
 ```haskell
 add (S m) Z
-= S (add m Z) -- applying add
-= S m -- applying induction hypothesis
+-- applying add
+= S (add m Z)
+-- applying induction hypothesis
+= S m
 ```
 
 This proves the right identity. To prove associativity we will again use induction, this time on `x`. The base case is `add Z (add y z)`:
 
 ```haskell
 add Z (add y z)
-= add y z -- applying add
-= add (add Z y) z -- un-applying add
+-- applying add
+= add y z
+-- un-applying add
+= add (add Z y) z
 ```
 
 The proof holds for `x = Z`. Here, the proof was approached from either end to meet in the middle, but written as a single list of operations for clarity. Sometimes it is easier to do this and work from either direction, especially when un-applying functions as it is more natural.
@@ -59,10 +65,14 @@ The induction hypothesis is `add x (add y z) == add (add x y) z`, and can be ass
 
 ```haskell
 add (S x) (add y z)
-= S (add x (add y z)) -- applying add
-= S (add (add x y ) z) -- applying induction hypothesis
-= add (S (add x y)) z -- un-applying add
-= add (add (S x) y) z -- un-applying add
+-- applying add
+= S (add x (add y z))
+-- applying induction hypothesis
+= S (add (add x y ) z)
+-- un-applying add
+= add (S (add x y)) z
+-- un-applying add
+= add (add (S x) y) z
 ```
 
 This proves associativity.
@@ -91,18 +101,26 @@ Map fusion can be proved by induction on xs. The base case is `map f (map g []) 
 
 ```haskell
 map f (map g [])
-= map f [] -- applying map
-= [] -- applying map
-= map (f.g) [] -- un-applying map
+-- applying map
+= map f []
+-- applying map
+= []
+-- un-applying map
+= map (f.g) []
 ```
 
 Using the induction hypothesis `map f (map g xs) = map (f.g) xs`, we can prove the inductive case `map f (map g (x : xs)) = map (f.g) (x : xs)`:
 
 ```haskell
 map f (map g (x : xs))
-= map f (g x : map g xs) -- applying map
-= f (g x) : map f (map g xs) -- applying map
-= f (g x) : map (f.g) xs -- induction hypothesis
-= (f.g) x : map (f.g) xs -- un-applying (.)
-= map (f.g) (x : xs) -- un-applying map
+-- applying map
+= map f (g x : map g xs)
+-- applying map
+= f (g x) : map f (map g xs)
+-- induction hypothesis
+= f (g x) : map (f.g) xs
+-- un-applying (.)
+= (f.g) x : map (f.g) xs
+-- un-applying map
+= map (f.g) (x : xs)
 ```
