@@ -38,7 +38,7 @@
   - [Recursion](./cs141/recursion.md)
   - [Higher Order Functions](./cs141/functions.md)
   - [Lazy Evaluation](./cs141/lazy.md)
-  - [Equational Reasoning]()
+  - [Reasoning About Programs](./cs141/reasoning.md)
   - [Functors & Foldables](./cs141/functors.md)
   - [Applicative Functors](./cs141/applicatives.md)
   - [Monads](./cs141/monads.md)
