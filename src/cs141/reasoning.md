@@ -124,3 +124,138 @@ map f (map g (x : xs))
 -- un-applying map
 = map (f.g) (x : xs)
 ```
+
+## Proving a Compiler
+
+Given a simple expression language:
+
+```haskell
+data Expr = Val Int | Plus Expr Expr
+```
+
+And a simple instruction set:
+
+```haskell
+data Instr = Push Int | Add
+type Program = [Instr]
+type Stack = [Int]
+```
+
+We can write an `exec` function as an interpreter for our instruction set:
+
+```haskell
+exec :: Program -> Stack -> Stack
+exec []                    s  = s
+exec (Push n : p)          s  = exec p (n : s)
+exec (Add    : p) (y : x : s) = exec p (x + y : s)
+```
+
+An `eval` function to evaluate our expressions:
+
+```haskell
+eval :: Expr -> Int
+eval (Val n)    = n
+eval (Plus l r) = eval l + eval r
+
+```
+
+And a `comp` function as a compiler for our `Expr` language to our `Instr` instruction set:
+
+```haskell
+comp :: Expr -> Program
+comp (Val n) = [PUSH n]
+comp (Plus l r) = comp l ++ comp r ++ [ADD]
+```
+
+Our compiler will be considered correct if for any expression, evaluating it yields the same result as compiling and then executing it:
+
+```haskell
+∀ e :: Expr, s :: Stack . eval e : s == exec (comp e) s
+```
+
+This can be proved by induction on `e`. The base case for `Expr` is for `Val`s, and we want to show that `eval (Val n) s == exec (comp (Val n)) s`. This time, we start with the RHS:
+
+```haskell
+exec (comp (Val n)) s
+-- applying comp
+= exec [Push n] s
+-- applying exec
+= exec [] (n : s)
+-- applying exec
+= (n : s)
+-- unappplying eval
+= eval (Val n) s
+```
+
+Our inductive case to be proved is `eval (Plus l r) s == exec (comp (Plus l r)) s`. Since the `Plus` constructor has two values of type `Expr`, there are two induction hypotheses:
+
+- for `l`: `eval l : s == exec (comp l) s`
+- for `r`: `eval r : s == exec (comp r) s`
+
+```haskell
+exec (comp (Plus l r)) s
+-- applying comp
+= exec (comp l ++ comp r ++ [Add]) s
+-- distributivity of (++)
+= exec (comp l ++ (comp r ++ [Add])) s
+-- distributivity lemma
+= exec (comp r ++ [Add]) (exec (comp l) s)
+-- distributivity lemma
+= exec [Add] (exec (comp r) (exec (comp l) s))
+-- induction hypothesis
+= exec [Add] (exec (comp r) (eval l : s))
+-- induction hypothesis
+= exec [Add] (eval r : (eval l : s))
+-- applying exec
+= exec [] ((eval l + eval r) : s)
+-- applying exec
+= (eval l + eval r) : s
+-- un-applying exec
+= eval (Plus l r) s
+```
+
+The proof holds, but relies on a lemma proving the distributivity of the exec function, which states that executing a program where a list of instructions `xs` is followed by a list of instructions `ys` is the same as first executing `xs` and then executing `ys` with the stack that results from executing `xs`: `∀ xs ys::Program, s::Stack . exec (xs++ys) s == exec ys (exec xs s)`.
+
+This can be proved by induction on `xs`. The base case is the empty list `[]`: `exec ([] ++ ys) s == exec ys (exec [] s)`:
+
+```haskell
+exec ys (exec [] s)
+-- applying exec
+= exec ys s
+-- un-applying (++)
+= exec ([] ++ ys) s
+```
+
+The induction hypothesis is `exec (xs++ys) s == exec ys (exec xs s)`. The inductive step is `exec ((x : xs) ++ ys) s == exec ys (exec (x : xs) s)`. As `x` could be either `Push x` or `Add`, we perform case analysis on `x`, first with the case where `x = Push n`:
+
+```haskell
+exec ys (exec (Push n : xs) s)
+-- applying exec
+= exec ys (exec xs (n : ns))
+-- induction hypothesis
+= exec (xs ++ ys) (n : s)
+-- un-applying exec
+= exec (Push n : (xs ++ ys)) s
+-- un-applying (++)
+= exec ((Push n : xs) ++ ys) s
+```
+
+The inductive step holds for the `Push n` case. The `Add` case:
+
+```haskell
+exec ys (exec (Add : xs) s)
+-- assuming stack has at least 2 elements
+exec ys (exec (Add : xs) (b : a : s'))
+-- applying exec
+exec ys (exec xs (a + b : s'))
+-- induction hypothesis
+exec (xs ++ ys) (a + b : s')
+-- un-applying exec
+exec (Add : (xs ++ ys)) (b : a : s')
+-- un-applying (++)
+exec ((Add : xs) ++ ys) (b : a : s')
+-- assumption
+exec ((Add : xs) ++ ys) s
+```
+
+This proves the inductive case for the `Add` instruction, and therefore the proof for the distributivity of `exec` lemma, which supported our initial proof of the correctness of our compiler.
