@@ -185,10 +185,10 @@ This algorithm uses a running average to compute the same array in linear time, 
 
 ## Big-Omega and Big-Theta
 
-Big-Omega is used to describe the best case runtime for an algorithm. Formally, $f(n)$ is $\Omega(g(n))$ if there is a constant $c>0$ and an integer constant $n_0 > 1$ such that
+Big-Omega is used to describe the best case runtime for an algorithm. Formally, $f(n)$ is $\Omega(g(n))$ if there is a constant $c>0$ and an integer constant $n_0 geq 1$ such that
 $$f(n) \geq c \cdot g(n) \;\text{for}\; n \geq n_0$$
 
-Big-Theta describes the average case of the runtime. $f(n)$ is $\Theta(g(n))$ if there are constants $c' >0$ and $c'' > 0$, and an integer constant $n_0 > 1$ such that
+Big-Theta describes the average case of the runtime. $f(n)$ is $\Theta(g(n))$ if there are constants $c' >0$ and $c'' > 0$, and an integer constant $n_0 \geq 1$ such that
 $$c'g(n) \leq f(n) \leq c''g(n) \;\text{for}\; n \geq n_0$$
 
 The three notations compare as follows:

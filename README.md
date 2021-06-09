@@ -8,16 +8,6 @@ It exists for a few purposes:
 - To aid revision
 - To act as a reference during exams
 
-## Progress
-
-- [x] CS118
-- [x] CS126
-- [x] CS132
-- [ ] CS141
-- [x] ES191
-- [x] ES193
-- [x] ES197
-
 ## Contributing
 
 If you wish to contribute to this, either to make any additions or just to fix any mistakes I've made, feel free.
