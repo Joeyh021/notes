@@ -149,7 +149,7 @@ Another example of an applicative functor is a list:
 ```haskell
 instance Applicative [] where
   pure x = [x]
-  [fs] <*> xs = [f x | f <- fs, x <- xs]
+  fs <*> xs = [f x | f <- fs, x <- xs]
 ```
 
 Every function in the left list is applied to every function in the right:
