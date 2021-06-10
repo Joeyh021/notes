@@ -98,8 +98,8 @@ data Vector a = Nil | Cons a (Vector a)
 
 -- GADT
 data Vector a where
-  Nil :: Vector a
-  Cons : a -> Vector a -> Vector a
+  Nil  :: Vector a
+  Cons :: a -> Vector a -> Vector a
 ```
 
 ## Example: A Safe Vector

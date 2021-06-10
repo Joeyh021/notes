@@ -51,7 +51,7 @@ For a type to be a monad, it must satisfy the following laws:
   - Left identity
 - `m >>= return = m`
   - Right identity
-- `(m >>= f) >>= f = m >>= (\x -> f x >>= g)`
+- `(m >>= f) >>= g = m >>= (\x -> f x >>= g)`
   - Associativity
 
 ## Example: Evaluating an Expression
