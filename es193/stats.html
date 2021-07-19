@@ -1,0 +1,725 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Probability &amp; Statistics - Year 1 Notes</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../cs118/index.html"><strong aria-hidden="true">1.</strong> CS118</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs118/floats.html"><strong aria-hidden="true">1.1.</strong> IEEE 754</a></li><li class="chapter-item "><a href="../cs118/oop.html"><strong aria-hidden="true">1.2.</strong> OOP Principles</a></li><li class="chapter-item "><a href="../cs118/exceptions.html"><strong aria-hidden="true">1.3.</strong> Java Exceptions &amp; Generics</a></li></ol></li><li class="chapter-item expanded "><a href="../cs126/index.html"><strong aria-hidden="true">2.</strong> CS126</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs126/arrays.html"><strong aria-hidden="true">2.1.</strong> Arrays &amp; Linked Lists</a></li><li class="chapter-item "><a href="../cs126/analysis.html"><strong aria-hidden="true">2.2.</strong> Analysis of Algorithms</a></li><li class="chapter-item "><a href="../cs126/recursion.html"><strong aria-hidden="true">2.3.</strong> Recursive Algorithms</a></li><li class="chapter-item "><a href="../cs126/stacks.html"><strong aria-hidden="true">2.4.</strong> Stacks &amp; Queues</a></li><li class="chapter-item "><a href="../cs126/lists.html"><strong aria-hidden="true">2.5.</strong> Lists</a></li><li class="chapter-item "><a href="../cs126/maps.html"><strong aria-hidden="true">2.6.</strong> Maps</a></li><li class="chapter-item "><a href="../cs126/hash.html"><strong aria-hidden="true">2.7.</strong> Hash Tables</a></li><li class="chapter-item "><a href="../cs126/sets.html"><strong aria-hidden="true">2.8.</strong> Sets</a></li><li class="chapter-item "><a href="../cs126/trees.html"><strong aria-hidden="true">2.9.</strong> Trees</a></li><li class="chapter-item "><a href="../cs126/pqs.html"><strong aria-hidden="true">2.10.</strong> Priority Queues</a></li><li class="chapter-item "><a href="../cs126/heaps.html"><strong aria-hidden="true">2.11.</strong> Heaps</a></li><li class="chapter-item "><a href="../cs126/skip-lists.html"><strong aria-hidden="true">2.12.</strong> Skip Lists</a></li><li class="chapter-item "><a href="../cs126/graphs.html"><strong aria-hidden="true">2.13.</strong> Graphs</a></li></ol></li><li class="chapter-item expanded "><a href="../cs132/index.html"><strong aria-hidden="true">3.</strong> CS132</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs132/logic.html"><strong aria-hidden="true">3.1.</strong> Digital Logic</a></li><li class="chapter-item "><a href="../cs132/assembly.html"><strong aria-hidden="true">3.2.</strong> Assembly</a></li><li class="chapter-item "><a href="../cs132/memory.html"><strong aria-hidden="true">3.3.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs132/io.html"><strong aria-hidden="true">3.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs132/architecture.html"><strong aria-hidden="true">3.5.</strong> Microprocessor Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../cs141/index.html"><strong aria-hidden="true">4.</strong> CS141</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs141/types.html"><strong aria-hidden="true">4.1.</strong> Types &amp; Typeclasses</a></li><li class="chapter-item "><a href="../cs141/recursion.html"><strong aria-hidden="true">4.2.</strong> Recursion</a></li><li class="chapter-item "><a href="../cs141/functions.html"><strong aria-hidden="true">4.3.</strong> Higher Order Functions</a></li><li class="chapter-item "><a href="../cs141/lazy.html"><strong aria-hidden="true">4.4.</strong> Lazy Evaluation</a></li><li class="chapter-item "><a href="../cs141/reasoning.html"><strong aria-hidden="true">4.5.</strong> Reasoning About Programs</a></li><li class="chapter-item "><a href="../cs141/functors.html"><strong aria-hidden="true">4.6.</strong> Functors &amp; Foldables</a></li><li class="chapter-item "><a href="../cs141/applicatives.html"><strong aria-hidden="true">4.7.</strong> Applicative Functors</a></li><li class="chapter-item "><a href="../cs141/monads.html"><strong aria-hidden="true">4.8.</strong> Monads</a></li><li class="chapter-item "><a href="../cs141/tlp.html"><strong aria-hidden="true">4.9.</strong> Type-Level Programming</a></li></ol></li><li class="chapter-item expanded "><a href="../es191/index.html"><strong aria-hidden="true">5.</strong> ES191</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es191/symbols-and-conventions.html"><strong aria-hidden="true">5.1.</strong> Circuit Symbols &amp; Conventions</a></li><li class="chapter-item "><a href="../es191/nodal.html"><strong aria-hidden="true">5.2.</strong> Nodal Analysis</a></li><li class="chapter-item "><a href="../es191/mesh.html"><strong aria-hidden="true">5.3.</strong> Mesh Analysis</a></li><li class="chapter-item "><a href="../es191/thevenin.html"><strong aria-hidden="true">5.4.</strong> Thevenin Circuits</a></li><li class="chapter-item "><a href="../es191/rc.html"><strong aria-hidden="true">5.5.</strong> First Order RC Circuits</a></li><li class="chapter-item "><a href="../es191/rl.html"><strong aria-hidden="true">5.6.</strong> First Order RL Circuits</a></li><li class="chapter-item "><a href="../es191/ac.html"><strong aria-hidden="true">5.7.</strong> AC Circuits</a></li><li class="chapter-item "><a href="../es191/diodes.html"><strong aria-hidden="true">5.8.</strong> Diodes</a></li><li class="chapter-item "><a href="../es191/transistors.html"><strong aria-hidden="true">5.9.</strong> Transistors</a></li><li class="chapter-item "><a href="../es191/opamps.html"><strong aria-hidden="true">5.10.</strong> Op Amps</a></li><li class="chapter-item "><a href="../es191/filters.html"><strong aria-hidden="true">5.11.</strong> Passive Filters</a></li><li class="chapter-item "><a href="../es191/equations.html"><strong aria-hidden="true">5.12.</strong> Equation Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../es193/index.html"><strong aria-hidden="true">6.</strong> ES193</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es193/functions.html"><strong aria-hidden="true">6.1.</strong> Functions, Conics &amp; Asymptotes</a></li><li class="chapter-item "><a href="../es193/complex.html"><strong aria-hidden="true">6.2.</strong> Complex Numbers</a></li><li class="chapter-item "><a href="../es193/vectors.html"><strong aria-hidden="true">6.3.</strong> Vectors</a></li><li class="chapter-item "><a href="../es193/matrices.html"><strong aria-hidden="true">6.4.</strong> Matrices</a></li><li class="chapter-item "><a href="../es193/equations.html"><strong aria-hidden="true">6.5.</strong> Simultaneous Linear Equations</a></li><li class="chapter-item "><a href="../es193/diff.html"><strong aria-hidden="true">6.6.</strong> Differentiation</a></li><li class="chapter-item "><a href="../es193/int.html"><strong aria-hidden="true">6.7.</strong> Integration</a></li><li class="chapter-item "><a href="../es193/diffeq.html"><strong aria-hidden="true">6.8.</strong> Differential Equations</a></li><li class="chapter-item "><a href="../es193/laplace.html"><strong aria-hidden="true">6.9.</strong> Laplace Transforms</a></li><li class="chapter-item expanded "><a href="../es193/stats.html" class="active"><strong aria-hidden="true">6.10.</strong> Probability &amp; Statistics</a></li></ol></li><li class="chapter-item expanded "><a href="../es197/index.html"><strong aria-hidden="true">7.</strong> ES197</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es197/mech1.html"><strong aria-hidden="true">7.1.</strong> Translational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/mech2.html"><strong aria-hidden="true">7.2.</strong> Rotational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/electrical.html"><strong aria-hidden="true">7.3.</strong> Electrical Systems</a></li><li class="chapter-item "><a href="../es197/thermal.html"><strong aria-hidden="true">7.4.</strong> Thermal Systems</a></li><li class="chapter-item "><a href="../es197/data.html"><strong aria-hidden="true">7.5.</strong> Data Driven Models</a></li><li class="chapter-item "><a href="../es197/step1.html"><strong aria-hidden="true">7.6.</strong> First Order Step Response</a></li><li class="chapter-item "><a href="../es197/step2.html"><strong aria-hidden="true">7.7.</strong> Second Order Step Response</a></li><li class="chapter-item "><a href="../es197/transfer.html"><strong aria-hidden="true">7.8.</strong> Transfer Functions</a></li><li class="chapter-item "><a href="../es197/freq1.html"><strong aria-hidden="true">7.9.</strong> First Order Frequency Response</a></li><li class="chapter-item "><a href="../es197/freq2.html"><strong aria-hidden="true">7.10.</strong> Second Order Frequency Response</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Year 1 Notes</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/Joeyh021/first-year-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="probability--statistics"><a class="header" href="#probability--statistics">Probability &amp; Statistics</a></h1>
+<h2 id="probability"><a class="header" href="#probability">Probability</a></h2>
+<h3 id="set-theory"><a class="header" href="#set-theory">Set Theory</a></h3>
+<ul>
+<li>A set is a collection of elements
+<ul>
+<li>Elements are members of a set</li>
+</ul>
+</li>
+<li>$s \in S$ means &quot;the element $s$ is a member of the set $S$</li>
+<li>The empty set $\varnothing$ contains no elements
+<ul>
+<li>It is empty</li>
+</ul>
+</li>
+<li>$S = {1,3,5,7,9}$
+<ul>
+<li>$S$ is a set consisting of those integers</li>
+</ul>
+</li>
+<li>$S = {n: n ;\text{is a prime number and}; n \leq 12}$
+<ul>
+<li>$S = {1,2,3,5,7,11}$</li>
+</ul>
+</li>
+<li>$S = {x: x^2 = 4 ;\text{and}; x ;\text{is odd}}$
+<ul>
+<li>$S = \varnothing$</li>
+</ul>
+</li>
+<li>$A \subset S$
+<ul>
+<li>$A$ is a subset of $S$</li>
+<li>$a \in A$ implies $a \in S$</li>
+</ul>
+</li>
+<li>$\varnothing \in S$ for all sets $S$</li>
+<li>$A = B$ if and only if $A \subset B$ and $B \subset A$</li>
+<li>$A \cup B$ is the union of $A$ and $B$
+<ul>
+<li>Set of elements belonging to $A$ <em>or</em> $B$</li>
+</ul>
+</li>
+<li>$A \cap B$ is the intersection of $A$ and $B$
+<ul>
+<li>Set of elements belonging to $A$ <em>and</em> $B$</li>
+</ul>
+</li>
+<li>Disjoint sets have no common elements
+<ul>
+<li>$A \cap B = \varnothing$</li>
+</ul>
+</li>
+<li>$A \setminus B$ is the different of $A$ and $B$
+<ul>
+<li>Set of elements belonging to <em>$A$ but not $B$</em></li>
+</ul>
+</li>
+<li>$A^c$ is the complement of $A$
+<ul>
+<li>Set of elements <em>not</em> belonging to $A$</li>
+</ul>
+</li>
+</ul>
+<h3 id="random-processes--probability"><a class="header" href="#random-processes--probability">Random Processes &amp; Probability</a></h3>
+<p>The probability of event $A$ occurring is denoted $P(A)$. This is the relative frequency of event $A \in S$ occurring in a random process within sample space S.</p>
+<ul>
+<li>$S$
+<ul>
+<li>Certain or sure event, guaranteed 100% to happen</li>
+</ul>
+</li>
+<li>$\varnothing$
+<ul>
+<li>Impossible event, won't happen</li>
+</ul>
+</li>
+<li>${a} \in S$
+<ul>
+<li>Elementary event, the only event that can happen, the only possible outcome</li>
+</ul>
+</li>
+<li>$A \cup B$
+<ul>
+<li>Event that occurs if <em>$A$ or $B$</em> occurs</li>
+</ul>
+</li>
+<li>$A \cap B$
+<ul>
+<li>Event that occurs if <em>$A$ and $B$</em> occur</li>
+</ul>
+</li>
+<li>$A^c = S \setminus A$
+<ul>
+<li>Event that occurs if $A$ <em>does not</em> occur</li>
+</ul>
+</li>
+<li>$A \cup B = \varnothing$
+<ul>
+<li>Events $A$ and $B$ are <em>mutually exclusive</em></li>
+</ul>
+</li>
+</ul>
+<h4 id="example"><a class="header" href="#example">Example</a></h4>
+<p>Toss a coin 3 times and observe the sequence of heads and tails.</p>
+<ul>
+<li>Sample space $S ={\text{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}}$</li>
+<li>Event that $\geq 2$ heads occur in succession $A = {\text{HHH,HHT,THH}}$</li>
+<li>Event that 3 heads or 3 tails occur $B = {\text{HHH,TTT}}$
+<br><br></li>
+<li>$A \cup B = { \text{HHH,HHT,THH,TTT}}$</li>
+<li>$A \cap B = {\text{HHH}}$</li>
+<li>$A^c = {\text{HTH,HTT,THT,TTH,TTT}}$</li>
+<li>$A^c \cup B ={\text{TTT}}$</li>
+</ul>
+<h4 id="another-example"><a class="header" href="#another-example">Another Example</a></h4>
+<p>Sample space $S={17,18,19,20,21,22}$. Each number is an individual event.</p>
+<table><thead><tr><th>Events</th><th>Frequency</th><th>Relative Frequency</th></tr></thead><tbody>
+<tr><td>17</td><td>3</td><td>3/35</td></tr>
+<tr><td>18</td><td>4</td><td>4/35</td></tr>
+<tr><td>19</td><td>9</td><td>9/35</td></tr>
+<tr><td>20</td><td>11</td><td>11/35</td></tr>
+<tr><td>21</td><td>6</td><td>6/35</td></tr>
+<tr><td>22</td><td>2</td><td>2/35</td></tr>
+</tbody></table>
+<h3 id="axioms--laws-of-probability"><a class="header" href="#axioms--laws-of-probability">Axioms &amp; Laws of Probability</a></h3>
+<ul>
+<li>$0 \leq P(A) \leq 1$ for all $ A \subset S$
+<ul>
+<li>Probabilities are always between 0 and 1 inclusive</li>
+</ul>
+</li>
+<li>$P(S) = 1$
+<ul>
+<li>Probability of the certain event is 1</li>
+</ul>
+</li>
+<li>If $A \cap B = \varnothing$ then $P(A \cup B) = P(A) + P(B)$
+<ul>
+<li>If two events are disjoint, then the probability of either occurring is equal to the sum of their two probabilities</li>
+</ul>
+</li>
+<li>$P(\varnothing) = 0$
+<ul>
+<li>The probability of the impossible event is zero</li>
+</ul>
+</li>
+<li>$P(A^c) = 1 - P(A)$
+<ul>
+<li>The probability of all the elements not in A occurring is the opposite of the probability of all the elements in A occurring</li>
+</ul>
+</li>
+<li>If $A \subset B$, then $P(A) \leq P(B)$
+<ul>
+<li>The probability of A will always be less than or equal to the probability of B when A is a subset of B</li>
+</ul>
+</li>
+<li>$P(A \setminus B) = P(A) - P(A \cup B)$
+<ul>
+<li>The probability of A minus B is equal to the probability of A minus the probability of A and B</li>
+</ul>
+</li>
+<li>$P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+<ul>
+<li>Probability of A or B is equal to probability of A plus the probability of B minus the probability of A and B</li>
+<li>This is important</li>
+</ul>
+</li>
+</ul>
+<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<p>In a batch of 50 ball bearings:</p>
+<ul>
+<li>15 have surface damage ($A$)
+<ul>
+<li>$P(A) = 0.3$</li>
+</ul>
+</li>
+<li>12 have dents ($B$)
+<ul>
+<li>$P(B) = 0.24$</li>
+</ul>
+</li>
+<li>6 both have defects ($A \cap B$)
+<ul>
+<li>$P(A \cap B) = 0.12$</li>
+</ul>
+</li>
+</ul>
+<p>The probability a single ball bearing has surface damage or dents:
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.3 + 0.24 - 0.12 = 0.42$$</p>
+<p>The probability a single ball bearing has surface damage but no dents:
+$$P(A \cap B^c) = P(A \setminus B) = P(A) - P(A \cap B) = 0.3 - 0.12 = 0.18$$</p>
+<h3 id="conditional-probability--bayes-theorem"><a class="header" href="#conditional-probability--bayes-theorem">Conditional Probability &amp; Bayes' Theorem</a></h3>
+<p>A conditional probability $P(A | B)$ is the probability of event $A$ occurring, <em>given</em> that the event $B$ has occurred.</p>
+<p>$$P(A|B) = \frac{P(A \cap B)}{P(B)}$$</p>
+<p>Bayes' theorem:</p>
+<p>$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$</p>
+<p>Axioms of conditional probability:</p>
+<ul>
+<li>$P(B) = P(B|A)P(A) + P(B|A^c)P(A^c)$</li>
+<li>$P(A \cup B | C) = P(A|C) + P(B|C) - P(A \cap B | C)$</li>
+</ul>
+<h4 id="example-2"><a class="header" href="#example-2">Example</a></h4>
+<p>In a semiconductor manufacturing process:</p>
+<ul>
+<li>$A$ is the event that chips are contaminated
+<ul>
+<li>$P(A) = 0.2$</li>
+</ul>
+</li>
+<li>$F$ is the event that the product containing the chip fails
+<ul>
+<li>$P(F|A) = 0.1$ and $P(F|A^c) = 0.005$</li>
+</ul>
+</li>
+</ul>
+<p>Determining the rate of failure:
+$P(F) = P(F|A)P(A) + P(F|A^c)P(A^c) = 0.1 \times 0.2 + 0.005 \times 0.8 = 0.024$</p>
+<h3 id="independent-events"><a class="header" href="#independent-events">Independent Events</a></h3>
+<p>Two events are independent when the probability of one occurring does not dependend on the occurrence of the other. An event $A$ is independent if and only if
+$$P(A \cap B) = P(A)P(B)$$</p>
+<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<p>Using the coin flip example again with a sample space $S$ and 3 events $A, B, C$</p>
+<ul>
+<li>$S = {\text{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}}$
+<ul>
+<li>$P(S) = 1$</li>
+</ul>
+</li>
+<li>$A = {\text{HHH, HHT, HTH, HTT}}$
+<ul>
+<li>$P(A) = 0.5$</li>
+</ul>
+</li>
+<li>$B = {\text{HHH, HHT, THH, THT}}$
+<ul>
+<li>$P(B) = 0.5$</li>
+</ul>
+</li>
+<li>$C = {\text{HHT, THH}}$
+<ul>
+<li>$P(C) = 0.25$</li>
+</ul>
+</li>
+</ul>
+<p>A and C are independent events:</p>
+<ul>
+<li>$A \cap C = {\text{HHT}}$</li>
+<li>$P(A \cap C) = 0.25 = 0.5 \times 0.25 = P(A)P(C)$</li>
+</ul>
+<p>B and C are not independent events:</p>
+<ul>
+<li>$B \cap C = {\text{HHT,THH}}$</li>
+<li>$P(B \cap C) = 0.25 \neq 0.25 \times 0.5 = P(B)P(C)$</li>
+</ul>
+<h2 id="discrete-random-variables"><a class="header" href="#discrete-random-variables">Discrete Random Variables</a></h2>
+<p>For a random process with a <em>discrete</em> sample space $S$, a discrete random variable $X$ is a function that assigns a real number to each outcome $s \in S$.</p>
+<ul>
+<li>$X$ is a measure related to the random distribution.</li>
+<li>Denoted $P(X = a)$</li>
+</ul>
+<p>Consider a weighted coin where $P(H) = 0.75$ and $P(T) = 0.25$. Tossing the coin twice gives a sample space $S = {\text{TT, TH, HT, HH}}$, which makes the number of heads a random variable $X(s) = {0, 1, 2}$. Since successive coin tosses are independent events:</p>
+<ul>
+<li>$P(TT) = 0.0625$</li>
+<li>$P(TH) = 0.1875$</li>
+<li>$P(HT) = 0.1875$</li>
+<li>$P(HH) = 0.5625$</li>
+</ul>
+<p>Events are also mutually exclusive, so:</p>
+<ul>
+<li>$f(0) = P(TT) = 0.0625$</li>
+<li>$f(1) = P(TH) + P(HT) = 0.375$</li>
+<li>$f(2) = P(HH) = 0.5625$</li>
+</ul>
+<p>This gives a probability distribution function $f(x) = P(X=x)$ of:</p>
+<table><thead><tr><th>$x$</th><th>$f(x)$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$0.0625$</td></tr>
+<tr><td>$1$</td><td>$0.375$</td></tr>
+<tr><td>$2$</td><td>$0.5625$</td></tr>
+</tbody></table>
+<h3 id="cumulative-distribution-functions"><a class="header" href="#cumulative-distribution-functions">Cumulative Distribution Functions</a></h3>
+<p>The cumulative probability function gives a &quot;running probability&quot;
+$$F_X(x_i) = P(X \leq x_i) = \sum^i_{j=1}f(x_j)$$</p>
+<ul>
+<li>if $x_i \leq x_j$ then $F_X(x_i) \leq F_X(x_j)$</li>
+<li>$F_X(x_1) = f(x_1)$</li>
+<li>$F_X(x_n) = 1$</li>
+</ul>
+<p>Using coin example again:</p>
+<table><thead><tr><th>$x$</th><th>$F_X(x)$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$0.0625$</td></tr>
+<tr><td>$1$</td><td>$0.4375$</td></tr>
+<tr><td>$2$</td><td>$1$</td></tr>
+</tbody></table>
+<h3 id="expectation--variance"><a class="header" href="#expectation--variance">Expectation &amp; Variance</a></h3>
+<ul>
+<li>Expectation is the average value, ie the value most likely to come up
+<ul>
+<li>The mean of $X$</li>
+</ul>
+</li>
+</ul>
+<p>$$E(X) = \sum^n_{i=1} x_if(x_i) = \mu_X$$</p>
+<ul>
+<li>Variance is a measure of the spread of the data</li>
+</ul>
+<p>$$Var(X) = \sum^n_{i=1}(x_i - \mu_x)^2 f(x_i) = E(X^2) - (E(X))^2 = \sigma^2_X$$</p>
+<ul>
+<li>Standard deviation $\sigma_X = \sqrt{Var(X)}$</li>
+</ul>
+<p>Using the weighted coin example once more:</p>
+<p>$$E(X) = 0 \times 0.0625 + 1 \times 0.375 + 2 \times 0.5625  = 1.5$$
+$$E(X^2) =  0^2 \times 0.0625 + 1^2 \times 0.375 + 2^2 \times 0.5625 = 2.625 $$
+$$Var(X) = E(X^2) - (E(X))^2 = 1.5 - 2.625^2 = 0.375$$</p>
+<h3 id="standardised-random-variable"><a class="header" href="#standardised-random-variable">Standardised Random Variable</a></h3>
+<p>The standardised random variable is a normalised version of the discrete random variable, obtained by the following transformation:
+$$X^* = \frac{X - \mu_X}{\sigma_X}$$</p>
+<ul>
+<li>$E(X^*) = 0$</li>
+<li>$Var(X^*) =1$</li>
+</ul>
+<h2 id="binomial-distribution"><a class="header" href="#binomial-distribution">Binomial Distribution</a></h2>
+<ul>
+<li>The binomial distribution models random processes consisting of repeated <em>independent</em> events</li>
+<li>Each event has only 2 outcomes, success or failure
+<ul>
+<li>$P(success) = p$</li>
+<li>$P(failure) = q = 1 - p$</li>
+</ul>
+</li>
+</ul>
+<p>The probability of $k$ successes in $n$ events:</p>
+<p>$$b(k;n;p) = {n \choose k}p^k q^{n-k}, ;; k = 0,1,2,...,n$$</p>
+<ul>
+<li>Probability of no success $= q^n$</li>
+<li>Probability of $\geq 1 $ successes is $1 - q^n$</li>
+</ul>
+<h3 id="expectation--variance-1"><a class="header" href="#expectation--variance-1">Expectation &amp; Variance</a></h3>
+<p>$$\mu = np$$
+$$\sigma^2 = npq$$</p>
+<h3 id="example-4"><a class="header" href="#example-4">Example</a></h3>
+<p>A fair coin is tossed 6 times.
+$$p = q = 0.5$$</p>
+<p>Probability of exactly 2 heads out of 6
+$$b(2;6;0.5) = {6 \choose 2} \times 0.5 ^2 \times 0.5 ^4 = \frac{15}{64}$$</p>
+<p>Probability of $\geq 1$ heads
+$$1 - q^6 = 1 - 0.5 ^6 = \frac{63}{64}$$</p>
+<p>Probability of $\geq 4$ heads</p>
+<p>$$b(4;6;0.5) + b(5;6;0.5) + b(6;6;0.5) = {6 \choose 2} (\frac{1}{2})^4 (\frac{1}{2})^2 + {6 \choose 2} (\frac{1}{2})^5 (\frac{1}{2})^1 + (\frac{1}{2})^6 = \frac{11}{32}$$</p>
+<p>Expected value $E(X)$
+$$\mu = np = 6 \times 0.5 = 3$$</p>
+<p>Variance
+$$\sigma^2 = npq = 6 \times 0.5 \times 0.5 = 1.5$$</p>
+<h2 id="poisson-distribution"><a class="header" href="#poisson-distribution">Poisson Distribution</a></h2>
+<p>Models a random process consisting of repeated occurrence of a single event within a fixed interval. The probability of $k$ occurrences is given by
+$$p(k;\lambda) = \frac{\lambda^k}{k!}e^{-\lambda}, ;; k = 0,1,2,...$$</p>
+<p>The poisson distribution can be used to approximate the binomial distribution with $\lambda = np$. This is only valid for large $n$ and small $p$</p>
+<h3 id="expectation--variance-2"><a class="header" href="#expectation--variance-2">Expectation &amp; Variance</a></h3>
+<p>$$\mu = \sigma^2 = \lambda$$</p>
+<h3 id="example-5"><a class="header" href="#example-5">Example</a></h3>
+<p>The occurrence of typos on a page is modelled by a poisson distribution with $\lambda = 0.5$.</p>
+<p>The probability of 2 errors:
+$$p(2;0.5) = \frac{0.5^2}{2!}e^{-0.5} = 0.076$$</p>
+<h2 id="continuous-random-variables"><a class="header" href="#continuous-random-variables">Continuous Random Variables</a></h2>
+<p>Continuous random variables map events from a sample space to an interval. Probabilities are written $P(a \leq X \leq b)$, where $X$ is the random variable. $X$ is defined with a continuous function, the probability density function.</p>
+<ul>
+<li>The function must be positive
+<ul>
+<li>$f(x) \geq 0$</li>
+</ul>
+</li>
+<li>The total area under the curve of the function must be 1
+<ul>
+<li>$\int^{\infty}_{-\infty} f(x) dx = 1$</li>
+</ul>
+</li>
+<li>$P(a \leq X \leq b) = \int^b_a f(x) dx$</li>
+</ul>
+<h3 id="example-6"><a class="header" href="#example-6">Example</a></h3>
+<p>$$
+f(x) =
+\begin{cases}
+a (x - x^2) &amp; 0 \leq x \leq 1 \
+0 &amp; otherwise
+\end{cases}
+$$</p>
+<p>Require that $\int^{\infty}<em>{-\infty} f(x) dx = 1$, so have to find $a$:
+$$\int^{\infty}</em>{-\infty} f(x) dx = \int^1_0 a (x - x^2) dx = a \left[\frac{x^2}{2} - \frac{x^3}{3}\right]^1_0 = \frac{a}{6} \Rightarrow a = 6$$</p>
+<p>Calculating some probabilities:
+$$P(0 \leq X \leq 0.5) = \int_0^{0.5} f(x) dx = \int_0^{0.5} 6(x - x^2) dx = 6 \left[\frac{x^2}{2} - \frac{x^3}{3}\right]<em>0^{0.5} = 0.5$$
+$$P(0.25 \leq X \leq 0.75) = \int</em>{0.25}^{0.75} f(x) dx = \int_{0.25}^{0.75} 6(x - x^2) dx = 6 \left[\frac{x^2}{2} - \frac{x^3}{3}\right]_{0.25}^{0.75} = \frac{11}{16}$$</p>
+<h3 id="cumulative-distribution-function"><a class="header" href="#cumulative-distribution-function">Cumulative Distribution Function</a></h3>
+<p>The cumulative distribution function $F_X$ up to the point $a$ is given as
+$$F_X(a) = \int_{-\infty}^a f(x) dx$$</p>
+<ul>
+<li>if $a \leq b$, then $F_X(a) \leq F_X(b)$</li>
+<li>$\lim_{ x \to -\infty} F_X(x) = 0$</li>
+<li>$\lim_{ x \to \infty} F_X(x) = 1$</li>
+<li>$\frac{d}{dx} F_X(x) = f(x)$
+<ul>
+<li>Derivative of cumulative distribution function is the probability distribution function</li>
+</ul>
+</li>
+</ul>
+<p>Using previous example, let $F_X(x) = \int_{-\infty}^x f(t) dt$. For $x &lt; 0$
+$$F_X(x) = 0$$</p>
+<p>For $0 \leq x \leq 1$
+$$F_X(x) = \int_0^x 6(t-t^2) dt = 6 \left[\frac{t^2}{2} - \frac{t^3}{3}\right]_0^x = 3x^2 - 2x^3$$</p>
+<p>For $x &gt; 1$
+$$F_X(x) = \int_0^1 6(t-t^2) dt = 6 \left[\frac{t^2}{2} - \frac{t^3}{3}\right]_0^1 = 1$$</p>
+<h3 id="expectation--variance-3"><a class="header" href="#expectation--variance-3">Expectation &amp; Variance</a></h3>
+<p>Where $X$ is a continuous random variable:</p>
+<p>$$E(X) = \int^{\infty}<em>{-\infty} x f(x) dx = \mu$$
+$$Var(X) = \int^{\infty}</em>{-\infty} (x - \mu)^2 f(x) dx = \sigma^2_X = E(X^2) - \mu^2$$</p>
+<h2 id="uniform-distribution"><a class="header" href="#uniform-distribution">Uniform Distribution</a></h2>
+<p>A continuous distribution with p.d.f:</p>
+<p>$$
+f(x) =
+\begin{cases}
+\frac{1}{b-a} &amp; a \leq x \leq b \
+0 &amp; otherwise
+\end{cases}
+$$</p>
+<p><img src="./img/uniform.png" alt="" /></p>
+<p>Expectation and variance:</p>
+<p>$$\mu = \frac{a+b}{2}$$
+$$\sigma^2 = \frac{(b-a)^2}{12}$$</p>
+<p>Cumulative distribution function:</p>
+<p>$$
+F_X(x) =
+\begin{cases}
+0 &amp; -\infty &lt; x &lt; a\
+\frac{x-a}{b-a} &amp; a \leq x \leq b \
+0 &amp; b &lt; x &lt; \infty&gt;&gt;
+\end{cases}
+$$</p>
+<p><img src="./img/uniform-cum.png" alt="" /></p>
+<h2 id="exponential-distribution"><a class="header" href="#exponential-distribution">Exponential Distribution</a></h2>
+<p>A continuous distribution with p.d.f:</p>
+<p>$$
+f(x) =
+\begin{cases}
+0 &amp; -\infty &lt; x &lt; 0 \
+ve^{-vx} &amp; 0 \leq x &lt; \infty
+\end{cases}
+$$</p>
+<p><img src="./img/exponential.png" alt="" /></p>
+<p>Expectation and variance:</p>
+<p>$$\mu = \frac{1}{v}$$
+$$\sigma^2 = \frac{1}{v^2}$$</p>
+<p>Cumulative distribution function:</p>
+<p>$$
+F_X(x) =
+\begin{cases}
+0 &amp; -\infty &lt; x &lt; 0\
+1 - e^{-vx} &amp; 0 \leq x &lt; \infty \
+\end{cases}
+$$</p>
+<p><img src="./img/exponential-cum.png" alt="" /></p>
+<ul>
+<li>Recall that a discrete random process $X$ where a single event occurs $i$ times in a fixed interval is modelled by a Possion distribution $p(k;\lambda)$
+<ul>
+<li>$E(X) = \lambda$</li>
+</ul>
+</li>
+<li>Consider a situation where the event occurs at a constant mean rate $v$ per unit time</li>
+<li>Let $\lambda = vt$, then $P(0) = e^{-vt}$ and probability of $\geq 1$ events occurring is $1-e^{-vt}$</li>
+<li>Suppose the <em>continuous</em> random variable $Y$ is the time between occurrences of successive events</li>
+<li>If there is a period of time $t$ with no events, then $Y &gt; t$ and $P(Y &gt; t) = e^{-vt}$</li>
+<li>If $\geq 1$ events occur then $Y \leq t$ and $P(Y \leq t) = 1 - e^{-vt}$</li>
+</ul>
+<p><strong>If the number of events per interval of time is Possion distributed, then the length of time between events is exponentially distributed</strong></p>
+<h3 id="example-7"><a class="header" href="#example-7">Example</a></h3>
+<p>Calls arrive randomly at the telephone exchange at a mean rate of 2 calls per minute. The number of calls per minute $X$ is a d.r.v. which can be modelled by a Poisson distribution with $\lambda = 2$. The probability of 1 call in any given minute is:</p>
+<p>$$P(X = 1) = \frac{\lambda e^(-\lambda)}{1!} = 2e^{-2} = 0.27$$</p>
+<p>The time between consecutive calls $Y$ is a c.r.v. modelled by an exponential distribution with $v = \frac{\lambda}{t} = \frac{2}{1} = 2$. The probability of at least 1 ($\geq 1$) minute between calls is:
+$$p(1 \leq Y \leq \infty) = \int_1^{\infty} v e^{-vt}dt = \int_1^{\infty} 2 e^{-2t}dt = \left[-e^{-2t}\right]_1^{\infty} = 0.135$$</p>
+<h2 id="normal-distribution"><a class="header" href="#normal-distribution">Normal Distribution</a></h2>
+<p>A distribution with probability density function:</p>
+<p>$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2 \sigma^2}}$$</p>
+<p>Expectation $E(X) = \mu$ and variance $Var(X) = \sigma^2$. Normal distribution is denoted $N(\mu,\sigma^2)$ and is defined by its mean and variance.</p>
+<p><img src="./img/normal.png" alt="" /></p>
+<h3 id="standardised-normal-distribution"><a class="header" href="#standardised-normal-distribution">Standardised Normal Distribution</a></h3>
+<p>$X$ is a random variable with distribution $N(\mu,\sigma^2)$. The standardised random variable $U$ is distributed $N(0,1)$ and can be obtained with the transform:
+$$U = \frac{X - \mu}{\sigma}$$
+and has p.d.f.
+$$f(u) = \frac{1}{\sqrt{2\pi}} e^{-\frac{u^2}{2}}$$</p>
+<p>$P(X \leq b) = P(U \leq \beta)$ where $\beta = \frac{b - \mu}{\sigma}$. Values for the standard normal distribution are tabulated in the data book.</p>
+<h3 id="example-8"><a class="header" href="#example-8">Example</a></h3>
+<p>The length of bolts $x$ from a production process are distributed normally with $\mu = 2.5$ and $\sigma^2 = 0.01$.</p>
+<p>$$u = \frac{x - \mu}{\sigma} = \frac{x - 2.5}{0.1}$$
+The probability the length of a bolt is between 2.6 and 2.7 cm (values obtained from table lookups):
+$$P(2.6 \leq X \leq 2.7) = P(\frac{2.6- 2.5}{0.1} \leq U \leq \frac{2.7 - 2.5}{0.1}) = P(1 \leq U \leq 2)$$
+$$=  P(0 \leq U \leq 2) - P(0 \leq U \leq 1) = 0.4772 - 0.3413 = 0.1359$$</p>
+<h3 id="confidence-intervals"><a class="header" href="#confidence-intervals">Confidence Intervals</a></h3>
+<p>A confidence interval is the interval in which we would expect to find an estimate of a parameter, at a specified probability level. For example, the interval covering 95% of the population of $N(\mu,\sigma^2)$ is $\mu \pm 1.96 \sigma$.</p>
+<p>For a random variable $X$ with distribution $N(67.5,2.5^2)$, the standard variate $u = \frac{x - 67.5}{2.5}$. For confidence interval at 95% probability:</p>
+<p>$$Q(u) = \frac{0.95}{2} = 0.475$$</p>
+<p>Using table lookups, $u = \pm 1.96$, and:
+$$x = \mu \pm 1.96 \sigma = 67.5 \pm 1.96 \times 2.5 = 67.5 \pm 4.9$$</p>
+<p>For confidence interval at 99.9% probability:</p>
+<p>$$Q(u) = \frac{0.999}{2} = 0.4995$$</p>
+<p>Table lookups again, $u = \pm 3.3$, and:
+$$x = \mu \pm 3.3 \sigma = 67.5 \pm 3.3 \times 2.5 = 67.5 \pm 8.25$$</p>
+<h3 id="normal-approximation-to-binomial-distribution"><a class="header" href="#normal-approximation-to-binomial-distribution">Normal Approximation to Binomial Distribution</a></h3>
+<p>The normal distribution gives a close approximation to the binomial distribution, provided:</p>
+<ul>
+<li>$n$ is large</li>
+<li>neither $p$ nor $q$ are close to zero</li>
+<li>$\mu = np$ and $\sigma^2 = npq$</li>
+</ul>
+<p>For example, take a random process consitsting of 64 spins of a fair coin $n = 64$ and $p = q = 0.5$. The probability of 40 heads is:
+$$P(40) = {60 \choose 40} \times 0.5^{64} = 0.01359 $$
+$$\mu = np = 32, ;; \sigma = \sqrt{npq} = 4$$</p>
+<p>For a normal approximation, must use the interval around 40 (normal is continuous, binomial is discrete) $[39.5,40.5]$:</p>
+<p>$$P(39.5 \leq X \leq 40.5) = P(\frac{39.5 - 32}{4} \leq X \leq \frac{39.5 - 32}{4}) = 0.4832 - 0.4696 = 0.0136$$</p>
+<h3 id="normal-approximation-to-poisson-distribution"><a class="header" href="#normal-approximation-to-poisson-distribution">Normal Approximation to Poisson Distribution</a></h3>
+<p>The normal distribution gives a close approximation to the binomial distribution, provided:</p>
+<ul>
+<li>$\lambda$ is large</li>
+<li>$\mu = \sigma^2 = np$</li>
+</ul>
+<p>For example, say a radioactive decay emits a mean of 69 particles per seconds. A standard normal approximation to this is:</p>
+<p>$$u = \frac{x - \mu}{\sigma} = \frac{x-69}{\sqrt{69}}$$</p>
+<p>The probability of emitting $\leq 60$ particles in a second is therefore:
+$$P(0 \leq X \leq 60) = P(\frac{0-69}{\sqrt{69}} \leq X \leq \frac{60.5 - 69}{\sqrt{69}}) = 0.5 - 0.3473 = 0.1527$$</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../es193/laplace.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../es197/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../es193/laplace.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../es197/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>OOP Principles - Year 1 Notes</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../cs118/index.html"><strong aria-hidden="true">1.</strong> CS118</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs118/floats.html"><strong aria-hidden="true">1.1.</strong> IEEE 754</a></li><li class="chapter-item expanded "><a href="../cs118/oop.html" class="active"><strong aria-hidden="true">1.2.</strong> OOP Principles</a></li><li class="chapter-item "><a href="../cs118/exceptions.html"><strong aria-hidden="true">1.3.</strong> Java Exceptions &amp; Generics</a></li></ol></li><li class="chapter-item expanded "><a href="../cs126/index.html"><strong aria-hidden="true">2.</strong> CS126</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs126/arrays.html"><strong aria-hidden="true">2.1.</strong> Arrays &amp; Linked Lists</a></li><li class="chapter-item "><a href="../cs126/analysis.html"><strong aria-hidden="true">2.2.</strong> Analysis of Algorithms</a></li><li class="chapter-item "><a href="../cs126/recursion.html"><strong aria-hidden="true">2.3.</strong> Recursive Algorithms</a></li><li class="chapter-item "><a href="../cs126/stacks.html"><strong aria-hidden="true">2.4.</strong> Stacks &amp; Queues</a></li><li class="chapter-item "><a href="../cs126/lists.html"><strong aria-hidden="true">2.5.</strong> Lists</a></li><li class="chapter-item "><a href="../cs126/maps.html"><strong aria-hidden="true">2.6.</strong> Maps</a></li><li class="chapter-item "><a href="../cs126/hash.html"><strong aria-hidden="true">2.7.</strong> Hash Tables</a></li><li class="chapter-item "><a href="../cs126/sets.html"><strong aria-hidden="true">2.8.</strong> Sets</a></li><li class="chapter-item "><a href="../cs126/trees.html"><strong aria-hidden="true">2.9.</strong> Trees</a></li><li class="chapter-item "><a href="../cs126/pqs.html"><strong aria-hidden="true">2.10.</strong> Priority Queues</a></li><li class="chapter-item "><a href="../cs126/heaps.html"><strong aria-hidden="true">2.11.</strong> Heaps</a></li><li class="chapter-item "><a href="../cs126/skip-lists.html"><strong aria-hidden="true">2.12.</strong> Skip Lists</a></li><li class="chapter-item "><a href="../cs126/graphs.html"><strong aria-hidden="true">2.13.</strong> Graphs</a></li></ol></li><li class="chapter-item expanded "><a href="../cs132/index.html"><strong aria-hidden="true">3.</strong> CS132</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs132/logic.html"><strong aria-hidden="true">3.1.</strong> Digital Logic</a></li><li class="chapter-item "><a href="../cs132/assembly.html"><strong aria-hidden="true">3.2.</strong> Assembly</a></li><li class="chapter-item "><a href="../cs132/memory.html"><strong aria-hidden="true">3.3.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs132/io.html"><strong aria-hidden="true">3.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs132/architecture.html"><strong aria-hidden="true">3.5.</strong> Microprocessor Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../cs141/index.html"><strong aria-hidden="true">4.</strong> CS141</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs141/types.html"><strong aria-hidden="true">4.1.</strong> Types &amp; Typeclasses</a></li><li class="chapter-item "><a href="../cs141/recursion.html"><strong aria-hidden="true">4.2.</strong> Recursion</a></li><li class="chapter-item "><a href="../cs141/functions.html"><strong aria-hidden="true">4.3.</strong> Higher Order Functions</a></li><li class="chapter-item "><a href="../cs141/lazy.html"><strong aria-hidden="true">4.4.</strong> Lazy Evaluation</a></li><li class="chapter-item "><a href="../cs141/reasoning.html"><strong aria-hidden="true">4.5.</strong> Reasoning About Programs</a></li><li class="chapter-item "><a href="../cs141/functors.html"><strong aria-hidden="true">4.6.</strong> Functors &amp; Foldables</a></li><li class="chapter-item "><a href="../cs141/applicatives.html"><strong aria-hidden="true">4.7.</strong> Applicative Functors</a></li><li class="chapter-item "><a href="../cs141/monads.html"><strong aria-hidden="true">4.8.</strong> Monads</a></li><li class="chapter-item "><a href="../cs141/tlp.html"><strong aria-hidden="true">4.9.</strong> Type-Level Programming</a></li></ol></li><li class="chapter-item expanded "><a href="../es191/index.html"><strong aria-hidden="true">5.</strong> ES191</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es191/symbols-and-conventions.html"><strong aria-hidden="true">5.1.</strong> Circuit Symbols &amp; Conventions</a></li><li class="chapter-item "><a href="../es191/nodal.html"><strong aria-hidden="true">5.2.</strong> Nodal Analysis</a></li><li class="chapter-item "><a href="../es191/mesh.html"><strong aria-hidden="true">5.3.</strong> Mesh Analysis</a></li><li class="chapter-item "><a href="../es191/thevenin.html"><strong aria-hidden="true">5.4.</strong> Thevenin Circuits</a></li><li class="chapter-item "><a href="../es191/rc.html"><strong aria-hidden="true">5.5.</strong> First Order RC Circuits</a></li><li class="chapter-item "><a href="../es191/rl.html"><strong aria-hidden="true">5.6.</strong> First Order RL Circuits</a></li><li class="chapter-item "><a href="../es191/ac.html"><strong aria-hidden="true">5.7.</strong> AC Circuits</a></li><li class="chapter-item "><a href="../es191/diodes.html"><strong aria-hidden="true">5.8.</strong> Diodes</a></li><li class="chapter-item "><a href="../es191/transistors.html"><strong aria-hidden="true">5.9.</strong> Transistors</a></li><li class="chapter-item "><a href="../es191/opamps.html"><strong aria-hidden="true">5.10.</strong> Op Amps</a></li><li class="chapter-item "><a href="../es191/filters.html"><strong aria-hidden="true">5.11.</strong> Passive Filters</a></li><li class="chapter-item "><a href="../es191/equations.html"><strong aria-hidden="true">5.12.</strong> Equation Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../es193/index.html"><strong aria-hidden="true">6.</strong> ES193</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es193/functions.html"><strong aria-hidden="true">6.1.</strong> Functions, Conics &amp; Asymptotes</a></li><li class="chapter-item "><a href="../es193/complex.html"><strong aria-hidden="true">6.2.</strong> Complex Numbers</a></li><li class="chapter-item "><a href="../es193/vectors.html"><strong aria-hidden="true">6.3.</strong> Vectors</a></li><li class="chapter-item "><a href="../es193/matrices.html"><strong aria-hidden="true">6.4.</strong> Matrices</a></li><li class="chapter-item "><a href="../es193/equations.html"><strong aria-hidden="true">6.5.</strong> Simultaneous Linear Equations</a></li><li class="chapter-item "><a href="../es193/diff.html"><strong aria-hidden="true">6.6.</strong> Differentiation</a></li><li class="chapter-item "><a href="../es193/int.html"><strong aria-hidden="true">6.7.</strong> Integration</a></li><li class="chapter-item "><a href="../es193/diffeq.html"><strong aria-hidden="true">6.8.</strong> Differential Equations</a></li><li class="chapter-item "><a href="../es193/laplace.html"><strong aria-hidden="true">6.9.</strong> Laplace Transforms</a></li><li class="chapter-item "><a href="../es193/stats.html"><strong aria-hidden="true">6.10.</strong> Probability &amp; Statistics</a></li></ol></li><li class="chapter-item expanded "><a href="../es197/index.html"><strong aria-hidden="true">7.</strong> ES197</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es197/mech1.html"><strong aria-hidden="true">7.1.</strong> Translational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/mech2.html"><strong aria-hidden="true">7.2.</strong> Rotational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/electrical.html"><strong aria-hidden="true">7.3.</strong> Electrical Systems</a></li><li class="chapter-item "><a href="../es197/thermal.html"><strong aria-hidden="true">7.4.</strong> Thermal Systems</a></li><li class="chapter-item "><a href="../es197/data.html"><strong aria-hidden="true">7.5.</strong> Data Driven Models</a></li><li class="chapter-item "><a href="../es197/step1.html"><strong aria-hidden="true">7.6.</strong> First Order Step Response</a></li><li class="chapter-item "><a href="../es197/step2.html"><strong aria-hidden="true">7.7.</strong> Second Order Step Response</a></li><li class="chapter-item "><a href="../es197/transfer.html"><strong aria-hidden="true">7.8.</strong> Transfer Functions</a></li><li class="chapter-item "><a href="../es197/freq1.html"><strong aria-hidden="true">7.9.</strong> First Order Frequency Response</a></li><li class="chapter-item "><a href="../es197/freq2.html"><strong aria-hidden="true">7.10.</strong> Second Order Frequency Response</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Year 1 Notes</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/Joeyh021/first-year-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="oop-principles"><a class="header" href="#oop-principles">OOP Principles</a></h1>
+<h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
+<p>All Java classes have a constructor, which is the method called upon object instantiation.</p>
+<ul>
+<li>An object can have multiple overloaded constructors</li>
+<li>A constructor can have any access modifier</li>
+<li>Constructors can call other constructors through the <code>this()</code> method.</li>
+<li>If no constructor is specified, a default constructor is generated which takes no arguments and does nothing.</li>
+<li>The first call in any constructor is to the superclass constructor.
+<ul>
+<li>This can be elided, and the default constructor is called
+<ul>
+<li>If there is no default constructor, a constructor must be called explicitly</li>
+</ul>
+</li>
+<li>Can call explicitly with <code>super()</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="access-modifiers"><a class="header" href="#access-modifiers">Access Modifiers</a></h2>
+<p>Access modifiers apply to methods and member variables.</p>
+<ul>
+<li><code>private</code>: only the members of the class can see</li>
+<li><code>public</code>: anyone can see</li>
+<li><code>protected</code>: only class and subclasses can see</li>
+<li>Default: package-private, only members of the same package can see</li>
+</ul>
+<h2 id="inheritance"><a class="header" href="#inheritance">Inheritance</a></h2>
+<ul>
+<li>To avoid the diamond/multiple inheritance problem, Java only allows for single inheritance</li>
+<li>This is done using the <code>extends</code> keyword in the class definition</li>
+<li>Inherits all public and protected methods and members</li>
+<li>Can, however, implement multiple interfaces</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-java">public class Car extends Vehicle implements Drivable, Crashable{
+    // insert class body here
+}
+</code></pre>
+<p>The <code>Car</code> class extends the <code>Vehicle</code> base class (can be abstract or concrete) and implements the behaviours defined by the interfaces <code>Drivable</code> and <code>Crashable</code>.</p>
+<h2 id="static"><a class="header" href="#static"><code>static</code></a></h2>
+<p>The static keyword defines a method, a field, or a block of code that belongs to the class instead of the object.</p>
+<ul>
+<li>Static fields share a mutable state accross all instances of the class</li>
+<li>Static methods are called from the class instead of from the object</li>
+<li>Static blocks are executed once, the first time the class is loaded into memory</li>
+</ul>
+<h2 id="polymorphism"><a class="header" href="#polymorphism">Polymorphism</a></h2>
+<p>Polymorphism: of many forms. A broad term describing a few things in java.</p>
+<h3 id="dynamic-polymorphism"><a class="header" href="#dynamic-polymorphism">Dynamic Polymorphism</a></h3>
+<p>An object is defined as polymorphic if it passes more than one <code>instanceof</code> checks. An object can be referred to as the type of any one of it's superclasses. Say for example there is a <code>Tiger</code> class, which subclasses <code>Cat</code>, which subclasses <code>Animal</code>, giving an inheritance chain of <code>Animal</code> &lt;- <code>Cat</code> &lt;- <code>Tiger</code>, then the following is valid:</p>
+<pre><code class="language-java">Animal a = new Tiger();
+Cat c = new Tiger();
+Tiger t = new Tiger();
+</code></pre>
+<p>When referencing an object through one of it's superclass types, you can only call objects that the reference type implements. For example, if there was two methods, <code>Cat::meow</code> and <code>Tiger::roar</code>, then:</p>
+<pre><code class="language-java">c.meow() //valid
+t.meow() //valid
+a.meow() //not valid - animal has no method meow
+t.roar() //valid
+c.roar() // not valid - cat has no method roar
+</code></pre>
+<p>Even though all these variables are of the same runtime type, they are being called from a reference of another type.</p>
+<p>When calling a method of an object, the actual method run is the one that is <em>furthest down the inheritance chain</em>. This is dynamic/runtime dispatch.</p>
+<pre><code class="language-java">public class Animal{
+    public speak(){return &quot;...&quot;;}
+}
+
+public class Dog extends Animal{
+    public speak(){return &quot;woof&quot;;}
+}
+
+public class Cat extends Animal{
+    public speak(){return &quot;meow&quot;;}
+}
+
+Animal a = new Animal();
+Animal d = new Dog();
+Animal c = new Cat();
+
+a.speak() // &quot;...&quot;
+d.speak() // &quot;woof&quot;
+c.speak() // &quot;meow&quot;
+</code></pre>
+<p>Even though the reference was of type <code>Animal</code>, the actual method called was the overridden subclass method.</p>
+<h3 id="static-polymorphism-method-overloading"><a class="header" href="#static-polymorphism-method-overloading">Static Polymorphism (Method Overloading)</a></h3>
+<p>Note: different to over<em>ridding</em></p>
+<ul>
+<li>Multiple methods with the same name can be written, as long as they have different parameter lists</li>
+<li>The method that is called depends upon the number of and type of the arguments passed</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-java">public class Addition{
+    private int add(int x, int y){return x+y;}
+    private float add(float x, float y){return x+y;}
+    public static void main(String[] args){
+        add(1,2); //calls first method
+        add(3.14,2.72); //calls second method
+        add(15,1.5); //calls second method
+    }
+}
+</code></pre>
+<h2 id="abstraction"><a class="header" href="#abstraction">Abstraction</a></h2>
+<p>Abstraction is the process of removing irrelevant details from the user, while exposing the relevant details. For example, you don't need to know how a function works, it's inner workings are <em>abstracted</em> away, leaving only the function's interface and details of what it does.</p>
+<p>In the example below, the workings of the sine function are abstracted away, but we still know what it does and how to use it.</p>
+<pre><code class="language-java">float sin(float x){
+    //dont care really
+}
+sin(90); // 1.0
+</code></pre>
+<h2 id="encapsulation"><a class="header" href="#encapsulation">Encapsulation</a></h2>
+<p>Encapsulation is wrapping the data and the code that acts on it into a single unit. The process is also known as <strong>data hiding</strong>, because the data is often hidden (declared <code>private</code>) behind the methods that retrieve them (getters/setters).</p>
+<h2 id="reference-variables"><a class="header" href="#reference-variables">Reference Variables</a></h2>
+<p>There is no such thing as an object variable in Java. Only primitives (<code>int</code>,<code>char</code>,<code>float</code>...), and references. All objects are heap-allocated (<code>new</code>), and a reference to them stored. Methods are all pass by value: either the value of the primitive, or the value of the reference. <em>Java is not pass by reference</em> . Objects are never copied/cloned/duplicated implicitly.</p>
+<p>If a reference type is required (ie <code>Integer</code>), but a primitive is given (<code>(int) 1</code>), then the primitive will be <em>autoboxed</em> into it's equivalent object type.</p>
+<h2 id="abstract-classes-and-interfaces"><a class="header" href="#abstract-classes-and-interfaces">Abstract Classes and Interfaces</a></h2>
+<ul>
+<li>Abstract classes are are classes that contain one or more <code>abstract</code> methods.
+<ul>
+<li>A class must be declared <code>abstract</code></li>
+<li>Abstract methods have no body, ie are unimplemented.</li>
+<li>The idea of them is to generalise behaviour, and leave it up to subclasses to implement</li>
+<li>Abstract classes cannot be instantiated directly, though can still have constructors for subclasses to call</li>
+</ul>
+</li>
+<li>Interfaces are a special kind of class that contain only abstract methods (and fields declared <code>public static final</code>)
+<ul>
+<li>Used to define behaviour</li>
+<li>Technically can contain methods, but they're default implementations
+<ul>
+<li>This raises all sorts of issues so is best avoided</li>
+</ul>
+</li>
+<li>Don't have to declare methods abstract, it's implicit</li>
+</ul>
+</li>
+</ul>
+<p>The diagram shows the inheritance hierarchy of the java collections framework, containing interfaces, abstract classes, and concrete classes.</p>
+<p><img src="./img/abstract.png" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../cs118/floats.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../cs118/exceptions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../cs118/floats.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../cs118/exceptions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

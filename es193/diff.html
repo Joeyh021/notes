@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Differentiation - Year 1 Notes</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../cs118/index.html"><strong aria-hidden="true">1.</strong> CS118</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs118/floats.html"><strong aria-hidden="true">1.1.</strong> IEEE 754</a></li><li class="chapter-item "><a href="../cs118/oop.html"><strong aria-hidden="true">1.2.</strong> OOP Principles</a></li><li class="chapter-item "><a href="../cs118/exceptions.html"><strong aria-hidden="true">1.3.</strong> Java Exceptions &amp; Generics</a></li></ol></li><li class="chapter-item expanded "><a href="../cs126/index.html"><strong aria-hidden="true">2.</strong> CS126</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs126/arrays.html"><strong aria-hidden="true">2.1.</strong> Arrays &amp; Linked Lists</a></li><li class="chapter-item "><a href="../cs126/analysis.html"><strong aria-hidden="true">2.2.</strong> Analysis of Algorithms</a></li><li class="chapter-item "><a href="../cs126/recursion.html"><strong aria-hidden="true">2.3.</strong> Recursive Algorithms</a></li><li class="chapter-item "><a href="../cs126/stacks.html"><strong aria-hidden="true">2.4.</strong> Stacks &amp; Queues</a></li><li class="chapter-item "><a href="../cs126/lists.html"><strong aria-hidden="true">2.5.</strong> Lists</a></li><li class="chapter-item "><a href="../cs126/maps.html"><strong aria-hidden="true">2.6.</strong> Maps</a></li><li class="chapter-item "><a href="../cs126/hash.html"><strong aria-hidden="true">2.7.</strong> Hash Tables</a></li><li class="chapter-item "><a href="../cs126/sets.html"><strong aria-hidden="true">2.8.</strong> Sets</a></li><li class="chapter-item "><a href="../cs126/trees.html"><strong aria-hidden="true">2.9.</strong> Trees</a></li><li class="chapter-item "><a href="../cs126/pqs.html"><strong aria-hidden="true">2.10.</strong> Priority Queues</a></li><li class="chapter-item "><a href="../cs126/heaps.html"><strong aria-hidden="true">2.11.</strong> Heaps</a></li><li class="chapter-item "><a href="../cs126/skip-lists.html"><strong aria-hidden="true">2.12.</strong> Skip Lists</a></li><li class="chapter-item "><a href="../cs126/graphs.html"><strong aria-hidden="true">2.13.</strong> Graphs</a></li></ol></li><li class="chapter-item expanded "><a href="../cs132/index.html"><strong aria-hidden="true">3.</strong> CS132</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs132/logic.html"><strong aria-hidden="true">3.1.</strong> Digital Logic</a></li><li class="chapter-item "><a href="../cs132/assembly.html"><strong aria-hidden="true">3.2.</strong> Assembly</a></li><li class="chapter-item "><a href="../cs132/memory.html"><strong aria-hidden="true">3.3.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs132/io.html"><strong aria-hidden="true">3.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs132/architecture.html"><strong aria-hidden="true">3.5.</strong> Microprocessor Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../cs141/index.html"><strong aria-hidden="true">4.</strong> CS141</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs141/types.html"><strong aria-hidden="true">4.1.</strong> Types &amp; Typeclasses</a></li><li class="chapter-item "><a href="../cs141/recursion.html"><strong aria-hidden="true">4.2.</strong> Recursion</a></li><li class="chapter-item "><a href="../cs141/functions.html"><strong aria-hidden="true">4.3.</strong> Higher Order Functions</a></li><li class="chapter-item "><a href="../cs141/lazy.html"><strong aria-hidden="true">4.4.</strong> Lazy Evaluation</a></li><li class="chapter-item "><a href="../cs141/reasoning.html"><strong aria-hidden="true">4.5.</strong> Reasoning About Programs</a></li><li class="chapter-item "><a href="../cs141/functors.html"><strong aria-hidden="true">4.6.</strong> Functors &amp; Foldables</a></li><li class="chapter-item "><a href="../cs141/applicatives.html"><strong aria-hidden="true">4.7.</strong> Applicative Functors</a></li><li class="chapter-item "><a href="../cs141/monads.html"><strong aria-hidden="true">4.8.</strong> Monads</a></li><li class="chapter-item "><a href="../cs141/tlp.html"><strong aria-hidden="true">4.9.</strong> Type-Level Programming</a></li></ol></li><li class="chapter-item expanded "><a href="../es191/index.html"><strong aria-hidden="true">5.</strong> ES191</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es191/symbols-and-conventions.html"><strong aria-hidden="true">5.1.</strong> Circuit Symbols &amp; Conventions</a></li><li class="chapter-item "><a href="../es191/nodal.html"><strong aria-hidden="true">5.2.</strong> Nodal Analysis</a></li><li class="chapter-item "><a href="../es191/mesh.html"><strong aria-hidden="true">5.3.</strong> Mesh Analysis</a></li><li class="chapter-item "><a href="../es191/thevenin.html"><strong aria-hidden="true">5.4.</strong> Thevenin Circuits</a></li><li class="chapter-item "><a href="../es191/rc.html"><strong aria-hidden="true">5.5.</strong> First Order RC Circuits</a></li><li class="chapter-item "><a href="../es191/rl.html"><strong aria-hidden="true">5.6.</strong> First Order RL Circuits</a></li><li class="chapter-item "><a href="../es191/ac.html"><strong aria-hidden="true">5.7.</strong> AC Circuits</a></li><li class="chapter-item "><a href="../es191/diodes.html"><strong aria-hidden="true">5.8.</strong> Diodes</a></li><li class="chapter-item "><a href="../es191/transistors.html"><strong aria-hidden="true">5.9.</strong> Transistors</a></li><li class="chapter-item "><a href="../es191/opamps.html"><strong aria-hidden="true">5.10.</strong> Op Amps</a></li><li class="chapter-item "><a href="../es191/filters.html"><strong aria-hidden="true">5.11.</strong> Passive Filters</a></li><li class="chapter-item "><a href="../es191/equations.html"><strong aria-hidden="true">5.12.</strong> Equation Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../es193/index.html"><strong aria-hidden="true">6.</strong> ES193</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es193/functions.html"><strong aria-hidden="true">6.1.</strong> Functions, Conics &amp; Asymptotes</a></li><li class="chapter-item "><a href="../es193/complex.html"><strong aria-hidden="true">6.2.</strong> Complex Numbers</a></li><li class="chapter-item "><a href="../es193/vectors.html"><strong aria-hidden="true">6.3.</strong> Vectors</a></li><li class="chapter-item "><a href="../es193/matrices.html"><strong aria-hidden="true">6.4.</strong> Matrices</a></li><li class="chapter-item "><a href="../es193/equations.html"><strong aria-hidden="true">6.5.</strong> Simultaneous Linear Equations</a></li><li class="chapter-item expanded "><a href="../es193/diff.html" class="active"><strong aria-hidden="true">6.6.</strong> Differentiation</a></li><li class="chapter-item "><a href="../es193/int.html"><strong aria-hidden="true">6.7.</strong> Integration</a></li><li class="chapter-item "><a href="../es193/diffeq.html"><strong aria-hidden="true">6.8.</strong> Differential Equations</a></li><li class="chapter-item "><a href="../es193/laplace.html"><strong aria-hidden="true">6.9.</strong> Laplace Transforms</a></li><li class="chapter-item "><a href="../es193/stats.html"><strong aria-hidden="true">6.10.</strong> Probability &amp; Statistics</a></li></ol></li><li class="chapter-item expanded "><a href="../es197/index.html"><strong aria-hidden="true">7.</strong> ES197</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es197/mech1.html"><strong aria-hidden="true">7.1.</strong> Translational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/mech2.html"><strong aria-hidden="true">7.2.</strong> Rotational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/electrical.html"><strong aria-hidden="true">7.3.</strong> Electrical Systems</a></li><li class="chapter-item "><a href="../es197/thermal.html"><strong aria-hidden="true">7.4.</strong> Thermal Systems</a></li><li class="chapter-item "><a href="../es197/data.html"><strong aria-hidden="true">7.5.</strong> Data Driven Models</a></li><li class="chapter-item "><a href="../es197/step1.html"><strong aria-hidden="true">7.6.</strong> First Order Step Response</a></li><li class="chapter-item "><a href="../es197/step2.html"><strong aria-hidden="true">7.7.</strong> Second Order Step Response</a></li><li class="chapter-item "><a href="../es197/transfer.html"><strong aria-hidden="true">7.8.</strong> Transfer Functions</a></li><li class="chapter-item "><a href="../es197/freq1.html"><strong aria-hidden="true">7.9.</strong> First Order Frequency Response</a></li><li class="chapter-item "><a href="../es197/freq2.html"><strong aria-hidden="true">7.10.</strong> Second Order Frequency Response</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Year 1 Notes</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/Joeyh021/first-year-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="differentiation"><a class="header" href="#differentiation">Differentiation</a></h1>
+<h2 id="implicit-differentiation"><a class="header" href="#implicit-differentiation">Implicit Differentiation</a></h2>
+<p>When differentiating a function of one variable with respect to another (ie $\frac{dy}{dx} f(y)$), simply differentiate with respect to $y$, then multiply by $\frac{dy}{dx}$.</p>
+<p>For example, find $\frac{dy}{dx}$ where $x^2y^3 - x^2 + 3y - 3 = 0$. First, using the product rule to differentiate the first term:
+$$u = x^2 \quad u' = 2x$$
+$$v = y^3 \quad v' = 3y^2 \frac{dy}{dx}$$</p>
+<p>The equation with all terms differentiated:
+$$2xy^3 + 3x^2y^2 \frac{dy}{dx} -2x + 3y \frac{dy}{dx} = 0$$</p>
+<p>Rearranging to get in terms of $\frac{dy}{dx}$:
+$$3x^2y^2 \frac{dy}{dx}+ 3y \frac{dy}{dx} = 2x - 2xy^3$$
+$$\frac{dy}{dx} = \frac{2x - 2xy^3}{3x^2y^2 + 3}$$</p>
+<h2 id="inverse-trig-functions"><a class="header" href="#inverse-trig-functions">Inverse Trig Functions</a></h2>
+<p>All the derivatives of the inverse trig functions are given in the data book. They can be derived as follows ($\sin$ is used as an example).</p>
+<p>$$y = \sin^{-1} x$$
+$$\sin y = x$$</p>
+<p>Differentiating both sides with respect to x</p>
+<p>$$\frac{dy}{dx}\cos y = 1$$
+$$\frac{dy}{dx} = \frac{1}{\cos y}$$</p>
+<p>Using pythagorean identity $\cos y = \sqrt{1 - \sin^2 y}$</p>
+<p>$$\frac{dy}{dx} = \frac{1}{\sqrt{1 - \sin^2 y}} = \frac{1}{\sqrt{1 - x^2}}$$</p>
+<h2 id="differentials"><a class="header" href="#differentials">Differentials</a></h2>
+<p>Differentials describe small changes to values/functions
+$$y= f(x)$$
+$$\frac{dy}{dx} = f'(x)$$
+$$dy = f'(x) dx$$</p>
+<p>Recall that $\frac{dy}{dx} \approx \frac{\delta y}{\delta x}$. This means this can be rewritten:
+$$\delta y \approx f'(x) \delta x$$</p>
+<p>Dividing both sides by $y = f(x)$:
+$$\frac{\delta y}{y} =  \frac{x f'(x)}{f(x)} \frac{\delta x}{x}$$</p>
+<p>$\frac{\delta y}{y}$ represents a <em>relative</em> change in y, and $\frac{\delta x}{x}$ represents a <em>relative</em> change in x. This can be used to give approximations of how one quantity changes based upon another.</p>
+<p>For example, given the mass of a sphere $M = \frac{4}{3} \rho \pi r^3$, where $\rho$ is the material density, estimate the change in mass when the radius is increased by 2%.
+$$M = \frac{4}{3} \rho \pi r^3$$
+$$\frac{dM}{dr} = 4 \rho \pi r^2$$
+$$\delta m = 4 \rho\pi r^2 \delta r$$</p>
+<p>Dividing both sides by the original formula:
+$$\frac{\delta M}{M} = \frac{4 \rho\pi r^2 \delta r}{\frac{4}{3} \rho \pi r^3} = 3 \frac{\delta r}{r}$$</p>
+<p>$\frac{\delta r}{r}$ represents a relative change in radius, so when $r$ increases by 2%, $\frac{\delta r}{r} = 0.02$
+$$\frac{\delta M}{M} = 3 \times 0.02 = 0.06$$</p>
+<p>Meaning the mass increases by 6%.</p>
+<h2 id="hyperbolic-functions"><a class="header" href="#hyperbolic-functions">Hyperbolic Functions</a></h2>
+<p>Hyperbolic functions have similar identities to circular trig functions. They're the same, except anywhere there is a product of two $\sinh$s, the term should be negated. Hyperbolic functions can also be defined in terms of exponential functions, making them easy to differentiate.</p>
+<p>$$y = \cosh x = \frac{1}{2} (e^x + e^{-x})$$
+$$\frac{dy}{dx} = \frac{1}{2} (e^x - e^{-x}) = \sinh x$$</p>
+<p>All the derivatives of hyperbolic functions are given in the formula book.</p>
+<h2 id="parametric-differentiation"><a class="header" href="#parametric-differentiation">Parametric Differentiation</a></h2>
+<p>For a function given in parametric form $y = f(t)$, $x = f(t)$:
+$$\frac{dy}{dx} = \frac{dy}{dt} \times \frac{dt}{dx}$$
+$$\frac{d}{dx} = \frac{dt}{dx} \times \frac{d}{dt}$$</p>
+<p>$$\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \frac{dt}{dx} \times \frac{d}{dt}(\frac{dy}{dx})$$</p>
+<h2 id="partial-differentiation"><a class="header" href="#partial-differentiation">Partial Differentiation</a></h2>
+<p>For a function of two variables $z = f(x,y)$ there are two gradients at the point $z$, one in $x$ and one in $y$. To find the gradient in the x direction, differentiate $f(x,y)$ treating y as a constant. To find the gradient in the y direction, differentiate $f(x,y)$ treating x as a constant. These are the two partial derivatives of the function, $\frac{\partial z}{\partial x}$ and $\frac{\partial z}{\partial y}$.</p>
+<p>For example, for a function $z= 4x^3 + 5y^7 x$:
+$$\frac{\partial z}{\partial x} = 12x^2 + 5y^7 $$
+$$\frac{\partial z}{\partial y} = 35y^6 x$$</p>
+<h2 id="implicit-partial-differentiation"><a class="header" href="#implicit-partial-differentiation">Implicit Partial Differentiation</a></h2>
+<p>When a function of several variables is given and a partial derivative is required, differentiate the numerator of the partial derivative implicitly with respect to the denominator, and treat the third variable as constant. For example, find $\frac{\partial z}{\partial y}$ given $z^2 = x^2 + y^2$:</p>
+<p>$$\frac{\partial}{\partial y} z^2 = \frac{\partial}{\partial y}(x^2 + y^2)$$</p>
+<p>$$2z \frac{\partial z}{\partial y} = 2y$$
+$$\frac{\partial z}{\partial y} = \frac y z$$</p>
+<p>Another example, find $\frac{\partial z}{\partial x}$ given $z\cos z=x^2 y^3+z$
+$$\frac{\partial}{\partial x}(z \cos z)  = \frac{\partial}{\partial x} (x^2 y^3 + z)$$
+$$\frac{\partial z}{\partial x} \cos z - z \sin z \frac{\partial z}{\partial x} = 2x y^3 + \frac{\partial z}{\partial x}$$
+$$\frac{\partial z}{\partial x}(\cos z - z \sin z -1) = 2xy^3$$
+$$\frac{\partial z}{\partial x} = \frac{2xy^3}{\cos z - z \sin z -1}$$</p>
+<h3 id="higher-order-partial-derivatives"><a class="header" href="#higher-order-partial-derivatives">Higher Order Partial Derivatives</a></h3>
+<p>Three 2nd order derivatives for functions of 2 variables. For $z = f(x,y)$:
+$$\frac{\partial^2 z}{\partial x^2} = \frac{\partial}{\partial x}(\frac{\partial z}{\partial x} ) $$
+$$\frac{\partial^2 z}{\partial y^2} = \frac{\partial}{\partial y}(\frac{\partial z}{\partial y} ) $$
+$$\frac{\partial^2 z}{\partial x \partial y} = \frac{\partial}{\partial x}(\frac{\partial z}{\partial y}) = \frac{\partial}{\partial y}(\frac{\partial z}{\partial x}) = \frac{\partial^2 z}{\partial y \partial x} $$</p>
+<p>Note how for the last one, the order is interchangable as it yields the same result.</p>
+<h3 id="chain-rule"><a class="header" href="#chain-rule">Chain Rule</a></h3>
+<p>The chain rule for a function $w(x,y)$, where x and y are functions of a parameter $t$:
+$$\frac{dw}{dt} = \frac{\partial w}{\partial x}\frac{dx}{dt} + \frac{\partial w}{\partial y} \frac{dy}{dt}$$</p>
+<h2 id="total-differential"><a class="header" href="#total-differential">Total Differential</a></h2>
+<p>The total differential represents the total height gain or lost when moving along the function described by $z = f(x,y)$
+$$dz = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy$$</p>
+<h3 id="contour-plots"><a class="header" href="#contour-plots">Contour Plots</a></h3>
+<p>Along a line of a contour plot, the total differential is zero: the height doesn't change. This allows $\frac{dy}{dx}$ to be found
+$$dh = \frac{\partial h}{\partial x}dx + \frac{\partial h}{\partial y}dy = 0$$
+$$\frac{dy}{dx} = \frac{\partial h / \partial x}{\partial h / \partial y}$$</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../es193/equations.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../es193/int.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../es193/equations.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../es193/int.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

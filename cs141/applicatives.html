@@ -1,0 +1,474 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Applicative Functors - Year 1 Notes</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../cs118/index.html"><strong aria-hidden="true">1.</strong> CS118</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs118/floats.html"><strong aria-hidden="true">1.1.</strong> IEEE 754</a></li><li class="chapter-item "><a href="../cs118/oop.html"><strong aria-hidden="true">1.2.</strong> OOP Principles</a></li><li class="chapter-item "><a href="../cs118/exceptions.html"><strong aria-hidden="true">1.3.</strong> Java Exceptions &amp; Generics</a></li></ol></li><li class="chapter-item expanded "><a href="../cs126/index.html"><strong aria-hidden="true">2.</strong> CS126</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs126/arrays.html"><strong aria-hidden="true">2.1.</strong> Arrays &amp; Linked Lists</a></li><li class="chapter-item "><a href="../cs126/analysis.html"><strong aria-hidden="true">2.2.</strong> Analysis of Algorithms</a></li><li class="chapter-item "><a href="../cs126/recursion.html"><strong aria-hidden="true">2.3.</strong> Recursive Algorithms</a></li><li class="chapter-item "><a href="../cs126/stacks.html"><strong aria-hidden="true">2.4.</strong> Stacks &amp; Queues</a></li><li class="chapter-item "><a href="../cs126/lists.html"><strong aria-hidden="true">2.5.</strong> Lists</a></li><li class="chapter-item "><a href="../cs126/maps.html"><strong aria-hidden="true">2.6.</strong> Maps</a></li><li class="chapter-item "><a href="../cs126/hash.html"><strong aria-hidden="true">2.7.</strong> Hash Tables</a></li><li class="chapter-item "><a href="../cs126/sets.html"><strong aria-hidden="true">2.8.</strong> Sets</a></li><li class="chapter-item "><a href="../cs126/trees.html"><strong aria-hidden="true">2.9.</strong> Trees</a></li><li class="chapter-item "><a href="../cs126/pqs.html"><strong aria-hidden="true">2.10.</strong> Priority Queues</a></li><li class="chapter-item "><a href="../cs126/heaps.html"><strong aria-hidden="true">2.11.</strong> Heaps</a></li><li class="chapter-item "><a href="../cs126/skip-lists.html"><strong aria-hidden="true">2.12.</strong> Skip Lists</a></li><li class="chapter-item "><a href="../cs126/graphs.html"><strong aria-hidden="true">2.13.</strong> Graphs</a></li></ol></li><li class="chapter-item expanded "><a href="../cs132/index.html"><strong aria-hidden="true">3.</strong> CS132</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs132/logic.html"><strong aria-hidden="true">3.1.</strong> Digital Logic</a></li><li class="chapter-item "><a href="../cs132/assembly.html"><strong aria-hidden="true">3.2.</strong> Assembly</a></li><li class="chapter-item "><a href="../cs132/memory.html"><strong aria-hidden="true">3.3.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs132/io.html"><strong aria-hidden="true">3.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs132/architecture.html"><strong aria-hidden="true">3.5.</strong> Microprocessor Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../cs141/index.html"><strong aria-hidden="true">4.</strong> CS141</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs141/types.html"><strong aria-hidden="true">4.1.</strong> Types &amp; Typeclasses</a></li><li class="chapter-item "><a href="../cs141/recursion.html"><strong aria-hidden="true">4.2.</strong> Recursion</a></li><li class="chapter-item "><a href="../cs141/functions.html"><strong aria-hidden="true">4.3.</strong> Higher Order Functions</a></li><li class="chapter-item "><a href="../cs141/lazy.html"><strong aria-hidden="true">4.4.</strong> Lazy Evaluation</a></li><li class="chapter-item "><a href="../cs141/reasoning.html"><strong aria-hidden="true">4.5.</strong> Reasoning About Programs</a></li><li class="chapter-item "><a href="../cs141/functors.html"><strong aria-hidden="true">4.6.</strong> Functors &amp; Foldables</a></li><li class="chapter-item expanded "><a href="../cs141/applicatives.html" class="active"><strong aria-hidden="true">4.7.</strong> Applicative Functors</a></li><li class="chapter-item "><a href="../cs141/monads.html"><strong aria-hidden="true">4.8.</strong> Monads</a></li><li class="chapter-item "><a href="../cs141/tlp.html"><strong aria-hidden="true">4.9.</strong> Type-Level Programming</a></li></ol></li><li class="chapter-item expanded "><a href="../es191/index.html"><strong aria-hidden="true">5.</strong> ES191</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es191/symbols-and-conventions.html"><strong aria-hidden="true">5.1.</strong> Circuit Symbols &amp; Conventions</a></li><li class="chapter-item "><a href="../es191/nodal.html"><strong aria-hidden="true">5.2.</strong> Nodal Analysis</a></li><li class="chapter-item "><a href="../es191/mesh.html"><strong aria-hidden="true">5.3.</strong> Mesh Analysis</a></li><li class="chapter-item "><a href="../es191/thevenin.html"><strong aria-hidden="true">5.4.</strong> Thevenin Circuits</a></li><li class="chapter-item "><a href="../es191/rc.html"><strong aria-hidden="true">5.5.</strong> First Order RC Circuits</a></li><li class="chapter-item "><a href="../es191/rl.html"><strong aria-hidden="true">5.6.</strong> First Order RL Circuits</a></li><li class="chapter-item "><a href="../es191/ac.html"><strong aria-hidden="true">5.7.</strong> AC Circuits</a></li><li class="chapter-item "><a href="../es191/diodes.html"><strong aria-hidden="true">5.8.</strong> Diodes</a></li><li class="chapter-item "><a href="../es191/transistors.html"><strong aria-hidden="true">5.9.</strong> Transistors</a></li><li class="chapter-item "><a href="../es191/opamps.html"><strong aria-hidden="true">5.10.</strong> Op Amps</a></li><li class="chapter-item "><a href="../es191/filters.html"><strong aria-hidden="true">5.11.</strong> Passive Filters</a></li><li class="chapter-item "><a href="../es191/equations.html"><strong aria-hidden="true">5.12.</strong> Equation Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../es193/index.html"><strong aria-hidden="true">6.</strong> ES193</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es193/functions.html"><strong aria-hidden="true">6.1.</strong> Functions, Conics &amp; Asymptotes</a></li><li class="chapter-item "><a href="../es193/complex.html"><strong aria-hidden="true">6.2.</strong> Complex Numbers</a></li><li class="chapter-item "><a href="../es193/vectors.html"><strong aria-hidden="true">6.3.</strong> Vectors</a></li><li class="chapter-item "><a href="../es193/matrices.html"><strong aria-hidden="true">6.4.</strong> Matrices</a></li><li class="chapter-item "><a href="../es193/equations.html"><strong aria-hidden="true">6.5.</strong> Simultaneous Linear Equations</a></li><li class="chapter-item "><a href="../es193/diff.html"><strong aria-hidden="true">6.6.</strong> Differentiation</a></li><li class="chapter-item "><a href="../es193/int.html"><strong aria-hidden="true">6.7.</strong> Integration</a></li><li class="chapter-item "><a href="../es193/diffeq.html"><strong aria-hidden="true">6.8.</strong> Differential Equations</a></li><li class="chapter-item "><a href="../es193/laplace.html"><strong aria-hidden="true">6.9.</strong> Laplace Transforms</a></li><li class="chapter-item "><a href="../es193/stats.html"><strong aria-hidden="true">6.10.</strong> Probability &amp; Statistics</a></li></ol></li><li class="chapter-item expanded "><a href="../es197/index.html"><strong aria-hidden="true">7.</strong> ES197</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es197/mech1.html"><strong aria-hidden="true">7.1.</strong> Translational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/mech2.html"><strong aria-hidden="true">7.2.</strong> Rotational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/electrical.html"><strong aria-hidden="true">7.3.</strong> Electrical Systems</a></li><li class="chapter-item "><a href="../es197/thermal.html"><strong aria-hidden="true">7.4.</strong> Thermal Systems</a></li><li class="chapter-item "><a href="../es197/data.html"><strong aria-hidden="true">7.5.</strong> Data Driven Models</a></li><li class="chapter-item "><a href="../es197/step1.html"><strong aria-hidden="true">7.6.</strong> First Order Step Response</a></li><li class="chapter-item "><a href="../es197/step2.html"><strong aria-hidden="true">7.7.</strong> Second Order Step Response</a></li><li class="chapter-item "><a href="../es197/transfer.html"><strong aria-hidden="true">7.8.</strong> Transfer Functions</a></li><li class="chapter-item "><a href="../es197/freq1.html"><strong aria-hidden="true">7.9.</strong> First Order Frequency Response</a></li><li class="chapter-item "><a href="../es197/freq2.html"><strong aria-hidden="true">7.10.</strong> Second Order Frequency Response</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Year 1 Notes</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/Joeyh021/first-year-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="applicative-functors"><a class="header" href="#applicative-functors">Applicative Functors</a></h1>
+<h2 id="kinds"><a class="header" href="#kinds">Kinds</a></h2>
+<ul>
+<li>For the compiler to accept a program, it must be well typed</li>
+<li><em>Kinds</em> are the &quot;types of types&quot;</li>
+<li>Types are denoted with <code>expression :: type</code>
+<ul>
+<li>eg <code>True :: Bool</code></li>
+</ul>
+</li>
+<li>Kinds are denoted the same: <code>type :: kind</code>
+<ul>
+<li><code>Bool :: *</code></li>
+</ul>
+</li>
+<li>The compiler infers kinds of types the same way it infers types of expressions</li>
+<li><code>*</code> is the kind of types</li>
+<li><code>Bool :: *</code> because <code>Bool</code> has no type parameters
+<ul>
+<li><code>data Bool = True | False</code></li>
+</ul>
+</li>
+<li><code>Maybe</code> is parametrised over some type <code>a</code>, so the kind signature <code>Maybe :: * -&gt; *</code> means that if given a type as an argument to the type constructor <code>Just</code>, it will give back some other type of kind <code>*</code></li>
+<li><code>[] :: * -&gt; *</code>
+<ul>
+<li><code>[]</code> is the type constructor for lists</li>
+</ul>
+</li>
+</ul>
+<p>Kinds are important when defining typeclasses. Take <code>Functor</code>, for example:</p>
+<pre><code class="language-haskell">class Functor f where
+  fmap :: (a -&gt; b) -&gt; f a-&gt; f b
+</code></pre>
+<p>This definition shows that the type <code>f</code> is applied to one argument (<code>f a</code>), so <code>f :: * -&gt; *</code></p>
+<pre><code class="language-haskell">-- Maybe :: * -&gt; *
+instance Functor Maybe where
+  fmap f Nothing = Nothing
+  fmap f (Just x) = Just (f x)
+
+-- invalid
+-- Maybe a :: *
+-- As the type is already applied to a
+instance Functor (Maybe a) where
+  fmap f Nothing = Nothing
+  fmap f (Just x) = Just (f x)
+</code></pre>
+<h2 id="the-either-type"><a class="header" href="#the-either-type">The <code>Either</code> Type</a></h2>
+<p>Either is usually used to represent the result of a computation when it could give one of two results. <code>Right</code> is used to represent success, and <code>a</code> is the wanted value. <code>Left</code> is used to represent error, with <code>e</code> as some error code/message.</p>
+<pre><code class="language-haskell">data Either e a = Left e | Right a
+Left :: e -&gt; Either e a
+Right :: a -&gt; Either e a
+</code></pre>
+<p><code>Either</code> has kind <code>* -&gt; * -&gt; *</code>, as it must be applied to two types <code>e</code> and <code>a</code> before we get some other type.</p>
+<p>Only types of kind <code>* -&gt; *</code> can be functors, so we need to apply <code>Either</code> to one argument first. The functor instance for <code>Either</code> applies the function to the <code>Right</code> value.</p>
+<pre><code class="language-haskell">instance Functor (Either e) where
+  fmap :: (a -&gt; b) -&gt; Either e a -&gt; Either e b
+  fmap f (Left x)  = Left x
+  fmap f (Right y) = Right (f y)
+</code></pre>
+<h2 id="the-unit-type-"><a class="header" href="#the-unit-type-">The Unit Type <code>()</code></a></h2>
+<ul>
+<li><code>()</code> is called the unit type</li>
+<li><code>() :: ()</code>
+<ul>
+<li><code>()</code>, the unit value, has type <code>()</code></li>
+<li><code>()</code> is the only value of type <code>()</code></li>
+</ul>
+</li>
+<li>Can be thought of as defined <code>data () = ()</code></li>
+<li>Or an empty tuple</li>
+</ul>
+<h2 id="semigroups-and-monoids"><a class="header" href="#semigroups-and-monoids">Semigroups and Monoids</a></h2>
+<p>A type is a semigroup if it has some associative binary operation defined on it. This operator <code>(&lt;&gt;)</code> is the &quot;combine&quot; operator.</p>
+<pre><code class="language-haskell">class Semigroup a where
+  (&lt;&gt;) :: a -&gt; a -&gt; a
+
+instance Semigroup [a] where
+  -- (&lt;&gt;) :: [a] -&gt; [a] -&gt; [a]
+  (&lt;&gt;) = (++)
+
+instance Semigroup Int where
+  -- (&lt;&gt;) :: Int -&gt; Int -&gt; Int
+  (&lt;&gt;) = (+)
+</code></pre>
+<p>A type is a monoid if it is a semigroup that also has some identity value, called <code>mempty</code>:</p>
+<pre><code class="language-haskell">class Semigroup a =&gt; Monoid a where
+  mempty ::a
+
+instance Monoid [a] where
+  -- mempty :: [a]
+  mempty = []
+
+instance Monoid Int where
+  -- mempty :: Int
+  mempty = 0
+</code></pre>
+<h2 id="applicatives"><a class="header" href="#applicatives">Applicatives</a></h2>
+<p>Applicative Functors are similar to normal functors, except with a slightly different type definition:</p>
+<pre><code class="language-haskell">class Functor f =&gt; Applicative f where
+  pure :: a -&gt; f a
+  &lt;*&gt;  :: f (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+<p>The typeclass defines two functions:</p>
+<ul>
+<li><code>pure</code> just lifts the value <code>a</code> into the &quot;box&quot;</li>
+<li><code>&lt;*&gt;</code> (the apply operator) takes some function (<code>a -&gt; b</code>) in a box <code>f</code>, and applies it to a value <code>a</code> in a box, returning the result in the same box.
+<ul>
+<li>&quot;box&quot; is a rather loose analogy. It is more accurate to say &quot;computational context&quot;.</li>
+</ul>
+</li>
+</ul>
+<p>Different contexts for function application:</p>
+<pre><code class="language-haskell">-- vanilla function application
+(\$) :: (a -&gt; b) -&gt; a -&gt; b
+-- Functor's fmap
+(&lt;\$&gt;) :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+-- Applicative's apply
+(&lt;*&gt;) :: Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+<p><code>Maybe</code> and <code>Either e</code> are both applicative functors:</p>
+<pre><code class="language-haskell">instance Applicative Maybe where
+  pure x = Just x
+  Nothing &lt;*&gt; _ = Nothing
+  (Just f) &lt;*&gt; x = f &lt;\$&gt; x
+
+instance Applicative (Either e) where
+  pure = Right
+  Left err &lt;*&gt; _ = Left err
+  Right f  &lt;*&gt; x = f &lt;\$&gt; x
+</code></pre>
+<p>The &quot;context&quot; of both of these types is that they represent error. All data flow in haskell has to be explicit due to its purity, so these types allow for the propagation of error.</p>
+<p>Another example of an applicative functor is a list:</p>
+<pre><code class="language-haskell">instance Applicative [] where
+  pure x = [x]
+  fs &lt;*&gt; xs = [f x | f &lt;- fs, x &lt;- xs]
+</code></pre>
+<p>Every function in the left list is applied to every function in the right:</p>
+<pre><code class="language-haskell">[f, g] &lt;*&gt; [x, y, z]
+=&gt; [f x, f y, f z, g x, g y, g z]
+
+g &lt;\$&gt; [x,y] &lt;*&gt; [a,b,c]
+=&gt; [g x, g y] &lt;*&gt; [a,b,c]
+=&gt; [g x a, g x b, g x c, g y a, g y b, g y c]
+</code></pre>
+<p><img src="./img/list-apply.png" alt="" /></p>
+<p>The context represented by lists is nondeterminism, ie a function <code>f</code> given one of the arguments <code>[x, y, z]</code> could have result <code>[f x, f y, f z]</code>.</p>
+<h2 id="applicative-laws"><a class="header" href="#applicative-laws">Applicative Laws</a></h2>
+<p>Applicative functors, like normal functors, also have to obey certain laws:</p>
+<ul>
+<li><code>pure id &lt;*&gt; x = x</code>
+<ul>
+<li>The identity law</li>
+<li>applying pure id does nothing</li>
+</ul>
+</li>
+<li><code>pure f &lt;*&gt; pure x = pure (f x)</code>
+<ul>
+<li>Homomorphism</li>
+<li><code>pure</code> preserves function application</li>
+</ul>
+</li>
+<li><code>u &lt;*&gt; pure y = pure (\$ y) &lt;*&gt; u</code>
+<ul>
+<li>Interchange</li>
+<li>Applying something to a pure value is the same as applying pure ($ y) to that thing</li>
+</ul>
+</li>
+<li><code>pure (.) &lt;*&gt; u &lt;*&gt; v &lt;*&gt; w = u &lt;*&gt; (v &lt;*&gt; w)</code>
+<ul>
+<li>Composition</li>
+<li>Function composition with <code>(.)</code> works within a <code>pure</code> context.</li>
+</ul>
+</li>
+</ul>
+<h2 id="left-and-right-apply"><a class="header" href="#left-and-right-apply">Left and Right Apply</a></h2>
+<p><code>&lt;*</code> and <code>*&gt;</code> are two more operators, both defined automatically when <code>&lt;*&gt;</code> is defined.</p>
+<pre><code class="language-haskell">const :: a -&gt; b -&gt; a
+const x y = x
+
+flip :: (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
+flip f x y = f y x
+
+(&lt;*) :: Applicative f =&gt; f a -&gt; f b -&gt; f a
+a0 &lt;* a1 = const &lt;\$&gt; a0 &lt;*&gt; a1
+
+(*&gt;) :: Applicative f =&gt; f a -&gt; f b -&gt; f b
+a0 *&gt; a1 = flip const &lt;\$&gt; a0 &lt;*&gt; a1
+</code></pre>
+<p>In simple terms <code>*&gt;</code> is used for sequencing actions, discarding the result of the first argument. <code>&lt;*</code> is the same, except discarding the result of the second.</p>
+<pre><code class="language-haskell">Just 4 &lt;* Just 8
+=&gt; const &lt;\$&gt; Just 4 &lt;*&gt; Just 8
+=&gt; Just (const 4) &lt;*&gt; Just 8
+=&gt; Just (const 4 8)
+=&gt; Just 4
+
+Just 4 &lt;* Nothing
+=&gt; const &lt;\$&gt; Just 4 &lt;*&gt; Nothing
+=&gt; Just (const 4) &lt;*&gt; Nothing
+=&gt; Nothing
+
+Just 4 *&gt; Just 8
+=&gt; flip const &lt;\$&gt; Just 4 &lt;*&gt; Just 8
+=&gt; Just (flip const 4) &lt;*&gt; Just 8
+=&gt; Just (flip const 4 8)
+=&gt; Just (const 8 4)
+=&gt; Just 8
+
+Nothing *&gt; Just 8
+=&gt; Nothing
+</code></pre>
+<p>These operators are perhaps easier to understand in terms of monadic actions:</p>
+<pre><code class="language-haskell">as *&gt; bs = do as
+              bs
+as *&gt; bs = as &gt;&gt; bs
+
+as &lt;* bs = do a &lt;- as
+              bs
+              pure a
+</code></pre>
+<h2 id="example-logging"><a class="header" href="#example-logging">Example: Logging</a></h2>
+<p>A good example to illustrate the uses of applicative functors is logging the output of a compiler. If we have a function <code>comp</code> that takes some <code>Expr</code> type, representing compiler input, and returns some <code>Program</code> type, representing output :</p>
+<pre><code class="language-haskell">comp :: Expr -&gt; Program
+comp (Val n) = [PUSH n]
+comp (Plus l r) = comp l ++ comp r ++ [ADD]
+-- extending to return a String for a log
+comp :: Expr -&gt; (Program, [String])
+comp (val n) = ([PUSH n],[&quot;compiling a value&quot;])
+comp (Plus l r) = (pl ++ pr ++ [ADD], &quot;compiling a plus&quot; : (ml ++ mr))
+  where (pl, ml) = comp l
+        (pr, mr) = comp r
+</code></pre>
+<p>This is messy and not very clear what is going on. There is a much nicer way to do this, using the <code>Writer</code> type:</p>
+<pre><code class="language-haskell">-- w is the &quot;log&quot;
+-- a is the containing type (the type in the &quot;box&quot;)
+data Writer w a = MkWriter (a,w)
+--type of MkWriter
+MkWriter :: (a,w) -&gt; Writer w a
+-- kind of Writer type
+Writer :: * -&gt; * -&gt; *
+
+instance Functor (Writer w) where
+  -- fmap :: (a -&gt; b) -&gt; Writer w a -&gt; Writer w b
+  fmap f (MkWriter (x,o)) = MkWriter (f x, o) -- applies the function to the x value
+
+-- a function to write a log
+-- generates a new writer with a msg and unit type in it's box
+writeLog :: String -&gt; Writer [w] ()
+writeLog msg = MkWriter((), [msg])
+</code></pre>
+<p>Using this to redefine <code>comp</code>:</p>
+<pre><code class="language-haskell">comp :: Expr -&gt; Writer [String] Program
+comp (Val n) = MkWriter ([PUSH n], m)
+  where (MkWriter (_, m)) = writeLog &quot;compiling a value&quot;
+comp (Plus l r) = MkWriter (pl ++ pr ++ [ADD], m ++ ml ++ mr)
+  where (MkWriter (pl, ml)) = comp l
+        (MkWriter (pr, mr)) = comp r
+        (MkWriter (_, m))   = writeLog
+</code></pre>
+<p>This definition of comp combines the output using <code>Writer</code>, but is messy as it uses pattern matching to deconstruct the results of the recursive calls and then rebuild them into the result. It would be nice if there was some way to implicitly keep track of the log messages.</p>
+<p>We can define an instance of the <code>Applicative</code> typeclass for <code>Writer</code> to do this. There is the additional constraint that <code>w</code> must be an instance of <code>Monoid</code>, because we need some way to combine the output of the log.</p>
+<pre><code class="language-haskell">instance Monoid w =&gt; Applicative (Writer w) where
+  --pure :: a -&gt; Writer w a
+  pure x = MkWriter (x, mempty)
+  -- &lt;*&gt; Monoid w =&gt; Writer w (a -&gt; b) -&gt; Writer w a -&gt; Writer w b
+  MkWriter (f,o1) &lt;*&gt; MkWriter (x,o2) = MkWriter (f x, o1 &lt;&gt; o2)
+  -- f is applied to x, and o1 and o2 are combined using their monoid instance
+</code></pre>
+<p>Using this definition, the <code>comp</code> function can be tidied up nicely using <code>&lt;*&gt;</code></p>
+<pre><code class="language-haskell">comp :: Expr -&gt; Writer [String] Program
+comp (Val n) = writeLog &quot;compiling a value&quot; *&gt; pure [PUSH n]
+comp (Plus l r) = writeLog &quot;compiling a plus&quot; *&gt;
+    ((\p p' -&gt; p ++ p' ++ [ADD]) &lt;\$&gt; comp l &lt;*&gt; comp r)
+</code></pre>
+<p>The first pattern uses <code>*&gt;</code>. Recall that <code>*&gt;</code> does not care about the left result, which in this case is the unit type, so only the result of the right <code>Writer</code> is used, which is the <code>[PUSH n]</code> put into a <code>Writer</code> by <code>pure</code>, with a <code>mempty</code>, or <code>[]</code> as the logged value.</p>
+<p>The second pattern applies the anonymous function <code>(\p p' -&gt; p ++ p' ++ [ADD])</code> to the result of the recursive calls. The lambda defines how the results of the recursive calls are combined together, and the log messages are automatically combined by the definition of <code>&lt;*&gt;</code>. <code>*&gt;</code> is used again to add a log message to the program.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../cs141/functors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../cs141/monads.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../cs141/functors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../cs141/monads.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
