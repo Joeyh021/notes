@@ -146,7 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="applicative-functors"><a class="header" href="#applicative-functors">Applicative Functors</a></h1>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="applicative-functors"><a class="header" href="#applicative-functors">Applicative Functors</a></h1>
 <h2 id="kinds"><a class="header" href="#kinds">Kinds</a></h2>
 <ul>
 <li>For the compiler to accept a program, it must be well typed</li>
@@ -259,9 +260,9 @@ instance Monoid Int where
 </ul>
 <p>Different contexts for function application:</p>
 <pre><code class="language-haskell">-- vanilla function application
-(\$) :: (a -&gt; b) -&gt; a -&gt; b
+($) :: (a -&gt; b) -&gt; a -&gt; b
 -- Functor's fmap
-(&lt;\$&gt;) :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+(&lt;$&gt;) :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 -- Applicative's apply
 (&lt;*&gt;) :: Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </code></pre>
@@ -269,12 +270,12 @@ instance Monoid Int where
 <pre><code class="language-haskell">instance Applicative Maybe where
   pure x = Just x
   Nothing &lt;*&gt; _ = Nothing
-  (Just f) &lt;*&gt; x = f &lt;\$&gt; x
+  (Just f) &lt;*&gt; x = f &lt;$&gt; x
 
 instance Applicative (Either e) where
   pure = Right
   Left err &lt;*&gt; _ = Left err
-  Right f  &lt;*&gt; x = f &lt;\$&gt; x
+  Right f  &lt;*&gt; x = f &lt;$&gt; x
 </code></pre>
 <p>The &quot;context&quot; of both of these types is that they represent error. All data flow in haskell has to be explicit due to its purity, so these types allow for the propagation of error.</p>
 <p>Another example of an applicative functor is a list:</p>
@@ -286,7 +287,7 @@ instance Applicative (Either e) where
 <pre><code class="language-haskell">[f, g] &lt;*&gt; [x, y, z]
 =&gt; [f x, f y, f z, g x, g y, g z]
 
-g &lt;\$&gt; [x,y] &lt;*&gt; [a,b,c]
+g &lt;$&gt; [x,y] &lt;*&gt; [a,b,c]
 =&gt; [g x, g y] &lt;*&gt; [a,b,c]
 =&gt; [g x a, g x b, g x c, g y a, g y b, g y c]
 </code></pre>
@@ -307,7 +308,7 @@ g &lt;\$&gt; [x,y] &lt;*&gt; [a,b,c]
 <li><code>pure</code> preserves function application</li>
 </ul>
 </li>
-<li><code>u &lt;*&gt; pure y = pure (\$ y) &lt;*&gt; u</code>
+<li><code>u &lt;*&gt; pure y = pure ($ y) &lt;*&gt; u</code>
 <ul>
 <li>Interchange</li>
 <li>Applying something to a pure value is the same as applying pure ($ y) to that thing</li>
@@ -329,25 +330,25 @@ flip :: (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
 flip f x y = f y x
 
 (&lt;*) :: Applicative f =&gt; f a -&gt; f b -&gt; f a
-a0 &lt;* a1 = const &lt;\$&gt; a0 &lt;*&gt; a1
+a0 &lt;* a1 = const &lt;$&gt; a0 &lt;*&gt; a1
 
 (*&gt;) :: Applicative f =&gt; f a -&gt; f b -&gt; f b
-a0 *&gt; a1 = flip const &lt;\$&gt; a0 &lt;*&gt; a1
+a0 *&gt; a1 = flip const &lt;$&gt; a0 &lt;*&gt; a1
 </code></pre>
 <p>In simple terms <code>*&gt;</code> is used for sequencing actions, discarding the result of the first argument. <code>&lt;*</code> is the same, except discarding the result of the second.</p>
 <pre><code class="language-haskell">Just 4 &lt;* Just 8
-=&gt; const &lt;\$&gt; Just 4 &lt;*&gt; Just 8
+=&gt; const &lt;$&gt; Just 4 &lt;*&gt; Just 8
 =&gt; Just (const 4) &lt;*&gt; Just 8
 =&gt; Just (const 4 8)
 =&gt; Just 4
 
 Just 4 &lt;* Nothing
-=&gt; const &lt;\$&gt; Just 4 &lt;*&gt; Nothing
+=&gt; const &lt;$&gt; Just 4 &lt;*&gt; Nothing
 =&gt; Just (const 4) &lt;*&gt; Nothing
 =&gt; Nothing
 
 Just 4 *&gt; Just 8
-=&gt; flip const &lt;\$&gt; Just 4 &lt;*&gt; Just 8
+=&gt; flip const &lt;$&gt; Just 4 &lt;*&gt; Just 8
 =&gt; Just (flip const 4) &lt;*&gt; Just 8
 =&gt; Just (flip const 4 8)
 =&gt; Just (const 8 4)
@@ -417,7 +418,7 @@ comp (Plus l r) = MkWriter (pl ++ pr ++ [ADD], m ++ ml ++ mr)
 <pre><code class="language-haskell">comp :: Expr -&gt; Writer [String] Program
 comp (Val n) = writeLog &quot;compiling a value&quot; *&gt; pure [PUSH n]
 comp (Plus l r) = writeLog &quot;compiling a plus&quot; *&gt;
-    ((\p p' -&gt; p ++ p' ++ [ADD]) &lt;\$&gt; comp l &lt;*&gt; comp r)
+    ((\p p' -&gt; p ++ p' ++ [ADD]) &lt;$&gt; comp l &lt;*&gt; comp r)
 </code></pre>
 <p>The first pattern uses <code>*&gt;</code>. Recall that <code>*&gt;</code> does not care about the left result, which in this case is the unit type, so only the result of the right <code>Writer</code> is used, which is the <code>[PUSH n]</code> put into a <code>Writer</code> by <code>pure</code>, with a <code>mempty</code>, or <code>[]</code> as the logged value.</p>
 <p>The second pattern applies the anonymous function <code>(\p p' -&gt; p ++ p' ++ [ADD])</code> to the result of the recursive calls. The lambda defines how the results of the recursive calls are combined together, and the log messages are automatically combined by the definition of <code>&lt;*&gt;</code>. <code>*&gt;</code> is used again to add a log message to the program.</p>

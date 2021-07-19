@@ -146,7 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="monads"><a class="header" href="#monads">Monads</a></h1>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="monads"><a class="header" href="#monads">Monads</a></h1>
 <p><strong>ṱ̴̹͙̗̣̙ͮ͆͑̊̅h̸̢͔͍̘̭͍̞̹̀ͣ̅͢e̖̠ͫ̒ͦ̅̉̓̓́͟͞ ͑ͥ̌̀̉̐̂͏͚̤͜f͚͔͖̠̣͚ͤ͆ͦ͂͆̄ͥ͌o̶̡̡̝͎͎̥͖̰̭̠̊r̗̯͈̀̚b̢͙̺͚̅͝i̸̡̱̯͔̠̲̿dͧ̈ͭ̑҉͎̮d̆̓̂̏̉̏͌͆̚͝͏̺͓̜̪͓e̎ͯͨ͢҉͙̠͕͍͉n͇̼̞̙͕̮̣͈͓ͨ͐͛̽ͣ̏͆́̓ ̵ͧ̏ͤ͋̌̒͘҉̞̞̱̲͓k͔̂ͪͦ́̀͗͘n͇̰͖̓ͦ͂̇̂͌̐ȯ̸̥͔̩͒̋͂̿͌w̞̟͔̙͇̾͋̅̅̔ͅlͧ͏͎̣̲̖̥ẻ̴̢̢͎̻̹̑͂̆̽ͮ̓͋d̴̪͉̜͓̗̈ͭ̓ͥͥ͞g͊̾̋̊͊̓͑҉͏̭͇̝̰̲̤̫̥e͈̝̖̖̾ͬ̍͢͞</strong></p>
 <p>Monads are another level of abstraction on top of applicatives, and allow for much more flexible and expressive computation. Functors =&gt; Applicatives =&gt; Monads form a hierarchy of abstractions.</p>
 <h2 id="the-monad-typeclass"><a class="header" href="#the-monad-typeclass">The <code>Monad</code> typeclass</a></h2>
@@ -214,10 +215,10 @@ safediv x y = Just (x `div` y)
 <p>If we want to use <code>safediv</code> with <code>eval</code>, we need to change it's type signature. The updated <code>eval</code> is shown below using applicatives to write the function cleanly and propagate any errors:</p>
 <pre><code class="language-haskell">eval :: Expr -&gt; Maybe Int
 eval (Val n) = Just n
-eval (Add l r) = (+) &lt;\$&gt; eval l &lt;*&gt; eval r
-eval (Div l r) = safediv &lt;\$&gt; eval l &lt;*&gt; eval r
+eval (Add l r) = (+) &lt;$&gt; eval l &lt;*&gt; eval r
+eval (Div l r) = safediv &lt;$&gt; eval l &lt;*&gt; eval r
 </code></pre>
-<p>If any recursive calls return a <code>Nothing</code>, the entire expression will evaluate to <code>Nothing</code>. Otherwise, the <code>&lt;\$&gt;</code> and <code>&lt;*&gt;</code> will evaluate the expression within the <code>Maybe</code> context. However, this is still wrong as the last expression now has type of <code>Maybe (Maybe Int)</code>. This can be fixed using <code>&gt;&gt;=</code>. Note the use of lambdas.</p>
+<p>If any recursive calls return a <code>Nothing</code>, the entire expression will evaluate to <code>Nothing</code>. Otherwise, the <code>&lt;$&gt;</code> and <code>&lt;*&gt;</code> will evaluate the expression within the <code>Maybe</code> context. However, this is still wrong as the last expression now has type of <code>Maybe (Maybe Int)</code>. This can be fixed using <code>&gt;&gt;=</code>. Note the use of lambdas.</p>
 <pre><code class="language-haskell">eval (Div l r) = eval l &gt;&gt;= \x -&gt;
                  eval r &gt;&gt;= \y -&gt;
                  x `safediv` y
@@ -236,7 +237,7 @@ eval (Add l r)  = eval l &gt;&gt;= \x -&gt;
 eval (Div l r)  = eval l &gt;&gt;= \x -&gt;
                   eval r &gt;&gt;= \y -&gt;
                   x `safediv` y
-eval (If c t f) = ifA &lt;\$&gt; eval c &lt;*&gt; eval t &lt;*&gt; eval f
+eval (If c t f) = ifA &lt;$&gt; eval c &lt;*&gt; eval t &lt;*&gt; eval f
   where ifA b x y = if b /= 0 then x else y
 </code></pre>
 <p>With this definition using applicatives, both branches of the conditional branch are evaluated. If there is an error in the false branch, the whole expression will fail. Here, using bind, the semantics are correct.</p>

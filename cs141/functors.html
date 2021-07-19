@@ -146,11 +146,12 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="functors--foldables"><a class="header" href="#functors--foldables">Functors &amp; Foldables</a></h1>
-<h2 id="the--operator"><a class="header" href="#the--operator">The <code>\$</code> Operator</a></h2>
-<p>The <code>\$</code> operator is an operator for function application. It has signature:</p>
-<pre><code class="language-haskell">(\$) :: (a -&gt; b) -&gt; a -&gt; b
-f \$ x = f x
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="functors--foldables"><a class="header" href="#functors--foldables">Functors &amp; Foldables</a></h1>
+<h2 id="the--operator"><a class="header" href="#the--operator">The <code>$</code> Operator</a></h2>
+<p>The <code>$</code> operator is an operator for function application. It has signature:</p>
+<pre><code class="language-haskell">($) :: (a -&gt; b) -&gt; a -&gt; b
+f $ x = f x
 </code></pre>
 <p>At first it doesn't look like it does much, but it is actually defined as <code>infixr 0</code> meaning it is:</p>
 <ul>
@@ -162,15 +163,15 @@ f \$ x = f x
 elem :: Eq a =&gt; a -&gt; [a] -&gt; Bool
 elem x xs = not (null (filter (==x) xs))
 -- rewritten, without parentheses
-elem x xs = not \$ null \$ filter (==x) xs
+elem x xs = not $ null $ filter (==x) xs
 -- or using function composition (.)
 elem x = not . null . filter (==x)
 </code></pre>
 <p>Another example, shown along with a trace of it's reduction:</p>
-<pre><code class="language-haskell">map (\$ 4) [even, odd]
-=&gt; (even $ 4) : map (\$ 4) [odd]
-=&gt; (even \$ 4) : (odd \$ 4) : []
-=&gt; True : (odd \$ 4) : []
+<pre><code class="language-haskell">map ($ 4) [even, odd]
+=&gt; (even  4) : map ($ 4) [odd]
+=&gt; (even $ 4) : (odd $ 4) : []
+=&gt; True : (odd $ 4) : []
 =&gt; True : False : []
 =&gt; [True, False]
 </code></pre>
@@ -295,20 +296,20 @@ divAndAdd :: Functor f =&gt; Int -&gt; Int -&gt; Maybe Int
 divAndAdd x y = fmap (5+) (safediv x y)
 </code></pre>
 <p>Functor is also another typeclass that can be derived by GHC, using the <code>-XDeriveFunctor</code> extension.</p>
-<h3 id="the--operator-1"><a class="header" href="#the--operator-1">The <code>&lt;\$&gt;</code> Operator</a></h3>
+<h3 id="the--operator-1"><a class="header" href="#the--operator-1">The <code>&lt;$&gt;</code> Operator</a></h3>
 <p>An operator that is essentially just an infix version of the <code>fmap</code> function.</p>
-<pre><code class="language-haskell">infixl 4 &lt;\$&gt;
-(&lt;\$&gt;) :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-(&lt;\$&gt;) = fmap
+<pre><code class="language-haskell">infixl 4 &lt;$&gt;
+(&lt;$&gt;) :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+(&lt;$&gt;) = fmap
 
 fmap (replicate 6) (safediv 8 4)
-== replicate 6 &lt;\$&gt; safediv 8 4
+== replicate 6 &lt;$&gt; safediv 8 4
 =&gt; Just [2,2,2,2,2,2]
 
 
--- redefining using &lt;\$&gt;
+-- redefining using &lt;$&gt;
 divAndAdd :: Functor f =&gt; Int -&gt; Int -&gt; Maybe Int
-divAndAdd x y = (5+) &lt;\$&gt; (safediv x y)
+divAndAdd x y = (5+) &lt;$&gt; (safediv x y)
 
 </code></pre>
 <h3 id="functor-laws"><a class="header" href="#functor-laws">Functor Laws</a></h3>

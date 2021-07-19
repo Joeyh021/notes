@@ -146,7 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="assembly"><a class="header" href="#assembly">Assembly</a></h1>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="assembly"><a class="header" href="#assembly">Assembly</a></h1>
 <h2 id="microprocessor-fundamentals"><a class="header" href="#microprocessor-fundamentals">Microprocessor Fundamentals</a></h2>
 <h3 id="the-cpu"><a class="header" href="#the-cpu">The CPU</a></h3>
 <ul>
@@ -283,15 +284,15 @@
 <li>Languages vary, but format tends to be similar: <code>LABEL: OPCODE OPERAND(S) | COMMENT</code></li>
 </ul>
 <p>An example program is shown below</p>
-<pre><code>    ORG  $4B0      | this program starts at hex 4B0
+<pre><code>    ORG  4B0      | this program starts at hex 4B0
     move.b #5, D0  | load D0 with number 5
-    add.b  #$A, D0 | add 10 (0x0A) to D0
+    add.b  #A, D0 | add 10 (0x0A) to D0
     move.b D0, ANS | move contents of D0 to ANS
 ANS: DS.B 1        | leave 1 byte of memory empty and name it ANS
 </code></pre>
 <ul>
 <li><code>#</code> indicates a literal</li>
-<li><code>$</code> means hexadecimal</li>
+<li>`` means hexadecimal</li>
 <li><code>%</code> means binary</li>
 <li>A number without a prefix is a memory address</li>
 <li><code>ANS</code> is a symbolic name</li>
@@ -333,10 +334,8 @@ ANS: DS.B 1        | leave 1 byte of memory empty and name it ANS
 <pre><code>move.b D0,   D1 | [D1(0:7)] &lt;- [D0(0:7)]
 move.w D0,   D1 | [D1(0:15)] &lt;- [D0(0:15)]
 swap   D2       | swap lower and upper words
-move.l $F20, D3  | [D3(24:31)] ← [MS($F20)]
-                | [D3(16:23)] ← [MS($F21)]
-                | [D3( 8:15)] ← [MS($F22)]
-                | [D3( 0:7)] ← [MS($F23)]
+move.l F20, D3  | [D3(24:31)] ← [MS(&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.13889em;&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;∣&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;←&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.05764em;&quot;&gt;MS&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;F21)]
+                | [D3( 8:15)] ← [MS(&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.13889em;&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;∣&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;←&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.05764em;&quot;&gt;MS&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;F23)]
                 | copied 8 bytes at a time in big endian order
 </code></pre>
 <h4 id="arithmetic"><a class="header" href="#arithmetic">Arithmetic</a></h4>
@@ -366,7 +365,7 @@ muls.w  Di, Dj  | signed multiplication
 <li>Normal rotate (<code>ROL</code>/<code>ROR</code>) moves the top of the bit to the bottom bit and also puts the top bit into C and X</li>
 <li>Rotate through X (<code>ROXL</code>/<code>ROXR</code>) rotates the value through the X register</li>
 </ul>
-<pre><code>AND.B #$7F, D0 | [D0] &lt;- [D0] . [0x7F]
+<pre><code>AND.B #7F, D0 | [D0] &lt;- [D0] . [0x7F]
 OR.B  D1,  D0 | [D0] &lt;- [D0] + [D1]
 LSL D0,    2  | [D0] &lt;- [D0] &lt;&lt; [2]
 </code></pre>
@@ -429,14 +428,14 @@ move D3, A2 | [A2] &lt;- [D3]
 <li>The operand forms part of the instruction (is a literal) and remains a constant</li>
 <li>Note the prefix <code>#</code> specifying a literal and the prefix specifying the base of the number</li>
 </ul>
-<pre><code>move.b #$42, D5 | [D5] &lt;- $42
+<pre><code>move.b #42, D5 | [D5] &lt;- 42
 </code></pre>
 <h3 id="absolute-addressing"><a class="header" href="#absolute-addressing">Absolute Addressing</a></h3>
 <ul>
 <li>Operand specifies the location in memory</li>
 <li>Does not allow for position-independent code: will always access the exact address given</li>
 </ul>
-<pre><code>move.l D2, $7FFF0 | [MS(7FFF0)] &lt;- [D2]
+<pre><code>move.l D2, 7FFF0 | [MS(7FFF0)] &lt;- [D2]
 </code></pre>
 <h3 id="address-register-indirect-addressing"><a class="header" href="#address-register-indirect-addressing">Address Register Indirect Addressing</a></h3>
 <ul>
