@@ -92,7 +92,7 @@ $$-4 V_1 + 5 V_2 +4 V_3 = 0 $$
 
 Using $I_x$ to generate another equation:
 
-$$I_x = V_1 - 7.5$$
+$$I_x = \frac{V_1}{7.5}$$
 $$V_3 - V_2 = I_x$$
 $$V_1 + 7.5V_2 - 7.5V_3 = 0$$
 
