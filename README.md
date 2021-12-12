@@ -1,6 +1,6 @@
 # Introduction
 
-This book is a collection of all my notes from the first year of my degree (computer systems engineering).
+This book is a collection of all my notes from my degree (computer systems engineering).
 
 It exists for a few purposes:
 

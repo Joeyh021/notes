@@ -83,3 +83,5 @@
   - [Transfer Functions](./es197/transfer.md)
   - [First Order Frequency Response](./es197/freq1.md)
   - [Second Order Frequency Response](./es197/freq2.md)
+- [ES2C6](./es2c6/index.md)
+- [ES2C7](./es2c7/index.md)
