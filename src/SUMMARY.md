@@ -97,7 +97,6 @@
 - [ES2C7](./es2c7/index.md)
   - [Binomial Theorem and Taylor Series](./es2c7/binomial.md)
   - [Matrices and Quadratic Forms](./es2c7/matrices.md)
-  - [Linear Independence](./es2c7/independence.md)
   - [Linear Simultaneous Equations](./es2c7/equations.md)
   - [Eigenvalues and Eigenvectors](./es2c7/eigen.md)
   - [Spectral Decomposition](./es2c7/spectral.md)

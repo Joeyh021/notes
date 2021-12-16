@@ -1,3 +1,0 @@
-# Linear Independence
-
-5
