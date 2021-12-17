@@ -3,7 +3,7 @@ authors = ["Joeyh021"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Year 1 Notes"
+title = "Computer Systems Engineering Notes"
 
 [preprocessor.katex]
 
