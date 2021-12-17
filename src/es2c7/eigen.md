@@ -1,6 +1,6 @@
 # Eigenvalues and Eigenvectors
 
-For a square $n$x$n$ matrix $A$, a scalar $\lambda$ is an **eigenvalue** of $A$, where:
+For a square $n\times n$ matrix $A$, a scalar $\lambda$ is an **eigenvalue** of $A$, where:
 
 $$Av =\lambda v$$
 
@@ -12,7 +12,7 @@ This equation has infinitely many non-trivial solutions for $v$, where:
 
 $$\det(A-\lambda I_n) = 0$$
 
-This is the characteristic equation of $A$, and the eigenvalues $\lambda$ are scalars that satisfy this. Since the characteristic equation is an $n$-th degree polynomial, an $n$x$n$ matrix will have $n$ eigenvalues $\lambda_i$ for $i = 1,2...,n$.
+This is the characteristic equation of $A$, and the eigenvalues $\lambda$ are scalars that satisfy this. Since the characteristic equation is an $n$-th degree polynomial, an $n\times n$ matrix will have $n$ eigenvalues $\lambda_i$ for $i = 1,2...,n$.
 
 Corresponding to each eigenvalue $\lambda_i$, eigenvectors $v^{(i)}$ are non-trivial solutions of:
 
