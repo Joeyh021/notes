@@ -1,3 +1,0 @@
-# Spectral Decomposition
-
-9

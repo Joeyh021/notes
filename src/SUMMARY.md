@@ -99,7 +99,6 @@
   - [Matrices and Quadratic Forms](./es2c7/matrices.md)
   - [Linear Simultaneous Equations](./es2c7/equations.md)
   - [Eigenvalues and Eigenvectors](./es2c7/eigen.md)
-  - [Spectral Decomposition](./es2c7/spectral.md)
   - [State Space Systems](./es2c7/systems.md)
   - [Differential Matrix Calculus](./es2c7/calculus.md)
   - [Fourier Series and Transforms](./es2c7/fourier.md)
