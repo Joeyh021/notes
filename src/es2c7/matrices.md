@@ -1,4 +1,4 @@
-# Matrices and Quadratic Forms
+# Matrices & Quadratic Forms
 
 ## Linear Algebra
 

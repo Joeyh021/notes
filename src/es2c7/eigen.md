@@ -1,4 +1,4 @@
-# Eigenvalues and Eigenvectors
+# Eigenvalues & Eigenvectors
 
 For a square $n\times n$ matrix $A$, a scalar $\lambda$ is an **eigenvalue** of $A$, where:
 

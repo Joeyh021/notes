@@ -1,4 +1,4 @@
-# Binomial Theorem and Taylor Series
+# Binomial Theorem & Taylor Series
 
 ## Binomial Theorem
 
