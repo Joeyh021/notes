@@ -502,7 +502,7 @@ A =
 \end{bmatrix}
 $$
 
-The solution is given by $x(t) = e^{At}x_0$, and the matrix exponential term $e^{At} = V \operatorname{diag}\{e^{\lambda_1 t}, e^{\lambda_2 t},\dots, e^{\lambda_n t\}} V^{-1} $:
+The solution is given by $x(t) = e^{At}x_0$, and the matrix exponential term $e^{At} = V \operatorname{diag}\{e^{\lambda_1 t}, e^{\lambda_2 t},\dots, e^{\lambda_n t}\} V^{-1} $:
 
 $$
 x(t) =
