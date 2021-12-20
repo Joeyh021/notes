@@ -145,7 +145,7 @@ If a reference type is required (ie `Integer`), but a primitive is given (`(int)
 
 ## Abstract Classes and Interfaces
 
-- Abstract classes are are classes that contain one or more `abstract` methods.
+- Abstract classes are classes that contain one or more `abstract` methods.
   - A class must be declared `abstract`
   - Abstract methods have no body, ie are unimplemented.
   - The idea of them is to generalise behaviour, and leave it up to subclasses to implement
