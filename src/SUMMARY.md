@@ -101,6 +101,7 @@
   - [Eigenvalues & Eigenvectors](./es2c7/eigen.md)
   - [Oscillators & State Space Systems](./es2c7/systems.md)
   - [Matrix Differential Calculus](./es2c7/calculus.md)
+  - [Optimisation](./es2c7/optimisation.md)
   - [Fourier Series & Transforms](./es2c7/fourier.md)
   - [Z Transforms](./es2c7/z.md)
   - [Partial Differential Equations](./es2c7/pdes.md)
