@@ -253,7 +253,7 @@ $$\lambda_1 = 0 \qquad \lambda_2 = 2$$
 
 The hessian matrix is positive semidefinite, so the point is probably a valley, but further analysis is required to determine the nature of the point.
 
-For $\mathbf x_0 =\begin{bmatrix}-1/6 \\ -1/3\end{bmatrix}:
+For $\mathbf x_0 =\begin{bmatrix}-1/6 \\ -1/3\end{bmatrix}$:
 
 $$\lambda_1 = 3.56 \qquad \lambda_2 = -0.56$$
 
