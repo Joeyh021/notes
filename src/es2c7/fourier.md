@@ -125,7 +125,7 @@ $$
 Provided that:
 
 - $f(t)$ and $f'(t)$ are piecewise continuous in every finite interval
-- $\int\_{\infty}^{-\infty}|f(t)| \; dt $ exists
+- $\int_{\infty}^{-\infty}|f(t)| \; dt $ exists
 
 This can also be expressed in complex notation:
 
