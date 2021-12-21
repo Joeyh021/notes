@@ -37,7 +37,7 @@ Alternatively, there is an analytical solution...
 
 Consider a discrete sequence $f[k], n \in \N$. The z transform of this sequence is defined as:
 
-$$F(z) = \cal{Z}\{f[k]\} = \sum^{\infty}_{k=0}f[k]z^{-k}\\ = F(z) = f[0] + \frac{f[1]}{z} + \frac{f[2]}{z^2} + \frac{f[3]}{z^3}...$$
+$$F(z) = \mathcal{Z}\{f[k]\} = \sum^{\infty}_{k=0}f[k]z^{-k}\\ = F(z) = f[0] + \frac{f[1]}{z} + \frac{f[2]}{z^2} + \frac{f[3]}{z^3}...$$
 
 A closed-form expression can generally be found by the sum of the infinite series. For example, the z transform of the unit step $f[k] = 1$:
 
@@ -61,15 +61,15 @@ z transforms have linearity, the same as laplace and fourier transforms.
 
 If $f[k]$ is a sequence and $F(z)$ it's transform, then
 
-$$\cal{Z}\{f[k+i]\} = z^iF(z) - (z^i f[0] + z^{i-1} f[1] + ... + zf[i-1]) $$
+$$\mathcal{Z}\{f[k+i]\} = z^iF(z) - (z^i f[0] + z^{i-1} f[1] + ... + zf[i-1]) $$
 
 For example, if $i=1$:
 
-$$\cal{Z}\{f[k+1]\} = zF(z) - zf[0]$$
+$$\mathcal{Z}\{f[k+1]\} = zF(z) - zf[0]$$
 
 For $i=2$:
 
-$$\cal{Z}\{f[k+2]\} = z^2F(z) - z^2f[0] - zf[1]$$
+$$\mathcal{Z}\{f[k+2]\} = z^2F(z) - z^2f[0] - zf[1]$$
 
 ### Second Shift Theorem
 
@@ -85,7 +85,7 @@ $$
 
 Where $u(t)$ is the unit step function. The function $f(t-iT)u(t-iT)$, where $i$ is a positive integer, represents a shift to the right of this function by $i$ sample intervals. If this shifted function is sampled, we have $f[k-i]u[k-i] $. The second shift theorem states:
 
-$$\cal{Z}\{f[k-i]u[k-i]\} = z^{-i}F(z)$$
+$$\mathcal{Z}\{f[k-i]u[k-i]\} = z^{-i}F(z)$$
 
 ## Inverse z Transforms
 
@@ -95,7 +95,7 @@ $$F(z) = \frac{z+3}{z-2} = \frac{z}{z-2} + \frac{3}{z-2}$$
 
 The first term can be seen immediately from the table:
 
-$$\cal{Z}\{\frac{z}{z-2}\} = 2^k$$
+$$\mathcal{Z}\{\frac{z}{z-2}\} = 2^k$$
 
 The second term rearranges to give:
 
@@ -103,17 +103,17 @@ $$\frac{3}{z-2} = \frac{3}{z} \frac{z}{z-2} = 3z^{-1} \frac{z}{z-2}$$
 
 This is in the form of the second shift theorem, so this can be applied to give:
 
-$$\cal{Z}\{3(2)^{k-1} u[k-1]\} = 3z^{-1} \frac{z}{z-2}$$
+$$\mathcal{Z}\{3(2)^{k-1} u[k-1]\} = 3z^{-1} \frac{z}{z-2}$$
 
 Thus,
 
-$$\cal{Z}^{-1}\left\{\frac{z+3}{z-2}\right\} = 2^k + 3(2)^{k-1} \,u[k-1]$$
+$$\mathcal{Z}^{-1}\left\{\frac{z+3}{z-2}\right\} = 2^k + 3(2)^{k-1} \,u[k-1]$$
 
 ## Example
 
 Solve $y[k+2] - 5y[k+1] + 6y[k]=0$, where $y[0] = 0$, $y[1] = 2$.
 
-$$\cal{Z}\{y[k+2]\} - 5\cal{Z}\{y[k+1]\} + 6\cal{Z}\{y[k]\} = 0$$
+$$\mathcal{Z}\{y[k+2]\} - 5\mathcal{Z}\{y[k+1]\} + 6\mathcal{Z}\{y[k]\} = 0$$
 Taking z transforms:
 $$z^2Y(z) - zy[0] - zy[1] - 5zY(z) + 5zy[0] + 6Y(z) = 0$$
 Rearranging and using initial conditions:
