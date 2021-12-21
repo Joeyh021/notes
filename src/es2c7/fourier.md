@@ -111,3 +111,100 @@ $$
 $$
 
 ## Fourier Transforms
+
+Fourier series give a representation of periodic signals, but non periodic signals can not be analysed in the same way. The Fourier transform works by replacing a sum of discrete sinusoids with a continuous integral of sinusoids over frequency, transforming from the time domain to the frequency domain. A non-periodic function $f(t)$ can be expressed as:
+
+$$
+f(t) = \int^{\infty}_0 A(\omega) \cos\omega t + B(\omega) \sin\omega t \; d\omega
+$$
+
+$$
+A(\omega) = \frac{1}{\pi} \int^{\infty}_{-\infty} f(t) \cos\omega t \; dt \qquad B(\omega) = \frac{1}{\pi} \int^{\infty}_{-\infty} f(t) \sin\omega t \; dt \quad
+$$
+
+Provided that:
+
+- $f(t)$ and $f'(t)$ are piecewise continuous in every finite interval
+- $\int\_{\infty}^{-\infty}|f(t)| \; dt $ exists
+
+This can also be expressed in complex notation:
+
+$$
+f(t) = \frac{1}{2\pi} \int^{\infty}_{-\infty} F(\omega) e^{j\omega t} \; d\omega
+$$
+
+$$
+F(\omega) = \int^{\infty}_{-\infty} f(t) e^{-j\omega t} \; dt
+$$
+
+- $F(\omega)$ is the **Fourier transform** of $f(t)$, denoted $\cal{F} \{f(t)\}$
+- $f(t)$ is the **inverse Fourier transform** of $F(\omega)$, denoted $\mathcal F^{-1} \{F(\omega) \}$
+
+For periodic signals:
+
+- **Fourier series** break a signal down into components with discrete frequencies
+  - Amplitude and phase of components can be calculated from coefficients
+  - Plots of amplitude and phase against frequency give frequency spectrum of a signal
+  - The spectrum is discrete for periodic signals
+
+For non-periodic signals:
+
+- **Fourier Transforms** represent a signal as a continuous integral over a range of frequencies
+  - The frequency spectrum of the signal is continuous rather than discrete
+  - $|F(\omega)|$ gives the spectrum amplitude
+  - $\arg(F(\omega))$ gives the spectrum phase
+
+### Fourier Transform Properties
+
+Fourier transforms have linearity, same as z and Laplace.
+
+#### Time Shift
+
+For any constant $a$:
+
+$$
+\mathcal{F}\{f(t-a)\} = e^{-j\omega a} F(\omega)
+$$
+
+If the original function $f(t)$ is shifted in time by a constant amount, this does not affect the magnitude of its frequency spectrum $F(\omega)$. Since the complex exponential always has a magnitude of 1, the time delay alters the phase of $F(\omega)$ but not its magnitude.
+
+#### Frequency Shift
+
+For any constant $a$:
+
+$$
+\mathcal{F}\{e^{jat}f(t)\} = F(\omega - a)
+$$
+
+### Example
+
+Find the Fourier integral representation of
+
+$$
+f(t) =
+\begin{cases}
+1 & -1 \leq t \leq 1 \\
+0 & |t| > 1
+\end{cases}
+$$
+
+$$
+F(\omega) = \int^{\infty}_{-\infty} f(t) e^{-j\omega t} \; dt =\int^{1}_{-1} (1) e^{-j\omega t} \; dt
+= \left[\frac{e^{-j\omega t}}{-j\omega}\right]^1_{-1}
+$$
+
+$$
+F(\omega) = \frac{e^{-j\omega} - e^{j\omega}}{j\omega}
+$$
+
+This is the Fourier transform of $f(t)$. Using Euler's relation $\sin \theta = \frac{e^{j\theta} - e^{-j\theta}}{2j}$:
+
+$$
+F(\omega) = \frac{e^{-j\omega} - e^{j\omega}}{j\omega} = \frac{2\sin\omega}{\omega}
+$$
+
+Therefore, the integral representation is:
+
+$$
+f(t) = \frac{1}{2\pi} \int^{\infty}_{-\infty} \frac{2\sin\omega}{\omega} e^{j\omega t} \; d\omega
+$$
