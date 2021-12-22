@@ -85,14 +85,13 @@
   - [Second Order Frequency Response](./es197/freq2.md)
 - [ES2C6](./es2c6/index.md)
 
-  - [Control Fundamentals](./es2c6/control.md)
-  - [PID Control](./es2c6/pid.md)
-  - [Control System Stability](./es2c6/stability.md)
-  - [Analysing Drive Systems](./es2c6/mechanics.md)
+  - [Control Systems](./es2c6/control.md)
+  - [Drive Systems](./es2c6/mechanics.md)
   - [Sensors](./es2c6/sensors.md)
   - [Electromagnetics](./es2c6/electromagnetics.md)
   - [Motor Control](./es2c6/motors.md)
-  - [Electrical Power](./es2c6/electrical.md)
+  - [AC Circuits](./es2c6/ac.md)
+  - [Three Phase AC Power](./es2c6/3phase.md)
 
 - [ES2C7](./es2c7/index.md)
   - [Binomial Theorem & Taylor Series](./es2c7/binomial.md)
