@@ -71,6 +71,7 @@
   - [Differential Equations](./es193/diffeq.md)
   - [Laplace Transforms](./es193/laplace.md)
   - [Probability & Statistics](./es193/stats.md)
+  - [Equation Reference](./es193/equationref.md)
 
 - [ES197](./es197/index.md)
   - [Translational Mechanical Systems](./es197/mech1.md)
