@@ -87,7 +87,7 @@
 - [ES2C6](./es2c6/index.md)
 
   - [Control Systems](./es2c6/control.md)
-  - [Drive Systems](./es2c6/mechanics.md)
+  - [Drive Systems](./es2c6/mechanial.md)
   - [Sensors](./es2c6/sensors.md)
   - [Electromagnetics](./es2c6/electromagnetics.md)
   - [Motor Control](./es2c6/motors.md)
