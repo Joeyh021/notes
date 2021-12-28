@@ -90,7 +90,6 @@
   - [Drive Systems](./es2c6/mechanics.md)
   - [Sensors](./es2c6/sensors.md)
   - [Electromagnetics & Motors](./es2c6/electromagnetics.md)
-  - [Motor Control](./es2c6/motors.md)
   - [AC Power](./es2c6/ac.md)
   - [Three Phase AC Circuits](./es2c6/3phase.md)
 
