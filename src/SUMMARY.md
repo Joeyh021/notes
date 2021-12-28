@@ -89,10 +89,10 @@
   - [Control Systems](./es2c6/control.md)
   - [Drive Systems](./es2c6/mechanics.md)
   - [Sensors](./es2c6/sensors.md)
-  - [Electromagnetics](./es2c6/electromagnetics.md)
+  - [Electromagnetics & Motors](./es2c6/electromagnetics.md)
   - [Motor Control](./es2c6/motors.md)
-  - [AC Circuits](./es2c6/ac.md)
-  - [Three Phase AC Power](./es2c6/3phase.md)
+  - [AC Power](./es2c6/ac.md)
+  - [Three Phase AC Circuits](./es2c6/3phase.md)
 
 - [ES2C7](./es2c7/index.md)
   - [Binomial Theorem & Taylor Series](./es2c7/binomial.md)
