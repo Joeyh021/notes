@@ -1,4 +1,4 @@
-# Electromagnetics
+# Electromagnetics & Motors
 
 There are 3 basic elements of any electrical machine
 

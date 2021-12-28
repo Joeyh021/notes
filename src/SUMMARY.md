@@ -91,7 +91,7 @@
   - [Sensors](./es2c6/sensors.md)
   - [Electromagnetics & Motors](./es2c6/electromagnetics.md)
   - [AC Power](./es2c6/ac.md)
-  - [Three Phase AC Circuits](./es2c6/3phase.md)
+  - [Three Phase AC Systems](./es2c6/3phase.md)
 
 - [ES2C7](./es2c7/index.md)
   - [Binomial Theorem & Taylor Series](./es2c7/binomial.md)
