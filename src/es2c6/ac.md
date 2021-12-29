@@ -111,10 +111,162 @@ $\cos \phi$ is the **power factor**. The closer it is to 1, the more real, usefu
 
 ## Power Factor Correction
 
+- Electrical power sources have to produce both real and reactive power
+- Real power is useful and does work, reactive power does not
+  - Most reactive power is inductance in transmission lines
+- We want to maximise the real power in the system, the ratio of which is given by the power factor $\cos\phi = P/S$
+- Inductive loads cause a positive phase angle
+- Capacitive loads cause a negative phase angle
+- Additional capacitors or inductors can be added to a power system to make the power factor as close to 1 as possible
+
+The power triangle below shoes a reduction in $\phi$ reducing the reactive power but keeping the same real power
+
+![](./img/compensation.png)
+
 ### Example 1
+
+Improve the power factor of the AC system shown to 0.98 lagging by adding a shunt reactance to the circuit
+
+![](./img/correction-example-1.png)
+
+Reducing the system to a single impedance:
+
+$$
+Z_T = \frac{Z_C(R + Z_L)}{Z_C + R + Z_L} = \frac{\frac{-j}{\omega C} \times (R + j\omega L)}{\frac{-j}{\omega C} + R + j\omega L} = \frac{(-j6.37)(2+j1.57)}{-j6.37 + 2+j1.57} = 3.11 \angle 15.5 \degree \,\Omega = 3 + j0.83 \\
+Z = R + jX = 3 + j0.83
+$$
+
+Calculating the complex power:
+
+$$
+I_{rms} = \frac{V}{Z} = \frac{25 \angle 0}{3.11 \angle 15.5} = 8.04 \angle -15.5
+$$
+
+$$
+P = I^2 R = 194
+$$
+
+$$
+Q = I^2 X = 56.63
+$$
+
+$$
+|S| = \sqrt{P^2 + Q^2} = 202
+$$
+
+The current power triangle is therefore:
+
+![](./img/power-triangle-1.png)
+
+With a power factor of $\cos \left( \tan^{-1} \frac{56.63}{194} \right) = 0.961$. The new load angle we require is $\cos^{-1}(0.98) = 11.48$. This will require a capacitance in parallel with the current impedance, which will dissipate more reactive power $Q_C$ to give a new overall reactive power $Q_1$:
+
+$$
+Q_C = Q - Q_1 = 56.63 - P \tan 11.48 = 17.23
+$$
+
+$$
+X_C = \frac{V^2}{Q_C} = \frac{25^2}{17.23} = 36.27
+$$
+
+$$
+C = \frac{1}{2\pi f X_C} = \frac{1}{2 \pi \times 50 \times 36.27} = 8.775 \times 10^{-5}
+$$
+
+The shunt capacitance should have a value of $87.75 \mu F$ to increase the power factor to 0.98 lagging.
 
 ### Example 2
 
+Add a component to this system to improve the power factor to 0.8 lagging.
+
+![](./img/correction-example-2.png)
+
+The total impedance of the system:
+
+$$
+Z_T = 1 + \frac{j6(2-2j)}{j6 + 2 - 2j} = 4.6 - j1.2 = 4.75 \angle - 14.6
+$$
+
+$$
+I = \frac{V}{Z} = \frac{8 \angle -40}{4.75 \angle -14.6} = 1.68 \angle - 25.4
+$$
+
+Calculating the power:
+
+$$
+S = |V_{rms}||I_{rms}| = \frac{8}{\sqrt{2}} \times \frac{1.68}{\sqrt 2} = 6.72
+$$
+
+$$
+P = I^2 R = \frac{1.68^2}{2} \times 4.6 = 6.6
+$$
+
+$$
+Q = I^2 X = \frac{1.68^2}{2} \times 1.2 = 1.7
+$$
+
+The current load angle is 14.6 lagging, so we need to add an inductance to make the system have a load angle of $\arccos 0.8 = 36.9$ leading:
+
+![](./img/power-triangle-2.png)
+
+The power dissipated by the new inductor:
+
+$$
+Q_L = Q + Q_1 = 1.7 + 6.5 \tan (36.9) = 6.58
+$$
+
+$$
+X_L = \frac{V^2_{rms}}{Q_L} = \frac{8^2 / 2}{6.58} = 4.86
+$$
+
+$$
+L = \frac{X_L}{\omega} = \frac{4.86}{2} = 2.43
+$$
+
+A shunt inductor of $2.43$ H is added to the system.
+
 ## Resonant Circuits
 
+- In any RLC circuit, it is possible to select a frequency at which the impedance is purely real
+- At this frequency the circuit will draw only real power
+- All the reactance will cancel out
+- In cases where frequency is controllable this is useful to improve efficiency
+- To calculate:
+  - Derive expression for the total circuit impedance
+  - Split into real and imaginary parts
+  - Derive a value of $\omega$ such that the imaginary part is 0
+
 ### Example
+
+Find an expression for the resonant frequency:
+
+![](./img/resonance-example.png)
+
+$$
+Z_1 =  R_1 + j\omega L
+$$
+
+$$
+Z_2 = \frac{R_2}{1 + j \omega R_2 C} = \frac{R_2}{1 + \omega^2 R_2^2 C^2} - j \frac{\omega R^2_2C}{1 + \omega^2 R_2^2 C^2}
+$$
+
+$$
+Z_T = R_1 + j\omega L + \frac{R_2}{1 + \omega^2 R_2^2 C^2} - j \frac{\omega R^2_2C}{1 + \omega^2 R_2^2 C^2}
+$$
+
+$$
+\operatorname{re}(Z_T) = R_1 + \frac{R_2}{1 + \omega^2 R_2^2 C^2}
+$$
+
+$$
+\operatorname{im}(Z_T) =\omega L -  \frac{\omega R^2_2C}{1 + \omega^2 R_2^2 C^2}
+$$
+
+We require that $\omega$ such that $\operatorname{im}(Z_T) = 0$:
+
+$$
+0 = \omega L -  \frac{\omega R^2_2C}{1 + \omega^2 R_2^2 C^2}
+$$
+
+$$
+\omega = \sqrt{\frac{1}{LC} - \frac{1}{R^2_2 C^2}}
+$$
