@@ -335,10 +335,101 @@ All have their strengths/weaknesses in different applications.
 
 ## Gearboxes
 
+Rotary transmission systems (gearboxes) used multiple gears compounded together with intermediate shafts
+
+- Driven gears are rotated by another gear
+- Driver gears are rotated by a shaft
+- Used where higher gear ratios are needed
+
+![](./img/compound-gears.png)
+
+The gear ratio for compound gears like this:
+
+- Gears 2,4,6 are driven gears
+- Gears 1,3,5 are driver gears
+
+$$
+N = \frac{\omega_i}{\omega_o} = \frac{\text{product of teeth on driven gears}}{\text{product of teeth on driver gears}}
+$$
+
+### Worm and Wheel
+
+A worm and wheel gearbox changes the axis of rotation and provides a high gear ratio
+
+![](./img/worm-wheel.png)
+
+- The worm drives the wheel
+  - Wheel cannot drive worm
+- The **lead** is the distance the worm moves forward in one revolution
+  - $L = N_1 p_a$
+  - $N$ is teeth on worm, $p_a$ is axial pitch in meters
+- The axial pitch is the distance between each thread on the worm gear
+- A worm with one tooth is single start, two teeth double start, three teeth triple start
+- Gear ratio $N$ is wheel teeth / worm teeth
+- To drive the gearbox backwards, $\tan \lambda < \mu$
+  - $\mu$ is coefficient of friction
+  - $\lambda$ is angle formed by the triangle between the length of the worm $L$ , and $\pi \d_w$
+    - $d_w$ is diameter of the worm gear
+- In most applications $\tan \lambda >> \mu$, so cannot be drive backwards
+
+### Planetary Gearbox
+
+A planetary gearbox is a co-axial gearbox, used in high-torque low-speed applications. It is cheap, compact, and efficient.
+
+![](./img/planetary.png)
+
+- Four main components
+  - Sun gear in the centre connected to one shaft
+  - Carrier connected to another shaft
+    - That fidget spinner-looking bit in the picture
+  - Outer ring
+  - Multiple planet gears connected to the carrier
+- Relationship between input and output torque depends on which components are fixed in place
+
+$$
+\frac{\omega_{sun} - \omega_{carrier}}{\omega_{ring} - \omega_{carrier}} = - \frac{N_{ring}}{N_{sun}} = \frac{\text{teeth on ring}}{\text{teeth on sun}}
+$$
+
+One of these velocities will always be zero, so the relationships are given below between velocities and torques for different fixed components
+
+![](./img/planetary-equations.png)
+
 ### Choosing a Gearbox
+
+An appropriate gearbox should be chosen based on velocities and torques in the system:
+
+- Max intermittent and continuous velocities
+- Max intermittent and continuous torques
+- Gear ratio
+- Radial and axial loads
+
+Equivalent torque $T_{equiv}$ is found based upon the motion profile and average torques:
+
+- $\bar T$ is average torque in a time period
+- $\bar \omega$ is average velocity in a time period
+- $x$ is a constant depending upon the gear construction, usually between 0.3 and 10
+  - Always use 5 here
+
+$$
+T_{equiv} = x \sqrt{\frac{\bar \omega_{acc} t_{acc} \bar T^x_{acc} +  \omega_{s} t_{s} \bar T^x_{s} + \bar \omega_{dec} t_{dec} \bar T^x_{dec}}{\bar \omega_{acc} t_{acc} +  \omega_{s} t_{s}+ \bar \omega_{dec} t_{dec}}}
+$$
+
+Mean velocity is also required:
+
+$$
+\omega_{avg} = \frac{\bar \omega_{acc} t_{acc} +  \omega_{s} t_{s}+ \bar \omega_{dec} t_{dec}}{t_{acc} + t_{s} + t_{dec}}
+$$
+
+The selection process for an appropriate gearbox is as follows:
+
+- Choose a gearbox whose maximum continuous torque (rated torque) is larger that $T_{equiv}$
+- Ensure max intermittent torque is frater than max torque load (torque at end of t\_{acc})
+- Divide the max gearbox speed by $\omega_s$ to determine maximum possible gear ratio
+- Select a standard gear ratio $N$ below this value
+- Input mean velocity is $N \times \omega_{avg}$
+- Input peak velocity is $N \times \omega_s$
+- If either of these exceed gearbox velocity ratings, select a lower gear ratio and try again
 
 ## Rotary to Linear Motion
 
-## Transmission Efficiency
-
-## RMS Torque
+## Transmission Efficiency and RMS Torque
