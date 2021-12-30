@@ -151,14 +151,6 @@ For both star and delta connected loads:
 | Apparent power per phase   | $\vert S_{ph} \vert=\vert I_{ph}\vert \vert  V_{ph}\vert$     |
 | Three phase apparent power | $\vert S_{3ph} \vert= 3 \vert I_{ph}\vert \vert  V_{ph}\vert$ |
 
-Expressing instead in terms of line current/voltage:
-
-| Power                      | Equation                                                            |
-| -------------------------- | ------------------------------------------------------------------- |
-| Three phase active power   | $P_{3ph}= \sqrt 3 \vert I_{L}\vert \vert  V_{LL}\vert\cos\phi$      |
-| Three phase reactive power | $Q_{3ph}= \sqrt 3\vert I_{L}\vert \vert  V_{LL}\vert\sin\phi$       |
-| Three phase apparent power | $\vert S_{3ph} \vert= \sqrt  3 \vert I_{L}\vert \vert  V_{LL}\vert$ |
-
 ## Example 1
 
 A balanced 3-phase star connected positive sequence source delivers power to a balanced 3-phase star connected load:
