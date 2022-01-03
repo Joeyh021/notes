@@ -172,7 +172,7 @@ $$
 Setting both sides again equal to a constant $-\mu^2$, we have two ODEs (one 2nd order, one 1st):
 
 $$
-\frac{d^2X(x)}{dx^2} = -\mu X(x) \quad \Rightarrow \quad X(x) = A \cos \mu x + B \sin \mu x
+\frac{d^2X(x)}{dx^2} = -\mu^2 X(x) \quad \Rightarrow \quad X(x) = A \cos \mu x + B \sin \mu x
 $$
 
 $$
