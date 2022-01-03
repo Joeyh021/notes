@@ -407,10 +407,16 @@ $$\dot{z_1}(t) = \lambda_1 z_1(t) \quad \Longrightarrow \quad z_1(t) = e^{\lambd
 $$\dot{z_2}(t) = \lambda_1 z_2(t) \quad \Longrightarrow \quad z_2(t) = e^{\lambda_1 t}z_2(0)$$
 $$\dot{z_n}(t) = \lambda_1 z_n(t) \quad \Longrightarrow \quad z_n(t) = e^{\lambda_1 t}z_n(0)$$
 
-$z_1(t), z_2(t), \dots , z_n(t)$ are the individual **modes** of the solution $x(t)$ and are defined by the eigenvalues $\lambda_1, \lambda_2, \dots , \lambda_n$ alone. The solution $x(t)$ is given by:
+$z_1(t), z_2(t), \dots , z_n(t)$ are the individual **modes** of the solution $x(t)$ and are defined by the eigenvalues $\lambda_1, \lambda_2, \dots , \lambda_n$ alone. The matrix exponential $e^{At}$ is given by:
 
 $$
-x(t) = Vz(t) = V \operatorname{diag}\{e^{\lambda_1 t}, e^{\lambda_2 t},\dots, e^{\lambda_n t\}} V^{-1} x_0
+e^{At} = Vz(t) = V \operatorname{diag}\{e^{\lambda_1 t}, e^{\lambda_2 t},\dots, e^{\lambda_n t\}} V^{-1}
+$$
+
+Multiplying by the starting state $x(0) = x_0$ gives:
+
+$$
+x(t) = x_0 e^{At} = x_0  V \operatorname{diag}\{e^{\lambda_1 t}, e^{\lambda_2 t},\dots, e^{\lambda_n t\}} V^{-1}
 $$
 
 - The solution is a linear combination of the terms $e^{\lambda_1 t}, e^{\lambda_2 t},\dots, e^{\lambda_n t}$
