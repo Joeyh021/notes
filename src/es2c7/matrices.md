@@ -310,13 +310,13 @@ $$
 where $x$ is an $n\times1$ column vector, and $A$ is an $n\times{}n$ symmetric matrix. In two variables:
 
 $$
-Q(x*1,x_2) = d*{11}x*1^2 + d*{22}x*2^2 + d*{12}x*1x_2 =
+Q(x_1,x_2) = d_{11}x_1^2 + d_{22}x_2^2 + d_{12}x_1x_2 =
 \begin{bmatrix}
 x_1 & x_2
 \end{bmatrix}
 \begin{bmatrix}
-d*{11} & d*{12} / 2 \\
-d*{12} /2 & d\_{22}
+d_{11} & d_{12} / 2 \\
+d_{12} /2 & d_{22}
 \end{bmatrix}
 \begin{bmatrix}
 x_1 & x_2
