@@ -116,7 +116,9 @@ $\cos \phi$ is the **power factor**. The closer it is to 1, the more real, usefu
   - Most reactive power is inductance in transmission lines
 - We want to maximise the real power in the system, the ratio of which is given by the power factor $\cos\phi = P/S$
 - Inductive loads cause a positive phase angle
+  - Lagging power factor as current lags voltage
 - Capacitive loads cause a negative phase angle
+  - Leading power factor as current leads voltage
 - Additional capacitors or inductors can be added to a power system to make the power factor as close to 1 as possible
 
 The power triangle below shoes a reduction in $\phi$ reducing the reactive power but keeping the same real power
@@ -204,7 +206,7 @@ $$
 Q = I^2 X = \frac{1.68^2}{2} \times 1.2 = 1.7
 $$
 
-The current load angle is 14.6 lagging, so we need to add an inductance to make the system have a load angle of $\arccos 0.8 = 36.9$ leading:
+The current load angle is 14.6 lagging, so we need to add an inductance to make the system have a load angle of $\arccos 0.8 = 36.9$ lagging
 
 ![](./img/power-triangle-2.png)
 
@@ -270,3 +272,5 @@ $$
 $$
 \omega = \sqrt{\frac{1}{LC} - \frac{1}{R^2_2 C^2}}
 $$
+
+## Transformers
