@@ -76,7 +76,7 @@ $$
 
 #### Positive Sequence
 
-All three line currents are $\sqrt 3 \times$ the phase currents, and **lad** them by 30°:
+All three line currents are $\sqrt 3 \times$ the phase currents, and **lag** them by 30°:
 
 $$
 I_{a} = \sqrt 3 |I_{ab}| \angle -30 \qquad I_{b} = \sqrt 3 |I_{bc}| \angle -150 \qquad I_{c} = \sqrt 3 |I_{ca}| \angle -270 \qquad
