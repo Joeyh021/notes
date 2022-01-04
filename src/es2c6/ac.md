@@ -274,3 +274,140 @@ $$
 $$
 
 ## Transformers
+
+- Transformers are the link between power systems of different voltage levels
+  - Step-up and step-down voltage
+  - An increase in voltage gives decrease in current and vice versa
+- Have full-load efficiencies of around 98% and are highly reliable
+- Similar to how mechanical gears increase/decrease torque/velocity dependent upon gear ratio, electrical transformers increase/decrease voltage/current dependent upon turns ratio
+- Consist of an iron/ferromagnetic core with wires wrapped around either side
+
+![](./img/transformer.png)
+
+- Changing voltage accross one coil induces magneto-motive force channelled through core
+- The other coil links the changing flux, inducing a voltage accross it
+
+### Ideal Transformers
+
+Ratios of input/output for an ideal transformer are given by:
+
+$$
+N = \frac{N_P}{N_S} = \frac{E_{in}}{E_{out}} = \frac{I_{out}}{I_{in}}
+$$
+
+When referring electrical properties over a transformer, multiply or divide by $N^2$
+
+$$
+Z_P = Z_S N^2
+$$
+
+An ideal transformer is assumed to be 100% efficient:
+
+$$
+S_{in} = S_{out}
+$$
+
+#### Example
+
+A single phase, 2 winding transformer is rated at 20kVA, 480V/120V, 50Hz. A source connected to the 480V (primary) winding supplies an impedance load connected to the 120V (secondary) winding. The load absorbs 15kVA at 0.8pf lagging when the load voltage is 118V.
+
+The turns ratio is given by the ratio of voltages:
+
+$$
+N = \frac{480}{120} = 4
+$$
+
+The load accross the primary winding is then calculated based on the load on the secondary winding:
+
+$$
+E_1 = N E_2 = 4 \times 118 = 472 V
+$$
+
+The current on the secondary side is calculated from the power:
+
+$$
+I_2 = \frac{S_2}{E_2} = \frac{15000 \angle \cos^{-1}(0.8)}{118\angle 0} = 127.12 \angle 36.87
+$$
+
+The power factor is lagging so the current is lagging voltage, the current should have a negative phase angle:
+
+$$
+I_2 = 127.12 \angle - 36.87
+$$
+
+The load impedance can then be calculated from this:
+
+$$
+Z_2 = \frac{E_2}{I_2} = \frac{118}{127.12 \angle - 36.87} = 0.928 \angle 36.87
+$$
+
+The load impedance referred over the transformer, as seen by the primary winding:
+
+$$
+Z_2' = N^2 Z_2 = 16 \times  0.928 \angle 36.87 = 14.85 \angle 36.87
+$$
+
+The real and reactive power supplied to the primary winding is calculated easily as this is an ideal transformer, so $S_1 = S_2$
+
+$$
+S_1 = S_2 = 15000 \angle 36.87 = 15000 \cos 36.87 +j15000\sin 36.87 = 12000 + j9000
+$$
+
+### Non-Ideal Transformers
+
+In reality:
+
+- Windings have resistance
+- Core has a reluctance
+- Flux is not entirely confined to the core
+- There are real and reactive power losses so efficiency is not 100%
+
+To model a transformer more accurately, introduce a resistance in series to model windings resistance, and inductance in series to model flux being not confined to core:
+
+![](./img/non-ideal-transformer.png)
+
+The model above shows a non-ideal transformer modelled with a single extra resistance and inductance, where the impedances from one side have been referred to the other to create a single impedance with values shown.
+
+- Note that in large power transformers, the winding resistance is tiny compared to leakage reactance, so series resistances may sometimes be omitted.
+
+#### Example
+
+An example of a power system containing an ideal transformer is shown below. An AC generator with internal impedance ZGen is connected to a transmission line with impedance $Z_{line}$. The voltage is then stepped up by an ideal transformer with a turns ratio of 0.1 and supplies a load impedance of $Z_{load}$ with a voltage $V_{load}$. Find the real power dissipated by the line impedance and the voltage accross the load.
+
+![](./img/transformers-example.png)
+
+Refer the load accross the transformer to create a single circuit:
+
+$$
+Z'_{load} = Z_{load}N^2 = (10+j1.5) \times 0.1^2 = 0.1 \times j0.15
+$$
+
+Now the circuit is a simple AC circuit with three impedences in parallel:
+
+$$
+Z_{gen} + Z_{line} + Z'_{load} = 4.1 + j6.15 = Z_T
+$$
+
+Current delivered by the generator:
+
+$$
+I_{in} = \frac{V}{Z_T} = \frac{240 \angle 30}{7.39 \angle 56.3} = 32.47 \angle - 26.3
+$$
+
+Real power dissipated by the line impedance is:
+
+$$
+P_{line} = |I|^2 R = 32.47^2 \times 3 = 3.164 kW
+$$
+
+To calculate the load voltage, we first need to refer current accross the transformer:
+
+$$
+I_{load} = NI_{in} = 0.1 \times 32.47 \angle - 26.3 = 3.247 \angle -26.3
+$$
+
+The load voltage is then:
+
+$$
+V_{load} = I_{load}Z_{load} = (3.247 \angle -26.3)(18 \angle 56.3) = 58.45 \angle 30
+$$
