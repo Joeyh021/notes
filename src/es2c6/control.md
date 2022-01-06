@@ -36,12 +36,14 @@ Consider an $n$th order linear differential equation, where $c(t)$ is the output
 
 $$
 a_n \frac{d^n c(t)}{dt^n} + a_{n-1} \frac{d^{n-1}c(t)}{dt^{n-1}} + ... + a_0 c(t) = b_m \frac{d^m r(t)}{dt^m} + a_{m-1} \frac{d^{m-1}r(t)}{dt^{m-1}} + ... + b_0 r(t)
+
 $$
 
 Taking laplace transforms an putting into a ratio of input over output:
 
 $$
 G(s) = \frac{C(s)}{R(s)} = \frac{b_m s^m + b_{m_-1}s^{m-1} + ... + b_0}{a_n s^n + a_{n_-1}s^{n-1} + ... + a_0}
+
 $$
 
 ![](./img/transfers.png)
@@ -55,18 +57,21 @@ Given the transfer function $G(s) = \frac{1}{s+2}$, find the response to a unit 
 
 $$
 C(S) = \frac{R(s)}{s+2}
+
 $$
 
 Transfer function of the step input $R(s) = \frac{1}{s}$, so:
 
 $$
 C(S) = \frac{1}{s+2} \frac{1}{s} = \frac{1}{2s} - \frac{1}{2(s+2)}
+
 $$
 
 Taking inverse laplace transforms:
 
 $$
 c(t) = \left(\frac{1}{2} - \frac{1}{2}e^{-2t}\right) u(t)
+
 $$
 
 ## Modelling
@@ -111,12 +116,14 @@ For inertia $J_1$:
 
 $$
 K \theta_1(t) + D_1 \dot{\theta}_1(t) + J_1\ddot\theta_1(t) - K\theta_2(t) = T(t)
+
 $$
 
 And for $J_2$:
 
 $$
 K \theta_2(t) + D_2 \dot{\theta}_2(t) - J_2\ddot\theta_2(t) - K\theta_1(t) = 0
+
 $$
 
 Note that for both these equations the form is \[sum of impedances connected to motion\] - \[sum of impedance between motions\] = \[sum of applied torque at motion\]. This general form can be applied to any rotational (or electrical) modelling problem.
@@ -131,12 +138,14 @@ Using KVL for loop 1:
 
 $$
 L \frac{dI_1 (t)}{dt} + R_1 I_1(t) - L \frac{dI_2(t)}{dt} = V(t)
+
 $$
 
 And loop 2:
 
 $$
 L \frac{dI_2(t)}{dt} + R_2I_2(t) + \frac{1}{C} \int^{t}_0 I_2(\tau) \; d\tau - L \frac{dI_1 (t)}{dt} = V_c(t)
+
 $$
 
 Again, noting that the form of the equation is the same as rotational: \[sum of impedances around loop\] - \[sum of impedance between loops\] = \[sum of applied voltage\]
@@ -170,6 +179,7 @@ This can be reduced to a single transfer function:
 
 $$
 \frac{C(s)}{R(s)} = \frac{G(s)}{1\pm G(s)H(s)}
+
 $$
 
 ### Other Identities
@@ -217,6 +227,7 @@ Conside the general form of the transfer function:
 
 $$
 G(s) = \frac{(s+ z_1)(s+z_2)\dots (s+z_n)}{(s+ p_1)(s+p_2)\dots (s+p_n)}
+
 $$
 
 - **Poles are the roots of the denominator**
@@ -232,10 +243,12 @@ To further analyse this transfer function, we can give it an input step to analy
 
 $$
 C(s) = \frac{1}{s} \frac{s+2}{s+5} = \frac{2}{5s} + \frac{3}{5(s+5)}
+
 $$
 
 $$
 c(t) = \frac{2}{5} + \frac{3}{5}e^{-5t}
+
 $$
 
 This shows that:
@@ -278,10 +291,12 @@ A first order system only has one pole. A general first order system with one po
 
 $$
 C(S) = R(S)G(S) = \frac{1}{s} \frac{a}{s+a} = frac{a}{s(s+a)}
+
 $$
 
 $$
 c(t) = c_f(t) + c_n(t) = 1-e^{-at}
+
 $$
 
 ![](./img/first-order.png)
@@ -303,12 +318,14 @@ Often it is not possible to obtain the transfer function of a system analyticall
 
 $$
 C(s) = \frac{1}{s}\frac{Ka}{s+a}
+
 $$
 
 The final value of the response is 0.72, so the time constant is where the response reaches roughly $0.63\times 0.72 = 0.45$, which is at about 0.13s. Hence $a = \frac{1}{0.13} = 7.7$. To find $K$, we can use the final value theorem:
 
 $$
 \lim_{s\to 0} sC(s) = \lim_{s \to 0} \frac{1}{s} \frac{a}{s+a} = frac{a}{s(s+a)} = 0.72 \Rightarrow K = 0.72
+
 $$
 
 ### Second Order
@@ -319,24 +336,28 @@ A second order system exhibits a wider range of responses than first order. A ch
 
 $$
 c(t) = K_1 e^{\sigma_1 t} + K_2 e^{\sigma_2 t}
+
 $$
 
 **Underdamped** response has a conjugate pair of complex poles $-\sigma \pm j \omega$, with the real part exhibiting exponential response, and the imaginary part sinusoidal.
 
 $$
 c(t) = Ae^{-\sigma t}\cos(\omega t - \phi)
+
 $$
 
 **Undamped** response has two imaginary poles, $\pm j\omega$, exhibiting purely sinusoidal response.
 
 $$
 c(t) = A\cos(\omega - \phi)
+
 $$
 
 **Critically damped** response has two repeated real poles, $-\sigma$, so exhibits an exponential response, and an exponential response multiplied by time:
 
 $$
 c(t) = K_1 e^{-\sigma t} + K_2 t e^{-\sigma t}
+
 $$
 
 ![](./img/2nd-responses.png)
@@ -350,6 +371,7 @@ A general 2nd order transfer function is given by:
 
 $$
 G(s) = \frac{\omega_n^2}{s^2 + 2\zeta \omega_n s + \omega_n^2}
+
 $$
 
 The damping ratio $\zeta$ determines the characteristics of the system response:
@@ -366,16 +388,19 @@ There are additional metrics that describe the response:
 
 $$
 t_p = \frac{\pi}{\omega_n \sqrt{1-\zeta^2}}
+
 $$
 
 $$
 OS = \frac{c(t_p) -1}{1} \times 100 = \exp\left(-\frac{\zeta\pi}{\sqrt{1- \zeta^2}}\right) \times 100
+
 $$
 
 The damping ratio can also be defined in terms of these parameters:
 
 $$
 \zeta = - \frac{\ln(OS/100)}{\sqrt{\pi^2 + (\ln(OS/100))^2}}
+
 $$
 
 #### Example
@@ -384,25 +409,29 @@ Find the damping ratio, natural frequency, damping characteristics, peak time, o
 
 $$
 G(s) = \frac{100}{s^2 + 15s + 100}
+
 $$
 
 $$
 \omega_n = 100 \qquad \zeta = \frac{15}{2 \times 10} = 0.75
+
 $$
 
 As $0 < \zeta < 1$, this is an underdamped system.
 
 $$
 t_p = \frac{\pi}{10 \sqrt{1-0.75^2}} = 0.475 \qquad  t_s = \frac{4}{10 \times 0.75} = 0.533
+
 $$
 
 $$
 OS = \exp\left(-\frac{0.75\pi}{\sqrt{1- 0.75^2}}\right) \times 100 = 2.84 \%
+
 $$
 
 ## Steady State Response Characteristics
 
-Steady state response is the final response of the system after the transient has diminished. The primary design focus with control systems is around reducing steady state error, the difference between the input and the output. In the graph below, output 1 has zero error, while output 2 has finite steady state error. It is possible for a system to have infinite steady state error if it continues to diverge from the input.
+Steady state response is the final response of the system after the transient has diminished. The primary design focus with control systems is around reducing steady state error, the difference between the input and the output ($e_{ss} = r(t) - c(t)$). In the graph below, output 1 has zero error, while output 2 has finite steady state error. It is possible for a system to have infinite steady state error if it continues to diverge from the input.
 
 ![](./img/steady.png)
 
@@ -412,18 +441,21 @@ Step input:
 
 $$
 e_{\text{step}}(\infty) = \frac{1}{1+K_p}
+
 $$
 
 Ramp input:
 
 $$
 e_{\text{ramp}}(\infty) = \frac{1}{K_v}
+
 $$
 
 Parabolic input:
 
 $$
 e_{\text{ramp}}(\infty) = \frac{1}{K_a}
+
 $$
 
 $K_p$,$K_v$, and $K_a$ are static error constants associated with different input types.
@@ -432,6 +464,7 @@ In order to acheive zero steady state error for a step input the denominator of 
 
 $$
 G(s) = \frac{(s+z_1)(s+z_2)...}{s^n(s+p_1)(s+p_2)...}
+
 $$
 
 Meaning that there must be at least one pure integrator (multiple of $1/s$) present in $G(s)$. For ramp and parabolic input, the same applies for $n \geq 2$ and $n \geq 3$.
@@ -442,10 +475,12 @@ PID controllers are a control method that consits of a proportional, integral, a
 
 $$
 u(t) = K_p e(t) + K_i \int e(t) \; dt + K_d \frac{de(t)}{dt}
+
 $$
 
 $$
 \frac{U(s)}{E(s)} = K_p + \frac{K_i}{s} + sK_d
+
 $$
 
 PID controllers are widely used as they are robust, versatile, and easy to tune. The tuning parameters are the three constants, $K_p$, $K_i$, and $K_d$
@@ -460,6 +495,7 @@ PID controllers are widely used as they are robust, versatile, and easy to tune.
   - The control signal can become large if the error is sloping steeply upwards, irrelevant of magnitude
   - Adds damping to the system to decrease overshoot
   - Does not affect steady-state error
+
 
 |       | Rise time    | Overshoot | Settling time | Steady-state error |
 | ----- | ------------ | --------- | ------------- | ------------------ |
@@ -485,9 +521,11 @@ The transfer function can then be approximated by:
 
 $$
 \frac{C(s)}{U(s)} = \frac{Ke^{-Ls}}{Ts+1}
+
 $$
 
 And the PID constants are set according to the following:
+
 
 | Controller type | $K_p$    | $T_i$    | $T_d$  |
 | --------------- | -------- | -------- | ------ |
@@ -502,6 +540,7 @@ For the second method:
   - If this does not happen for any $K_p$, this method is not applicable
 - The critical gain, $K_{cr}$ and corresponding critical oscillation period $P_{cr}$ are experimentally determined
 - These are then used to set the other constants as per the following:
+
 
 | Controller type | $K_p$        | $T_i$        | $T_d$         |
 | --------------- | ------------ | ------------ | ------------- |

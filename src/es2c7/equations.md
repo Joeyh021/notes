@@ -135,7 +135,7 @@ $$
 - A particular vector $x^*$ will again minimise the square of the norm of the solution vector
 
 $$
-x^* = A^+_R = A'(AA')^{-1}b
+x^* = A^+_Rb = A'(AA')^{-1}b
 
 $$
 
