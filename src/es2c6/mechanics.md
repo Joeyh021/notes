@@ -13,7 +13,7 @@
 
 System parameters:
 
-- $J_<$ = motor inertia, kgm$^2$
+- $J_M$ = motor inertia, kgm$^2$
 - $J_L$ = load inertia, kgm$^2$
 - $T_L$ = torque load, Nm
 - $T_M$ = motor torque, Nm
@@ -25,6 +25,7 @@ The system equation for how much torque the motor must provide is:
 $$
 (J_M + J_L) \ddot \theta = T_M - B \dot \theta - T_L\\
 T_M = (J_M + J_L)\ddot \theta + B \dot\theta + T_L
+
 $$
 
 The system's total moment of inertia $(J_M + J_L)$ is the sum of the inertias in the transmission system and load referred to the motor shaft, plus the inertia of the motor.
@@ -45,6 +46,7 @@ Using the same system shown above with parameters:
 
 $$
 T_M = (J_M + J_L)\ddot \theta + B \dot\theta + T_L = (2\times 10^{-3} + 1\times 10^{-2})\ddot\theta + 10^{-2}\dot\theta + 0.5
+
 $$
 
 To rotate the load from stationary to 20 rad/s, at an acceleration of 10 rad/s$^2$, the torque delivered is:
@@ -52,7 +54,6 @@ To rotate the load from stationary to 20 rad/s, at an acceleration of 10 rad/s$^
 - $T_M = 0.62$ Nm at $t=0$
 - $T_M = 0.82$ Nm at $t=2$
 - $T_M = 0.7$ Nm at $t > 2$
-
 - It can be seen that for a given motion trajectory, the maximum torque load was when the system was still accelerating, but had reached its final velocity
 - Decreasing the acceleration will reduce the maximum torque requirement, which will reduce load on the motor
 - More torque is required to accelerate a load than decelerate it due to friction
@@ -60,7 +61,7 @@ To rotate the load from stationary to 20 rad/s, at an acceleration of 10 rad/s$^
 
 ## Moments of Inertia
 
-An object's moment of inertia is determined by it's shape, and the axis through which it rotates. For a point mass the moment of inertia $J = mr^$, where $m$ is the mass and $r$ the perpendicular distance from the center of mass to the axis. Infinite infinitesimally small masses can be considered to calculate the moment of inertia of an entire body through integration.
+An object's moment of inertia is determined by it's shape, and the axis through which it rotates. For a point mass the moment of inertia $J= mr^2$, where $m$ is the mass and $r$ the perpendicular distance from the center of mass to the axis. Infinite infinitesimally small masses can be considered to calculate the moment of inertia of an entire body through integration.
 
 Fortunately, this is rarely needed as the inertias of common shapes through all 3 axes are given:
 
@@ -70,30 +71,34 @@ For rotation about an axis other than one through the centre of gravity, the par
 
 $$
 J = J_G + md^2
+
 $$
 
 ### Example 1
 
 The body shown is modelled as two 30kg spheres with radii 0.1m, connected with a slender rod of length 1m with weight 10kg. The whole body rotates about the $z$ axis, shown. Calculate the total inertia.
 
-![](./inertia-example-1.png)
+![](./img/inertia-example-1.png)
 
 First the moment of inertia of the rod about the $z$ axis:
 
 $$
 J_{r,z} = \frac{1}{12}m_rd_r^2 = \frac{10}{12} = \frac{5}{6}
+
 $$
 
 The moment of inertia of the spheres requires the parallel axis theorem:
 
 $$
 J_{z,s} = \frac{2}{5}m_sR_s^2 + m_s d^2 = \frac{2}{5}(30)(0.1)^2 + (30)(0.6)^2  = 10.92
+
 $$
 
 Total inertia:
 
 $$
 J_{z,t} = 2J_{z,s} + J_{r,z} = \frac{5}{6} + 2 \times 10.92 = 22.67
+
 $$
 
 ### Example 2
@@ -118,31 +123,35 @@ Inertia of encoder:
 
 $$
 J_e = \frac{m_er^2_e}{2} = \frac{0.1 \times 0.1^2}{2} = 5 \times 10^{-4}
+
 $$
 
 Inertia of rod using the parallel axis theorem, with the axis through it's centre of mass halfway up it's length parallel to the shaft:
 
 $$
 J_r = J_G + md^2 = \frac{m_rl_r^2}{12} + m_r (r_s + \frac{l_r}{2})^2 = \frac{0.2 \times 0.5 ^2}{12} + 0.2(0.15 + \frac{0.5}{2})^2 = 3 \times 10^{-2}
+
 $$
 
 The total inertia:
 
 $$
 J_T = J_M + J_L + J_S + J_r + J_r = 4.95 \times 10^{-2}
+
 $$
 
 Deriving the equation for motor torque and then substituting in:
 
 $$
 T_m = J\ddot\theta + B\dot\theta + T_L = (4.95 \times 10^{-2})\ddot\theta + (10^{-2})\dot\theta + 0.5
+
 $$
 
 ## Geared Rotary Systems
 
 Connecting a load to a motor via a gearbox allows a motor to drive higher torque loads, at the expense of reducing the angular velocity (or vice versa). Analysis of such systems is more complex as there are different velocities involved. Systems can be reduced to an equivalent direct drive system by referring torques accross the gearbox.
 
-- Assuming a gearbox is 100% efficient, input and output power $J\theta\dot$ are the same
+- Assuming a gearbox is 100% efficient, input and output power $J\dot\theta$ are the same
 - Angular velocity is decreased and torque increased by a factor of $N$
   - If $N <1$, the inverse happens
 - The gear ratio $N$ is defined as the number of teeth on output gear $N_2$ over the number of teeth on the input gear $N_1$
@@ -154,12 +163,14 @@ Connecting a load to a motor via a gearbox allows a motor to drive higher torque
 
 $$
 T_{\text{out}} = \pm N T_{\text{in}} \qquad \ddot\theta_{\text{out}} = \pm \frac{\ddot\theta_{\text{in}}}{N} \qquad \dot\theta_{\text{out}} = \pm \frac{\dot\theta_{\text{in}}}{N}
+
 $$
 
 In general, terms reflected across a gear system are:
 
 $$
 J_{\text{ref}} = \frac{J}{N^2} \qquad B_{\text{ref}} = \frac{B}{N^2} \qquad T_{\text{ref}} = \frac{T}{N}
+
 $$
 
 ### Example 1
@@ -180,22 +191,26 @@ Total inertia is the motor inertia plus the load inertia reflected across the ge
 
 $$
 J_{t} = J_M + \frac{J_L}{N^2} = 2 \times 10^-3 + \frac{10^{-2}}{10^2} = 2.1 \times 10^{-3}
+
 $$
 
 Reflecting the damping and torque load too:
 
 $$
 B_{t} = B_1 + \frac{B_2}{N^2} = 10^{-3} + \frac{10^{-2}}{10^2} = 1.1 \times 10^{-3}
+
 $$
 
 $$
 T_{Lr} = \frac{T_L}{N} = \frac{0.5}{10} = 5 \times 10^{-2}
+
 $$
 
 Final equation:
 
 $$
 T_m = J\ddot\theta + B\dot\theta + T_L  = (2.1 \times 10^{-3})\ddot\theta + (1.1 \times 10^{-3})\dot\theta
+
 $$
 
 ### Gear Ratios
@@ -206,6 +221,7 @@ In the example above, the peak torque when accelerating to 20 rad/s at 10 rad/s$
 
 $$
 N^{*} = \frac{J_L}{J_M}
+
 $$
 
 The minimum torque in a geared assembly **with no torque load** is achieved when the **reflected load inertia is equal to the motor inertia**. There are a few reasons why this may not be achevied, however:
@@ -232,36 +248,43 @@ The motor torque is the acceleration times total inertia, plus referred torque l
 
 $$
 T_M = \ddot\theta_L N \left(J_M + \frac{J_L}{N^2}\right) + \frac{T_L}{N}
+
 $$
 
 Rearranging for acceleration:
 
 $$
 \ddot\theta_L = \frac{T_M - T_L/N}{N\left(J_M + \frac{J_L}{N^2}\right)}
+
 $$
 
 The addition of a constant torque load changes the optimal gear ratio, which is now given by:
 
 $$
 \frac{\partial T_M}{\partial N} = \frac{\partial}{\partial N}\left( \ddot\theta_L N \left(J_M + \frac{J_L}{N^2}\right) + \frac{T_L}{N}\right) = 0
+
 $$
 
 $$
 N^* = \sqrt{\frac{\ddot\theta_L J_L + T_L}{\ddot\theta_L J_M}}
+
 $$
 
 **This is the optimal gear ratio for a geared rotary system with a constant torque load**
 
 $$
 \ddot\theta_L = \frac{\dot\theta_{L\text{max}}}{t_{\text{acc}}} = \frac{25}{0.1} = 250
+
 $$
 
 $$
 N* = \sqrt{\frac{250 \times 3 \times 10^{-1} +  100}{250 \times 2.4 \times 10^-4}} = 54
+
 $$
 
 $$
 T^*_M = \left(J_M + \frac{J_L}{(N^*)^2}\right) + \frac{T_L}{N^*} = \left(2.4 \times 10^{-4} + \frac{3 \times 10^{-1}}{54^2}\right) + \frac{100}{54} = 6.48
+
 $$
 
 ## Torque Loads
@@ -350,6 +373,7 @@ The gear ratio for compound gears like this:
 
 $$
 N = \frac{\omega_i}{\omega_o} = \frac{\text{product of teeth on driven gears}}{\text{product of teeth on driver gears}}
+
 $$
 
 ### Worm and Wheel
@@ -368,7 +392,7 @@ A worm and wheel gearbox changes the axis of rotation and provides a high gear r
 - Gear ratio $N$ is wheel teeth / worm teeth
 - To drive the gearbox backwards, $\tan \lambda < \mu$
   - $\mu$ is coefficient of friction
-  - $\lambda$ is angle formed by the triangle between the length of the worm $L$ , and $\pi \d_w$
+  - $\lambda$ is angle formed by the triangle between the length of the worm $L$ , and $\pi d_w$
     - $d_w$ is diameter of the worm gear
 - In most applications $\tan \lambda >> \mu$, so cannot be drive backwards
 
@@ -388,6 +412,7 @@ A planetary gearbox is a co-axial gearbox, used in high-torque low-speed applica
 
 $$
 \frac{\omega_{sun} - \omega_{carrier}}{\omega_{ring} - \omega_{carrier}} = - \frac{N_{ring}}{N_{sun}} = \frac{\text{teeth on ring}}{\text{teeth on sun}}
+
 $$
 
 One of these velocities will always be zero, so the relationships are given below between velocities and torques for different fixed components
@@ -412,12 +437,14 @@ Equivalent torque $T_{equiv}$ is found based upon the motion profile and average
 
 $$
 T_{equiv} = x \sqrt{\frac{\bar \omega_{acc} t_{acc} \bar T^x_{acc} +  \omega_{s} t_{s} \bar T^x_{s} + \bar \omega_{dec} t_{dec} \bar T^x_{dec}}{\bar \omega_{acc} t_{acc} +  \omega_{s} t_{s}+ \bar \omega_{dec} t_{dec}}}
+
 $$
 
 Mean velocity is also required:
 
 $$
 \omega_{avg} = \frac{\bar \omega_{acc} t_{acc} +  \omega_{s} t_{s}+ \bar \omega_{dec} t_{dec}}{t_{acc} + t_{s} + t_{dec}}
+
 $$
 
 The selection process for an appropriate gearbox is as follows:

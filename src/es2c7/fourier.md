@@ -5,7 +5,8 @@
 Fourier series provide a way of representing any periodic function as a sum of trigonometric functions. For a periodic function $f(t)$ with period $2L$, the Fourier series is given by:
 
 $$
-f(t) = \frac{a_0}{2} + \sum^{\infty}_{n=1} a_n \cos \frac{n\pi t}{L} + \sum^{\infty}_{n=1} b_n \cos \frac{n\pi t}{L}
+f(t) = \frac{a_0}{2} + \sum^{\infty}_{n=1} a_n \cos \frac{n\pi t}{L} + \sum^{\infty}_{n=1} b_n \sin \frac{n\pi t}{L}
+
 $$
 
 Where the coefficients $a_n$ and $b_n$ are called the Fourier coefficients, integrals calculated over the period of the function:
@@ -14,18 +15,21 @@ $$
 a_0 = \frac{1}{L} \int^L_{-L} f(t) dt \qquad
 a_n = \frac{1}{L} \int^L_{-L} f(t) \cos \frac{n\pi t}{L}dt \qquad
 b_n = \frac{1}{L} \int^L_{-L} f(t) \sin \frac{n\pi t}{L} dt \qquad
+
 $$
 
 Note that if the function is even $f(t) = f(-t)$, then the $b_n$ term is always 0, and the series is comprised of cosine terms only:
 
 $$
 f(t) = \frac{a_0}{2} + \sum^{\infty}_{n=1} a_n \cos \frac{n\pi t}{L}
+
 $$
 
 Likewise for odd functions $f(t) = -f(-t)$, the $a_n$ term is always zero, and the series is comprised of sine terms only:
 
 $$
 f(t) = \sum^{\infty}_{n=1} b_n \sin \frac{n\pi t}{L}
+
 $$
 
 The Fourier series uniquely represents a function if:
@@ -40,10 +44,12 @@ The Fourier series can be rewritten using Euler's formula $e^{j\theta} = \cos\th
 
 $$
 f(t) = \sum^{\infty}_{-\infty} c_n e^{j2n\pi t / T}
+
 $$
 
 $$
 c_n = \frac{1}{T} \int^T_0 f(t) e^{-j2n\pi t / T} dt \qquad \text{for}\; n = 0, \pm 1, \pm 2, \pm 3...
+
 $$
 
 Note that T = 2L, the period of the function.
@@ -53,13 +59,14 @@ Note that T = 2L, the period of the function.
 The spectrum representation gives the magnitude $A_n$ and phase $\phi_n$ of the harmonic components defined by the frequencies $f_n$ contained in a signal $f(t)$
 
 $$
-
 f(t) = \sum^{\infty}_{n=1} A_n \sin(2\pi f_n t + \phi_n) = \frac{a_0}{2} + \sum^{\infty}_{n=1} a*n \cos \frac{n\pi t}{L} + \sum^{\infty}*{n=1} b_n \cos \frac{n\pi t}{L}
-
 
 $$
 
-$$A_n = \sqrt{a^2_n + b^2_n} \quad \phi_n = \tan^{-1}\frac{a_n}{b_n} \quad f_n= \frac{n}{2L}$$
+$$
+A_n = \sqrt{a^2_n + b^2_n} \quad \phi_n = \tan^{-1}\frac{a_n}{b_n} \quad f_n= \frac{n}{2L}
+
+$$
 
 This gives two spectra:
 
@@ -80,6 +87,7 @@ f(t) =
 -1 & -\pi \leq t \leq 0 \\
 1 & 0 \leq t \leq \pi
 \end{cases}
+
 $$
 
 $f(t)$ is an odd function with period $2\pi$ ($L = \pi$), hence we only need the $b_n$ integral:
@@ -87,27 +95,34 @@ $f(t)$ is an odd function with period $2\pi$ ($L = \pi$), hence we only need the
 $$
 b_n = \frac{1}{L}\int^L_{-L} \sin \frac{n\pi t}{L} dt
 = \frac{1}{\pi} \left(\int^0_{-\pi} \sin nt +  \int^\pi_{0} \sin nt\right)  dt
+
 $$
 
 $$
 = \frac{1}{\pi} \left(  \left[ \frac{1}{n} - \frac{1}{n} \cos (-\pi n) \right] + \left[- \frac{1}{n} \cos(n\pi) + \frac{1}{n} \right] \right)
 = \frac{2}{n\pi}\left( 1-\cos(n\pi)\right)
+
 $$
 
 Since $\cos n\pi = (-1)^n$:
 
 $$
 b_n = \frac{2}{n\pi}(1- (-1)^n)
+
 $$
 
 Can introduce a new index $k$, such that $n = 2k-1$:
 
-$$b_k = \frac{4}{2k\pi -\pi} \quad \text{for} \: 1,2,3,...,\infty$$
+$$
+b_k = \frac{4}{2k\pi -\pi} \quad \text{for} \: 1,2,3,...,\infty
+
+$$
 
 The Fourier series for $f(t)$ is therefore given by:
 
 $$
 \frac{4}{\pi} \sum^{\infty}_{k=1} \frac{1}{2k-1} \sin\left((2k-1)t\right)
+
 $$
 
 ## Fourier Transforms
@@ -116,10 +131,12 @@ Fourier series give a representation of periodic signals, but non periodic signa
 
 $$
 f(t) = \int^{\infty}_0 A(\omega) \cos\omega t + B(\omega) \sin\omega t \; d\omega
+
 $$
 
 $$
 A(\omega) = \frac{1}{\pi} \int^{\infty}_{-\infty} f(t) \cos\omega t \; dt \qquad B(\omega) = \frac{1}{\pi} \int^{\infty}_{-\infty} f(t) \sin\omega t \; dt \quad
+
 $$
 
 Provided that:
@@ -131,10 +148,12 @@ This can also be expressed in complex notation:
 
 $$
 f(t) = \frac{1}{2\pi} \int^{\infty}_{-\infty} F(\omega) e^{j\omega t} \; d\omega
+
 $$
 
 $$
 F(\omega) = \int^{\infty}_{-\infty} f(t) e^{-j\omega t} \; dt
+
 $$
 
 - $F(\omega)$ is the **Fourier transform** of $f(t)$, denoted $\cal{F} \{f(t)\}$
@@ -164,6 +183,7 @@ For any constant $a$:
 
 $$
 \mathcal{F}\{f(t-a)\} = e^{-j\omega a} F(\omega)
+
 $$
 
 If the original function $f(t)$ is shifted in time by a constant amount, this does not affect the magnitude of its frequency spectrum $F(\omega)$. Since the complex exponential always has a magnitude of 1, the time delay alters the phase of $F(\omega)$ but not its magnitude.
@@ -174,6 +194,7 @@ For any constant $a$:
 
 $$
 \mathcal{F}\{e^{jat}f(t)\} = F(\omega - a)
+
 $$
 
 ### Example
@@ -186,25 +207,30 @@ f(t) =
 1 & -1 \leq t \leq 1 \\
 0 & |t| > 1
 \end{cases}
+
 $$
 
 $$
 F(\omega) = \int^{\infty}_{-\infty} f(t) e^{-j\omega t} \; dt =\int^{1}_{-1} (1) e^{-j\omega t} \; dt
 = \left[\frac{e^{-j\omega t}}{-j\omega}\right]^1_{-1}
+
 $$
 
 $$
 F(\omega) = \frac{e^{-j\omega} - e^{j\omega}}{j\omega}
+
 $$
 
 This is the Fourier transform of $f(t)$. Using Euler's relation $\sin \theta = \frac{e^{j\theta} - e^{-j\theta}}{2j}$:
 
 $$
 F(\omega) = \frac{e^{-j\omega} - e^{j\omega}}{j\omega} = \frac{2\sin\omega}{\omega}
+
 $$
 
 Therefore, the integral representation is:
 
 $$
 f(t) = \frac{1}{2\pi} \int^{\infty}_{-\infty} \frac{2\sin\omega}{\omega} e^{j\omega t} \; d\omega
+
 $$
