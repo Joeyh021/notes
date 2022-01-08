@@ -23,7 +23,7 @@ $$
 This can be generalised to:
 
 $$
-(a+b)^n = a^n + na^(n-1)b + \frac{n(n-1)}{2!} a^{n-2}b^2 + ... + b^n
+(a+b)^n = a^n + na^{n-1}b + \frac{n(n-1)}{2!} a^{n-2}b^2 + ... + b^n
 $$
 
 For the particular case where $a=1$ and $b=x$,we have:
