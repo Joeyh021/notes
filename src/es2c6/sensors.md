@@ -195,6 +195,12 @@ The unknown resistance may be some sensor which changes its resistance based upo
 
 ![](./img/wheatstone-example.png)
 
+The gain of the differential amplifier is calculated using the following, where $R_1=R_2$ and $R_3=R_4$
+
+$$
+V_{out} = \frac{R_3}{R_1}(V_C-V_D)
+
+$$
 ## Force and Torque Sensors
 
 ### Strain Gauge
@@ -202,7 +208,7 @@ The unknown resistance may be some sensor which changes its resistance based upo
 - A thin strip of semiconductor which is wafer thin and can be stuck onto things
 - The strip deforms as the surface deforms
 - When subject to a strain, its resistance changes
-  - $\Delta R / R = G\varepsilon $
+  - $\frac{\Delta R}{R} = G\varepsilon $
   - $G$ is the gauge factor, $\varepsilon$ is the strain
 - Strain is the ratio of change in length to original length, so this will measure how much a material has stretched by
   - The diagram below shows how
