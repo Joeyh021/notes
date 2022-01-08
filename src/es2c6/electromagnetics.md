@@ -231,6 +231,11 @@ $$
 - $A$ is field area in square meters (m$^2$)
 - $B$ is flux density in Teslas (T)
 
+The equation relating flux, current, turns and inductance is:
+$$
+L = \frac{\phi{}N}{I}
+$$
+
 ## PMDC Motors
 
 Permanent magnet DC motors are widely used in a variety of applications due to their simplicity of control. They consist of two main parts: a stator, and an armature. Stationary magnets are attached to the stator, and coils of wire are wound around the rotating armature:
@@ -517,6 +522,10 @@ $$
 
 $$
 F = \frac{LI^2}{2x} = \frac{N^2I^2}{2 \mathcal{R} x} = \mu A \frac{N^2 I^2}{2 x^2} = \frac{B^2 A}{2 \mu}
+$$
+
+$$
+L = \frac{\phi{}N}{I}
 $$
 
 $$
