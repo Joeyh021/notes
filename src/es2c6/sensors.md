@@ -118,7 +118,7 @@ Voltage attenuation can be easily achevied with just a voltage divider
 ![](./img/divider.png)
 
 - $V_{\text{in}}$ has range 0 to 20V
-- $R_1 = 30 \, k\Omega$, $R_2 = 30 \,k\Omega$,
+- $R_1 = 30 \, k\Omega$, $R_2 = 10 \,k\Omega$,
   - $V_{\text{out}}/V_{\text{in}} = 0.25$
 - $V_{\text{out}}$ has range 0 to 5V
 
