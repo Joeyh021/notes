@@ -2,6 +2,20 @@
 
 The overwhelming majority of electrial power is AC power, single phase power from the mains at 240V 50-60 Hz.
 
+## Reactance of Capcitors and Inductors
+
+$$
+X_L = \omega L = 2 \pi f L \\
+Z_L = jX_C = j\omega L = j(2\pi
+
+$$
+
+$$
+X_C = \omega L = 2 \pi f C\\
+Z_C = \frac{1}{jX_C} = \frac{1}{j\omega C} = \frac{1}{j\times 2\pi fC} = -j\frac{1}{2\pi fC}
+
+$$
+
 ## RMS Power
 
 AC voltages and currents alternate polarities so it is useful to define a DC equivalent, an average voltage/current. This is obtained by taking the root mean square of the sine wave:
