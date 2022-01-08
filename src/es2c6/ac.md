@@ -7,21 +7,19 @@ The overwhelming majority of electrial power is AC power, single phase power fro
 $$
 X_L = \omega L = 2 \pi f L \\
 Z_L = jX_C = j\omega L = j(2\pi f C)
-
 $$
 
 $$
 X_C = \omega L = 2 \pi f C\\
 Z_C = \frac{1}{jX_C} = \frac{1}{j\omega C} = \frac{1}{j\times 2\pi fC} = -j\frac{1}{2\pi fC}
-
 $$
 
 When in parallel the impedances is:
+
 $$
 \frac{1}{Z_t} = \frac{1}{Z_1} + \frac{1}{Z_2} \\
 Z_t = \frac{Z_1 Z_2}{Z_1 + Z_2}
 $$
-
 
 ## RMS Power
 
@@ -135,7 +133,7 @@ $\cos \phi$ is the **power factor**. The closer it is to 1, the more real, usefu
 - Electrical power sources have to produce both real and reactive power
 - Real power is useful and does work, reactive power does not
   - Most reactive power is inductance in transmission lines
-- We want to maximise the real power in the system, the ratio of which is given by the power factor $\cos\phi = P/S$
+- We want to maximise the real power in the system, the ratio of which is given by the power factor $\cos\phi = P/|S|$
 - Inductive loads cause a positive phase angle
   - Lagging power factor as current lags voltage
 - Capacitive loads cause a negative phase angle
