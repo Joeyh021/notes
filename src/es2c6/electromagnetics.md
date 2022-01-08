@@ -464,3 +464,65 @@ A H-Bridge is a power electronic circuit that can convert DC to AD current. For 
     - $S_2$ and $S_4$ are closed, connecting both terminals to ground and causing the motor to brake sharply
   - Coasting
     - All switches open, motor will continue to spin until mechanical load brings it to a stop
+
+
+## Equations
+
+Below are just the majority of the equations in one place without having to scroll :)
+
+$$
+B = \frac{\mu_0 I}{2\pi r}
+$$
+
+
+$$
+B = \frac{\phi}{A}
+$$
+
+$$
+H = \frac{NI}{L}
+$$
+
+$$
+B = \mu H
+$$
+
+$$
+F = BIL\sin\theta
+$$
+
+$$
+\mathcal{F}  = NI = Hl = \phi \mathcal{R}
+$$
+
+$$
+\mathcal{R} = \frac{l}{\mu_0 \mu_r A}
+$$
+
+$$
+e = \frac{d}{dt}(N\phi) = \frac{d\lambda}{dt}
+$$
+
+$$
+V = L \frac{dI}{dt}
+$$
+
+$$
+VI = P = LI \frac{dI}{dt}
+$$
+
+$$
+W_f = \int^t_0 P \, dt = \frac{1}{2}LI^2
+$$
+
+$$
+F = \frac{LI^2}{2x} = \frac{N^2I^2}{2 \mathcal{R} x} = \mu A \frac{N^2 I^2}{2 x^2} = \frac{B^2 A}{2 \mu}
+$$
+
+$$
+V = L \frac{di}{dt} + Ri + K_e \dot \theta
+$$
+
+$$
+k_t i = J \ddot\theta + b \dot\theta + T_L
+$$
