@@ -469,7 +469,7 @@ For three different kinds of test input, the corresponding steady state errors a
 Step input:
 
 $$
-e_{\text{step}}(\infty) = \frac{1}{1+K_p}
+e_{\text{step}}(\infty) = \frac{1}{1 + \lim_{s \to 0}G(s)}=\frac{1}{1+K_p}
 
 
 $$
@@ -477,7 +477,7 @@ $$
 Ramp input:
 
 $$
-e_{\text{ramp}}(\infty) = \frac{1}{K_v}
+e_{\text{ramp}}(\infty) =\frac{1}{1 + \lim_{s \to 0}sG(s)}= \frac{1}{K_v}
 
 
 $$
@@ -485,7 +485,7 @@ $$
 Parabolic input:
 
 $$
-e_{\text{ramp}}(\infty) = \frac{1}{K_a}
+e_{\text{ramp}}(\infty) =\frac{1}{1 + \lim_{s \to 0}s^2G(s)}= \frac{1}{K_a}
 
 
 $$
