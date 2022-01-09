@@ -350,21 +350,6 @@ x_1 & x_2
 
 $$
 
-$$
-Q(x_1,x_2) = d_{11}x_1^2 + d_{22}x{_2}^2 + d_{12}x_1x_2 =
-\begin{bmatrix}
-x_1 & x_2
-\end{bmatrix}
-\begin{bmatrix}
-d_{11} & d_{12} / 2 \\
-d_{12} /2 & d_{22}
-\end{bmatrix}
-\begin{bmatrix}
-x_1 & x_2
-\end{bmatrix}
-
-$$
-
 Linear forms are also a thing. A general linear form in three variables $x_1$, $x_2$, $x_3$:
 
 $$
