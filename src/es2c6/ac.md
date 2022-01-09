@@ -6,7 +6,7 @@ The overwhelming majority of electrial power is AC power, single phase power fro
 
 $$
 X_L = \omega L = 2 \pi f L \\
-Z_L = jX_C = j\omega L = j(2\pi f C)
+Z_L = jX_L = j\omega L = j(2\pi f L)
 
 $$
 
