@@ -244,7 +244,7 @@ $$
 c_0 = a \qquad c_1 = f'(a) \qquad c_2 = \frac{1}{2!}f^{(2)}(a) \quad ... \quad c_n = \frac{1}{n!} f^{(n)}(a)
 $$
 
-Therefore the Taylor series expansion of $f(x)$ about the point $x^{\*} = a $ is:
+Therefore the Taylor series expansion of $f(x)$ about the point $x^{\*} = a$ is:
 
 $$
 f(x) = \sum^{\infty}_{n=0} \frac{1}{n!}f^{(n)}(a)(x-a)^n=  f(a) + f'(a)(x-a) + \frac{1}{2!}f^{(2)}(a)(x-a)^2 + ... + \frac{1}{n!} f^{(n)}(a)(x-a)^n
