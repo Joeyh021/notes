@@ -1,17 +1,20 @@
 # AC Power
 
-The overwhelming majority of electrial power is AC power, single phase power from the mains at 240V 50-60 Hz.
+The overwhelming majority of electrical power is AC power, single phase power from the mains at 240V 50-60 Hz.
 
-## Reactance of Capcitors and Inductors
+## Reactance of Capacitors and Inductors
 
 $$
 X_L = \omega L = 2 \pi f L \\
-Z_L = jX_C = j\omega L = j(2\pi f C)
+
+Z_L = jX_L = j\omega L = j(2\pi f L)
+
 $$
 
 $$
-X_C = \omega L = 2 \pi f C\\
-Z_C = \frac{1}{jX_C} = \frac{1}{j\omega C} = \frac{1}{j\times 2\pi fC} = -j\frac{1}{2\pi fC}
+X_C = \frac{1}{\omega C} = \frac{1}{2\pi f C}\\
+Z_C = \frac{X_C}{j} = \frac{1}{j\omega C} = \frac{1}{j\times 2\pi fC} = -j\frac{1}{2\pi fC}
+
 $$
 
 When in parallel the impedances is:
