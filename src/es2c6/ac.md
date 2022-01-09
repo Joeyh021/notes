@@ -1,8 +1,8 @@
 # AC Power
 
-The overwhelming majority of electrial power is AC power, single phase power from the mains at 240V 50-60 Hz.
+The overwhelming majority of electrical power is AC power, single phase power from the mains at 240V 50-60 Hz.
 
-## Reactance of Capcitors and Inductors
+## Reactance of Capacitors and Inductors
 
 $$
 X_L = \omega L = 2 \pi f L \\
