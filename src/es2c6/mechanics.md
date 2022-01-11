@@ -581,3 +581,14 @@ $$
 The equations for position, velocity, acceleration,inertia, and torque are literally all the same as for a conveyor what more do u want me to say
 
 ## Transmission Efficiency and RMS Torque
+
+- No gearboxes have 100% efficiency
+- Efficiency modifies torque, not velocity
+- $P_{in} = T_{in}\dot\theta_{in}$
+- $P_{out} = (\eta T_{out})\dot\theta_{out}$
+
+RMS torque is a useful metric of a system to inform the choice of motor used in design. Assuming a trapezoidal motion profile:
+
+$$
+T_{RMS} = \sqrt{\frac{\frac{1}{2}(T^2_{M,acc} + T^2_{P, acc})t_{acc} + T^2_{P,s} t_s + \frac{1}{2}(T^2_{M,dec} + T^2_{P, dec})t_{dec}}{t_M}}
+$$
