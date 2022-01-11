@@ -487,4 +487,97 @@ The selection process for an appropriate gearbox is as follows:
 
 ## Rotary to Linear Motion
 
+### Belt and Pulley
+
+Transfers rotary motion across a distance
+
+![](./img/belt-pully.png)
+
+The rotational position, velocity, and acceleration of the motor and load are related by the relative diameters of the pulleys
+
+- $N = \frac{D_{PL}}{D_{PM}}$
+- $\theta_M = N\theta_L$
+- $\dot\theta_M = N \dot\theta_L$
+- $\ddot\theta_M = N\ddot\theta_L$
+
+The total intertia of the torque load is the intertia of the motor, pullets, belt, and load, all referred to the motor
+
+- $J_T = J_M + J_{PM} + J_{PL \to M} + J_{B \to M} + J_{L \to M}$
+- $J_{PL \to M} = J_{PL}\times \frac{1}{N^2}$
+- $J_{B \to M} = M_B\times \frac{D_{PM}^2}{N^2}$
+- $J_{L \to M} = J_L\times \frac{1}{N^2}$
+
+The torque load must also be referred across the belt and pully system using the equation
+
+$$
+T_{L \to M} = T_L \frac{1}{N}
+$$
+
+The total torque the motor must provide for the belt and pully system shown is:
+
+$$
+T_M = \left( J_M + J_{PM} + J_{PL} \times \frac{1}{N^2} + M_B \times \frac{D_{PM}^2}{N^2} + J_L\times \frac{1}{N^2} \right) \ddot\theta_M + \left(B_M + B_L \frac{1}{N^2} \right) \dot\theta_M + \frac{T_L}{N}
+$$
+
+### Lead and Screw
+
+- The screw is rotated by the motor, which makes the nut move along the thread of the screw
+- The distance the nut moves in one rotation is the **lead** $L$
+- The **pitch** is the distance between two adjacent threads
+- The **starts** is the number of independent threads in a screw, typically 1-3
+- $L = starts \times pitch$
+- The relationship between rotary velocity of the screw and linear velocity of the nut is $\omega = V/L$
+
+The diagram below shows a lead and screw subject to three forces
+
+- Push-pull $F_P$
+- Gravity $F_g = M_L g \sin \gamma$
+- Frition $F_f = \mu M_L g \cos \gamma $
+
+[](./img/lead-screw.png)
+
+The forces must be referred to the motor as a torque, which is done using the lead
+
+$$
+T_M = \left(J_M + J_S + M_L \left(\frac{L}{2\pi}\right)\right)\ddot\theta + \frac{L}{2\pi}(F_P + F_g + F_f)
+$$
+
+The equation above is written using lead in m/rev. Lead is sometimes given in m/rad, and the conversion is given as:
+
+$$
+1 \frac{m}{rev} = \frac{1}{2\pi} \frac{m}{rad}
+$$
+
+### Conveyor Belt
+
+![](./img/conveyor.png)
+
+The position, velocity, and acceleration of the motor and the load can be related using the following formulae:
+
+$$
+\theta_M = \frac{x_L}{D_{P1}/2} \quad \dot\theta_M = \frac{v_L}{D_{P1}/2} \quad \ddot\theta_M = \frac{a_L}{D_{P1}/2}
+$$
+
+The inertia of each of the pulleys depends on their relative diameters, so the total intertia referred to each motor is it's own inertia, plus the intertia of each pulley, plus the load:
+
+$$
+J_T = J_M + J_{P1} + J_{P2} \left(\frac{D_{P1}}{D_{P2}}\right)^2 + J_{P3} \left(\frac{D_{P1}}{D_{P3}}\right)^2 + J_{L \to M}
+$$
+
+$$
+J_{L \to M} = (M_B + M_L) \left( \frac{D_{P1}}{2} \right)
+$$
+
+The forces from the load must be referred to the motor as a torque, which is done using the diameter of the pulley the motor is connected to also:
+
+$$
+T_{L \to M} = (F_P + F_g + F_f) \frac{D_{P1}}{2}
+$$
+
+### Rack and Pinion
+
+![](./img/rack-pinion.png)
+
+The equations for position, velocity, acceleration,inertia, and torque are literally all the same as for a conveyor what more do u want me to say
+
 ## Transmission Efficiency and RMS Torque
