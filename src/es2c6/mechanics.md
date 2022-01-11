@@ -359,7 +359,7 @@ Most rotary and linear systems can be categorised as either:
 There are four types of motion profiles:
 
 - Triangular
-- Trapezoidal
+- Trapezoidal (the only examinable one)
 - Cosine
 - Polynomial
 
@@ -370,15 +370,72 @@ They are defined by:
 - Deceleration time $t_{\text{dec}}$
 - Total motoring time $t_M$
 
-All have their strengths/weaknesses in different applications.
+The beginning and ends of the time are dentoed $t_a$ and $t_b$, where $t_b$ and $t_c$ are the beginning and end of the slew time.
 
-### Triangular Motion
+Additionally, $k$ is a value whch is defined as the fraction of the total runtime for which velocity is constant:
+
+$$
+k = \frac{t_s}{t_M} = \frac{t_M - t_acc - t_dec}{t_M}
+$$
 
 ### Trapezoidal Motion
 
-### Cosine Motion
+We want to define the acceleration, velocity, and position in the three distinct time periods: accelerating $[t_a,t_b]$ , constant velocity $(t_b,t_c]$, and decelerating $(t_c,t_d]$.
 
-### Polynomial Motion
+$$
+\theta(t) =
+\begin{cases}
+\frac{1}{2} \alpha t^2 & t \in [t_a,t_b] \\
+\frac{1}{2} \alpha t_b^2 + \alpha t_b (t-t_b) & t \in (t_b,t_c] \\
+\frac{1}{2} \alpha t_b^2 + \alpha t_b (t_c - t_b) + \alpha t_b (t - t_c) + \alpha t_c (t-t_c) - \frac{1}{2} \alpha (t^2 - t^2_c) & t \in (t_c, t_d]
+\end{cases}
+$$
+
+$$
+\dot\theta(t) =
+\begin{cases}
+\alpha t & t \in [t_a,t_b] \\
+\alpha t_b & t \in (t_b,t_c] \\
+\alpha t_b - \alpha(t-t_c) & t \in (t_c, t_d]
+\end{cases}
+$$
+
+$$
+\ddot\theta(t) =
+\begin{cases}
+\alpha & t \in [t_a,t_b] \\
+0 & t \in (t_b,t_c] \\
+-\alpha & t \in (t_c, t_d]
+\end{cases}
+$$
+
+We can also define the time periods with respect to $k$:
+
+$$
+t_a = 0
+$$
+
+$$
+t_b = t_a + \frac{1}{2}(t_M - kt_M)  = t_{acc}
+$$
+
+$$
+t_c = t_b + kt_M
+$$
+
+$$
+t_c = t_c + t_b = t_M
+$$
+
+And the max velocity/acceleration:
+
+$$
+\dot\theta_{max} = \frac{2L}{(1+k)t_M}
+$$
+
+$$
+\ddot\theta_{max} = \pm \left(\frac{4}{1-k^2}\right)\left(\frac{L}{t^2_M}\right) = \pm \alpha
+$$
 
 ## Gearboxes
 
