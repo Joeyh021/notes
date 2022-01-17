@@ -139,6 +139,246 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="sequential-verilog"><a class="header" href="#sequential-verilog">Sequential Verilog</a></h1>
+<ul>
+<li>We can design combinational circuits using
+<ul>
+<li>Gate-level structural design</li>
+<li>Assign statements</li>
+<li>Behavioural always blocks</li>
+</ul>
+</li>
+<li>Important to consider that our circuits are purely combinational in all cases</li>
+<li>It is possible to design sequential circuits
+<ul>
+<li>Most designs will be synchronous: synced with a clock</li>
+</ul>
+</li>
+</ul>
+<h2 id="latches"><a class="header" href="#latches">Latches</a></h2>
+<h3 id="sr-latch"><a class="header" href="#sr-latch">SR Latch</a></h3>
+<ul>
+<li>Two inputs</li>
+<li>Two outputs</li>
+<li>Two NOR gates</li>
+</ul>
+<pre><code class="language-verilog">module srlatch(input R, S
+             output Q, Qbar);
+
+nor N1 (Q, R, Qbar);
+nor N2 (Qbar, S, Q);
+
+// Alternatively
+
+assign Q = R ~| Qbar;
+assign Qbar = S ~| Q;
+
+endmodule
+</code></pre>
+<h3 id="d-latch"><a class="header" href="#d-latch">D Latch</a></h3>
+<p>A D latch is synchronous, where an SR isn't:</p>
+<pre><code class="language-verilog">
+module dlatch(input EN, D,
+              output reg Q, Qbar);
+
+always @ (D, EN)
+    if(EN) begin
+        Q &lt;= D;
+        Qbar &lt;= ~D;
+    end
+end
+endmodule;
+</code></pre>
+<p>D goes to Q if enable is high: circuit is described succinctly.</p>
+<p>Generally, FPGA designs will be synchronous as it allows us to more easily understand the timing of the circuit. Most of the logic we will look at will be edge-triggered, which is described as follows:</p>
+<pre><code class="language-verilog">module simplereg(input d, clk, output reg q);
+    always @ (posedge clk)
+        q &lt;= d;
+endmodule
+</code></pre>
+<p><code>posedge</code> keyword can can be used in a sensitivity list to define a trigger on the rising edge of a clock (<code>negedge</code> is also a thing). In this case, a simple register is created. A multi-bit register/flip flop is defined below:</p>
+<pre><code class="language-verilog">module simplereg(input [3:0] d, input clk, output reg [3:0] q);
+
+    always @ (posedge clk)
+        q &lt;= d;
+endmodule
+</code></pre>
+<h2 id="clocks-and-reset"><a class="header" href="#clocks-and-reset">Clocks and Reset</a></h2>
+<ul>
+<li>All circuits should be synchronised based on the same clock signal</li>
+<li>Clock can be named whatever (usually <code>clk</code>) and defined as an input to the module</li>
+<li>We often need to reset the contents of a register or state of circuit to 0/a default
+<ul>
+<li>Two types of reset:
+<ul>
+<li>Asynchronous: whenever the reset input is asserted, the reset is triggered</li>
+<li>Synchronous: if the reset is asserted on the rising edge, reset is triggered</li>
+</ul>
+</li>
+<li>In modern FPGA design, we use synchronous reset</li>
+</ul>
+</li>
+</ul>
+<p>An 8 bit register with synchronous reset:</p>
+<pre><code class="language-verilog">
+module 8bitreg(input [7:0] d,
+               input clk, rst,
+               output reg [7:0] q);
+
+always @ (posedge clk) begin
+    if(rst)
+        q &lt;= 8'b00000000;
+    else
+        q &lt;= d;
+end
+endmodule
+</code></pre>
+<p>For an asynchronous reset, the reset signal is added to the sensitivity list so that the block can be triggered independently of the clock. However, this will desynchronise the always block from the rest of the circuit so is not the prefferred way to do it.</p>
+<pre><code class="language-verilog">
+module 8bitreg(input [7:0] d,
+               input clk, rst,
+               output reg [7:0] q);
+
+always @ (posedge clk or posedge rst) begin
+    if(rst)
+        q &lt;= 8'b00000000;
+    else
+        q &lt;= d;
+end
+endmodule
+</code></pre>
+<h2 id="registers"><a class="header" href="#registers">Registers</a></h2>
+<p>Can control multiple registers from the same block. Each assignment in a synchronous always block creates a register controlled by the same block. This verilog module contains 3 8-bit registers.</p>
+<pre><code class="language-verilog">module multireg(input [7:0] a, b, c
+                input clk, rst
+                output reg [7:0] q, r, s);
+
+always @ (posedge clk) begin
+    if(!rst) begin
+        q &lt;= 0;
+        r &lt;= 0;
+        s &lt;= 0;
+    end
+    else begin
+        q &lt;= a;
+        r &lt;= b;
+        s &lt;= c;
+    end
+end
+
+endmodule
+</code></pre>
+<ul>
+<li>When drawing can ignore clock and reset as they should always be there</li>
+<li>Putting a triangle on an input in a block diagram shows that the input is edge-triggered</li>
+</ul>
+<h3 id="non-blocking-assignment"><a class="header" href="#non-blocking-assignment">Non-Blocking assignment</a></h3>
+<ul>
+<li>The <code>&lt;=</code> operator is called non-blocking assignment</li>
+<li>For combinational always blocks, as use blocking assignment and order matters</li>
+<li>For a synchronous block, order does not matter
+<ul>
+<li>Everything only happens on the rising edge</li>
+</ul>
+</li>
+</ul>
+<h2 id="counters"><a class="header" href="#counters">Counters</a></h2>
+<p>A register where the value increments on the rising edge (or decrements if <code>down</code> signal is asserted).</p>
+<pre><code class="language-verilog">module simplecount(input clk, rst, down, output reg [3:0] q);
+    always @ (posedge clk) begin
+        if(rst)
+            q &lt;= 4'b0000;
+        else
+            if(down)
+                q &lt;= q - 1'b1;
+            else
+                q &lt;= q + 1'b1;
+
+endmodule
+</code></pre>
+<p>Can alter to include an <code>enable</code> signal. Since it's a synchronous component, don't need to account for all branches.</p>
+<pre><code class="language-verilog">module simplecount(input clk, rst, down, enable, output reg [3:0] q);
+    always @ (posedge clk) begin
+        if(rst)
+            q &lt;= 4'b0000;
+        else
+            if(enable)
+                if(down)
+                    q &lt;= q - 1'b1;
+                else
+                    q &lt;= q + 1'b1;
+    end
+endmodule
+</code></pre>
+<p>Can again alter to include the ability to load a value.</p>
+<pre><code class="language-verilog">module simplecount(input clk, rst, down, load, input [3:0] cnt_in, output reg [3:0] q);
+    always @ (posedge clk) begin
+        if(rst)
+            q &lt;= 4'b0000;
+        else
+            if(load)
+                q &lt;= cnt_in
+            else
+                if(down)
+                    q &lt;= q - 1'b1;
+                else
+                    q &lt;= q + 1'b1;
+    end
+endmodule
+</code></pre>
+<h2 id="shift-registers"><a class="header" href="#shift-registers">Shift Registers</a></h2>
+<p>1 bit serial in serial out shift register. Propagation occurs on the rising edge of the clock.</p>
+<ul>
+<li>Order of assignment does not matter</li>
+</ul>
+<pre><code class="language-verilog">module shiftreg(input clk, y, output reg q);
+    req q1,q2,q3;
+
+    always @ (posedge clk) begin
+        q1 &lt;= y;
+        q2 &lt;= q1;
+        q3 &lt;= q2;
+        q &lt;= q3;
+    end
+endmodule
+</code></pre>
+<p>Can make the module simpler using vectors, where each stage in the shift register is a separate position in the vector. The LSB is replaced by the input, and the MSB is the output.</p>
+<pre><code class="language-verilog">module shiftreg(input clk, y, output reg q_out);
+    req [4:0] q;
+
+    always @ (posedge clk) begin
+        q[0] &lt;= y;
+        q[4:1] &lt;= q[3:0];
+        q_out &lt;= q[4];
+    end
+endmodule
+</code></pre>
+<h2 id="memory"><a class="header" href="#memory">Memory</a></h2>
+<ul>
+<li>64 element memory requires 6-bit address input, with each word as 16 bits</li>
+<li>Declare internal 64-element array, where each position is 16 bits.</li>
+</ul>
+<pre><code class="language-verilog">module spram(input clk, en, write_en,
+             input [5:0] addr,
+             input [15:0] d_in
+             output reg [15:0] d_out);
+
+    reg [15:0] ram [0:63];
+
+    always @ (posedge clk) begin
+        if (en) begin
+            if (write_en) begin
+                ram[addr] &lt;= d_in;
+            end
+            d_out &lt;= ram [addr];
+        end
+    end
+endmodule
+</code></pre>
+<p>On each clock cycle:</p>
+<ul>
+<li>output 16 bit word that is on the provided addres</li>
+<li>if <code>write_en</code>, then <code>d_in</code> is stored at the memory location <code>addr</code></li>
+</ul>
 
                     </main>
 
