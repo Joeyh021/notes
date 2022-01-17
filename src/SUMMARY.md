@@ -116,5 +116,5 @@
   - [Verification](./es2e3/verification.md)
   - [FPGA Arithmetic](./es2e3/arithmetic.md)
   - [Timing & Pipelining](./es2e3/timing.md)
-  - [Interfaces](./es2e3/interfaces.md)
+  - [Hardware Interfaces](./es2e3/interfaces.md)
   - [Processor Implementation](./es2e3/processors.md)
