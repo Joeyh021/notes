@@ -139,6 +139,317 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="interfaces"><a class="header" href="#interfaces">Interfaces</a></h1>
+<ul>
+<li>FPGAs come in a wide variety of packages with a range of IO capabilities
+<ul>
+<li>Most pins are reserved for specific uses such as voltage rails, clocks, configuration</li>
+<li>Other pins are multifunction and used for I/O</li>
+</ul>
+</li>
+<li>FPGAs can be incorporated into a system in many ways
+<ul>
+<li>Standalone, interfacing with peripherals and implementing all functionality</li>
+<li>As a peer to a more general purpose processor, connected with high bandwith</li>
+<li>As an accelerator on a high performance bus with shared memory</li>
+<li>As a separate device that communicates with another processor over a lower throughput bus</li>
+</ul>
+</li>
+<li>How to integerate and communicate with an FPGA depends on the application
+<ul>
+<li>Tightly coupled offers good bandwith but requires complex OS support</li>
+<li>Treating it as an accelerator like a GPU allows it to work with the CPU</li>
+</ul>
+</li>
+<li>New hybrid FPGA designs that include an embedded processor in the same fabric
+<ul>
+<li>Design built around a processor subsystem along with programmable logic</li>
+<li>High throughput interconnect</li>
+</ul>
+</li>
+</ul>
+<h2 id="adcs-and-dacs"><a class="header" href="#adcs-and-dacs">ADCs and DACs</a></h2>
+<ul>
+<li>Interfacing with the real, analog world requires converting between analog and digital signals</li>
+<li>Analog-to-digital converters take an analog voltage level and convert it to a digital word</li>
+<li>Digital-to-analog converters take a digital word and convert to an analog voltage level</li>
+<li>ADCs and DACs are characterised by
+<ul>
+<li>Sampling rate: the number of values the device can create/consume per second
+<ul>
+<li>Determines the bandwidth based on the Nyquist theorem</li>
+</ul>
+</li>
+<li>Resolution: the number of different levels the device can differentiate between</li>
+<li>Various fidelity characteristics such as linearity, noise, jitter</li>
+</ul>
+</li>
+<li>In most cases, external ADCs/DACs are used with FPGAs</li>
+<li>Modern FPGAs include analog interfaces with internal ADCs</li>
+<li>Recent RFSoC radio-focused FPGAs include high speed ADCs and DACs on chip for integrated RF implementation</li>
+</ul>
+<h2 id="gpio"><a class="header" href="#gpio">GPIO</a></h2>
+<ul>
+<li>Most FPGAs and microcontrollers have pins for general purpose I/O</li>
+<li>Each pin can be set as an input or output for a single bit</li>
+<li>The I/O voltage level is customisable for banks of GPIO pins</li>
+<li>Easiest way to get data in and out of an FPGA</li>
+<li>Support switching rates of over 200MHz</li>
+<li>The number of pins is generally limited and insufficient for creating large parallel data busses
+<ul>
+<li>Parallel I/O at high speeds requires detailed timing calibration and synchronisation</li>
+</ul>
+</li>
+</ul>
+<h2 id="pwm"><a class="header" href="#pwm">PWM</a></h2>
+<ul>
+<li>Method of switching an output on and off, where the ratio of on to off, the duty cycle, gives an average output level</li>
+<li>Used for changing motor speed, servo direction, LED brightness</li>
+<li>Works due to the inertial load of output devices
+<ul>
+<li>High speed switching means the overall output level is the average of the high and low periods</li>
+<li>An LED flickering at 500Hz cannot be detected as flickering by a human eye</li>
+</ul>
+</li>
+<li>Microcontrollers use timers to generate waveforms, and the number of timers available limits the number of PWM signals that can be generated</li>
+<li>FPGAs can create counters specifically for PWM</li>
+</ul>
+<pre><code class="language-Verilog">module pwmgen #(parameter CNTR_BITS=6) (input clk, rst,
+                input [CNTR_BITS-1:0] duty,
+                output pwm_out);
+
+reg [CNTR_BITS-1:0] pwm_step;
+
+always @ (posedge clk) begin
+    if(rst)
+        pwm_step &lt;= 1'b0;
+    else
+        pwm_step &lt;= pwm_step + 1'b1;
+end
+
+assign pwm_out = (duty &gt;= pwm_step);
+
+endmodule
+</code></pre>
+<ul>
+<li><code>CNTR_BITS</code> is the width of the counter</li>
+<li><code>duty</code> is the number of steps that the pwm signal is high for</li>
+<li><code>pwm_step</code> is the internal counter for each period</li>
+</ul>
+<h2 id="uart"><a class="header" href="#uart">UART</a></h2>
+<ul>
+<li>Universal Asynchronous Receiver/Transmitter is the easier way of sending multi-bit data between two systems
+<ul>
+<li>Uses a single wire</li>
+<li>Asynchronous because no clock line between
+<ul>
+<li>Baud rate is pre-agreed</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Data is transmitted in frames
+<ul>
+<li>Frames can vary in bit length, and sometimes include parity, start, and stop bits</li>
+</ul>
+</li>
+<li>Shift register is used at either end for parallel-serial conversion</li>
+<li>Rx of one device connected to Tx of another</li>
+<li>Combination of start and stop bit means frames can always be detected</li>
+<li>Can be issues when clocks are not well matched, which limits possible throughput</li>
+</ul>
+<h2 id="spi"><a class="header" href="#spi">SPI</a></h2>
+<ul>
+<li>Serial Peripheral Interface is a syncrhonous communication protocol that uses a shared clock at both transmitter and receiver</li>
+<li>Master initiates communication and generates clock</li>
+<li>Slave devices used as peripherals
+<ul>
+<li>A single master can communicate with multiple slaves on the same SPI bus</li>
+</ul>
+</li>
+<li>Four signals required
+<ul>
+<li><code>SCLK</code> - the clock generated by the master</li>
+<li><code>MISO</code> - master in slave out
+<ul>
+<li>Data input from slave to master</li>
+</ul>
+</li>
+<li><code>MOSI</code>
+<ul>
+<li>Data output from master to slave</li>
+</ul>
+</li>
+<li><code>SS</code> - slave select
+<ul>
+<li>Select which slave is being communicated with</li>
+<li>Typically active low</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Each slave connected to a master requires a separate slave select line</li>
+<li>Master outputs the same clock for synchronous communication</li>
+</ul>
+<p><img src="./img/spi.png" alt="" /></p>
+<ul>
+<li>To initiate communication, the master sets the required slave select line low and sends a clock signal</li>
+<li>On each clock edge, the data can be sent bi-directionally on <code>MOSI</code> and <code>MISO</code></li>
+<li>With multiple slaves, the <code>MISO</code> line must only be driven by one at a time so other slaves must be set to high impedance</li>
+<li>All devices must agree on clock frequency, polarity and phase
+<ul>
+<li>Specified in datasheets</li>
+</ul>
+</li>
+</ul>
+<h2 id="i2c"><a class="header" href="#i2c">I2C</a></h2>
+<ul>
+<li>Inter-intergrated circuit protocol is similar do SPI but has different features
+<ul>
+<li>Uses fewer wires due to lack of slave select lines</li>
+<li>Uses addressing to allow a large number of devices to share the same lines</li>
+</ul>
+</li>
+<li>Only two wires
+<ul>
+<li>SDA - serial data</li>
+<li>SCL - serial clock</li>
+<li>I2C clock is usually 100kHz</li>
+</ul>
+</li>
+<li>All devices connected to an I2C bus act the same</li>
+<li>Whichever device is transmitting is the master for that communication</li>
+<li>Pull-up resistors keep each line high when no device is transmitting</li>
+<li>The device intending to communicate indicates this by pulling SDA low</li>
+<li>Data is then put onto the bus while SCL is low and sampled by slave devices during the rising edges</li>
+<li>Simpler signalling means more complicated data framing
+<ul>
+<li>Pulled low to start</li>
+<li>7 bit address sent</li>
+<li>1 bit for read/write mode</li>
+<li>1 bit slave ack</li>
+<li>8 bit word</li>
+<li>1 bit ack signal</li>
+<li>Stop bit</li>
+</ul>
+</li>
+</ul>
+<p><img src="./img/i2c.png" alt="" /></p>
+<ul>
+<li>Takes 20 cycles to read a single byte
+<ul>
+<li>Vs 10 for SPI</li>
+</ul>
+</li>
+<li>I2C is also half-duplex with a slow clock</li>
+<li>I2C used when there is less pins, SPI needed for higher data throughput</li>
+</ul>
+<h2 id="high-speed-serial-io"><a class="header" href="#high-speed-serial-io">High Speed Serial I/O</a></h2>
+<ul>
+<li>Higher speed communication off ship is facilitated by special serial/desrial blocks
+<ul>
+<li>These take data words and serialise them, and transmit them over differential pairs of I/O pins</li>
+<li>Controller by high-speed clocks</li>
+<li>Can acheive up to 10s of gigabit speeds</li>
+</ul>
+</li>
+<li>Differential signalling is used to improve noise resistance at high speed
+<ul>
+<li>Signal sent twice, one an inverted copy of the other</li>
+<li>Balanced lines means better resistance to EM interference</li>
+</ul>
+</li>
+<li>Clock information is encoded in data that is sent</li>
+<li>Data is encoded and scrambled to ensure sufficient transitions between 1s and 0s for receiver to be able to decode</li>
+<li>Extra bits are added to the data bits to ensure sufficient transitions and DC balance</li>
+<li>Specific schemes are specified by different physical layer standards
+<ul>
+<li>8b/10b means 2 extra bits are added to each byte</li>
+</ul>
+</li>
+<li>Effective data rate is determined from two specifications
+<ul>
+<li>Baud rate</li>
+<li>Encoding scheme</li>
+<li>For example, 2GHz with 8b/10b encoding gives 200MB/s
+<ul>
+<li>20% of baud rate is encoding overhead</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Multiple lanes are used to improve throughput
+<ul>
+<li>PCIe gen 3 had a transfer rate of 8Gb/s per lane and uses a 128b/130b encoding
+<ul>
+<li>985 MB/s</li>
+<li>1.5% encoding overhead</li>
+<li>16 lanes (PCIe3 x16) gives about 16Gbps</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Use in many interfaces
+<ul>
+<li>Serial ATA for disks and storage</li>
+<li>Gigabit ethernet</li>
+<li>Used over a variety of physical media</li>
+</ul>
+</li>
+<li>Circuits required to interface with high speed I/O have to be designed carefully to meet strict timing requirements
+<ul>
+<li>Vendors usually provide IP for this</li>
+<li>IP blocks designed to specific standard for the interface they are meant to be using</li>
+</ul>
+</li>
+<li>The simplest form of communicating between modules in design is the ready/valid handshaking
+<ul>
+<li>One module is a source, another a sink</li>
+<li>The sink module asserts a ready signal when it is ready to consume data</li>
+<li>The source module asserts a valid signal when it is outputting valid data</li>
+<li>At any clock edge when both ready and valid are asserted, data is transferred on the data line</li>
+<li>Can introduce a bottleneck</li>
+</ul>
+</li>
+<li>In the source module, the pipeline can be halted when the sink is not ready, and resumed when ready
+<ul>
+<li>In the sink, ready is asserted when data is ready to be accepted</li>
+<li>Such an interface allows a FIFO buffer to be inserted between modules to offer more isolation</li>
+</ul>
+</li>
+</ul>
+<p><img src="./img/fifo.png" alt="" /></p>
+<h3 id="axi4"><a class="header" href="#axi4">AXI4</a></h3>
+<ul>
+<li>Most hybrid FPGAs include an ARM processor</li>
+<li>Advanced microcontroller bus architecture (AMBA) is an on-chip interconnect specification introduced by ARM for use in SoCs</li>
+<li>Defines a number of interfaces
+<ul>
+<li>AXI4 for high performance memory mapped communication</li>
+<li>AXI4-Lite is a simpler interface for low throughput</li>
+<li>AXI4-Stream is for high speed streaming data</li>
+</ul>
+</li>
+<li>Reads are initiated by a master over the read address channel
+<ul>
+<li>The slave response with data over the read data channel</li>
+</ul>
+</li>
+<li>Writes are similar, with address and control data being placed on the write address channel
+<ul>
+<li>The master sends data over the write data channel</li>
+<li>Slave responds on the write response channel</li>
+</ul>
+</li>
+<li>Read and write channels are separeatre, allowing bidirectional communication</li>
+<li>AXI4 supports bursts of up to 256 words</li>
+<li>Each master/slave pair can have a separate clock</li>
+<li>A system consists of multiple masters and slaves connected on an interconnect</li>
+<li>Most vendor IP is provided with an AXI4 interface to simplify integration into a design
+<ul>
+<li>Different interface specifications are shown in datasheets</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
