@@ -139,6 +139,106 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="timing--pipelining"><a class="header" href="#timing--pipelining">Timing &amp; Pipelining</a></h1>
+<p>So far, digital circuits have been considered as instantaneous, where outputs are available immediately. This is an approximation, as there are delays in the propagation of signals through circuits. There are delays associated with many elements in circuits, and these need to be analysed and take in to account.</p>
+<ul>
+<li>Every gate or circuit element exhibits a propagation delay</li>
+<li>A change in the input causes a change in output, but only after a propagation delay: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>Delay arises due to low level factors to do with analog properties including capacitance
+<ul>
+<li>Figures usually supplied by manufacturers</li>
+<li>Can differ for different gates</li>
+<li>Can be affected by temperature</li>
+<li>Low-to-high may differ from high-to-low delay</li>
+<li>Also related to fanout
+<ul>
+<li>The number of inputs the output is driving</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>This information can give the total propagation delay for a whole circuit
+<ul>
+<li>Sum up all delays along all paths from inputs to outputs
+<ul>
+<li>Worst case delay is the one we're concerned with</li>
+</ul>
+</li>
+<li>Different path delays can cause internal glitches</li>
+<li>The worst case through a circuit is the deciding factor in how fast we can supply inputs</li>
+</ul>
+</li>
+</ul>
+<h2 id="combinational-timing"><a class="header" href="#combinational-timing">Combinational Timing</a></h2>
+<p>It is typically easiest to trace through a circuit gate by gate, working out what the delay would be at each step. The gate delay can be indicated on timing diagrams, but only when specifically interested in them. The diagram shows a circuit, along with it's timing diagram including propagation delay.</p>
+<p><img src="./img/combi-timing.png" alt="" /></p>
+<p>Attaching some numbers to the delays:</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">A</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">D</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.00773em;">pOR</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> ns</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight" style="margin-right:0.07847em;">I</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> ns</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.00773em;">pXOR</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> ns</li>
+</ul>
+<p>There are four inputs and one output in this circuit, so four possible paths. All paths have the same delay of 6ns.</p>
+<p>Another example:</p>
+<p><img src="./img/combi-timing-2.png" alt="" /></p>
+<ul>
+<li>The first two paths have a 6ns delay</li>
+<li>the second two paths also include an inverter, which adds another 2ns of delay for a total of 8ns</li>
+</ul>
+<p>Looking again at the ripple adder, and assuming each gate has a unit delay:</p>
+<p><img src="./img/full-adder.png" alt="" /></p>
+<ul>
+<li>a,b to sum has 2 delays</li>
+<li>cin to sum has 1 delay</li>
+<li>a,b to cout has 3 delays</li>
+<li>cin to cout has 2 delays</li>
+<li>Worst case is 3 delays, so this is how long we must wait for signals to propagate fully</li>
+</ul>
+<p>Uneven path delays mean there may be invalid intermediate values before outputs settle, called glitches. It is important to wait for all signals to propagate to avoid incorrect results in the circuit.</p>
+<p>The total delay of an n-stage ripple adder is <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span></span></span></span> gate delays:</p>
+<ul>
+<li>The 1st stage has 3 delays</li>
+<li>intermediate ripple stages have 2 delays</li>
+<li>The final stage will have 2 delays</li>
+</ul>
+<p><img src="./img/ripple-adder.png" alt="" /></p>
+<p>Any combinational circuit element will have a delay, which can be determined from it's datasheet. Combining larger complex combinational elements must follow the same rules as combining gates. Consider the circuit to the right which computes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">a</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span>:</p>
+<p><img src="./img/complex-combi.png" alt="" /></p>
+<ul>
+<li>The longest path from input to output is through the 2 multipliers and 2 adders</li>
+<li>Assuming 4ns and 2ns delay respectively, the total worst case delay is 12ns</li>
+</ul>
+<h2 id="synchronous-timing"><a class="header" href="#synchronous-timing">Synchronous Timing</a></h2>
+<p>When composing large combinational circuits, the timing characteristics of each part must be considered to ensure that inputs and outputs are all timed correctly, analysing all paths. Any change to the circuit requires re-analysis of the timing behaviour. Sequential circuits are more complex to analyse.</p>
+<ul>
+<li>A synchronous system has a single clock that marks the timesteps when the new inputs are passed to sub-circuits</li>
+<li>At each rising edge, register outputs change</li>
+<li>Any combinational path must process this input, and have the result ready before the next clock cycle</li>
+<li><strong>The clock must be slow enough to accommodate the slowest path between two flip-flops</strong></li>
+</ul>
+<p><img src="./img/sync-timing.png" alt="" /></p>
+<ul>
+<li>At the first clock edge, values emerge from the first set of registers and propagate through the circuit, taking 12ns</li>
+<li>After 12ns, the values at the combinational output are stable and correct</li>
+<li>At the next clock edge, this output is stored in the register, and a new set of values enter the combinational circuit</li>
+<li>The maximum frequency = 1/12ns = approx 83MHz
+<ul>
+<li>Or any slower clock will also work</li>
+</ul>
+</li>
+</ul>
+<p>When looking at a larger synchronous circuit:</p>
+<ul>
+<li>There will be a delay between any pair of registers</li>
+<li>The output of any register must have enough time to propagate through all the combinational logic to the next input</li>
+<li>The paths between all pairs of registers is considered, and the longest is selected as the <strong>critical path</strong>
+<ul>
+<li>The critical path determines the maximum clock frequency for the whole circuit</li>
+</ul>
+</li>
+</ul>
+<h2 id="flip-flop-timing"><a class="header" href="#flip-flop-timing">Flip-Flop Timing</a></h2>
+<h2 id="syncrhonous-design"><a class="header" href="#syncrhonous-design">Syncrhonous Design</a></h2>
+<h2 id="pipelining-circuits"><a class="header" href="#pipelining-circuits">Pipelining Circuits</a></h2>
 
                     </main>
 
