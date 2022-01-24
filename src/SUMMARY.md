@@ -94,6 +94,7 @@
   - [Three Phase AC Systems](./es2c6/3phase.md)
 
 - [ES2C7](./es2c7/index.md)
+
   - [Binomial Theorem & Taylor Series](./es2c7/binomial.md)
   - [Matrices & Quadratic Forms](./es2c7/matrices.md)
   - [Linear Simultaneous Equations](./es2c7/equations.md)
@@ -104,3 +105,16 @@
   - [Fourier Series & Transforms](./es2c7/fourier.md)
   - [Z Transforms](./es2c7/z.md)
   - [Partial Differential Equations](./es2c7/pdes.md)
+
+- [ES2E3](./es2e3/index.md)
+  - [Hardware Description Languages](./es2e3/hdl.md)
+  - [Structural & Behavioual Verilog](./es2e3/verilog.md)
+  - [FPGA Design Flow](./es2e3/design.md)
+  - [FPGA Architecture](./es2e3/architecture.md)
+  - [Sequential Verilog](./es2e3/sequential.md)
+  - [Finite State Machines](./es2e3/fsm.md)
+  - [Verification](./es2e3/verification.md)
+  - [FPGA Arithmetic](./es2e3/arithmetic.md)
+  - [Timing & Pipelining](./es2e3/timing.md)
+  - [Hardware Interfaces](./es2e3/interfaces.md)
+  - [Processor Implementation](./es2e3/processors.md)
