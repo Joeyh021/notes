@@ -237,8 +237,173 @@
 </li>
 </ul>
 <h2 id="flip-flop-timing"><a class="header" href="#flip-flop-timing">Flip-Flop Timing</a></h2>
-<h2 id="syncrhonous-design"><a class="header" href="#syncrhonous-design">Syncrhonous Design</a></h2>
+<p>Recall how flip-flops are constructed, in a master/slave arrangement such that the master is active low and the slave active high, which traps data on the rising edge of the clock.</p>
+<p><img src="./img/flip-flo.png" alt="" /></p>
+<p><code>int</code> represents the output of the master latch, and follows the input as long as <code>clk</code> is low. When <code>clk</code> is high the slave latch becomes transparent, passing through the trapped value.</p>
+<p><img src="img/flip-flop-timing.png" alt="" /></p>
+<p>The actual timing characteristics are a little more complex:</p>
+<ul>
+<li>There is a <strong>clock-to-q</strong> delay, which is the delay between the clock edge and output changing</li>
+<li>Any desired input must arrive and be stable for a portion of time before the rising edge: the <strong>setup</strong> time</li>
+<li>The input must be held for a short while after the rising edge: the <strong>hold</strong>time*</li>
+</ul>
+<p><img src="./img/setup-and-hold.png" alt="" /></p>
+<ul>
+<li>For a more accurate max clock period, this must be factored in</li>
+<li>Min clock period <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> is given by <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></li>
+<li>This does not factor in hold time
+<ul>
+<li>The previous register must not produce an output that can reach the next register's input before <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> after the rising edge</li>
+<li>As long as <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, this cannot happen
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is often 0 in modern devices</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p>Assuming a gate delay of 1ns, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0.6</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span></span>, and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0.4</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span></span>, determine the max clock frequency for a 6 bit ripple adder.</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> bit ripple adder has <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span></span></span></span> gate delays
+<ul>
+<li>For 6 bits, delay is 12ns</li>
+</ul>
+</li>
+<li>Require <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">13</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/13</span><span class="mord text"><span class="mord">ns</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">76.9</span><span class="mord text"><span class="mord">MHz</span></span></span></span></span></li>
+</ul>
+<h2 id="synchronous-design"><a class="header" href="#synchronous-design">Synchronous Design</a></h2>
+<ul>
+<li>When designing a circuit, we want to process large amounts of data</li>
+<li>Software programs used for data processing spend most of their time inside loops
+<ul>
+<li>eg processing an image means applying a filter which involved maths over each pixel of the frame</li>
+</ul>
+</li>
+<li>Combinational circuits with no clocks become difficult to build as they increase in size
+<ul>
+<li>Difficult to keep track of the delay</li>
+<li>A synchronous system gives a predictable, fixed rate of data movement so the system can be modelled more easily</li>
+</ul>
+</li>
+<li>I/O typically supplies data at a regular rate
+<ul>
+<li>Sensors/ADCs</li>
+<li>I/O Busses such as PCIe</li>
+<li>Outputs read from a memory</li>
+</ul>
+</li>
+<li>Building a data processing pipeline allows computation to be done quicker than a processor
+<ul>
+<li>Can exploit parallelism</li>
+<li>Implement complex, custom datapaths</li>
+</ul>
+</li>
+<li>Throughput is the number of input values that can be processed per unit time
+<ul>
+<li>Determines the real speed of the circuit</li>
+<li>A fully synchronous circuit that can accept one set of inputs per cycle has a throughput of clock speed x amount of data per input</li>
+</ul>
+</li>
+<li>Latency is the time between an input entering the system, and the computed output emerging from the system
+<ul>
+<li>Less critical as it is a fixed delay</li>
+</ul>
+</li>
+<li>Generally, it is desirable to maximise throughput, even if this comes at a slight cost of latency</li>
+<li>The limiting factor in any circuit is combinational propagation delay
+<ul>
+<li>The largest chunk of combinational logic between any two registers determines the max frequency</li>
+<li>Large chunks of logic can be broken down by adding another register in the middle
+<ul>
+<li>This increases latency, but allows the circuit to be clocked faster</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="pipelining-circuits"><a class="header" href="#pipelining-circuits">Pipelining Circuits</a></h2>
+<p>Recall the polynomial calculation circuit from earlier. If another register stage is added in the middle, we now have two sets of paths between three registers:</p>
+<p><img src="./img/pipeline.png" alt="" /></p>
+<ul>
+<li>The longest path between the first two register stages is through two multipliers: 8ns</li>
+<li>Longest path between second pair is 4ns</li>
+<li>Critical path is now 8ns, so can be clocked at 125MHz
+<ul>
+<li>Latency is now 2 clock cycles, 16ns</li>
+</ul>
+</li>
+<li>Throughput has been increased</li>
+</ul>
+<p>This can be broken down further to add yet another register stage:</p>
+<p><img src="./img/pipeline-2.png" alt="" /></p>
+<ul>
+<li>Critical path now 4ns, clock speed now 250MHz</li>
+<li>Latency now 3 cycles (12ns)</li>
+<li>Have increased throughput and decrease latency</li>
+</ul>
+<p>It would be pointless to add another stage between the two final adders as the critical path would still be elsewhere. It is important to place register stages to balance delays between pairs.</p>
+<p>As a general rule, clock frequency can be increased by splitting up combinational logic. This is <strong>pipelineing</strong></p>
+<ul>
+<li>A heavily pipeline circuit has many pipeline stages to allow the clock to be as fast as possible</li>
+<li>Even if cycle latency increases, may actually still be faster due to increased clock</li>
+<li>Leads to more complex designs and increased resource usage</li>
+</ul>
+<p>To add a pipeline stage to a circuit:</p>
+<ul>
+<li>Find the largest block of combinational logic</li>
+<li>Break all paths between the registers with a new pipeline stage</li>
+<li>Wherever the break crosses a signal, place a register</li>
+<li>Registers are drawn combined but each signal requires a separate register</li>
+<li>Some registers will do nothing but delay signals so they align correctly</li>
+<li>The widths of registers will depend on the signals going in/out of them</li>
+</ul>
+<h3 id="timing-in-fpgas"><a class="header" href="#timing-in-fpgas">Timing in FPGAs</a></h3>
+<ul>
+<li>On FPGAs, logic is implemented in LUTs, so gate delays are not relevant</li>
+<li>A 6-input LUT can implement any function of 6 inputs
+<ul>
+<li>The propagation delay is the same no matter what function is implements</li>
+</ul>
+</li>
+<li>If a function is too large for a single LUTs, it will be spread accross multiple, increasing delay
+<ul>
+<li>A single LUT in a Xilinx Virtex-6 is around 240ps</li>
+</ul>
+</li>
+<li>Other FPGA resources have specified delays too
+<ul>
+<li>DSP blocks have a specific combinational delay
+<ul>
+<li>Registers can be enabled to decrease the critical path</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Total combinational delay in an FPGA is composed of
+<ul>
+<li>Logic delay: delay through LUTs, DSPs, etc</li>
+<li>Routing delay: the delay through the routing fabric</li>
+</ul>
+</li>
+<li>Synthesis and mapping tools will break logic into blocks, but pipelining is done as coded in verilog</li>
+<li>Place and route tools will minimise routing delay
+<ul>
+<li>Use numbers from datasheet to find critical paths</li>
+</ul>
+</li>
+<li>FPGAs have many flip flops around the chip to allow deep pipelining</li>
+<li>Timing characteristics are given in datasheet
+<ul>
+<li>A slice register has clock-to-output delay, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">O</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, of around 0.4ns</li>
+<li>Setup and hold times are around 0.4ns and 0.2ns, respectively</li>
+<li>Specifics depend on which outputs are used</li>
+<li>Slice multiplexers affects timing</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
