@@ -139,6 +139,87 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="hardware-description-languages"><a class="header" href="#hardware-description-languages">Hardware Description Languages</a></h1>
+<p>So far, we've been restricted to describing circuits using equations and diagrams. Diagrams can convey structure, but behaviour can be hard to see and they become unweildy as they grow. HDLs are languages that describe hardware with a heirarchical design.</p>
+<h2 id="history"><a class="header" href="#history">History</a></h2>
+<ul>
+<li>Programmaple Array Logic (PAL) allows for implementing a sum of products logic, building circuits by blowing fuses in certain places.
+<ul>
+<li>This got cumbersome for larger circuits</li>
+</ul>
+</li>
+<li>PALASM developed as a language for mapping functional specifications to PAL</li>
+<li>Other languages developed around this concept, all with the idea of introducing more layers of abstraction</li>
+<li>There are two main languages in use today:
+<ul>
+<li>Verilog</li>
+<li>VHDL</li>
+</ul>
+</li>
+<li>Verilog started as a proprietary language, released to the public in 1991 and standardised in 1995 by the IEEE
+<ul>
+<li>Standard revised in 2001</li>
+</ul>
+</li>
+<li>SystemVerilog is an extension of Verilog with more capabilities</li>
+</ul>
+<h2 id="verilog"><a class="header" href="#verilog">Verilog</a></h2>
+<ul>
+<li>Verilog designs are broken down into modules
+<ul>
+<li>A module is an encapsulation of a unit of functionality</li>
+<li>Good designs have appropriate levels of hierarchy</li>
+<li>At each level, modules below are treated as black boxes</li>
+</ul>
+</li>
+<li><strong>Modules</strong> are declared using the <code>module</code> keyword and a list of ports
+<ul>
+<li>Can indicate the direction of the port as <code>input</code> or <code>output</code></li>
+<li><code>endmodule</code> indicate the end of a module</li>
+</ul>
+</li>
+<li><strong>Identifiers</strong> are the names of modules, signals, ports, etc
+<ul>
+<li>Must start with a letter, and can't clash with keywords</li>
+</ul>
+</li>
+<li><strong>Wires</strong> can be declared within modules using the <code>wire</code> keyword</li>
+<li>Verilog is case sensitive, ignores whitespace and uses C-style <code>//comments</code></li>
+</ul>
+<h2 id="structural-verilog-design"><a class="header" href="#structural-verilog-design">Structural Verilog Design</a></h2>
+<ul>
+<li>Circuits are described structurally, by the structure of their constituent parts</li>
+<li>Primitives are included for all basic gates:
+<ul>
+<li><code>and(x, a, b)</code> is equivalent to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span></li>
+<li><code>or(z, a, b, c, d)</code> is equivalent to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">d</span></span></span></span></li>
+<li>Arguments are either ports or wires declared within module</li>
+</ul>
+</li>
+</ul>
+<p>Consider an and-or inverter: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">o</span><span class="mord mathnormal">u</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">((</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p><img src="./img/and-or-inv.png" alt="" /></p>
+<pre><code class="language-verilog">module andorinv (input a, b, c, d, output out);
+    wire and1out, and2out;
+    and (and1out, a, b);
+    and (and2out, c, d);
+    nor(out, and1out, and2out);
+endmodule
+</code></pre>
+<p>Note the two internal wires being used here. Gates can also be given identifiers, which helps with testing and readability:</p>
+<pre><code class="language-verilog">module andorinv (input a, b, c, d, output out);
+    wire and1out, and2out;
+    and g1(and1out, a, b);
+    and g2(and2out, c, d);
+    nor g3(out, and1out, and2out);
+endmodule
+</code></pre>
+<p>The order of statements in Verilog is <strong>irrelevant</strong>, as each statement describes a piece of hardware, so there is no sequence of steps, unlike when writing procedural code.</p>
+<p>It is also important to obey the usual connection rules for combinational circuits:</p>
+<ul>
+<li>Every node of the circuit is either an input, or connects to exactly one output terminal of a gate</li>
+<li><strong>The same wire cannot be driven by multiple gates</strong></li>
+<li>There can be no cycles in the circuit</li>
+</ul>
 
                     </main>
 
