@@ -57,10 +57,10 @@ The inputs to our unit under test will be driven by the testbench and must be de
   - This tells the simulator to wait 10 time steps and then set a to 1
 - Delays are only for simulation and cannot be synthesised
 
-### `$display`
+### `display`
 
 - The simulator has a console where the simulator prints messages
-- The `$display` task/function allows us to print info to the console
+- The `display` task/function allows us to print info to the console
 - Allows for C-style format strings
 - Argument can be an expression also
 
