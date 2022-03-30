@@ -139,6 +139,134 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="finite-state-machines"><a class="header" href="#finite-state-machines">Finite State Machines</a></h1>
+<p>Take a binary counter as an example, the output of which is a sequence of numbers, increasing by one each step. The behaviour is described in terms of a register and an incrementer circuit. This is fairly easy to reason about as a state machine:</p>
+<ul>
+<li>At each point in time the system is in a <strong>state</strong> that determines what the output is (the contents of the register)</li>
+<li>On each <strong>transition</strong>, the state changes (counter increments)</li>
+</ul>
+<p>This is a state machine. A finite state machine describes a system using a finite number of states, and associated transitions. In synchronous design, an FSM is in one state for the duration of each clock cycle, and may transition on each rising edge depending upon the input.</p>
+<p><strong>State transition diagrams</strong> show the different states of a system and transitions between them. The diagram below shows a 3-bit binary counter with an enable signal. The state only transitions if enable is high.</p>
+<p><img src="./img/fsm-1.png" alt="" /></p>
+<p>The diagram consisits of nodes with states, edges between the states, and conditions that determine which transitions may occur. Diagrams may be simplified by only including conditions that result in state-changing transitions:</p>
+<p><img src="./img/fsm-2.png" alt="" /></p>
+<p>Consider an up/down counter:</p>
+<ul>
+<li>Two input signals, <code>dn</code> and <code>en</code></li>
+<li>Counts up when <code>en</code> is high</li>
+<li>Counts up when <code>dn</code> is low, down when <code>dn</code> is high</li>
+<li>An input of 10 is <code>en</code> high and <code>dn</code> low
+<ul>
+<li>Other combinations with <code>en</code> = 0 result in no transition</li>
+</ul>
+</li>
+</ul>
+<p><img src="./img/fsm-3.png" alt="" /></p>
+<p>States can be labelled with a more meaningful name, like in the example below</p>
+<p><img src="./img/fsm-4.png" alt="" /></p>
+<p>This FSM always produces 3 high cycles followed by one low, with the output <code>x</code> shown with the states. The FSM is off in the off state, and then on for the three on states.</p>
+<p>The diagram below shows the same FSM, but it will only output the three-cycle pulse when an input signal <code>b</code> is set high. The output of each state is also shown in the circle next to the state: state/output. It is important to label diagrams with a proper legend to make it clear what means what.</p>
+<p><img src="./img/fsm-5.png" alt="" /></p>
+<p>State transition information can also be presented in tables, which is effectively a truth table for the next state based on the current state</p>
+<table><thead><tr><th>Current state</th><th>Input <code>b</code></th><th>Next state</th><th>Output <code>x</code></th></tr></thead><tbody>
+<tr><td>off</td><td>0</td><td>off</td><td>0</td></tr>
+<tr><td>off</td><td>1</td><td>on1</td><td>0</td></tr>
+<tr><td>on1</td><td>0</td><td>on2</td><td>1</td></tr>
+<tr><td>on1</td><td>1</td><td>on2</td><td>1</td></tr>
+<tr><td>on2</td><td>0</td><td>on3</td><td>1</td></tr>
+<tr><td>on2</td><td>1</td><td>on3</td><td>1</td></tr>
+<tr><td>on3</td><td>0</td><td>off</td><td>1</td></tr>
+<tr><td>on3</td><td>1</td><td>off</td><td>1</td></tr>
+</tbody></table>
+<p>Can see that the state only transitions from off to on1 when input <code>b</code> is asserted.</p>
+<h2 id="implementing-fsm"><a class="header" href="#implementing-fsm">Implementing FSM</a></h2>
+<p>Using a state table, you can build the combinational circuit that determines the next state from the current state. Connected with a register holding state, this forms the structure of a finite state machine.</p>
+<p><img src="./img/fsm-7.png" alt="" /></p>
+<p>Consider an example of designing a lock that only unlocks (output <code>u</code> = 1) when input buttons are pressed in a fixed sequence. Inputs are 4 buttons: start, red, blue, green, and an input that indicates if any button has been pressed.</p>
+<p><img src="./img/lock.png" alt="" /></p>
+<p>We can capture the lock's behaviour in a state diagram:</p>
+<ul>
+<li>Start in an initial state</li>
+<li>If start is pressed then move to another state (input <code>s</code>)</li>
+<li>If a button is pressed and its red, move to next state (input <code>ar</code>)
+<ul>
+<li>So on for button presses</li>
+</ul>
+</li>
+<li>If at any point a button is pressed but it is not the correct one, go back to the start again</li>
+</ul>
+<p><img src="./img/lock-fsm.png" alt="" /></p>
+<p>However their is still another issue, where if someone holds down all the buttons the machine will just cycle through to the end state. This can be fixed by attaching conditions to check that other buttons aren't pressed to the states, ensuring the machine is robust with regards to the requirements.</p>
+<p><img src="./img/lock-fsm-2.png" alt="" /></p>
+<p>Consider another example of a vending machine:</p>
+<ul>
+<li>Accepts only £1 and 50p coins</li>
+<li>Dispenses drink for £1.50 and change if necessary</li>
+<li>Two inputs, c100 for £1 coin, c50 for 50p coin</li>
+<li>Assume only ever 1 input high, and it tells us which coin is inserted</li>
+<li>Two outputs, vend to release a drink, and change to give 50p of change.</li>
+</ul>
+<p><img src="./img/vending-1.png" alt="" /></p>
+<p>However, notice that some of these states are equivalent. These can be merged to reduce the number of states in the diagram, hence simplifying it</p>
+<p><img src="./img/vending-2.png" alt="" /></p>
+<h2 id="moore-and-mealy-machines"><a class="header" href="#moore-and-mealy-machines">Moore and Mealy Machines</a></h2>
+<p>In all the previous examples, outputs depend only on the state. These are called <strong>Moore Machines</strong>. The alternative is <strong>Mealy Machines</strong>, where the output depends on the state <em>and</em> the current value of the inputs. Mealy machines are harder to design and analyze, but can be more compact. In mealy machines, the outputs cant be drawn in the state circles, so are added to the edges, as output is a function of state and input. The diagram below shows a previous example with the outputs on the arrows.</p>
+<p><img src="./img/mealy-1.png" alt="" /></p>
+<p>The two diagrams below show the same machine, that outputs a 1 when the last two inputs were 0 then 1.</p>
+<p><img src="./img/mealy-2.png" alt="" /></p>
+<h2 id="state-encoding--transition-logic"><a class="header" href="#state-encoding--transition-logic">State Encoding &amp; Transition Logic</a></h2>
+<p>In a synchronous design, we can assume that the FSM changes states only on rising edges, so we can put together a circuit like this, with a register and two sets of combinational logic:</p>
+<p><img src="./img/fsm-7.png" alt="" /></p>
+<ul>
+<li>The state register stores the current state
+<ul>
+<li>To encode state, a binary value is assigned to each state</li>
+<li>Need <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">m</span></span></span></span> bits for <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span> states</li>
+</ul>
+</li>
+<li>Must also build the transition logic
+<ul>
+<li>This can be done from a state table, by replacing names with encodings</li>
+</ul>
+</li>
+</ul>
+<p>Consider the state transition logic for the example with the three-cycle pulse:</p>
+<table><thead><tr><th>Current state: <code>s[1:0]</code></th><th>Input <code>b</code></th><th>Next state: <code>ns[1:0]</code></th><th>Output <code>x</code></th></tr></thead><tbody>
+<tr><td>00</td><td>0</td><td>00</td><td>0</td></tr>
+<tr><td>00</td><td>1</td><td>01</td><td>0</td></tr>
+<tr><td>01</td><td>0</td><td>10</td><td>1</td></tr>
+<tr><td>01</td><td>1</td><td>10</td><td>1</td></tr>
+<tr><td>10</td><td>0</td><td>11</td><td>1</td></tr>
+<tr><td>10</td><td>1</td><td>11</td><td>1</td></tr>
+<tr><td>11</td><td>0</td><td>00</td><td>1</td></tr>
+<tr><td>11</td><td>1</td><td>00</td><td>1</td></tr>
+</tbody></table>
+<p>This is now a binary truth table, from which we can determine equations for each output bit, mapping <code>s</code> to <code>ns</code>.</p>
+<ul>
+<li><code>ns[1] = s[1] &amp; !s[0] | !s[1] &amp; s[0]</code></li>
+<li><code>ns[0] = !s[1] &amp; !s[0] &amp; b | s[1] &amp; !s[0]</code></li>
+<li><code>x = s[1] | s[0]</code></li>
+</ul>
+<p>We can now create the two circuits and connect them into a state register. As a Verilog module, this requires a register, an <code>always</code> block, and combinational assignments connecting <code>s</code> and <code>ns</code>.</p>
+<pre><code class="language-verilog">module pulse3 (input clk, rst, b, output x);
+
+reg [1:0] s;
+wire [1:0] ns;
+
+assign ns[1] = s[1] ^ s[0];
+assign ns[0] = (!s[1] &amp; !s[0] &amp; b) | (s[1] &amp; !s[0]);
+assign x = s[1] | s[0];
+
+always @ (posedge clk) begin
+    if (rst) begin
+        s &lt;= 2'b00;
+    end else begin
+        s &lt;= ns;
+    end
+end
+endmodule
+</code></pre>
+<p>When implementing a finite state machine, always ensure the state register as a reset, and a defined initial state, otherwise the starting state of the FSM is unpredictable.</p>
+<h2 id="more-complex-fsm"><a class="header" href="#more-complex-fsm">More Complex FSM</a></h2>
 
                     </main>
 
