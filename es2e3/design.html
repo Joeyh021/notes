@@ -139,6 +139,96 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="fpga-design-flow"><a class="header" href="#fpga-design-flow">FPGA Design Flow</a></h1>
+<p>How do you go from HDL to a circuit? The key development was tools that could take HDL and generate a circuit automatically. Design flow is the process by which we specify and design a system all the way through to implementation.</p>
+<h2 id="the-design-process"><a class="header" href="#the-design-process">The Design Process</a></h2>
+<ul>
+<li>Design is always informed by a specification
+<ul>
+<li>What does the circuit do?</li>
+<li>What I/O does it need?</li>
+<li>Performance requirements</li>
+<li>Space/Power budget</li>
+<li>Edge cases</li>
+</ul>
+</li>
+<li>This is the most important stage as it defines what the design will be verified against
+<ul>
+<li>Also influences the choice of target architecture</li>
+<li>Errors in interpretation of the specification/requirements can cause issues</li>
+</ul>
+</li>
+<li>Next is design entry
+<ul>
+<li>Writing the actual HDL files</li>
+<li>Modules and sub-modules are defined</li>
+<li>I/O is defined</li>
+</ul>
+</li>
+<li>There are two main aspects to architecture design
+<ul>
+<li>The <strong>datapath</strong>, logic that acts on data to compute the required functions</li>
+<li>The <strong>control path</strong>, logic that manages the movement of data and controls the datapath</li>
+</ul>
+</li>
+<li>Functional verification is performed throughout the design process
+<ul>
+<li>It is important to verify that the HDL meets the specification</li>
+<li>Usually start at the lowest level modules and move up</li>
+<li>This is an iterative process, and testing should be continuous</li>
+</ul>
+</li>
+<li><strong>Synthesis</strong> is the process by which the design is converted into circuits
+<ul>
+<li>Lots of optimisation goes on at this stage</li>
+<li>Combinational logic is minimised</li>
+<li>Arithmetic operators are expanded into primitive operations</li>
+<li>Basic structures like memories, multiplexers, decoders are inferred</li>
+</ul>
+</li>
+<li>The result of synthesis is a <strong>netlist</strong>, a low-level representation of the circuit using basic blocks</li>
+<li><strong>Mapping</strong> takes the netlist and works out how to build it on the target architecture
+<ul>
+<li>For ASIC design, each node in the netlist is mapped to cells from a cell library</li>
+<li>For FPGA design, each node is mapped to resources available on the FPGA
+<ul>
+<li>Maps combinational logic to LUTs</li>
+<li>Synchronouse components mapped to flip-flops</li>
+<li>Arithmetic mapped to ALUs or DSPs</li>
+</ul>
+</li>
+<li>This gives an architecture-specific netlist</li>
+</ul>
+</li>
+<li>Synthesis verification checks the circuit is valid
+<ul>
+<li>Checks circuit fits on FPGA</li>
+<li>Estimates timing, power usage, performance</li>
+</ul>
+</li>
+<li><strong>Place and Route</strong> is when the netlist is mapped onto specific locations on the FPGA, and routing is configured to connect the blocks
+<ul>
+<li>Often multiple iterations are needed to get it right</li>
+</ul>
+</li>
+<li>Timing verification checks timing constraints have been met</li>
+<li>The <strong>bitstream</strong> is a file that is loaded onto the FPGA that tells it how to configure itself</li>
+</ul>
+<h2 id="intellectual-property"><a class="header" href="#intellectual-property">Intellectual Property</a></h2>
+<ul>
+<li>IP cores are premade designs</li>
+<li>Implementing complex hardware is pointless when you can re-use other modules</li>
+<li>Similar to software libraries</li>
+<li>Lots of open source cores are available online</li>
+<li>Vendors and FPGA companies sell IPs</li>
+<li>Good IP works as a black-box
+<ul>
+<li>Well-defined</li>
+<li>Configurable</li>
+<li>Thoroughly tested and verified</li>
+<li>Provided with data sheets like any other piece of hardware</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
