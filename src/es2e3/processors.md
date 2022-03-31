@@ -45,7 +45,8 @@ end
 endmodule
 ```
 
-### Register File
+### Register File
+
 The register file constains 32 32-bit registers, and has two read ports.
 
 - Two read address, one for each port (`ra1`,`ra2`)
@@ -118,11 +119,11 @@ always @ *
 endmodule
 ```
 
-### Processor control
+### Processor control
 
 The processor also has a control unit, which asserts signals to inform the datapath for the processing of a particular instruction. The control unit uses combinational logic to break down the instruction and then output signals to control the rest of the processor
 
-### Pipelining
+### Pipelining
 
 A pipeline processor requires register stages to be added within the data and control paths.
 

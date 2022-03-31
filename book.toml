@@ -10,7 +10,7 @@ title = "Computer Systems Engineering Notes"
 [output.html]
 default-theme = "rust"
 preferred-dark-theme = "navy"
-git-repository-url = "https://github.com/Joeyh021/first-year-notes"
+git-repository-url = "https://github.com/Joeyh021/notes"
 
 [output.html.fold]
 enable = true
