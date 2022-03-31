@@ -154,3 +154,73 @@ endmodule
 When implementing a finite state machine, always ensure the state register as a reset, and a defined initial state, otherwise the starting state of the FSM is unpredictable.
 
 ## More Complex FSM
+
+More complex FSMs with more states and inputs can be hard to construct truth tables and equations for. Verilog's behavioural abstractions can be used instead.
+
+- Each state can be assigned a binary value and used as a named constants
+- Still need two registers for the state and next state
+- Synchronous logic to move state into next state
+- Behavioural combinatorial `always` block with a case statement for state transitions
+
+Consider the more complex example with the button lock again:
+
+![](./img/lock-fsm-2.png)
+
+```verilog
+module lock(input clk, rst, s, r, g, b, a, output u);
+
+//define states as parameters
+parameter wt = 3'b000, str = 3'b001, rd1 = 3'b010,
+    blu = 3'b011, grn = 3'b100, rd2 = 3'b101;
+
+//state registers
+reg [2:0] nst, st;
+
+//output logic
+//output u is only high when state is rd2
+assign u = (st == rd2);
+
+//synchronous logic for changing state
+always @ (posedge clk) begin
+    if (rst) st <= wt;
+    else st <= nst;
+end
+
+//input logic
+//combinatorial logic for defining state transitions
+always @ * begin
+  nst = st;
+  case(st)
+    wt:
+        if(s) nst = str;
+    str:
+        if(a)
+            if(r&~b&~g) nst = rd1;
+        else nst = wt;
+    rd1:
+        if(a)
+            if(b&~r&~g) nst = blu;
+        else nst = wt;
+    blu:
+        if(a)
+            if(g&~r&~b) nst = grn;
+        else nst = wt;
+    grn:
+        if(a)
+            if(r&~g&~b) nst = rd2;
+        else nst = wt;
+    rd2:
+        nst = wt;
+    default:
+        nst = wt;
+  endcase
+end
+
+endmodule
+```
+
+The general structure of a state machine will always follow the example above.
+
+- Always ensure next state is assigned in every case
+- Use a default next state and output assignment at the top of the state transition block to minimise the number of statements
+- Using a combinatorial `alway` block, it becomes easy to verify that the FSM is correct, as we can verify against the state transition diagram.
