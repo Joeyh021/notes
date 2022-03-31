@@ -110,7 +110,7 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://github.com/Joeyh021/first-year-notes" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/Joeyh021/notes" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
@@ -172,8 +172,8 @@ always @ (posedge clk) begin
 end
 endmodule
 </code></pre>
-<p>### Register File
-The register file constains 32 32-bit registers, and has two read ports.</p>
+<h3 id="register-file"><a class="header" href="#register-file">Register File</a></h3>
+<p>The register file constains 32 32-bit registers, and has two read ports.</p>
 <ul>
 <li>Two read address, one for each port (<code>ra1</code>,<code>ra2</code>)</li>
 <li>A write address (<code>wa3</code>)</li>
@@ -236,9 +236,9 @@ always @ *
 
 endmodule
 </code></pre>
-<p>### Processor control</p>
+<h3 id="processor-control"><a class="header" href="#processor-control">Processor control</a></h3>
 <p>The processor also has a control unit, which asserts signals to inform the datapath for the processing of a particular instruction. The control unit uses combinational logic to break down the instruction and then output signals to control the rest of the processor</p>
-<p>### Pipelining</p>
+<h3 id="pipelining"><a class="header" href="#pipelining">Pipelining</a></h3>
 <p>A pipeline processor requires register stages to be added within the data and control paths.</p>
 <p><img src="./img/pipeline-processor.png" alt="" /></p>
 
