@@ -81,7 +81,7 @@
   - [Diodes](./es2c0/diodes.md)
   - [Oscillators](./es2c0/oscillators.md)
   - [BJTs](./es2c0/bjt.md)
-  - [BJT Amplifiers](./es2c0/bjt-amps/md)
+  - [BJT Amplifiers](./es2c0/bjt-amps.md)
   - [MOSFETs](./es2c0/mosfet.md)
   - [MOSFET Amplifiers](./es2c0/mosfet-amps.md)
   - [Differential Amplifiers](./es2c0/differential.md)

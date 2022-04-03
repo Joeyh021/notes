@@ -167,3 +167,5 @@ $$
 $$
 
 This is much lower than a typical $\beta$ would be. As $V_{BC}$ is increased further, $\beta$ decreases further and further.
+
+![](./img/modes.png)
