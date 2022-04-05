@@ -139,6 +139,471 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="operating-systems"><a class="header" href="#operating-systems">Operating Systems</a></h1>
+<h2 id="processes"><a class="header" href="#processes">Processes</a></h2>
+<ul>
+<li>Process is a program in execution</li>
+<li>A process in memory has
+<ul>
+<li>Text: process instructions</li>
+<li>Data: global variables</li>
+<li>Stack &amp; Heap
+<ul>
+<li>Can shrink/grow at runtime</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Process can be in several states
+<ul>
+<li>New: being created</li>
+<li>Ready: waiting to be assigned to processor</li>
+<li>Waiting: waiting on something or other</li>
+<li>Running</li>
+<li>Terminated: finished execution</li>
+</ul>
+</li>
+<li>Process control blocks
+<ul>
+<li>Stores:
+<ul>
+<li>State</li>
+<li>Program counter</li>
+<li>CPU registers</li>
+<li>Scheduling info</li>
+<li>Memory management info</li>
+<li>Accouting information
+<ul>
+<li>CPU usage, time since start, etc</li>
+</ul>
+</li>
+<li>I/O Status
+<ul>
+<li>Open files and I/O devices</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Stored in kernel memory</li>
+<li>Used when saving processes for context switches</li>
+<li>Simpler the PCB, faster the context can switch</li>
+</ul>
+</li>
+<li>Process scheduling
+<ul>
+<li>Scheduler selects among available processes for who's turn is next on the CPU</li>
+<li>Three queues:
+<ul>
+<li>Job queue for new processes (long term)</li>
+<li>Ready queue for ready processes (short term)</li>
+<li>Device queues for processes waiting for I/O access</li>
+</ul>
+</li>
+<li>Short term scheduler selects next process from ready queue
+<ul>
+<li>Invoked frequently and must be fast</li>
+</ul>
+</li>
+<li>Long term moves from new state to ready queue
+<ul>
+<li>Invoked when processes are created</li>
+<li>Moves processes into memory</li>
+<li>Not used in modern OS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Process creation
+<ul>
+<li>Child processes can be created by parent processes
+<ul>
+<li>Forms a tree</li>
+<li>Root process is <code>init</code></li>
+</ul>
+</li>
+<li>Options are specified when creating process
+<ul>
+<li>Resource sharing options</li>
+<li>Execution options (concurrently or parent waits)</li>
+<li>Address space options (duplicate or child loads new)</li>
+</ul>
+</li>
+<li><code>fork()</code> creates new process as duplicate</li>
+<li><code>exec()</code> used after fork to replace address space with new program</li>
+</ul>
+</li>
+<li>Process termination
+<ul>
+<li>Processes terminate after executing last statement</li>
+<li>Can be terminated with <code>exit()</code> syscall, returning status code</li>
+<li><code>wait()</code> tells parent to wait for child to exit</li>
+<li>If a parent exits without waiting for child, children become orphans and are adopted by <code>init</code></li>
+<li>When a process terminates but exit code has not yet been collected it is a zombie process
+<ul>
+<li>All resources released but entry in process table remains</li>
+<li>Once parent gets exit status it is released</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Inter-process communication
+<ul>
+<li>Either shared memory or message passing</li>
+<li>Shared memory
+<ul>
+<li>Address space of one process and other one attaches to it</li>
+<li>Special permission required for one process to access another's address space</li>
+<li><code>mmap()</code> syscall creates shared block of memory</li>
+</ul>
+</li>
+<li>Message passing
+<ul>
+<li>Send and receive syscalls provided</li>
+<li>One process typically act as producer and other consumer</li>
+<li>Message buffer exists in kernel space
+<ul>
+<li>Circular queue can be used as a shared buffer</li>
+<li>Can have zero-capacity, or bounded/unbounded</li>
+</ul>
+</li>
+<li>Can communicate directly by naming processes</li>
+<li>Can also communicate indirectly using mailboxes
+<ul>
+<li>Mailboxes have unique IDs</li>
+<li>Process can only communicate if they share a mailbox</li>
+</ul>
+</li>
+<li>Can do blocking sends/receives, or non-blocking</li>
+</ul>
+</li>
+<li>Pipes
+<ul>
+<li>A mechanism for message passing in UNIX</li>
+<li>Pipes in bash exist with <code>|</code>, connecting input of one process to output of another</li>
+<li>Named pipes, or fifos appear in file system and can be manipulated using file operations
+<ul>
+<li>Much more powerful, persist beyond processes exiting</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="threads"><a class="header" href="#threads">Threads</a></h2>
+<ul>
+<li>What are threads
+<ul>
+<li>A unit of CPU execution</li>
+<li>Can multi-thread processes to achieve concurrency</li>
+<li>Threads lighter than processes and share more with parent
+<ul>
+<li>Share code, data, files</li>
+</ul>
+</li>
+<li>Threads have own id, program counter, register set, stack (share heap)</li>
+</ul>
+</li>
+<li>Concurrency and parallelism
+<ul>
+<li>Concurrency implies more than one task making progress</li>
+<li>Parallelism implies that a system can perform more than one task simultaneously
+<ul>
+<li>Data parallelism splits data up and performs same processing on each subset of data</li>
+<li>Task parallelism splits threads doing different things up</li>
+</ul>
+</li>
+<li>Can have concurrency without parallelism by interleaving tasks on one core</li>
+<li>Amdahl's law is a rough estimate of speedup</li>
+<li>Speedup <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.365108em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span><span class="mbin mtight">+</span><span class="mopen mtight">(</span><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span><span class="mclose mtight">)</span><span class="mord mtight">/</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>
+<ul>
+<li>Numerator (1) is time taken before parallelising</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span> is time taken to run serial part</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> is the time taken to run parallelisable part on <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> cores</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Pthreads is common API for working with threads
+<ul>
+<li><code>pthread_create()</code> creates new thread to execute a function</li>
+<li><code>pthread_join()</code> waits for thread to exit</li>
+<li>Provides mutexes and condvars</li>
+<li>Can set thread IDs and work with attributes, etc</li>
+</ul>
+</li>
+<li>Synchronising threads
+<ul>
+<li>Sharing memory between threads requires synchronisation</li>
+<li>Race conditions occur when two threads try to write to a variable at the same time
+<ul>
+<li>High level code broken down into atomic steps which become interleaved and cause registers and intermediate operations to become mixed up, causing undefined behaviour</li>
+</ul>
+</li>
+<li>Can use mutexes for synchronisation</li>
+</ul>
+</li>
+<li>User vs Kernel threads
+<ul>
+<li>User level threads are implemented by user code in userspace
+<ul>
+<li>No kernel involvement</li>
+<li>Cannot be scheduled in parallel but can run concurrently</li>
+</ul>
+</li>
+<li>Kernel threads are implemented by the kernel and created by syscalls
+<ul>
+<li>Scheduling is handled by kernel so can be scheduled on different CPUs</li>
+<li>Management has kernel overhead</li>
+</ul>
+</li>
+<li>Many-to-one model maps many user level threads to a single kernel thread
+<ul>
+<li>Less overhead</li>
+<li>User threads are all sharing kernel thread so no parallelism and one blocking causes all to block</li>
+</ul>
+</li>
+<li>One-to-one gives each user thread a kernel thread
+<ul>
+<li>Used in windows and linux</li>
+<li>More kernel threads = more overhead</li>
+<li>Users can cause creation of kernel threads which slows system</li>
+</ul>
+</li>
+<li>Many-to-many multiplexes user threads across a set of kernel threads
+<ul>
+<li>Number of kernel thread can be set and can run in parallel</li>
+<li>More complex than one-to-one</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Condition variables
+<ul>
+<li>Used to synchronise threads</li>
+<li>Threads can <code>wait()</code> on condition variables</li>
+<li>Other threads signal the variable using <code>signal()</code> or <code>broadcast()</code></li>
+</ul>
+</li>
+<li>Signals are used in UNIX systems to notify processes
+<ul>
+<li>Synchronous signals generated internally by process</li>
+<li>Asynchronous signals generated external to process by other processes
+<ul>
+<li>ctrl+c sends SIGINT asynchronously</li>
+</ul>
+</li>
+<li>Signals are delivered to process and handled by signal handlers
+<ul>
+<li>Only signal-safe functions can be called within signal handlers</li>
+</ul>
+</li>
+<li>Signals can be delivered to all threads, just the main thread, or specific threads</li>
+</ul>
+</li>
+</ul>
+<h2 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h2>
+<ul>
+<li>Different schedule queues contain processes in different states
+<ul>
+<li>Queues contain process control blocks</li>
+</ul>
+</li>
+<li>Scheduler wants to be as efficient as possible in scheduling jobs
+<ul>
+<li>Maximise CPU utilisation and process throughput</li>
+<li>Minimise turnaround, waiting, response times</li>
+</ul>
+</li>
+<li>Four events that can trigger scheduler
+<ul>
+<li>Process switches from running to waiting state</li>
+<li>Process terminates</li>
+<li>Process switches from running to ready</li>
+<li>Process switches from waiting to ready</li>
+<li>First two cases are non pre-emptive, where process give up CPU</li>
+<li>2nd two are pre-emptive, where scheduler takes the task off the CPU and gives it to a new task</li>
+</ul>
+</li>
+<li>First-come first-serve scheduling is where processes are assigned to CPU in order of arrival
+<ul>
+<li>Avg wait time varies massively on order of processes arriving</li>
+<li>Non pre-emptive</li>
+<li>Shorter jobs first improves performance</li>
+</ul>
+</li>
+<li>Shortest first scheduling
+<ul>
+<li>Provably optimal in minimising average wait time</li>
+<li>Relies on knowing how long each job will take</li>
+<li>Can estimate job length by exponential moving average
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the length of the nth CPU burst</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span> is the predicted length of the next CPU burst</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li>Can be either pre-emptive or non pre-emptive
+<ul>
+<li>When a new, shorter process arrives when one is already being executed, can either:
+<ul>
+<li>Switch to new process</li>
+<li>Wait for current job to finish</li>
+</ul>
+</li>
+<li>Pre-emptive can cause race conditions where processes are switched mid-write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Priority scheduling assigns a priority to each process, and lowest priority is executed first
+<ul>
+<li>Shortest job first is a special case of priority scheduling, where the priority is execution time</li>
+<li>Can cause starvation for processes with low priority
+<ul>
+<li>Can overcome with aging, where priority is increased over time</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Round robin scheduling is where each process gets a small amount of CPU time (a quantum <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>), and after that time has elapsed the process is pre-empted and put back into the ready queue
+<ul>
+<li>Scheduler visits process in arrival order</li>
+<li>No process waits more than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span> for it's next turn</li>
+<li>If <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span> is large, becomes first come first served</li>
+<li>If <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span> is small, too many context switches
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span> usually 10 to 100ms</li>
+</ul>
+</li>
+<li>Higher wait time than shortest job first in most cases, but better response time</li>
+</ul>
+</li>
+</ul>
+<h2 id="synchronisation"><a class="header" href="#synchronisation">Synchronisation</a></h2>
+<ul>
+<li>Synchronisation is important to prevent race conditions</li>
+<li>Needed for both process and threads as they both share memory</li>
+<li>The part of code where processes update shared variables is the critical section
+<ul>
+<li>No two processes can concurrently execute their critical section
+<ul>
+<li>Entry and exit must uphold mutual exclusion</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ideal solution to the critical section problem must satisfy:
+<ul>
+<li>Mutual exclusion</li>
+<li>At least one process must be able to progress into the critical section if no other process is in it</li>
+<li>No process should have to wait indefinitely to enter critical section</li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Peterson%27s_algorithm">Peterson's Algorithm</a> is a solution to the problem
+<ul>
+<li><code>int turn;</code> shared variable to specify who's turn it is</li>
+<li><code>boolean flag[2];</code> flags store who wished to enter</li>
+<li>Process runs if both waiting and their turn, or if only one waiting and other not in critical section</li>
+<li>Can fail with modern architectures reordering stuff</li>
+</ul>
+</li>
+<li>Synchronisation primitives are based on the idea of locking
+<ul>
+<li>Two processes cannot hold a lock simultaneously</li>
+<li>Locking and unlocking should be atomic operations
+<ul>
+<li>Modern hardware provides atomic instructions</li>
+<li>Used to build sync primitives</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Test and set is one type of atomic instruction
+<ul>
+<li>Update a register and return it's original value</li>
+<li>Can be used to implement a lock using a shared boolean variable
+<ul>
+<li>Does not satisfy bounded waiting as the process can instantly reacquire the lock</li>
+</ul>
+</li>
+<li>More complex implementations can satisfy criteria (allow the next waiting process to execute and only release lock if no other process waiting)</li>
+</ul>
+</li>
+<li>Mutex locks are lock variables that only one process can hold at a time
+<ul>
+<li>If another process tries to acquire the lock then it blocks until the lock is available</li>
+</ul>
+</li>
+<li>Semaphores have integer values
+<ul>
+<li>0 means unavailable</li>
+<li>Positive value means available</li>
+<li><code>wait()</code> on a semaphore makes the process wait until the value is positive
+<ul>
+<li>Decrements by 1 if/when positive</li>
+</ul>
+</li>
+<li><code>signal()</code> increments value by one</li>
+<li>Both commands must be atomic</li>
+<li>Controls the number of processes that can concurrently access resource - more powerful than mutex</li>
+</ul>
+</li>
+<li>Deadlocks may occur when both processes are waiting for an event that can only be caused by the other waiting process</li>
+<li>Starvation occurs when a specifics process has to wait indefinitely while others make progress</li>
+<li>Priority inversion is a scheduling problem when a lower-priority process holds a lock needed by a higher priority process
+<ul>
+<li>Solved via priority inheritance, where the priority of processes is changed while the lock is contended</li>
+</ul>
+</li>
+<li>There are a few classic synchronisation problems that can be used to test synchronisation schemes
+<ul>
+<li>The bounded buffer problem has <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> buffers where each can old one item. Produces produces items and write to buffers while the consumers consume from buffers
+<ul>
+<li>Producer should not write when all buffers full</li>
+<li>Consumer should not consume when all buffers empty</li>
+<li>Solved with three semaphores
+<ul>
+<li><code>mutex = 1; full = 0; empty = n</code></li>
+</ul>
+</li>
+<li>Producers wait on empty when filling a buffer, and signal on full to indicate a buffer has been filled</li>
+<li>Consumers wait on full to indicate emptying a buffer, and wait on empty to indicate one has been emptied</li>
+<li>buffer access protected by mutex</li>
+</ul>
+</li>
+<li>Reader/writer problem has some data shared among processes, where multiple readers are allowed but only one writer
+<ul>
+<li>Readers are given preference over writers, and writers may starve</li>
+<li>A shared integer keeps track of the number of readers, and two mutexes are used, one read/write mutex, and another to protect the shared reader count.</li>
+<li>The writer must acquire the writer mutex</li>
+<li>Readers increase the read count while reading and decrease when done, both operations synchronised using mutex</li>
+<li>Read/write mutex also locked while read count is at least one reading to prevent writes while anyone is reading.</li>
+</ul>
+</li>
+<li>Dining philosophers spend their lives either thinking or eating.
+<ul>
+<li>They sit in a circle, with a chopstick between each pair. When they wish to eat, they pick up a chopstick from either side of them, and put them back down when done.
+<ul>
+<li>Two neighbouring philosophers cannot eat at the same time</li>
+<li>Five mutexes, one for each chopstick</li>
+</ul>
+</li>
+<li>If all five decide to eat at once and pick up the left chopstick, then deadlock occurs</li>
+<li>There are multiple solutions:
+<ul>
+<li>Allow only <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> philosophers for <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> chopsticks</li>
+<li>Allow a philosopher to only pick up both chopsticks if both are available, which must be done atomically</li>
+<li>Use an asymmetric solution, where odd-numbered philosophers pick up left first, and even numbers vice-versa.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="deadlocks"><a class="header" href="#deadlocks">Deadlocks</a></h2>
+<h2 id="memory"><a class="header" href="#memory">Memory</a></h2>
 
                     </main>
 
