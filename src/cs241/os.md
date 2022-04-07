@@ -249,6 +249,67 @@
 
 ## Deadlocks
 
+- A set of processes is said to be in deadlock when each process is waiting for an event that can only be caused by another process in the event
+  - All waiting on each other
+  - Usually acquisition/release of a lock or resource
+  - An abstract system model for discussing deadlocks
+    - System has resources $R_1, R_0, ..., R_m$
+      - Resources can have multiple instances
+    - A set of processses $P_0, P_1, ..., P_n$
+    - To utilise a resource a process must request it, use it, then release it
+  - Conditions for deadlock:
+    - Mutual exclusion, only one process can use a resource
+    - Hold and wait, a process must hold some resources and then be waiting to acquire more
+    - No pre-emption, a resource can be released only voluntarily
+    - Circular wait, there must be a subset of processes waiting for each other in a circular manner
+- The resource allocation graph is a directed graph where:
+  - Vertices are processes and resources
+    - Resource nodes show the multiple instances of each resource
+  - Request edge is a directed edge $P_i \leftarrow R_j$
+  - Assignment edge is a directed edge $R_j \leftarrow P_i$
+  - Cycles in graph show circular wait
+  - No cycles means no deadlock
+  - Cycles _may_ mean deadlock, but not sufficient alone to detect deadlock
+- Deadlock detection algorithms are needed to verify if a resource allocation graph contains deadlock
+  - Resource graph can be represented in a table showing allocated, available, and requested resources
+  - Flags show if each process has finished executing
+  - A process may execute and set it's flag if it can satisfy it's requested resources using the currently available resources, which then frees any allocated resources
+  - Can then try to execute other processes
+  - If ever a point where no progress can be made, then the processes are deadlocked
+- Deadlock prevention ensures that at least one of the necessary conditions for deadlock does not hold
+  - Impossible to design system without mutual exclusion
+  - Can prevent hold-and-wait by ensuring a process atomically gets either all or none of its required resources at once, so it is either waiting on one of them or all of them
+  - Can introduce pre-emption into the system to make a process release all it's resources if it is ever waiting on any
+  - Can prevent circular wait by numbering resources, and requiring that each process requests resources in order
+    - Process holding resource $n$ cannot request any resources numbered less than $n$
+  - All of these methods can be restrictive
+    - Harmless requests could be blocked
+- Deadlock avoidance is less restrictive than prevention
+  - Determines if a request should be granted based upon if the resulting allocation leaves the system in a safe state where no deadlock can ever occur in future
+    - Need advanced information on resource requirements
+  - Each process declares the maximum number of instances of each resources it may need
+  - On receiving a resource request, the algorithm checks if granting the resource leaves the system in a safe state
+  - If it can't guarantee a safe state, the system waits until the system changes into a state where the request can be granted safely
+  - How do we determine if a state is safe?
+    - Cycles alone do not guarantee deadlock
+    - The banker's algorithm determines if a state is safe
+- The banker's algorithm:
+  - Take a system with 5 process and three resource types, A, B and C, with 10, 5, and 7 instances respectively.
+  - Table shows the current and maximum usage for each process
+    - Available resources is (instances of resource) - (total current used by each process)
+    - Future needed resources is (maximum usage) - (current usage)
+  - At each step, a process is found who's needs can be satisfied with currently available resources
+    - Can then execute process and reclaim its resources
+    - Keep applying steps to try to reclaim all resources
+      - Gives a sequence that processes can be executed in
+        - If sequence completes all processes then it's a safe sequence and starting state is safe
+        - If some processes cannot be executed and there is no possible safe sequence the starting state is unsafe
+- Resource request algorithm checks if granting a request is safe
+  - Check that we can satisfy request
+  - Pretend request was executed
+  - Use bankers algorithm to see if resulting state would be safe
+    - If not, then keep request pending until state changes into a safe state where we can grant it
+
 ## Memory
 
 - Memory is a flat array of addressable bytes
