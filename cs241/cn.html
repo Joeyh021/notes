@@ -139,6 +139,199 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="networks"><a class="header" href="#networks">Networks</a></h1>
+<h2 id="intro"><a class="header" href="#intro">Intro</a></h2>
+<ul>
+<li>A network is a group of interconnected dervices that communicate by sending messages
+<ul>
+<li>End hosts run applications and send/receive messages
+<ul>
+<li>Generate messages and break them down into packets</li>
+<li>Add additional info such as IP address and port in packet header</li>
+<li>Send bits physically</li>
+</ul>
+</li>
+<li>Access points provide access to the internet
+<ul>
+<li>End hosts connect to APs</li>
+<li>Most use ethernet/wifi but also 4G/5G mobile networks</li>
+</ul>
+</li>
+<li>Intermediate devices such as switches and routers forward and route messages
+<ul>
+<li>Also known as network core</li>
+<li>Run routing and forwarding algorithms</li>
+<li>Info stored in routing tables</li>
+<li>Move packets to correct output link</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The store-and-forward principle states that an entire packet must arrive at a before it can re-send it
+<ul>
+<li>It takes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.00773em;">R</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> seconds to transmit a packet of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">L</span></span></span></span> at <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> bits per second</li>
+<li>The router has to receive and send, so total delay is <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord">2</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.00773em;">R</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>, plus processing time</li>
+<li>Packets queue at the router if the rate of incoming packets is greater than the transmittion rate</li>
+<li>Packets either queue in buffer or may be dropped if buffer fills</li>
+<li>There are four main sources of packet delay:
+<ul>
+<li>Transmission delay
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.00773em;">R</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> time to send packet</li>
+</ul>
+</li>
+<li>Queueing delay
+<ul>
+<li>Time waiting to be transmitted</li>
+</ul>
+</li>
+<li>Processing delay
+<ul>
+<li>Any processing at node</li>
+</ul>
+</li>
+<li>Propagation delay
+<ul>
+<li>Time to physically move bits in link cables</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Throughput is the overall rate at which bits are transferred from a source to a destination in a time window
+<ul>
+<li>Can be instantaneous throughput, the rate at a specific point in time</li>
+<li>Or average throughput, the mean rate over a longer period of time</li>
+<li>Transmission links are bottlenecked by their minimum speeds</li>
+</ul>
+</li>
+<li>Protocols are defined rules for communication between nodes
+<ul>
+<li>Define packet format, order of messages, actions to take on send and receive</li>
+<li>Can be in software or hardware</li>
+<li>Routers run IP protocols and switches and network cards implement ethernet</li>
+</ul>
+</li>
+<li>The internet uses packet switching to allow different routes to share links between nodes
+<ul>
+<li>If one flow of data is not using any shared links then another flow can use it</li>
+<li>Circuit switching was used in old telephone networks, where links were reserved for an entire call duration and flows did not get shared
+<ul>
+<li>Not ideal for internet traffic due to the bursty nature of packets</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>There are 5 layers in the network stack, each using the services of the layer below it and providing services to the layer above it
+<ul>
+<li><strong>Application layer</strong> generates data
+<ul>
+<li>HTTP, SMTP, DNS</li>
+</ul>
+</li>
+<li><strong>Transport layer</strong> packetises data, adds port number, sequencing and error correcting info
+<ul>
+<li>TCP, UDP</li>
+</ul>
+</li>
+<li><strong>Network layer</strong> adds source and destination IP addresses and routes packets
+<ul>
+<li>IP</li>
+</ul>
+</li>
+<li><strong>Link layer</strong> adds source/destination MAC addresses, passes ethernet frames to network interface hardware drivers
+<ul>
+<li>Ethernet, WiFi</li>
+</ul>
+</li>
+<li><strong>Physical layer</strong> sends the bits down the wire
+<ul>
+<li>Different protocol for cables, WiFi, fibre optics, etc</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="application-layer"><a class="header" href="#application-layer">Application Layer</a></h2>
+<ul>
+<li>Processes such as web browsers, email, file sharing, communicate over networks
+<ul>
+<li>Developer has to develop either both client and server so they know how to communicate</li>
+<li>Alternatively, processes can implement an application-layer protocol such as HTTP</li>
+</ul>
+</li>
+<li>Process send/receive via sockets, which are the API between application and network
+<ul>
+<li>Creating, reading, writing to sockets is done by syscalls</li>
+<li>Messages need to be addressed to the correct process running on the correct end host
+<ul>
+<li>Host identified by IP address</li>
+<li>Processes identified by port number</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Application processes use transport layer services
+<ul>
+<li>Transport layer is expected to deliver messages to the intended recipients</li>
+<li>All transport layer protocols provide basic services such as packetisation, addressing, sequencing, error correction</li>
+<li>Different protocols provide different services</li>
+<li>TCP is for reliable and ordered data transfer
+<ul>
+<li>Is correction-oriented
+<ul>
+<li>TCP handshake is required</li>
+</ul>
+</li>
+<li>Client must contact server, establish connection with IP and Port</li>
+<li>Provides a</li>
+</ul>
+</li>
+<li>UDP provides no guarantees on data transfer
+<ul>
+<li>Best-effort service</li>
+<li>Faster as no handshake is required and headers are smaller</li>
+<li>Maintains no connection, data may be lost or our of order</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>HTTP is how web browsers communicate with web servers
+<ul>
+<li>Uses TCP port 80</li>
+<li>Client sends a HTTP request to request a resource</li>
+<li>Server response with a HTTP response with the requested resource</li>
+<li>Web pages consist of HTML file and references objects</li>
+<li>HTTPv1.0 is non-persistent and downloads each object over a separate TCP connection
+<ul>
+<li>New TCP handshake for each object</li>
+</ul>
+</li>
+<li>HTTPv1.1 is persistent and uses the same connection for multiple objects
+<ul>
+<li>Server leaves connection open for any referenced objects, which are sent back-to-back as soon as they are encountered</li>
+</ul>
+</li>
+<li>RTT is the round trip time for a request
+<ul>
+<li>Needs 1 RTT to establish TCP connection, then another to request and receive first few bytes of data</li>
+<li>Non-persistent response time is 2RTT + file transmission time for each file</li>
+<li>Persistent response time only requires 2RTT once, then total data transfer</li>
+</ul>
+</li>
+<li>HTTP requests and responses are in ASCII, in a human-readable format
+<ul>
+<li>In request, top line is request line with request verb (GET/POST/PUT)</li>
+<li>In response, top line is status line with status code and phrase</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Web clients can be configured to access the web via a cache, which caches objects to reduce response time for client requests</li>
+</ul>
+<h2 id="transport-layer"><a class="header" href="#transport-layer">Transport Layer</a></h2>
+<h2 id="network-layer"><a class="header" href="#network-layer">Network Layer</a></h2>
+<h2 id="selected-topics"><a class="header" href="#selected-topics">Selected Topics</a></h2>
 
                     </main>
 
