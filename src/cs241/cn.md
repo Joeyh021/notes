@@ -96,6 +96,134 @@
 
 ## Transport Layer
 
+- Transport services provide logical communication between application processes running on different hosts
+  - Break messages into segments, add header, pass to network layer on the send side
+  - Reassemble segments into messages and pass up to application layer on the receive side
+- UDP provides bare minimum services
+  - No effort to recover lost packets or re-order packets
+  - Connectionless
+    - Each segment treated individually
+  - No congestion control
+    - Sender can send as fast as they want, possibly overloading receiver or infrastructure
+  - Used when fast and low latency is needed
+    - UDP header is smaller
+    - Can send data as fast as wanted
+      - Video games, internet streaming
+  - It is the programmers responsibility to make UDP reliable
+- TCP is connection-oriented and more reliable
+  - Provides flow and congestion control
+  - Manages packets out of order to make packets appear in order
+  - Enhances unreliable network layer services
+    - Bits often flipped due to noise and packets re-ordered
+  - Checksums in headers detect bit errors
+  - Acknowledgments (ACKs) indicated packets are correctly received
+  - Sender times out if ACK not received within a timeout interval
+  - Automatic Repeat Requests (ARQs) are sent to retransmit lost or corrupt packets
+  - Packets include a sequence number to detect lost or duplicated packets
+- Stop and wait ARQ is a protocol for ARQs
+  - Sender sends a packet and waits until it receives an ACK
+  - If ACK arrives, send the next packet
+  - If ACK times out, retransmit the same packet
+  - Duplicate detection is possible because sequence numbers are used
+    - Sufficient to use 1 bit sequence number since there can be at most one outstanding packet
+      - Known as the alternating bit protocol
+  - Reliable, but slow as sender has to wait for ACK to send next packet
+    - Suppose a 1Gbps ($R=10^9$) link with a packet length of $L=8000$ bits
+    - RTT is 30ms
+    - Utilisation $U$ is the fraction of time the link is spent transmitting
+      - $L/R$ time spent sending, $RTT$ time spent waiting
+      - $U = \frac{L }{R \times RTT +  L } = 0.00027$
+  - The sender should be allowed to send more packets without waiting for an ACK
+    - There is $R \times RTT$ bits of additional data that could be sent during the RTT interval
+    - $R \times RTT$ is the **delay-bandwith product**
+      - Indicates the length of the pipeline
+  - Receiving buffer can also be a bottleneck
+    - Typically has a finite buffer of $B$ bits
+    - May not be reading from buffer all the time
+    - Sender should not send more than $B$ bits at a time to prevent overflow
+    - The maximum number of bits without waiting for an ACK is $\min(B, L + R \times RTT)$
+- Pipelined protocols allow multiple unacknowledged packets in the pipeline
+  - ACKs are sent individually or cumulatively
+  - Range of sequence number must be increased from alternating bits
+  - Go-back-n is a common protocol
+    - Sender maintains a window of $N$ packets that can be sent without waiting for ACK
+      - Depends on delay-bandwith product, receive buffer size, other factors
+    - Receiver maintains expected sequence number variable, keeps track of the next expected packet
+    - If the receiver receives the packet with the expected sequence number, then it sends ACK($n$), which acknowledges all packets up to $n$, making the ACK cumulative
+    - If the sequence number is not the expected one, then the receiver discard the incoming packet and sends ACK($n-1$), acknowledging all up to the last correctly received packet
+      - Waits for packet $n$ to be correctly received before acknowledging any further packets
+    - The sender moves the send window forward for every ACK received
+    - Maintains a timer for the oldest unacknowledged packet, if an ACK times out then the packet is resent
+  - Selective repeat does not discard out of order packets as long as they fall inside a receive window
+    - ACKs are individual and not cumulative
+    - Sender selectively retransmits packets whose ACK did not arrive
+      - Maintains a timer for each unacknowledged packet in the send window
+    - Does not have to retransmit out-of-order packets
+    - Packets arriving out of order are buffered, but receive window not moved forward
+    - Send window moved forward when ACK received
+- TCP uses a combination of GBN and SR protocols
+  - Uses cumulative ACKs
+  - Only retransmits the packet causing timeout
+  - Each byte of data is numbered in TCP
+    - Sequence number of a packet is the byte number of the first byte of the segment
+  - TCP ACK number is the number of the next byte expected from the other side
+    - Cumulative ACKs are used
+  - TCP is duplex, so ACKs are piggybacked onto data segments. A segment can carry data and serve as an ACK
+  - The timout period is often relatively long, so on 3 duplicate ACKs, the sender re-transmits that segment without waiting for timeout
+    - Duplicate ACKs are good indicators of high packet loss
+  - TCP headers contain a few fields
+    - Sequence number is the 32 bit number of the segment indicating the number of the first byte in the packet
+    - Acknowledgement number is the number of the next byte expected to be transmitted
+    - Receive window is used for flow control
+- TCP uses flow control to ensure that the data in the pipeline does not exceed the receive buffer size
+  - Receiver advertises free buffer spaces in the receive windows field - `rwnd`
+  - Sender limits amount of unacknowledged data to the receiver's `rwnd` value
+  - (last byte send - last byte ACK'd) $\leq$ `rwnd`
+- TCP provides congestion control to control the rate of transmission according to the level of perceived congestion in the network
+  - Congestion occurs when input rate > output rate
+  - Results in lost packets, buffer overflows, long delays due to queuing at routers
+  - As a transmission link approaches maximum capacity queues build up and delay approaches infinity
+  - There is no benefit in increasing transmission rate beyond network capacity
+  - In a circular network where the transmission rate via link $i$ is $\lambda '$ and the capacity of the link is $C$
+    - If $\lambda \leq C/2$, then $\lambda'' = \lambda' = \lambda$: the links can all transmit at the same rate and there is no congestion
+    - If $\lambda > C/2$, then only a portion of the traffic can be carried by each link
+      - $\lambda' = (C\lambda) / (\lambda + \lambda')$
+      - $\lambda'' = (C\lambda') / (\lambda' + \lambda)$
+      - $\lambda'' = C - \frac{\lambda}{2}\left( \sqrt{1 + 4C/\lambda} -1 \right)$
+    - The throughput increases linearly up to a max of $\lambda = C/2$, then decreases exponentially towards 0 from there causing congestion collapse
+  - Throughput control aims to limit send rates such that congestion collapse does not occur, and flows get a fair share of network resources
+  - TCP detects network congestion through delays and losses
+    - Congestion is assumed when timeout occurs or 3 duplicate ACKs are received
+  - TCP is a window-based pipelined protocol, where the rate of transmission is window size $W/RTT$
+    - Controlling $W$ controls the transmission rate
+  - Maximum size of a TCP segment is the MSS, Maximum Segment Size, which is determined by the maximum frame size specified by the link layer
+  - Number of segments to transmit all data is $W/MSS$
+  - The sender maintains a congestion window size, denoted `cwnd`
+    - `W = LastByteSent - LastByteAcked <= min(cwnd, rwnd)`
+    - When `rwnd` is large, sender `cwnd` determines the transmission rate, which $\approx \frac{cwnd}{RTT}$ bps
+  - `cwnd` is a function of perceived network congestion
+    - Varied using additive increases and multiplicative decreases (AIMD)
+      - Increase `cwnd` by 1MSS every RTT until loss detected
+      - Cut `cwnd` in half after loss
+      - Achieves a fair allocation rate among competing flows
+        - Additive increase gives a slope of 1 as throughput increases
+        - Multiplicative decrease decreases throughput proportionally
+        - $w(t+1) = w(t) + 1$ if no loss, $0.5w(t)$ if loss
+        - Ideal operating point for two connections sharing $R$ bandwith is that both are sending at $R/2$ bps
+  - TCP starts slowly as AIMD convergence rate is slow
+    - Window size increased exponentially until predefined threshold hit (`ssthresh`)
+      - "slow start" phase, `cwnd` doubled each RTT
+      - `ssthresh` remembers previous window size for which a loss occurred
+    - Initial aggressive behaviour ensure sender reaches correct speed quickly
+  - Losses are detected through timeouts and 3 duplicate ACKs
+    - Harsher on losses than duplicate ACKs
+    - Timeout indicates a packet loss, so drastic action is taken
+      - `ssthresh= 0.5 * cwnd`, `cwnd = 1 MSS`
+      - Sender enters slow start phase again
+    - Losses indicated by duplicate ACKs take less drastic action -
+      - `ssthresh= 0.5 * cwnd`, `cwnd = 0.5 * cwnd`
+      - Window grows again linearly (additively)
+
 ## Network Layer
 
 ## Selected Topics
