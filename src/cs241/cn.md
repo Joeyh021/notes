@@ -226,4 +226,117 @@
 
 ## Network Layer
 
+- The main function of the network layer is to move packets from the source to destination node through intermediate nodes (routers)
+- Main protocol on this layer is IP
+  - At the source, the IP header is added with source and destination IP addresses
+  - Routers check destination IP addresses to decide the next hop
+  - At the destination, the IP header is stripped and the packet is delivered to the transport layer
+- Routers have two key functions
+  - Forwarding, moving packets from the input to the appropriate output
+  - Routing, constructing routing tables and running routing protocols
+- Routing tables map destination IP ranges to their output links
+  - Mapping all 4 billion IP addresses would be impractical
+  - If the IP ranges don't divide up so nicely, longest prefix matching is used
+    - When looking for a table entry for a given destinaion address, use the longest address prefix that matches the destination address
+- IPv4 addresses are 32bits to uniquely identify network interfaces
+  - IP addresses belonging to the same subnet have the same prefix, the subnet mask
+  - Interfaces on the same subnet are connected by a link layer switch and communicate directly
+  - IP addresses have their subnet mask specified as the number of bits as a prefix
+    - CIDR notation is xxx.xxx.xxx.xxx/xx
+  - A sender checks if the destination IP has the same subnet mask
+    - If it does then obtain the MAC address of the destination and forward the packet to the link layer switch
+  - If source and destination belong to different subnets, then the source forwards the packet to it's default gateway
+    - Gateway routers connect subnets
+    - If `A` want so communicate with `B` on a different subnet, it forwards the packets to `R`, the default gateway
+    - `R` will look up in it's routing table to forward `A`'s packets to the correct outgoing interface
+    - When the packet reaches the interface, it will be forwarded to `B` through the switch in `B`'s subnet
+- Nodes have two options for acquiring IP addresses
+  - Network admins can manually configure the IP of each host on the network
+  - DHCP is an application layer protocol that dynamically assigns IP addresses from the server to clients
+  - Both subnet mask and default gateway must be provided for both
+- Networks are allocated subnets from the ISP's address space
+  - Global authority ICANN is responsible for allocating IP addresses to ISPs
+- Network Address Translation (NAT) is used so that each IP address on a subnet does not need a globally unique IP, as ICANN have run out of them (4 billion is not enough)
+  - Unique IP addresses are provided to public gateway routers
+  - Private IP addresses that are unique only on the subnet are allocated by the gateway router
+  - Devices in home or private networks need not be visible to the public internet, they can use private IP addresses to communicate with each other and communication with the internet is done via the gateway router
+  - Packets with private IP addresses cannot be carried by the public internet
+  - Private source IP addresses are converted to the public IP address of the router facing the internet
+  - Incoming packets for different hosts are distinguished by different ports on the router
+  - Address shortage is solved by IPv6 with 128-bit addresses, but it is not in wide use yet
+- At each router, a routing protocol such as RIP or OSPF constructs the routing table
+  - Each routing protocol implements a routing algorithm
+  - Networks are abstracted as graphs $G = (N, E)$
+    - $N = {u, v, w, x, y, z}$ is the set of routers
+    - $E = {(u, v), (u, x), (v ,x), (v, w), (x, w), (x, y), (w, y), (w, z), (y, z) }$ is the set of links
+    - Each edge $(x, y)$ has a cost associated with if $c(x, y)$
+      - $c(x, y) = \infty$ if $x$ and $y$ are not direct neighbours
+    - The cost of a path $(x_1 , x_2 , x_3 ,..., x_p ) = c(x_1, x_2) + c(x_2, x_3) + ... + c(x_{p-1}, x_p)$
+    - The idea is that given a source $x$ and destination $y$, what is the least cost path from $x$ to $y$
+      - Need the shortest past from each node to every other node to populate the routing table
+  - Two type of routing algorithm are used
+    - Global requires the knowledge of the complete topology at each router including costs
+      - Link state algorithms
+    - Local requires only knowledge of the network surrounding the router
+- Dijkstra’s algorithm is a link-state routing algorithm that computes leas cost path from one node (the source) to all other nodes
+  - Implemented in Open Shortest Path First (OSPF) protocol
+  - Each node requires the entire topology, which is obtained through broadcasting link states
+  - Maintains a set of visited nodes $N'$, initially only the source
+  - For all nodes $v$
+    - If $v$ adjacent to $u$
+      - D(v) = c(u, v) , store current estimates of shortest distance
+      - p(v) = u, store predecessor node of $v$ along with current shortest path from $u$ to $v$
+    - else, $D(v) = \infty$, $p(v) = \text{null}$, initialise all other nodes to be infinite distance away with no known predecessor yet
+  - While all nodes $w$ not in $N'$, not yet visited
+    - Add node $w$ to $N'$
+    - For all $v$ adjacent to $w$ and not in $N'$
+      - If $D(v) > D(w) + c(w, v)$
+        - $D(v) = D(w) + c(w, v)$, update distance to the unvisited neighbour $v$ of $w$ if it is smaller
+        - $p(v) = w$
+- The Distance Vector (DV) algorithm is used in the Routing Information Protocol (RIP)
+  - Uses local information from neighbouring nodes to compute shortest paths
+  - Based on the Bellman-Ford equation
+    - $d_x(y)$ is the length of the shortest path from $x$ to $y$
+    - BF equation relates $d_x(y)$ to $d_v(y)$, where $v \in N(x)$ (the set of neighbouts of x)
+    - $d_x(y) = \min {c(x, v) + d_v(y)}$
+      - If $v^*$ minimises the above sum, then it is the next-hop node in the shortest path
+  - $D_x(y)$ is the current estimate of the minimum distance from $x$ to $y$ (different to actual minimum distance $d_x(y)$)
+    - DV algorithm tries to converge estimates to their actual values
+    - Each node maintains a distance vector $\mathbf D_x = [D_x (y) : y \in N]$
+    - Node $x$ performs the update $D_x(y) = min_v {c(x, v) + D_v(y)}$
+      - Node $x$ needs toe cost of each neighbour, and the distance vector of each neighbour (obtained via message passind)
+      - Whenever any of these is updated, the node recomputes it's distance vector and update all it's neighbours
+    - Each node:
+      - Wait for a change in local link cost or a message from neighbour
+      - Recompute estimates using BF equation
+      - If DV to any destination has changed, notify neighbours
+
 ## Selected Topics
+
+- A network interfaces is how the computer connects to a network
+  - Node can have multiple interfaces
+  - Loopback address (localhost) is simulated interface
+  - Each interface has an IP address
+  - Each NIC has a MAC address
+- Internet protocols specify the structure of internet packets
+  - Packet headers are added at each layer of the network stack
+  - Ethernet header from link layer describes source and destination MAC addresses
+    - Fixed length header
+  - IP header from network layer describes source and destination IP
+    - Variable length header, length stored in `IHL` field
+    - Stores protocol of transport layer too
+  - TCP/UDP header from transport layer has port numbers, control bits
+    - Also has data offset has the header length is variable
+    - Has sequence number, ACK number and checksum
+  - Application message is after the three headers
+- SYN attacks are when a malicious attacker sends a flood of TCP packets with the SYN bit set
+  - This causes the server to reply with SYN ACK for each packet received, creating a bunch of half open connections waiting for an ACK that never arrives
+  - The server is then too busy to respond to any other users
+  - Denial of service attack
+- MAC addresses are the addresses of the physical network interface hardware
+  - Address Resolution Protocol (ARP) determines the MAC addresses of hardware from the IP addresses
+  - The router broadcasts an ARP request packet to all interfaces on the link
+  - The ARP reply is sent by the node with the requested address
+  - MAC address is saved in ARP cache for future use
+- ARP allows unsolicited replies from anyone, so an attacker can send an unsolicited ARP reply pretending to be another address.
+  - This poisons the ARP cache with an incorrect entry, and the device will the send all messages intended for the spoofed address to the attacker
