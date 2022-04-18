@@ -71,7 +71,7 @@ $$
 Combinging this equation with $i_D = K_n (V_{GS} - V_{TN}) ^2$ gives the following quadratic equation in $\sqrt {i_D}$:
 
 $$
-i_D R_S + \frac{1}{K_n} \sqrt{i_D} + (V_{TN} - V_{TH}) = 0
+i_D R_S + \frac{1}{\sqrt{K_n}} \sqrt{i_D} + (V_{TN} - V_{TH}) = 0
 $$
 
 As the equation for drain current is quadratic, there are two possible solutions:
