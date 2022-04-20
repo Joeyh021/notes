@@ -84,7 +84,7 @@ The hybrid-pi model of this circuit looks like, as without the collector the cir
 
 ![](./img/emitter-follower-model.png)
 
-The output voltage is the voltage accross the emitter resists, and as $i_E = (1+\beta) i_v$:
+The output voltage is the voltage accross the emitter resistor, and as $i_E = (1+\beta) i_v$:
 
 $$
 V_o = i_b (1+ \beta) R_E
@@ -125,3 +125,55 @@ R_o = \frac{r_\pi}{1+\beta} = \frac{1}{g_m}
 $$
 
 The emitter follow has high input and low output impedance with a high current gain, so acts as an impedance transformer and a buffer.
+
+## Example
+
+A circuit for a common-emitter amplifier is shown below.
+
+![](./img/bjt-example.png)
+
+Work out the values of the DC biasing components $R_{B1}$, $R_{B2}$, and $R_E$ for the following conditions:
+
+- $V_{CC} = 10 V$
+- $I_E = 5 mA$
+- $V_E = 1.3 V$
+- Voltage accross $R_C = 4 V$
+- $\beta = 100$
+
+Assuming $I_E = I_C$ and $\alpha = \frac{\beta}{1 + \beta} = 0.99$, we have:
+
+$$
+R_C = \frac{4}{5mA} = 800 \Omega \qquad R_E = \frac{1.3}{5mA} = 260 \Omega
+$$
+
+Calculating the Thevenin equivalent of the biasing resistors:
+
+$$
+R_{TH} = \frac{\beta R_E}{10} = 2.6k \Omega \qquad V_{TH} = V_E + V_{BE} + I_B R_{TH} = 1.3 + 0.7 + 50\mu A \times 2.6k \Omega = 2.13 V
+$$
+
+Then calculating the bias resistors from the Thevenin values:
+
+$$
+R_1 = \frac{V_{CC} R_{TH}}{V_{TH}} = \frac{10 \times 2.6k}{2.13} = 12.2k \Omega
+$$
+
+$$
+R_2 = \frac{R_{TH} R_1}{R_1 - R_{TH}} = \frac{2.6k \times 12.1k}{12.1k - 2.6k} = 3.3k \Omega
+$$
+
+To derive an expression for the voltage gain, need to replace the BJT by it's small signal model
+
+![](./img/small-signal-example.jpg)
+
+$$
+V_{out} = -\beta i_b R_c
+$$
+
+$$
+V_s = i_b r_\pi + i_b R_E + \beta i_b R_E = i_b (r_\pi (1+\beta) R_E)
+$$
+
+$$
+A_v = \frac{V_{out}}{V_s} = \frac{- \beta R_c}{R_\pi + (1+\beta) R_E} = \frac{-100 \times 800}{500 + 101 \times 260} = -2.99
+$$
