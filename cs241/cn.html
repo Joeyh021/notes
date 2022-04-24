@@ -457,6 +457,11 @@
 </li>
 <li>Does not have to retransmit out-of-order packets</li>
 <li>Packets arriving out of order are buffered, but receive window not moved forward</li>
+<li>Window size should be less than or equal to half the max sequence number
+<ul>
+<li>Avoids packets being recognised incorrectly </li>
+</ul>
+</li>
 <li>Send window moved forward when ACK received</li>
 </ul>
 </li>
