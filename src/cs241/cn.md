@@ -160,6 +160,8 @@
       - Maintains a timer for each unacknowledged packet in the send window
     - Does not have to retransmit out-of-order packets
     - Packets arriving out of order are buffered, but receive window not moved forward
+    - Window size should be less than or equal to half the max sequence number
+      - Avoids packets being recognised incorrectly 
     - Send window moved forward when ACK received
 - TCP uses a combination of GBN and SR protocols
   - Uses cumulative ACKs
