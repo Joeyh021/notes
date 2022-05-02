@@ -140,6 +140,59 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="memory-systems"><a class="header" href="#memory-systems">Memory Systems</a></h1>
 <h2 id="main-memory"><a class="header" href="#main-memory">Main Memory</a></h2>
+<ul>
+<li>We have a memory hierarchy to balance the tradeoff between cost and speed</li>
+<li>Want to exploit temporal and spatial locality</li>
+<li>Moore's law is long dead and never really applied to memory</li>
+<li>The basic element of main memory is a memory cell capable of being written or read
+<ul>
+<li>Need to indicate read/write, data input, and also an enable line</li>
+</ul>
+</li>
+<li>When organising memory cells into a larger chip, it is important to maintain a structure approach and keep the circuit as compact as possible
+<ul>
+<li>For example, a 16 word x 8 bit memory chip requires 128 cells and 4-bit addresses</li>
+<li>A 1024 bit device as a 128x8 array requires 7 address pins and 8 data pins
+<ul>
+<li>Alternatively, it is possible to organise it as a 1024x1 array, which would be really dumb as it would need 10 address pins</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Can use the same principle to build smaller ICs into larger ICs, using decoders/multiplexers to split address spaces</li>
+<li>Semiconductor memory is generally whats used for main store, Random Access Memory</li>
+<li>Two main technologies:
+<ul>
+<li>Static RAM (SRAM) uses a flip-flop as a storage element for each bit</li>
+<li>Dynamic RAM (DRAM) uses the presence or lack of charge in a capacitor for each bit
+<ul>
+<li>Charge leaks away over time so needs refreshing, but DRAM is generally cheaper if the overhead of the refresh circuitry is sufficiently amortised</li>
+</ul>
+</li>
+<li>SRAM typically faster so is used for cache</li>
+<li>DRAM used for main memory</li>
+</ul>
+</li>
+<li>The interface to main memory is always a bottleneck so we can do some fancy DRAM organisations stuff
+<ul>
+<li>Synchronous DRAM exchanges data with the processor according to an external clock memory
+<ul>
+<li>Clock runs at the speed of the bus to avoid waiting on memory</li>
+<li>Processor can perform other tasks while</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ROM typically used in microprogramming or systems stuff
+<ul>
+<li>ROM is mask-written read only memory</li>
+<li>PROM is same as above, but electrically written</li>
+<li>EPROM is same as above, but is erasable via UV light at the chip level</li>
+<li>EEPROM is erasable electrically at the byte-level</li>
+<li>Flash memory is erasable electrically at the block level</li>
+</ul>
+</li>
+</ul>
 <h2 id="cache"><a class="header" href="#cache">Cache</a></h2>
 
                     </main>
