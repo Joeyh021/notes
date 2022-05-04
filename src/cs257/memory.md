@@ -173,3 +173,77 @@
     - If $B$ lines to consider, then the upper triangular matrix of a $B\times B$ matrix is formed without the diagonal, with $(B \times (B-1))/2$
     - When the $i$th line is referenced, all bits in the $i$th row are set to one and $i$th column is zeroed
     - The least recently used one is one that has all 0s in its row and all 1s in its column
+- There are three types of cache miss:
+  - Compulsory, where an access will always miss because it is the first access to the block
+  - Capacity, where a miss occurs because a cache is not large enough to contain all the blocks needed
+  - Conflict, misses occurring as a result of blocks not being fully associative
+  - Sometimes a fourth category, coherency, is used to describe misses occurring due to cache flushes in multiprocessor systems
+- Performance measures based solely on hit rate don't factor in the actual cost of a cache miss, which is the real performance issue
+  - Average memory access time = hit time + (miss rate x miss penalty)
+  - Measuring access time can be a more indicative measure
+- There are a number of measures that can be taken to optimise cache performance
+  - Have larger block sizes to exploit spatial locality
+    - Likely to reduce number of compulsory misses
+    - Will increase cache miss penalty
+  - Have a larger cache
+    - Longer hit times and increased power consumption and more expensive
+  - Higher levels of associativity
+    - Reduces number of conflict misses
+    - Can cause longer hit times and increased power consumption
+  - Multilevel Caches
+    - Idea is to reduce miss penalty
+    - L1 cache keeps pace with CPU clock, further caches serve to reduce the number of main memory accesses
+    - Can redefine average accesstime for multilevel caches: L1 hit time + (L1 miss rate x (L2 hit time + (L2 miss rate x L2 miss penalty)))
+  - Prioritising read misses over writes
+    - Write buffers can hold updated value for a location needed on a read miss
+    - If no conflicts, then sending the read before the write will reduce the miss penalty
+    - Optimisation easily implemented in write buffer
+    - Most modern processor do this as cost is low
+  - Avoid address translation during cache indexing
+    - Caches must cope with the translation of virtual addresses to physical
+    - Using the page offset to index cache means the TLB can be omitted
+      - Imposes restrictions in structure and size of cache
+  - Controlling L1 cache size and complexity
+    - Fast clock cycles encourage small and simple L1 caches
+    - Lower levels of associativity can reduce hit times as they are less complex
+  - Way prediction
+    - Reduce conflict misses
+    - Keep extra bits in cache to preduct the block within the next set of the next cache access
+    - Requires block predictor bits in each block
+      - Determine which block to try on the next cache access
+      - If prediction correct then latency is equal to direct mapped, otherwise at least an extra clock cycle required
+      - Prediction accuracy commonly 90%+ for 2-way cache
+  - Pipelined access
+    - Effective latency of an L1 cache hit can be multiple cycles
+    - Pipelining allows to increase clock speeds and bandwith
+    - Can incur slower hit times
+  - Non-blocking cache
+    - Processors in many systems do not need to stall on a data cache miss
+      - Instruction fetch could be performed while data fetched from main memory following a miss
+    - Allows to issue more than one cache request at at time
+      - Cache can continue to supply hits immediately following a miss
+    - Performance hard to measure and model
+      - Out-of-order processors can hide impact of L1 misses that hit L2
+  - Multi-bank caches
+    - Increase cache bandwith by having multiple banks that support simultaneous access
+    - Ideal if cache accesses spread themselves accross banks
+      - Sequential interleaving spreads block addresses sequentially accross banks
+  - Critical word first
+    - A processor often only needs one word of a block at a time
+    - Request the missing word first and send it to the processor, then fill the remainder of the block
+    - Most beneficial for large caches with large blocks
+  - Merging write buffer
+    - Write buffers are used by write-through and write-back caches
+    - If write buffer is empty then data and full address are written to buffer
+    - If write buffer contains other modified blocks then address can be checked to see if new data and buff entry match, and the data is combined with the buffer entry
+      - Known as write merging
+    - Reduces miss penalty
+  - Hardware prefetching
+    - Put the data in cache before it's requested
+    - Instruction prefetches usually done in hardware
+    - Processor fetches two blocks on a miss, the missed block and then prefetches the next one
+    - Prefetched block put in instruction stream buffer
+  - Compiler driven prefetching
+    - Reduces miss rate and penalty
+    - Compiler inserts prefetching instructions based on what it can deduce about a program
+  - Compiler can make other optimisations such as loop interchange and blocking
