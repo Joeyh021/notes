@@ -144,7 +144,7 @@
 <li>We have a memory hierarchy to balance the tradeoff between cost and speed</li>
 <li>Want to exploit temporal and spatial locality</li>
 <li>Moore's law is long dead and never really applied to memory</li>
-<li>The basic element of main memory is a memory cell capable of being written or read
+<li>The basic element of main memory is a memory cell capable of being written or read to
 <ul>
 <li>Need to indicate read/write, data input, and also an enable line</li>
 </ul>
@@ -154,9 +154,10 @@
 <li>For example, a 16 word x 8 bit memory chip requires 128 cells and 4-bit addresses</li>
 <li>A 1024 bit device as a 128x8 array requires 7 address pins and 8 data pins
 <ul>
-<li>Alternatively, it is possible to organise it as a 1024x1 array, which would be really dumb as it would need 10 address pins</li>
+<li>Alternatively, it is possible to organise it as a 1024x1 array, which would be really dumb as it would result in a massive decoder and inefficient space usage</li>
 </ul>
 </li>
+<li>Dividing the address inputs into 2 parts, column and row address, minimise the decoder space and allows more space for memory</li>
 </ul>
 </li>
 <li>Can use the same principle to build smaller ICs into larger ICs, using decoders/multiplexers to split address spaces</li>
@@ -178,7 +179,26 @@
 <li>Synchronous DRAM exchanges data with the processor according to an external clock memory
 <ul>
 <li>Clock runs at the speed of the bus to avoid waiting on memory</li>
-<li>Processor can perform other tasks while</li>
+<li>Processor can perform other tasks while waiting because clock period and wait times are known</li>
+</ul>
+</li>
+<li>Rambus DRAM was used by Intel for Pentium and Itanium
+<ul>
+<li>Exchanges data over a 28-wire bus no more than 12cm long</li>
+<li>Provides address and control information</li>
+<li>Asynchronous and block-oriented</li>
+<li>Fast because requests are issued by the processor over the RDRAM bus instead of using explicit R/W and enable signals</li>
+<li>Bus propertties such as impedances must be known to processor</li>
+</ul>
+</li>
+<li>DDR SDRAM extends SDRAM by sending data to the processor on both rising and falling edge
+<ul>
+<li>Actually used</li>
+</ul>
+</li>
+<li>Cache DRAM (CDRAM) combines DRAM with a small SRAM cache
+<ul>
+<li>Performance very dependant upon domain and load</li>
 </ul>
 </li>
 </ul>
@@ -189,7 +209,13 @@
 <li>PROM is same as above, but electrically written</li>
 <li>EPROM is same as above, but is erasable via UV light at the chip level</li>
 <li>EEPROM is erasable electrically at the byte-level</li>
-<li>Flash memory is erasable electrically at the block level</li>
+</ul>
+</li>
+<li>Flash memory is a high speed semiconductor memory
+<ul>
+<li>Used for persistent storage</li>
+<li>Limited to block-level erasure</li>
+<li>Uses typically 1 transistor per bit</li>
 </ul>
 </li>
 </ul>
