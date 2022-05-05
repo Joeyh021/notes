@@ -70,6 +70,20 @@
 
 ## Pipelining
 
+- The problem with an instruction/execute pipeline is contention over memory access
+  - Overcome with interleaved memory
+- Two possible methods of controlling the transfer of information between pipeline stages
+  - Asynchronously using handshake signals
+    - Most flexible, max speed determined by slowest stage
+  - Synchronously, where there are latches between each stage all synced to a clock
+- Example 5-stage I/E pipeline: fetch instruction, decode instruction, fetch operands, execute instruction, store results
+- Pipelining assumes the only interaction between stages is the passage of information, but there are 3 major things that can cause hazards and stall the pipeline
+  - Structural hazards, resource conflicts where two stages wish to use the same resource, ie a memory port
+    - Interleave memory or prefetch data into cache
+  - Control hazards occur when there is a change in order of execution of instructions, eg when there is a branch or jump
+    - Cause the pipeline to stall and have to refill it
+    - Strategies exist to reduce pipeline failures due to conditional branches
+
 ## Superscalar Processors
 
 ## Instruction Level Parallelism
