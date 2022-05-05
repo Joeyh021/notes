@@ -268,6 +268,39 @@
 </li>
 </ul>
 <h2 id="pipelining"><a class="header" href="#pipelining">Pipelining</a></h2>
+<ul>
+<li>The problem with an instruction/execute pipeline is contention over memory access
+<ul>
+<li>Overcome with interleaved memory</li>
+</ul>
+</li>
+<li>Two possible methods of controlling the transfer of information between pipeline stages
+<ul>
+<li>Asynchronously using handshake signals
+<ul>
+<li>Most flexible, max speed determined by slowest stage</li>
+</ul>
+</li>
+<li>Synchronously, where there are latches between each stage all synced to a clock</li>
+</ul>
+</li>
+<li>Example 5-stage I/E pipeline: fetch instruction, decode instruction, fetch operands, execute instruction, store results</li>
+<li>Pipelining assumes the only interaction between stages is the passage of information, but there are 3 major things that can cause hazards and stall the pipeline
+<ul>
+<li>Structural hazards, resource conflicts where two stages wish to use the same resource, ie a memory port
+<ul>
+<li>Interleave memory or prefetch data into cache</li>
+</ul>
+</li>
+<li>Control hazards occur when there is a change in order of execution of instructions, eg when there is a branch or jump
+<ul>
+<li>Cause the pipeline to stall and have to refill it</li>
+<li>Strategies exist to reduce pipeline failures due to conditional branches</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="superscalar-processors"><a class="header" href="#superscalar-processors">Superscalar Processors</a></h2>
 <h2 id="instruction-level-parallelism"><a class="header" href="#instruction-level-parallelism">Instruction Level Parallelism</a></h2>
 
