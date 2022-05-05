@@ -83,6 +83,27 @@
   - Control hazards occur when there is a change in order of execution of instructions, eg when there is a branch or jump
     - Cause the pipeline to stall and have to refill it
     - Strategies exist to reduce pipeline failures due to conditional branches
+      - Instruction pre-fetch buffers, which fetches both branches
+        - Complex and rarely used
+      - Pipeline freeze strategy, which freezes the pipeline when it receives a branch instruction
+        - Simple, but poor performance
+      - Static prediction leverages known facts about branches to guess which one is taken
+        - 60% of all branches are taken, so may be better to predict this
+        - However to not take wastest less pipeline cycles so average performance may be better
+      - Dynamic prediction predicts on the fly for each instruction
+        - Based on branch instruction characteristics, target address characteristics, and branch history
+  - Data hazards, where an instruction depends on the result of a previous instruction that has not yet completed
+- Pipeline clock period is determined by the slowest stage, usually execution
+  - Pipeline execution unit separately or have multiple execution units
+- Sometimes useful to add feedback between stages (recursion), where the output of one stage becomes the input to a previous one
+  - Used in accumulation
+- Alternative designs are always possible, which come with their own performance tradeoffs
+- Space-time diagrams show pipeline usage
+  - Efficiency $E_n$ = (busy area)/(total area)
+    - Speedup $S(n) = n E_n$
+  - More generally, $S(n) =\frac{nN}{N + (n-1)}$
+    - $n$ is number of stages, $N$ is instructions executed
+    - As $N \to \infty$, $S(n) \to \n$
 
 ## Superscalar Processors
 
