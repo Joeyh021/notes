@@ -139,8 +139,134 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="processor-architecture"><a class="header" href="#processor-architecture">Processor Architecture</a></h1>
-<h2 id="processor-organisation"><a class="header" href="#processor-organisation">Processor Organisation</a></h2>
-<h2 id="cpu-control"><a class="header" href="#cpu-control">CPU Control</a></h2>
+<h2 id="cpu-organisation--control"><a class="header" href="#cpu-organisation--control">CPU Organisation &amp; Control</a></h2>
+<ul>
+<li>Processor continuously runs fetch-decode-execute cycle
+<ul>
+<li>Each instruction cycle take several CPU clock cycles</li>
+<li>Requires interaction of lots of CPU components
+<ul>
+<li>ALU, CU, PC, IR, MAR, MDR</li>
+</ul>
+</li>
+<li>Machine instructions may specify
+<ul>
+<li>Op code</li>
+<li>Source operand reference</li>
+<li>Result operand reference</li>
+<li>Next instruction reference</li>
+</ul>
+</li>
+<li>Some CPU registers are user-visible, such as data and address registers</li>
+<li>Control and status registers are used by CU and privileged OS processes only</li>
+<li>Executing an instruction may involve one or more operands, each requiring to be fetched
+<ul>
+<li>Can account for this in instruction cycle model known as <strong>indirect cycle</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Instruction pipelining allows to use wasted time, as new inputs can be accepted before previously accepted instructions and been output</li>
+<li>Control unit is responsbible for generating control signals to drive cycle
+<ul>
+<li>Observe opcode input and choose right control signal - decode</li>
+<li>Assert control signals - execute</li>
+<li>Two approaches to CU design:
+<ul>
+<li>Hardwired
+<ul>
+<li>Uses a sequencer and a digital logic circuit that produces outputs</li>
+<li>Fast but limited by complexity and inflexibility</li>
+</ul>
+</li>
+<li>Microprogrammed
+<ul>
+<li>Uses a microprogram memory</li>
+<li>Has it's own fetch-execute cycle - mini computer in the CPU
+<ul>
+<li>Microaddress, MicroPC, MicroIR, microinstructions</li>
+</ul>
+</li>
+<li>Easy to design, implement, flexible, can be reprogrammed</li>
+<li>Slower than hardwired</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Instruction sequencing is important to be designed to utilise as many memory cycles as possible, possibly by overlapping fetches
+<ul>
+<li>Proper sequence must be followed in sequencing control signals, to avoid conflicts
+<ul>
+<li>MAR &lt;- PC must precede MBR &lt;- Memory</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Micro-ops are enabled by control signals to transfer data between registers/busses and perform arithmetic or logical operations
+<ul>
+<li>Each step in the operation of a larger machine instruction is encoded into a micro-instruction</li>
+<li>Micro-instructions make up the micro-program</li>
+<li>Micro-program word length is based on 3 factors:
+<ul>
+<li>The max number of simultaneous micro-ops supported</li>
+<li>How control info is represented/encoded</li>
+<li>How the next micro-instruction address is specified</li>
+</ul>
+</li>
+<li>Horizontal/direct control has very wide word length with few micro-instructions per machine instruction
+<ul>
+<li>Outputs buffered/gated with timing signals</li>
+<li>Fewer instructions == faster</li>
+</ul>
+</li>
+<li>Vertical control uses narrower instructions with <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> control signals encoded into <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">n</span></span></span></span> bits
+<ul>
+<li>Limited ability to express parallelism</li>
+<li>Requires external decoder to identify what control lines are being asserted</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="performance"><a class="header" href="#performance">Performance</a></h2>
+<ul>
+<li>M J Flynn in 1966 defined a simple means of classifying machines, SISD is one such classification
+<ul>
+<li>Uses fetch-decode-execute</li>
+<li>Fetch sub-cycle is fairly constant-ish speed</li>
+<li>Execute sub-cycle may vary in speed greatly</li>
+</ul>
+</li>
+<li>A simple measure of performance is MIPS, millions of instructions per second
+<ul>
+<li>Not actually that useful as it measures how fast a processor can do nothing</li>
+</ul>
+</li>
+<li>Parallel performance is very difficult to measure due to system architecture and degree of parallelism varying</li>
+<li>Instruction bandwith measures the instruction execution rate, similar to MIPS</li>
+<li>Data bandwith measured in FLOPS measures the throughput</li>
+<li>It is nigh-on impossible to get full theoretical throughput in any system, especially parallel</li>
+<li>Speedup is a useful measure that factors in the degree of parallelism
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span>(Execution time on sequential machine, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>) / (Execution time on parallel machine, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>)</li>
+<li>A closeley related measure is efficiency, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal">n</span></span></span></span></li>
+<li>Both measures depend on parallelism of algorithm</li>
+</ul>
+</li>
+<li>An algorithm may be characterised by it's degree of parallelism <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, which is the degree of parallelism that exists at time <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></li>
+<li>Assume all computations are of two types, vector operations of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> and scalar operations where <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> is the total proportion of scalar ops, so <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> is the measure of parallelism in the program</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the throughput of vector ops in MFLOPS and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the scalar throughput
+<ul>
+<li>Average throughput <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.377316em;vertical-align:-0.44509999999999994em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9322159999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10764em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44509999999999994em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.377316em;vertical-align:-0.44509999999999994em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9322159999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.10764em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44509999999999994em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="pipelining"><a class="header" href="#pipelining">Pipelining</a></h2>
 <h2 id="superscalar-processors"><a class="header" href="#superscalar-processors">Superscalar Processors</a></h2>
 <h2 id="instruction-level-parallelism"><a class="header" href="#instruction-level-parallelism">Instruction Level Parallelism</a></h2>
