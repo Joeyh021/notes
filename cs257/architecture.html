@@ -449,7 +449,174 @@
 </ul>
 <p>Honestly just check the slides and examples for this one it makes zero sense lol</p>
 <h2 id="superscalar-processors"><a class="header" href="#superscalar-processors">Superscalar Processors</a></h2>
+<ul>
+<li>A single, linear instruction pipeline provides at very best a steady-state Clocks per Instruction (CPI) of 1</li>
+<li>Fetching/decoding more than one instruction per clock cycle can reduce the CPI below 1</li>
+<li>An easy way to do this is to add duplicate the pipeline</li>
+<li>For example:
+<ul>
+<li>Two fetch/decode stages</li>
+<li>Execution staging window register</li>
+<li>Multiple execution pipelines for different instructions</li>
+<li>Non-uniform superscalar has pipeline is not duplicated</li>
+</ul>
+</li>
+<li>Number of replications before window is the <strong>degree</strong> of the superscalar processor</li>
+<li>Some pipeline stages need less than half a clock cycle, so double internal clock speed can get two tasks done per half a clock cycle
+<ul>
+<li>Known as <strong>superpipelining</strong></li>
+</ul>
+</li>
+<li>A pipeline takes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> clock cycles to execute <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> instructions
+<ul>
+<li>A superscalar pipeline takes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">σ</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> to do the same</li>
+</ul>
+</li>
+<li>An example pipeline has 4 stages, fetch, decode, execute, write-back
+<ul>
+<li>Each stage is duplicated
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>, the number of replications</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>, the number of stages</li>
+</ul>
+</li>
+<li>If instructions are aligned, the number of clocks required if <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+<li>If instructions are unaligned, then <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+</li>
+<li>The CPI of a superscalar processor is <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mclose">)</span></span></span></span></li>
+<li>For large values of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span></span></span></span>, the speedup is limited by delays set by <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> and pipeline length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span></span></span></span></li>
+<li>As <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span></span></span></span> increases, speedup increases linearly too until the point where instruction level parallelism limits further increases
+<ul>
+<li>For many problems, ILP gives parallelism in the range 2-4x</li>
+</ul>
+</li>
+<li>No reason to have a huge number of duplicated pipelines, as most programs have a limited degree of inherent parallelism
+<ul>
+<li>Can be maximised by compiler and hardware techniques</li>
+<li>Limited by dependencies</li>
+</ul>
+</li>
+<li>The program to be executed is a linear stream of instructions
+<ul>
+<li>Instruction fetch stage includes branch prediction to form a dynamic stream which may include dependencies</li>
+<li>Processor dispatches instructions to be executed according to their dependencies</li>
+<li>Instructions are conceptually put back into sequential order and results recorded - known as committing or retiring the instruction
+<ul>
+<li>Needed as instructions are executed out of order</li>
+<li>Instruction may also be executed speculatively and not need to be retired</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="instruction-level-parallelism"><a class="header" href="#instruction-level-parallelism">Instruction Level Parallelism</a></h2>
+<ul>
+<li>Common instructions can be initiated simultaneously and executed independently</li>
+<li>Superscalar processors rely on this ability to execute instructions in separate pipelines, possibly out-of-order
+<ul>
+<li>Multiple functional units for multiple tasks</li>
+</ul>
+</li>
+<li>ILP refers to the degree to which instructions can be executed in parallel</li>
+<li>Common techniques to exploit it include instruction pipelining and superscalar execution, but also:
+<ul>
+<li>Out-of-order execution</li>
+<li>Register renaming
+<ul>
+<li>Values conflict for use of the registers, processor has to stall to resolve conflicts</li>
+<li>Can treat the problem as a resource conflict, and dynamically rename registers in hardware to reduce dependencies</li>
+<li>Use different registers to the ones that the instructions say</li>
+</ul>
+</li>
+<li>Branch prediction
+<ul>
+<li>Prefetch both sides of the branch, reduces delay</li>
+<li>Can be static or dynamic</li>
+<li>Speculative execution aims to do the work before it is known if results will be needed
+<ul>
+<li>Relies on resource abundance to provide performance improvements</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Fiver factors fundamentally constrain ILP:
+<ul>
+<li>True data dependency
+<ul>
+<li>An instruction cannot execute because it requires data that will be produced by a preceding instruction</li>
+<li>Usually causes pipeline delays</li>
+</ul>
+</li>
+<li>Procedural dependency
+<ul>
+<li>Inherent to the sequential nature of execution</li>
+<li>Instructions following a branch have a dependency on the result of the branch</li>
+<li>Variable length instructions can prevent simultaneous fetching</li>
+</ul>
+</li>
+<li>Resource conflicts
+<ul>
+<li>Two or more instructions require a system resource at the same time</li>
+<li>Memories, caches, functional units, etc</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A program may not always have enough inherent ILP to take advantage of the machine parallelism
+<ul>
+<li>Limited machine parallelism will always inhibit performance</li>
+<li>Processor must be able to identify ILP</li>
+</ul>
+</li>
+<li>Instruction issue refers to the process of initiating execution in the processors functional units
+<ul>
+<li>Instruction has been issued once it finishes decoding and hits first execute stage</li>
+<li>The instruction issue policy can have a large performance impact</li>
+<li>Three types of instruction order are significant:
+<ul>
+<li>Fetch order</li>
+<li>Execute order</li>
+<li>Order in which instructions update the contents of memory</li>
+</ul>
+</li>
+<li>Issue policy can fuck with these orders to whatever extent it pleases provided the results are correct</li>
+</ul>
+</li>
+<li>Three general categories for instruction issue policies:
+<ul>
+<li>In-order issue with in-order completion
+<ul>
+<li>Do the same as what would be done by a sequential processor
+<ul>
+<li>Issuing stalls when there is a conflict on a functional unit or takes more than one cycle</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In-order issue with out-of-order completion
+<ul>
+<li>A number of instructions may be being executed at any time</li>
+<li>Limited by machine parallelism in functional unites</li>
+<li>Still stalled by resource conflicts and dependencies</li>
+<li>Introduces output dependencies</li>
+</ul>
+</li>
+<li>Out-of-order issue with out-of-order completion
+<ul>
+<li>In-order issue will only decode up to a dependency or conflict</li>
+<li>Further decouple decode and execute stages</li>
+<li>A buffer - the instruction window - holds instructions after decode</li>
+<li>Processor can continually fetch/decode as long as window not full and execution is separate</li>
+<li>Increases instructions that are available to execution unit</li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
