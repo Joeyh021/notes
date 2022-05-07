@@ -104,6 +104,48 @@
   - More generally, $S(n) =\frac{nN}{N + (n-1)}$
     - $n$ is number of stages, $N$ is instructions executed
     - As $N \to \infty$, $S(n) \to \n$
+- Complex pipelines with feedback and differently clocked stages can be difficult to design and optimise
+
+  - Reservation tables are space-time diagrams that show where data can be admitted to the pipeline
+    - `X`s in adjacent columns of the same row show that stages operate for more than one clock period
+    - More than one `X`s in a row not next to each other show feedback
+    - Pipelines may not accpet initiations at the start of every clock period, or collisions may occur
+      - Potential collisions shown by the distance in time slots between `X`s in each row
+  - Collision vector is derived from the distance between `X`s
+    - $C = C_{n-1} C_{n-2} ... C_2 C_1 C_0$
+      - $C_0 = 1$, always
+    - $C_i = 1$ if a collision would occur with an initiation $i$ cycles after a previous initiation
+    - The initial collision vector is the state of the pipeline after the first initiation
+      - Distances between all pairs of `X`s in each row, if distance is $i$ then set bit
+  - Need a control mechanism to determine if new initiations can happen without a collision occurring
+    - Latency is the number of clock periods between initiations
+    - Average latency is the number of clock periods between initiations over some repeating cycle
+    - Minimum average latency is the smallest possible considering all possible sequences of initiations
+      - The goal for optimum design
+    - A pipeline changes state as a result of initiations, so represent activity as a state diagram
+      - A diagram of all pipeline states and changes starting with the initial collision vector
+      - Shifting the collision vector to the right gives the next state
+        - If shifted vector has $C_0 = 1$, cannot initiate
+        - If $C_0=1$, then can do new initiation, new vector is bitwise OR of shifted vector and initial vector
+      - State diagram can be reduced to show only changes where initiations are taken
+        - Numbers on edges indicate number of clock periods to reach the next tate shown
+        - Can identify cycles in graph
+  - Always taking initiations when $C_0 = 0$, to give minimum latency is the greedy strategy
+    - Will not always give minimum average latency but is close
+    - Often more than one greedy cycle
+    - Average latency for a greedy cycle is less than or equal to the number of 1s in the initial collision vector
+      - Gives an upper bound on latency
+    - Minimum average latency is greater than or equal to the max number of `X`s in any reservation table row
+      - Gives a lower bound on latency
+    - Max `X`s in row $<=$ min avg latency $<=$ greedy cycles avg latency $<=$ number of 1s in the initial collision vector
+  - A given pipeline may not give the required latency, so insert delays into the pipeline to expand the number of time slots and reduce collisions
+  - Can identify where to place delays to give a latency of $n$ cycles: -
+    - Start with the first `X`, enter an `X` in a revised table and mark as forbidden every $n$ cycles, to indicate the positions are reserved for initiations
+    - Repeat for all `X`s until `X` falls on a forbidden mark, then delay the `X` by one or more
+    - Mark all delayed positions and delay all subsequent `X`s by the same amount
+  - Delays can be added using a latch to delay by a cycle
+
+Honestly just check the slides for this one it makes zero sense to me
 
 ## Superscalar Processors
 
