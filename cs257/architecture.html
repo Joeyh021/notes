@@ -269,12 +269,14 @@
 </ul>
 <h2 id="pipelining"><a class="header" href="#pipelining">Pipelining</a></h2>
 <ul>
-<li>The problem with an instruction/execute pipeline is contention over memory access
+<li>
+<p>The problem with an instruction/execute pipeline is contention over memory access</p>
 <ul>
 <li>Overcome with interleaved memory</li>
 </ul>
 </li>
-<li>Two possible methods of controlling the transfer of information between pipeline stages
+<li>
+<p>Two possible methods of controlling the transfer of information between pipeline stages</p>
 <ul>
 <li>Asynchronously using handshake signals
 <ul>
@@ -284,8 +286,11 @@
 <li>Synchronously, where there are latches between each stage all synced to a clock</li>
 </ul>
 </li>
-<li>Example 5-stage I/E pipeline: fetch instruction, decode instruction, fetch operands, execute instruction, store results</li>
-<li>Pipelining assumes the only interaction between stages is the passage of information, but there are 3 major things that can cause hazards and stall the pipeline
+<li>
+<p>Example 5-stage I/E pipeline: fetch instruction, decode instruction, fetch operands, execute instruction, store results</p>
+</li>
+<li>
+<p>Pipelining assumes the only interaction between stages is the passage of information, but there are 3 major things that can cause hazards and stall the pipeline</p>
 <ul>
 <li>Structural hazards, resource conflicts where two stages wish to use the same resource, ie a memory port
 <ul>
@@ -325,18 +330,23 @@
 <li>Data hazards, where an instruction depends on the result of a previous instruction that has not yet completed</li>
 </ul>
 </li>
-<li>Pipeline clock period is determined by the slowest stage, usually execution
+<li>
+<p>Pipeline clock period is determined by the slowest stage, usually execution</p>
 <ul>
 <li>Pipeline execution unit separately or have multiple execution units</li>
 </ul>
 </li>
-<li>Sometimes useful to add feedback between stages (recursion), where the output of one stage becomes the input to a previous one
+<li>
+<p>Sometimes useful to add feedback between stages (recursion), where the output of one stage becomes the input to a previous one</p>
 <ul>
 <li>Used in accumulation</li>
 </ul>
 </li>
-<li>Alternative designs are always possible, which come with their own performance tradeoffs</li>
-<li>Space-time diagrams show pipeline usage
+<li>
+<p>Alternative designs are always possible, which come with their own performance tradeoffs</p>
+</li>
+<li>
+<p>Space-time diagrams show pipeline usage</p>
 <ul>
 <li>Efficiency <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> = (busy area)/(total area)
 <ul>
@@ -351,7 +361,93 @@
 </li>
 </ul>
 </li>
+<li>
+<p>Complex pipelines with feedback and differently clocked stages can be difficult to design and optimise</p>
+<ul>
+<li>Reservation tables are space-time diagrams that show where data can be admitted to the pipeline
+<ul>
+<li><code>X</code>s in adjacent columns of the same row show that stages operate for more than one clock period</li>
+<li>More than one <code>X</code>s in a row not next to each other show feedback</li>
+<li>Pipelines may not accpet initiations at the start of every clock period, or collisions may occur
+<ul>
+<li>Potential collisions shown by the distance in time slots between <code>X</code>s in each row</li>
 </ul>
+</li>
+</ul>
+</li>
+<li>Collision vector is derived from the distance between <code>X</code>s
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord">...</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>, always</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> if a collision would occur with an initiation <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> cycles after a previous initiation</li>
+<li>The initial collision vector is the state of the pipeline after the first initiation
+<ul>
+<li>Distances between all pairs of <code>X</code>s in each row, if distance is <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> then set bit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Need a control mechanism to determine if new initiations can happen without a collision occurring
+<ul>
+<li>Latency is the number of clock periods between initiations</li>
+<li>Average latency is the number of clock periods between initiations over some repeating cycle</li>
+<li>Minimum average latency is the smallest possible considering all possible sequences of initiations
+<ul>
+<li>The goal for optimum design</li>
+</ul>
+</li>
+<li>A pipeline changes state as a result of initiations, so represent activity as a state diagram
+<ul>
+<li>A diagram of all pipeline states and changes starting with the initial collision vector</li>
+<li>Shifting the collision vector to the right gives the next state
+<ul>
+<li>If shifted vector has <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>, cannot initiate</li>
+<li>If <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>, then can do new initiation, new vector is bitwise OR of shifted vector and initial vector</li>
+</ul>
+</li>
+<li>State diagram can be reduced to show only changes where initiations are taken
+<ul>
+<li>Numbers on edges indicate number of clock periods to reach the next tate shown</li>
+<li>Can identify cycles in graph</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Always taking initiations when <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>, to give minimum latency is the greedy strategy
+<ul>
+<li>Will not always give minimum average latency but is close</li>
+<li>Often more than one greedy cycle</li>
+<li>Average latency for a greedy cycle is less than or equal to the number of 1s in the initial collision vector
+<ul>
+<li>Gives an upper bound on latency</li>
+</ul>
+</li>
+<li>Minimum average latency is greater than or equal to the max number of <code>X</code>s in any reservation table row
+<ul>
+<li>Gives a lower bound on latency</li>
+</ul>
+</li>
+<li>Max <code>X</code>s in row <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;=</span></span></span></span> min avg latency <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;=</span></span></span></span> greedy cycles avg latency <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;=</span></span></span></span> number of 1s in the initial collision vector</li>
+</ul>
+</li>
+<li>A given pipeline may not give the required latency, so insert delays into the pipeline to expand the number of time slots and reduce collisions</li>
+<li>Can identify where to place delays to give a latency of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> cycles: -
+<ul>
+<li>Start with the first <code>X</code>, enter an <code>X</code> in a revised table and mark as forbidden every <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> cycles, to indicate the positions are reserved for initiations</li>
+<li>Repeat for all <code>X</code>s until <code>X</code> falls on a forbidden mark, then delay the <code>X</code> by one or more</li>
+<li>Mark all delayed positions and delay all subsequent <code>X</code>s by the same amount</li>
+</ul>
+</li>
+<li>Delays can be added using a latch to delay by a cycle</li>
+</ul>
+</li>
+</ul>
+<p>Honestly just check the slides and examples for this one it makes zero sense lol</p>
 <h2 id="superscalar-processors"><a class="header" href="#superscalar-processors">Superscalar Processors</a></h2>
 <h2 id="instruction-level-parallelism"><a class="header" href="#instruction-level-parallelism">Instruction Level Parallelism</a></h2>
 
