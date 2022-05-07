@@ -145,7 +145,7 @@
     - Mark all delayed positions and delay all subsequent `X`s by the same amount
   - Delays can be added using a latch to delay by a cycle
 
-Honestly just check the slides for this one it makes zero sense to me
+Honestly just check the slides and examples for this one it makes zero sense lol
 
 ## Superscalar Processors
 
