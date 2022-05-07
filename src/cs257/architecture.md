@@ -149,4 +149,91 @@ Honestly just check the slides and examples for this one it makes zero sense lol
 
 ## Superscalar Processors
 
+- A single, linear instruction pipeline provides at very best a steady-state Clocks per Instruction (CPI) of 1
+- Fetching/decoding more than one instruction per clock cycle can reduce the CPI below 1
+- An easy way to do this is to add duplicate the pipeline
+- For example:
+  - Two fetch/decode stages
+  - Execution staging window register
+  - Multiple execution pipelines for different instructions
+  - Non-uniform superscalar has pipeline is not duplicated
+- Number of replications before window is the **degree** of the superscalar processor
+- Some pipeline stages need less than half a clock cycle, so double internal clock speed can get two tasks done per half a clock cycle
+  - Known as **superpipelining**
+- A pipeline takes $s + N -1 $ clock cycles to execute $N$ instructions
+  - A superscalar pipeline takes $s + \frac{N-1}{\sigma}$ to do the same
+- An example pipeline has 4 stages, fetch, decode, execute, write-back
+  - Each stage is duplicated
+    - $\sigma=2$, the number of replications
+    - $s=4$, the number of stages
+  - If instructions are aligned, the number of clocks required if $s + (N/\sigma) -1$
+  - If instructions are unaligned, then $s + (N/\sigma)$
+- The CPI of a superscalar processor is $1/\sigma + 1/N(s- 1/\sigma)$
+- For large values of $\sigma$, the speedup is limited by delays set by $N$ and pipeline length $s$
+- As $\sigma$ increases, speedup increases linearly too until the point where instruction level parallelism limits further increases
+  - For many problems, ILP gives parallelism in the range 2-4x
+- No reason to have a huge number of duplicated pipelines, as most programs have a limited degree of inherent parallelism
+  - Can be maximised by compiler and hardware techniques
+  - Limited by dependencies
+- The program to be executed is a linear stream of instructions
+  - Instruction fetch stage includes branch prediction to form a dynamic stream which may include dependencies
+  - Processor dispatches instructions to be executed according to their dependencies
+  - Instructions are conceptually put back into sequential order and results recorded - known as committing or retiring the instruction
+    - Needed as instructions are executed out of order
+    - Instruction may also be executed speculatively and not need to be retired
+
 ## Instruction Level Parallelism
+
+- Common instructions can be initiated simultaneously and executed independently
+- Superscalar processors rely on this ability to execute instructions in separate pipelines, possibly out-of-order
+  - Multiple functional units for multiple tasks
+- ILP refers to the degree to which instructions can be executed in parallel
+- Common techniques to exploit it include instruction pipelining and superscalar execution, but also:
+  - Out-of-order execution
+  - Register renaming
+    - Values conflict for use of the registers, processor has to stall to resolve conflicts
+    - Can treat the problem as a resource conflict, and dynamically rename registers in hardware to reduce dependencies
+    - Use different registers to the ones that the instructions say
+  - Branch prediction
+    - Prefetch both sides of the branch, reduces delay
+    - Can be static or dynamic
+    - Speculative execution aims to do the work before it is known if results will be needed
+      - Relies on resource abundance to provide performance improvements
+- Fiver factors fundamentally constrain ILP:
+  - True data dependency
+    - An instruction cannot execute because it requires data that will be produced by a preceding instruction
+    - Usually causes pipeline delays
+  - Procedural dependency
+    - Inherent to the sequential nature of execution
+    - Instructions following a branch have a dependency on the result of the branch
+    - Variable length instructions can prevent simultaneous fetching
+  - Resource conflicts
+    - Two or more instructions require a system resource at the same time
+    - Memories, caches, functional units, etc
+- A program may not always have enough inherent ILP to take advantage of the machine parallelism
+  - Limited machine parallelism will always inhibit performance
+  - Processor must be able to identify ILP
+- Instruction issue refers to the process of initiating execution in the processors functional units
+  - Instruction has been issued once it finishes decoding and hits first execute stage
+  - The instruction issue policy can have a large performance impact
+  - Three types of instruction order are significant:
+    - Fetch order
+    - Execute order
+    - Order in which instructions update the contents of memory
+  - Issue policy can fuck with these orders to whatever extent it pleases provided the results are correct
+- Three general categories for instruction issue policies:
+  - In-order issue with in-order completion
+    - Do the same as what would be done by a sequential processor
+      - Issuing stalls when there is a conflict on a functional unit or takes more than one cycle
+  - In-order issue with out-of-order completion
+    - A number of instructions may be being executed at any time
+    - Limited by machine parallelism in functional unites
+    - Still stalled by resource conflicts and dependencies
+    - Introduces output dependencies
+  - Out-of-order issue with out-of-order completion
+    - In-order issue will only decode up to a dependency or conflict
+    - Further decouple decode and execute stages
+    - A buffer - the instruction window - holds instructions after decode
+    - Processor can continually fetch/decode as long as window not full and execution is separate
+    - Increases instructions that are available to execution unit
+  -
