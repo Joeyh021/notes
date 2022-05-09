@@ -58,6 +58,84 @@
 
 ## Cache Coherence
 
+- Shared memory MIMD systems are easy to program, and can overcome memory contention via cache
+- Copies of the same data may now be in different places
+  - Cache coherence must be maintained
+  - A write-through policy is not sufficient as that only updates main memory
+  - It is necessary to update other caches too
+- Possible solutions include:
+  - Shared caches
+    - Poor performance for more than a few processors
+  - Non-cacheable items
+    - Can only write to main memory, causes problems
+  - Broadcast write
+    - Every cache write request is broadcast to all other caches
+    - Copies either updated or invalidated, preferably the latter as it is faster
+    - Increases memory transactions and wastes bus bandwidth
+  - Snoop bus
+    - Suitable for single-bus architectures
+    - Cache write-through is used
+    - A bus watcher (cache controller) is used and snoops on the system bus
+      - Detects memory write operations, and invalidates local cached copies if main memory updated
+  - Directory methods
+    - A directory is a list of entries identifying cached copies
+      - Used when a processor writes to a cached location to invalidate or update other copies
+    - Various methods exist
+    - Suitably for shared memory systems with multistage or hierarchical interconnects where broadcast systems are hard to implement
+    - Full directory has a directory in main memory
+      - A set of pointers per cache and a dirty bit is used with each shared data item
+      - Bit set high if cache has a copy
+      - Each word/block/line in cache has two state bits:
+        - Valid bit, set if cache data is valid
+        - Private bit, set if processor is allowed to write to the block
+    - Limited directories only stored pointer for the number of caches that have the data
+      - Saves memory storing pointers for caches that don't have data
+      - Only $n$ pointers required, but each pointer must uniquely identify one of the $N$ caches
+        - $\log_2 N$ pointers required for each pointer instead of 1 bit
+      - Requires $n \log_2 N$ bits instead of $N$ bits
+      - Scales much better as entries grow less than linearly
+    - Chained directories also attempt to reduce the size of the directory
+      - Use a linked list to hold directory items
+      - Shared memory directory entry points to one copy in a cache, from there a pointer points to next copy, so on..
+      - $N$ copies may be maintained
+      - Whenever a new copy called for, list broken and pointers altered
+- MESI is the good protocol
+  - Snoop bus arrangement used with a write-back policy
+  - Two status bits per cache line tag so it can be in one of four states
+    - Modified: entry valid, main memory invalid, no copies exist
+    - Exclusive: no other cache holds line, memory up to date
+    - Shared: multiple caches hold line, memory is up to date
+    - Invalid: cache entry is garbage
+  - When machine booted, all entries are invalid
+  - First time memory is read, block referenced is fetched by CPU 1 and marked exclusive
+    - Subsequent reads by same processor use cache
+  - CPU 2 fetches same block
+    - CPU 1 sees by snooping it is no longer alone and announces it has a copy
+    - Both copies marked shared
+  - CPU 2 wants to write to the block
+    - Puts invalidate signal on bus
+    - Cached copy goes into modified state
+    - If block was exclusive, no need to signal on bus
+  - CPU 3 wants to read block from memory
+    - CPU 2 has the modified block, so tells 3 to wait while it writes it back
+  - CPU 1 wants to write a word in the block (cache)
+    - Assuming fetch on write, block must be read before writing
+    - CPU 1 generates a Read With Intend To Modify (RWITM) sequence
+      - CPU 2 has a modified copy so interrupts the sequence and write to memory, invaliding it's own copy
+      - CPU 1 reads block from memory, updates it and marks it modified
+  - All read hits do not alter block state
+  - All read misses cause a change to shared state
+- Intel and AMD took different approaches to extending MESI
+  - Intel uses MESIF
+    - Forward state is a specialised shared state
+    - Serving multiple caches in shared state is inefficient, so only the cache with the special forward state responds to requests
+      - Allows cache-to-cache speeds
+  - AMD uses MOESI
+    - Owned state is when a cache has exclusive write rights, but other caches may read from it
+      - Changes to line are broadcast to other caches
+    - Avoids writing dirty line back to main memory
+      - Modified line provided from the owning cache
+
 ## Data Level Parallelism
 
 ## Multicore Systems
