@@ -256,6 +256,169 @@
 </li>
 </ul>
 <h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
+<ul>
+<li>Shared memory MIMD systems are easy to program, and can overcome memory contention via cache</li>
+<li>Copies of the same data may now be in different places
+<ul>
+<li>Cache coherence must be maintained</li>
+<li>A write-through policy is not sufficient as that only updates main memory</li>
+<li>It is necessary to update other caches too</li>
+</ul>
+</li>
+<li>Possible solutions include:
+<ul>
+<li>Shared caches
+<ul>
+<li>Poor performance for more than a few processors</li>
+</ul>
+</li>
+<li>Non-cacheable items
+<ul>
+<li>Can only write to main memory, causes problems</li>
+</ul>
+</li>
+<li>Broadcast write
+<ul>
+<li>Every cache write request is broadcast to all other caches</li>
+<li>Copies either updated or invalidated, preferably the latter as it is faster</li>
+<li>Increases memory transactions and wastes bus bandwidth</li>
+</ul>
+</li>
+<li>Snoop bus
+<ul>
+<li>Suitable for single-bus architectures</li>
+<li>Cache write-through is used</li>
+<li>A bus watcher (cache controller) is used and snoops on the system bus
+<ul>
+<li>Detects memory write operations, and invalidates local cached copies if main memory updated</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Directory methods
+<ul>
+<li>A directory is a list of entries identifying cached copies
+<ul>
+<li>Used when a processor writes to a cached location to invalidate or update other copies</li>
+</ul>
+</li>
+<li>Various methods exist</li>
+<li>Suitably for shared memory systems with multistage or hierarchical interconnects where broadcast systems are hard to implement</li>
+<li>Full directory has a directory in main memory
+<ul>
+<li>A set of pointers per cache and a dirty bit is used with each shared data item</li>
+<li>Bit set high if cache has a copy</li>
+<li>Each word/block/line in cache has two state bits:
+<ul>
+<li>Valid bit, set if cache data is valid</li>
+<li>Private bit, set if processor is allowed to write to the block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Limited directories only stored pointer for the number of caches that have the data
+<ul>
+<li>Saves memory storing pointers for caches that don't have data</li>
+<li>Only <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> pointers required, but each pointer must uniquely identify one of the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> caches
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> pointers required for each pointer instead of 1 bit</li>
+</ul>
+</li>
+<li>Requires <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> bits instead of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> bits</li>
+<li>Scales much better as entries grow less than linearly</li>
+</ul>
+</li>
+<li>Chained directories also attempt to reduce the size of the directory
+<ul>
+<li>Use a linked list to hold directory items</li>
+<li>Shared memory directory entry points to one copy in a cache, from there a pointer points to next copy, so on..</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> copies may be maintained</li>
+<li>Whenever a new copy called for, list broken and pointers altered</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MESI is the good protocol
+<ul>
+<li>Snoop bus arrangement used with a write-back policy</li>
+<li>Two status bits per cache line tag so it can be in one of four states
+<ul>
+<li>Modified: entry valid, main memory invalid, no copies exist</li>
+<li>Exclusive: no other cache holds line, memory up to date</li>
+<li>Shared: multiple caches hold line, memory is up to date</li>
+<li>Invalid: cache entry is garbage</li>
+</ul>
+</li>
+<li>When machine booted, all entries are invalid</li>
+<li>First time memory is read, block referenced is fetched by CPU 1 and marked exclusive
+<ul>
+<li>Subsequent reads by same processor use cache</li>
+</ul>
+</li>
+<li>CPU 2 fetches same block
+<ul>
+<li>CPU 1 sees by snooping it is no longer alone and announces it has a copy</li>
+<li>Both copies marked shared</li>
+</ul>
+</li>
+<li>CPU 2 wants to write to the block
+<ul>
+<li>Puts invalidate signal on bus</li>
+<li>Cached copy goes into modified state</li>
+<li>If block was exclusive, no need to signal on bus</li>
+</ul>
+</li>
+<li>CPU 3 wants to read block from memory
+<ul>
+<li>CPU 2 has the modified block, so tells 3 to wait while it writes it back</li>
+</ul>
+</li>
+<li>CPU 1 wants to write a word in the block (cache)
+<ul>
+<li>Assuming fetch on write, block must be read before writing</li>
+<li>CPU 1 generates a Read With Intend To Modify (RWITM) sequence
+<ul>
+<li>CPU 2 has a modified copy so interrupts the sequence and write to memory, invaliding it's own copy</li>
+<li>CPU 1 reads block from memory, updates it and marks it modified</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>All read hits do not alter block state</li>
+<li>All read misses cause a change to shared state</li>
+</ul>
+</li>
+<li>Intel and AMD took different approaches to extending MESI
+<ul>
+<li>Intel uses MESIF
+<ul>
+<li>Forward state is a specialised shared state</li>
+<li>Serving multiple caches in shared state is inefficient, so only the cache with the special forward state responds to requests
+<ul>
+<li>Allows cache-to-cache speeds</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AMD uses MOESI
+<ul>
+<li>Owned state is when a cache has exclusive write rights, but other caches may read from it
+<ul>
+<li>Changes to line are broadcast to other caches</li>
+</ul>
+</li>
+<li>Avoids writing dirty line back to main memory
+<ul>
+<li>Modified line provided from the owning cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="data-level-parallelism"><a class="header" href="#data-level-parallelism">Data Level Parallelism</a></h2>
 <h2 id="multicore-systems"><a class="header" href="#multicore-systems">Multicore Systems</a></h2>
 <h2 id="thread-level-parallelism"><a class="header" href="#thread-level-parallelism">Thread Level Parallelism</a></h2>
