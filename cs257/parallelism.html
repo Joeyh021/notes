@@ -140,6 +140,121 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="parallelism"><a class="header" href="#parallelism">Parallelism</a></h1>
 <h2 id="parallel-organisation"><a class="header" href="#parallel-organisation">Parallel Organisation</a></h2>
+<ul>
+<li>Flynn's Taxonomy:
+<ul>
+<li>SISD
+<ul>
+<li>Standard uniprocessor stuff</li>
+</ul>
+</li>
+<li>SIMD
+<ul>
+<li>Vector/Array Processors</li>
+<li>Single machine instruction executes on a number of processing elements in lockstep</li>
+</ul>
+</li>
+<li>MISD
+<ul>
+<li>Not really used</li>
+</ul>
+</li>
+<li>MIMD
+<ul>
+<li>Distributed memory systems (cluster-based)
+<ul>
+<li>Communicate via message passing, very scalable</li>
+</ul>
+</li>
+<li>Shared memory systems
+<ul>
+<li>Communicate via memory and are easy to program but memory contention can happen</li>
+<li>Symmetric multiprocessors</li>
+<li>NUMA</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Vector computers employ lots of arithmetic pipelines for SIMD processing
+<ul>
+<li>Instructions operate on vectors of numbers (one or two dimensional)</li>
+<li>One operation specified for all elements of the vector</li>
+<li>2 main types of architecture:
+<ul>
+<li>memory-to-memory</li>
+<li>register-to-register (specific vector registers)</li>
+</ul>
+</li>
+<li>Chaining often used - chain pipelines together for operations such as FMA
+<ul>
+<li>Connect inputs/outputs via crossbar switches</li>
+</ul>
+</li>
+<li>SIMD array computers had good performance for specific applications, but they're old and no-one makes them anymore
+<ul>
+<li>Special set of instructions broadcast to processing elements for execution</li>
+</ul>
+</li>
+<li>Array computer are dead but MMX, SSE, AVX are big in x86</li>
+<li>ARM has NEON coprocessor, a 10-stage SIMD pipeline</li>
+</ul>
+</li>
+<li>Interconnection structure are important in allowing data or memory to be shared
+<ul>
+<li>In distributed memory systems, communication is in software via ethernet or infiniband</li>
+<li>More efficient interconnects are needed to share memory
+<ul>
+<li>A shared bus allows processor and memory to share a communication network
+<ul>
+<li>Need to resolve bus contention issues</li>
+<li>Poor reliability</li>
+<li>Only good for small systems</li>
+</ul>
+</li>
+<li>A cross-bar switch matrix uses a matrix of interconnects
+<ul>
+<li>Functional units require minimal logic</li>
+<li>Switch is complex, large and costly</li>
+<li>Potentially high bandwith, but still struggles with contention</li>
+</ul>
+</li>
+<li>Static links between each processor enable dedicated communication
+<ul>
+<li>More links -&gt; better communication rate</li>
+<li>Different patterns have different performance properties</li>
+<li>Chosen architecture of links usually is a tradeoff between cost and performance
+<ul>
+<li>Hypercube is a good balance</li>
+<li>Number of connections and links per node are a good indication of cost</li>
+<li>Maximum inter-node distance is an indicator of worst-case communication delay</li>
+</ul>
+</li>
+<li>Can have a dedicated link for each pair but that's expensive and rarely necessary</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Multistage switching networks can be either cross-bar or cell-based
+<ul>
+<li>Requirement is to connector each processor to any other processor
+<ul>
+<li>Known as the full access property</li>
+</ul>
+</li>
+<li>Another useful property is that connections are non-blocking</li>
+<li>CLOS networks (multi-stage cross-bar switches) showed that a network with 3 or more stages can be non-blocking</li>
+<li>A CLOS network with 2x2 cross-bar elements is known as a Benes Network, classified as cell-based
+<ul>
+<li>Most cell-based networks are highly blocking but require few switches</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
 <h2 id="data-level-parallelism"><a class="header" href="#data-level-parallelism">Data Level Parallelism</a></h2>
 <h2 id="multicore-systems"><a class="header" href="#multicore-systems">Multicore Systems</a></h2>
