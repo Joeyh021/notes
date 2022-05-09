@@ -170,7 +170,7 @@ There are several laws of boolean algebra which can be used to simplify logic ex
 | Name             | AND form                                | OR form                                  |
 | ---------------- | --------------------------------------- | ---------------------------------------- |
 | Identity Law     | $1A = A$                                | $0 + A = A$                              |
-| Null Law         | $0A = A$                                | $1 + A = 1$                              |
+| Null Law         | $0A = 0$                                | $1 + A = 1$                              |
 | Idempotent Law   | $AA = A$                                | $A + A = A$                              |
 | Inverse Law      | $A\bar A = 0$                           | $A + \bar A = 1$                         |
 | Commutative Law  | $AB = BA$                               | $A + B = B + A$                          |
