@@ -420,7 +420,282 @@
 </li>
 </ul>
 <h2 id="data-level-parallelism"><a class="header" href="#data-level-parallelism">Data Level Parallelism</a></h2>
+<ul>
+<li>The utilisation of SIMD depends on applications having a degree of data-level parallelism
+<ul>
+<li>Matrix oriented computation</li>
+<li>Image and sound processing</li>
+</ul>
+</li>
+<li>Sequential thinking but parallel processing makes it easy to reason about</li>
+<li>Vector-specific architecures make SIMD easy but practicality is limited
+<ul>
+<li>Reduced fetch/decode bandwith as fewer instructions</li>
+<li>Programmers view is:
+<ul>
+<li>Transfer data elements to register files
+<ul>
+<li>Essentially compiler-managed buffers for data</li>
+<li>Fixed length buffer to store a single vector
+<ul>
+<li>Eg, each register holds 64 words</li>
+<li>Needs enough ports to service all functional units</li>
+<li>Ports connect to functional units over crossbar switch</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Operate on register files
+<ul>
+<li>Functional units heavily pipleined</li>
+<li>Integrated control units detect structural or data hazards</li>
+<li>Also provide scalar units to compute addresses
+<ul>
+<li>Can be chained with vector units</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Place results back in memory</li>
+</ul>
+</li>
+<li>Loads and stores are pipleined
+<ul>
+<li>Program pays memory latency cost just once, instead of once per data element</li>
+</ul>
+</li>
+<li>Three contributing performance factors are:
+<ul>
+<li>Length of vector ops</li>
+<li>Structural hazards</li>
+<li>Data dependencies</li>
+</ul>
+</li>
+<li>Performance can be considered in terms of vector length or initiation rate</li>
+<li>Modern vector computers employ parallel pipelines known as lanes
+<ul>
+<li>Superscalar architecture</li>
+</ul>
+</li>
+<li>Convoys are sets of vector instructions that can execute together
+<ul>
+<li>Performance of code sections can be estimated by counting number of convoys</li>
+<li>Need to ensure no structural hazards exist</li>
+<li>A chime refers to the unit of time to execute a single convoy
+<ul>
+<li>A vector sequence of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> convoys executes in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> chimes</li>
+<li>Approximation ignores processor specific overhead and allows to readon about inherent data-level parallelism</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Chaining can be used to acheive performance, as it allows operations to be initiated as soon as individual elements of the vector source are available
+<ul>
+<li>Earliest implementations work in a similar way to forwarding in scalar pipelines</li>
+<li>Flexible chaining allows a vector instruction to chain to almost any other active vector instruction
+<ul>
+<li>Have to take care not to introduce hazards</li>
+<li>Supported by modern architectures</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A number of techniques can be applied to optimise vector architectures
+<ul>
+<li>Can have multiple lanes, a single vector instruction can be split up to execute accross the lanes
+<ul>
+<li>Doubling lanes but halving clock rate does not change speed</li>
+<li>Increases size and energy consumption</li>
+</ul>
+</li>
+<li>Vector length registers vary the size of the vector operations
+<ul>
+<li>Value cannot be greater than the max vector length, the physical register size</li>
+<li>Strip mining is a technique that generates code such that each vector operation is done for a size less than or equal to the max vector length</li>
+</ul>
+</li>
+<li>Vector mask registers allow for conditional execution of each element operation, when usually conditionals would be needed that hinder performance</li>
+<li>Memory banking spreads memory accesses across multiple memory banks to improve the start up time for a vector load</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MMX/SSE/AVX provide SIMD in x86
+<ul>
+<li>Many media applications operate on a narrower range of data types than 32-bit processors are designed for
+<ul>
+<li>8-bit colour components</li>
+<li>16-bit audio samples</li>
+</ul>
+</li>
+<li>A 256-bit adder can operate on 32 8-bit values at once</li>
+<li>MMX was introduced by intel in 1996
+<ul>
+<li>Used 64-bit FP registers to provide 8 and 16-bit operations</li>
+</ul>
+</li>
+<li>SSE was introduced as the successor, adding 128-but wide registers</li>
+<li>AVX introduced in 2010 adds 256 bit registers with a focus on double precision FP
+<ul>
+<li>AVX-512 introduced doubles register size again</li>
+</ul>
+</li>
+<li>Focus of SIMD extensions is to accelerate carefully implemented code
+<ul>
+<li>Low cost to use</li>
+<li>Require little extra state compared to vector architectures</li>
+<li>No virtual memory problems</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>GPUs are powerful vector units that are similar to vector architectures
+<ul>
+<li>Hardware designed for graphics but usually supplemented to improve the performance of a wider range of applications</li>
+<li>Heterogeneous execution model
+<ul>
+<li>CPU is host, GPU is device</li>
+</ul>
+</li>
+<li>NVIDIA have CUDA for programming, OpenCL is vendor-independent</li>
+<li>GPUs provide high levels of every form of parallelism, but it is hard to achieve performance as must also manage
+<ul>
+<li>Scheduling of computation</li>
+<li>Transfer of data to GPU memory</li>
+</ul>
+</li>
+<li>CUDA threads are the lowest form of parallelism, one associated with each data element
+<ul>
+<li>Can group thousands of threads to yield other forms of parallelism</li>
+<li>Threads organised into blocks, multithreaded SIMD processor executed a whole thread block</li>
+<li>Blocks organised into grids, executed independently and in any order</li>
+<li>GPU hardware handles thread management</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="multicore-systems"><a class="header" href="#multicore-systems">Multicore Systems</a></h2>
+<ul>
+<li>Can consider the performance of a processor in terms of the rate at which it executes instructions
+<ul>
+<li>MIPS = freq * IPC</li>
+<li>Leads to an focus on increasing clock frequency and processor efficiency
+<ul>
+<li>We've kinda hit a ceiling with this</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Alternative approach is multithreading
+<ul>
+<li>Divide instruction stream into smaller streams to execute threads in parallel</li>
+<li>Various designs and implementations
+<ul>
+<li>Threads may or may not be the same as software threads in multiprogrammed OS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A process is an instance of a running program
+<ul>
+<li>Processes own resources in their virtual address space</li>
+<li>Processes are scheduled by the OS</li>
+<li>Process switch is an operation that switches the processor form one process to another</li>
+</ul>
+</li>
+<li>A thread is a unit of work within a process
+<ul>
+<li>Thread switch switches processor control from one to another within the same process</li>
+<li>Far less costly than processes &amp; process switches</li>
+</ul>
+</li>
+<li>Implicit multithreading is the concurrent execution of multiple threads from a single sequential program
+<ul>
+<li>Statically defined by compiler or dynamically in hardware</li>
+<li>Rarely done as it hard</li>
+</ul>
+</li>
+<li>Most processors have adopted explicit multithreading, which concurrently execute instructions form different threads by either:
+<ul>
+<li>Uses separate program counter for each thread</li>
+<li>Instruction fetching happens per thread</li>
+<li>Each thread treated and optimised separately</li>
+<li>Multiple approaches:
+<ul>
+<li>Interleaved, where processor deals with more than one at a time, switching at each clock cycle
+<ul>
+<li>Thread skipped when blocking</li>
+</ul>
+</li>
+<li>Blocking or coarse grained, where threads execute successively until an event occurs that may cause a delay
+<ul>
+<li>Delay prompts a switch to another thread</li>
+</ul>
+</li>
+<li>SMT, where instructions are issues from multiple threads to the execution units of a superscalar processor
+<ul>
+<li>Performance comes from superscalar capability combined with multiple thread contexts</li>
+</ul>
+</li>
+<li>Chip multiprocessing replicates entire processor on same chip
+<ul>
+<li>Multicore</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Interleaved and blocked do not provied true concurrency, whereas SMT and multicore are actual simultaneous execution</li>
+<li>Multicore systems combine multiple cores on a single die
+<ul>
+<li>Each core has its own components (ALU, registers, PC) and caches</li>
+<li>Pollack's rule: performance increase is roughly proportional to square root of increase in complexity
+<ul>
+<li>If we double the logic, will deliver 40% perf boost</li>
+<li>Multicore has potential for near-linear improvement but is hard to acheive</li>
+</ul>
+</li>
+<li>Main variables are number of cores, and levels and amount of shared cache
+<ul>
+<li>Can have dedicated L1/L2</li>
+<li>Can share L2 or have dedicated L2 and share L3</li>
+<li>Shared L2 cache has advantages over reliance on dedicated cache
+<ul>
+<li>Constructive interference can reduce miss rates</li>
+<li>Data shared is not replicated in shared cache</li>
+<li>Amount of shared cache for each core is dynamic</li>
+<li>Interprocessor communication can happen through cache</li>
+<li>Confines cache coherence problem to L1 cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Clusters
+<ul>
+<li>A group of interconnected whole computers working together as a unified computing resource, that creates the illusion of a single machine</li>
+<li>Alternative to multiprocessing for high performance and availability</li>
+<li>Attractive for servers</li>
+<li>Absolute and incremental scalability, high reliability, superior price/performance ratio</li>
+<li>High-speed interconnects needed</li>
+</ul>
+</li>
+<li>With uniform memory access, all processors have access to all the memory in uniform time
+<ul>
+<li>NUMA, Non Uniform Memory Access, gives different access times to different processors for different regions of memory
+<ul>
+<li>All processors can still access all memory, just slower</li>
+<li>Cache Coherent NUMA (CC-NUMA) extends NUMA with cache coherence between the processors</li>
+</ul>
+</li>
+<li>Used because SMP approaches don't scale, and allows for transparent-system wide memory</li>
+<li>Could motivate clusters, but clusters are hard to program effectively</li>
+</ul>
+</li>
+</ul>
 <h2 id="thread-level-parallelism"><a class="header" href="#thread-level-parallelism">Thread Level Parallelism</a></h2>
 <h2 id="high-performance-systems"><a class="header" href="#high-performance-systems">High Performance Systems</a></h2>
 
