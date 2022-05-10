@@ -138,7 +138,142 @@
 
 ## Data Level Parallelism
 
+- The utilisation of SIMD depends on applications having a degree of data-level parallelism
+  - Matrix oriented computation
+  - Image and sound processing
+- Sequential thinking but parallel processing makes it easy to reason about
+- Vector-specific architecures make SIMD easy but practicality is limited
+  - Reduced fetch/decode bandwith as fewer instructions
+  - Programmers view is:
+    - Transfer data elements to register files
+      - Essentially compiler-managed buffers for data
+      - Fixed length buffer to store a single vector
+        - Eg, each register holds 64 words
+        - Needs enough ports to service all functional units
+        - Ports connect to functional units over crossbar switch
+    - Operate on register files
+      - Functional units heavily pipleined
+      - Integrated control units detect structural or data hazards
+      - Also provide scalar units to compute addresses
+        - Can be chained with vector units
+    - Place results back in memory
+  - Loads and stores are pipleined
+    - Program pays memory latency cost just once, instead of once per data element
+  - Three contributing performance factors are:
+    - Length of vector ops
+    - Structural hazards
+    - Data dependencies
+  - Performance can be considered in terms of vector length or initiation rate
+  - Modern vector computers employ parallel pipelines known as lanes
+    - Superscalar architecture
+  - Convoys are sets of vector instructions that can execute together
+    - Performance of code sections can be estimated by counting number of convoys
+    - Need to ensure no structural hazards exist
+    - A chime refers to the unit of time to execute a single convoy
+      - A vector sequence of $n$ convoys executes in $n$ chimes
+      - Approximation ignores processor specific overhead and allows to readon about inherent data-level parallelism
+  - Chaining can be used to acheive performance, as it allows operations to be initiated as soon as individual elements of the vector source are available
+    - Earliest implementations work in a similar way to forwarding in scalar pipelines
+    - Flexible chaining allows a vector instruction to chain to almost any other active vector instruction
+      - Have to take care not to introduce hazards
+      - Supported by modern architectures
+  - A number of techniques can be applied to optimise vector architectures
+    - Can have multiple lanes, a single vector instruction can be split up to execute accross the lanes
+      - Doubling lanes but halving clock rate does not change speed
+      - Increases size and energy consumption
+    - Vector length registers vary the size of the vector operations
+      - Value cannot be greater than the max vector length, the physical register size
+      - Strip mining is a technique that generates code such that each vector operation is done for a size less than or equal to the max vector length
+    - Vector mask registers allow for conditional execution of each element operation, when usually conditionals would be needed that hinder performance
+    - Memory banking spreads memory accesses across multiple memory banks to improve the start up time for a vector load
+- MMX/SSE/AVX provide SIMD in x86
+  - Many media applications operate on a narrower range of data types than 32-bit processors are designed for
+    - 8-bit colour components
+    - 16-bit audio samples
+  - A 256-bit adder can operate on 32 8-bit values at once
+  - MMX was introduced by intel in 1996
+    - Used 64-bit FP registers to provide 8 and 16-bit operations
+  - SSE was introduced as the successor, adding 128-but wide registers
+  - AVX introduced in 2010 adds 256 bit registers with a focus on double precision FP
+    - AVX-512 introduced doubles register size again
+  - Focus of SIMD extensions is to accelerate carefully implemented code
+    - Low cost to use
+    - Require little extra state compared to vector architectures
+    - No virtual memory problems
+- GPUs are powerful vector units that are similar to vector architectures
+  - Hardware designed for graphics but usually supplemented to improve the performance of a wider range of applications
+  - Heterogeneous execution model
+    - CPU is host, GPU is device
+  - NVIDIA have CUDA for programming, OpenCL is vendor-independent
+  - GPUs provide high levels of every form of parallelism, but it is hard to achieve performance as must also manage
+    - Scheduling of computation
+    - Transfer of data to GPU memory
+  - CUDA threads are the lowest form of parallelism, one associated with each data element
+    - Can group thousands of threads to yield other forms of parallelism
+    - Threads organised into blocks, multithreaded SIMD processor executed a whole thread block
+    - Blocks organised into grids, executed independently and in any order
+    - GPU hardware handles thread management
+
 ## Multicore Systems
+
+- Can consider the performance of a processor in terms of the rate at which it executes instructions
+  - MIPS = freq \* IPC
+  - Leads to an focus on increasing clock frequency and processor efficiency
+    - We've kinda hit a ceiling with this
+- Alternative approach is multithreading
+  - Divide instruction stream into smaller streams to execute threads in parallel
+  - Various designs and implementations
+    - Threads may or may not be the same as software threads in multiprogrammed OS
+- A process is an instance of a running program
+  - Processes own resources in their virtual address space
+  - Processes are scheduled by the OS
+  - Process switch is an operation that switches the processor form one process to another
+- A thread is a unit of work within a process
+  - Thread switch switches processor control from one to another within the same process
+  - Far less costly than processes & process switches
+- Implicit multithreading is the concurrent execution of multiple threads from a single sequential program
+  - Statically defined by compiler or dynamically in hardware
+  - Rarely done as it hard
+- Most processors have adopted explicit multithreading, which concurrently execute instructions form different threads by either:
+  - Uses separate program counter for each thread
+  - Instruction fetching happens per thread
+  - Each thread treated and optimised separately
+  - Multiple approaches:
+    - Interleaved, where processor deals with more than one at a time, switching at each clock cycle
+      - Thread skipped when blocking
+    - Blocking or coarse grained, where threads execute successively until an event occurs that may cause a delay
+      - Delay prompts a switch to another thread
+    - SMT, where instructions are issues from multiple threads to the execution units of a superscalar processor
+      - Performance comes from superscalar capability combined with multiple thread contexts
+    - Chip multiprocessing replicates entire processor on same chip
+      - Multicore
+  - Interleaved and blocked do not provied true concurrency, whereas SMT and multicore are actual simultaneous execution
+  - Multicore systems combine multiple cores on a single die
+    - Each core has its own components (ALU, registers, PC) and caches
+    - Pollack's rule: performance increase is roughly proportional to square root of increase in complexity
+      - If we double the logic, will deliver 40% perf boost
+      - Multicore has potential for near-linear improvement but is hard to acheive
+    - Main variables are number of cores, and levels and amount of shared cache
+      - Can have dedicated L1/L2
+      - Can share L2 or have dedicated L2 and share L3
+      - Shared L2 cache has advantages over reliance on dedicated cache
+        - Constructive interference can reduce miss rates
+        - Data shared is not replicated in shared cache
+        - Amount of shared cache for each core is dynamic
+        - Interprocessor communication can happen through cache
+        - Confines cache coherence problem to L1 cache
+- Clusters
+  - A group of interconnected whole computers working together as a unified computing resource, that creates the illusion of a single machine
+  - Alternative to multiprocessing for high performance and availability
+  - Attractive for servers
+  - Absolute and incremental scalability, high reliability, superior price/performance ratio
+  - High-speed interconnects needed
+- With uniform memory access, all processors have access to all the memory in uniform time
+  - NUMA, Non Uniform Memory Access, gives different access times to different processors for different regions of memory
+    - All processors can still access all memory, just slower
+    - Cache Coherent NUMA (CC-NUMA) extends NUMA with cache coherence between the processors
+  - Used because SMP approaches don't scale, and allows for transparent-system wide memory
+  - Could motivate clusters, but clusters are hard to program effectively
 
 ## Thread Level Parallelism
 
