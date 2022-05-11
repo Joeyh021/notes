@@ -114,8 +114,9 @@
   - [Z Transforms](./es2c7/z.md)
   - [Partial Differential Equations](./es2c7/pdes.md)
 - [ES2E3](./es2e3/index.md)
-    <!-- - [Combinational Logic Circuits](./es2e3/combinational.md)
-    - [Synchronous Logic Circuits](./es2e3/synchronous.md) -->
+      <!-- - [Combinational Logic Circuits](./es2e3/combinational.md)
+      - [Synchronous Logic Circuits](./es2e3/synchronous.md) -->
+  - [Logic](./es2e3/logic.md)
   - [Hardware Description Languages](./es2e3/hdl.md)
   - [Structural & Behavioual Verilog](./es2e3/verilog.md)
   - [FPGA Design Flow](./es2e3/design.md)
