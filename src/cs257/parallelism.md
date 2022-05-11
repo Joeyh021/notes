@@ -277,4 +277,64 @@
 
 ## Thread Level Parallelism
 
+- Synchronisation primitives exist in hardware that allow high-level synchronisation constructs to be built
+  - Establish building blocks to build actual constructs used by programmers
+- Most important hardware provision is the atomic instruction
+  - Uninterruptible and capable of incurring value change
+  - May actually be an atomic instruction sequence
+- In high-contention sequence, synchronisation can become a performance bottleneck
+- Atomic exchange is a primitive that swaps a value in a register for a value in memory
+  - Can be used to build locks for synchronisation
+    - Assume a value of 0 indicates the lock is free, 1 indicates it is unavailable
+  - Simplest possible situation where two processors both wish to perform an atomic exchange
+    - One processor will enter the exchange first
+    - This processor will ensure that a value of 1 is returned to any other processor that next attempts an exchange
+    - The two simultaneous exchange operations will be ordered by write serialisation mechanisms
+- Older microprocessors feature a test-and-set atomic instruction in hardware
+  - Allowed to define a test against which a value can be tested
+  - Value modified if defined test succeeded
+- Some current gen microprocessors have fetch-and-increment atomic
+  - Return the value at a pointer and increment it
+- Atomic instructions usually consist of some read and write
+- Requiring an uninterruptible read-write fucks with a good number of things
+  - Cache coherence
+  - Instruction pipelining
+  - Cache performance
+- Possible to have a pair of atomic instructions where the second instruction returns a value that indicates if the pair executed atomically
+  - Pair includes a special load known as load linked, followed by a special write, store conditional
+    - If they memory location specified by load linked is accessed prior to the store conditional then the store fails
+    - Also fails if there is a context switch
+  - Can implement atomic exchange using this
+    - If the store conditional returns a value indicating failure, then a branch jumps back and retries
+  - Can also implement fetch-and-increment
+    - Maintain a record of the address specified by linked load in a link register
+    - If an interrupt occurs or cache block containing address is invalidated, register is cleared
+    - Conditional store checks register for address matching to determine success
+    - To avoid deadlock, only register to register operations are permitted between linked-store instructions
+- Spin locks are locks that processors repeatedly attempt to required
+  - Effective when low latency required and lock held for short periods
+  - Processors with cache coherence provide a convenient mechanism for spin locks
+    - Testing the status of a lock requires local cache access rather than main memory access
+    - Temporal locality decreases lock acquisition times
+  - Linked-store can avoid needless bus access when multiple processors attempt to acquire a lock
+- Cache coherence ensures multiple processors have a consistent view of memory, so allows communication through shared memory
+  - Shared memory communications means we only need consider the rules enforced on reads and writes of different processors
+    - Don't need to sync _everything_
+- Different models of memory consistency exist
+  - Simplest is sequential consistency
+    - Requires the results of execution be the same if memory accesses of processors were kept in order and interleaved
+    - Ensured all processors delay memory accesses until all cache invalidations are complete
+    - Simple but slow
+  - Synchronised consistency orders all accesses to shared data using synchronisation operations
+    - A data reference is ordered by a synchronisation operation if, in every possible execution, a write by one processor and an access by another are separated by a pair of synchronisation operations
+    - Whenever a variable might be updated without ordering by synchronisation is a data rate
+  - There are relaxed consistency models that allow reads and writes to complete out-of-order but use synchronisation to enforce ordering
+    - Three general models
+    - A -> B denotes that A must complete before B
+    - Total store ordering relaxes W -> R
+      - Retrains ordering among writes
+    - Partial order store model relaxes W -> W
+      - Impractical for most programs
+    - Relaxing R -> R and R -> W happens in a variety of models, including weak ordering and release consistency
+
 ## High Performance Systems
