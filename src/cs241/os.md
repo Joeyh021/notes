@@ -1,0 +1,423 @@
+# Operating Systems
+
+## Processes
+
+- Process is a program in execution
+- A process in memory has
+  - Text: process instructions
+  - Data: global variables
+  - Stack & Heap
+    - Can shrink/grow at runtime
+- Process can be in several states
+  - New: being created
+  - Ready: waiting to be assigned to processor
+  - Waiting: waiting on something or other
+  - Running
+  - Terminated: finished execution
+- Process control blocks
+  - Stores:
+    - State
+    - Program counter
+    - CPU registers
+    - Scheduling info
+    - Memory management info
+    - Accouting information
+      - CPU usage, time since start, etc
+    - I/O Status
+      - Open files and I/O devices
+  - Stored in kernel memory
+  - Used when saving processes for context switches
+  - Simpler the PCB, faster the context can switch
+- Process scheduling
+  - Scheduler selects among available processes for who's turn is next on the CPU
+  - Three queues:
+    - Job queue for new processes (long term)
+    - Ready queue for ready processes (short term)
+    - Device queues for processes waiting for I/O access
+  - Short term scheduler selects next process from ready queue
+    - Invoked frequently and must be fast
+  - Long term moves from new state to ready queue
+    - Invoked when processes are created
+    - Moves processes into memory
+    - Not used in modern OS
+- Process creation
+  - Child processes can be created by parent processes
+    - Forms a tree
+    - Root process is `init`
+  - Options are specified when creating process
+    - Resource sharing options
+    - Execution options (concurrently or parent waits)
+    - Address space options (duplicate or child loads new)
+  - `fork()` creates new process as duplicate
+  - `exec()` used after fork to replace address space with new program
+- Process termination
+  - Processes terminate after executing last statement
+  - Can be terminated with `exit()` syscall, returning status code
+  - `wait()` tells parent to wait for child to exit
+  - If a parent exits without waiting for child, children become orphans and are adopted by `init`
+  - When a process terminates but exit code has not yet been collected it is a zombie process
+    - All resources released but entry in process table remains
+    - Once parent gets exit status it is released
+- Inter-process communication
+  - Either shared memory or message passing
+  - Shared memory
+    - Address space of one process and other one attaches to it
+    - Special permission required for one process to access another's address space
+    - `mmap()` syscall creates shared block of memory
+  - Message passing
+    - Send and receive syscalls provided
+    - One process typically act as producer and other consumer
+    - Message buffer exists in kernel space
+      - Circular queue can be used as a shared buffer
+      - Can have zero-capacity, or bounded/unbounded
+    - Can communicate directly by naming processes
+    - Can also communicate indirectly using mailboxes
+      - Mailboxes have unique IDs
+      - Process can only communicate if they share a mailbox
+    - Can do blocking sends/receives, or non-blocking
+  - Pipes
+    - A mechanism for message passing in UNIX
+    - Pipes in bash exist with `|`, connecting input of one process to output of another
+    - Named pipes, or fifos appear in file system and can be manipulated using file operations
+      - Much more powerful, persist beyond processes exiting
+
+## Threads
+
+- What are threads
+  - A unit of CPU execution
+  - Can multi-thread processes to achieve concurrency
+  - Threads lighter than processes and share more with parent
+    - Share code, data, files
+  - Threads have own id, program counter, register set, stack (share heap)
+- Concurrency and parallelism
+  - Concurrency implies more than one task making progress
+  - Parallelism implies that a system can perform more than one task simultaneously
+    - Data parallelism splits data up and performs same processing on each subset of data
+    - Task parallelism splits threads doing different things up
+  - Can have concurrency without parallelism by interleaving tasks on one core
+  - Amdahl's law is a rough estimate of speedup
+  - Speedup $\leq \frac{1}{S + (1-S)/N}$
+    - Numerator (1) is time taken before parallelising
+    - $S$ is time taken to run serial part
+    - $(1-S)/N$ is the time taken to run parallelisable part on $N$ cores
+- Pthreads is common API for working with threads
+  - `pthread_create()` creates new thread to execute a function
+  - `pthread_join()` waits for thread to exit
+  - Provides mutexes and condvars
+  - Can set thread IDs and work with attributes, etc
+- Synchronising threads
+  - Sharing memory between threads requires synchronisation
+  - Race conditions occur when two threads try to write to a variable at the same time
+    - High level code broken down into atomic steps which become interleaved and cause registers and intermediate operations to become mixed up, causing undefined behaviour
+  - Can use mutexes for synchronisation
+- User vs Kernel threads
+  - User level threads are implemented by user code in userspace
+    - No kernel involvement
+    - Cannot be scheduled in parallel but can run concurrently
+  - Kernel threads are implemented by the kernel and created by syscalls
+    - Scheduling is handled by kernel so can be scheduled on different CPUs
+    - Management has kernel overhead
+  - Many-to-one model maps many user level threads to a single kernel thread
+    - Less overhead
+    - User threads are all sharing kernel thread so no parallelism and one blocking causes all to block
+  - One-to-one gives each user thread a kernel thread
+    - Used in windows and linux
+    - More kernel threads = more overhead
+    - Users can cause creation of kernel threads which slows system
+  - Many-to-many multiplexes user threads across a set of kernel threads
+    - Number of kernel thread can be set and can run in parallel
+    - More complex than one-to-one
+- Condition variables
+  - Used to synchronise threads
+  - Threads can `wait()` on condition variables
+  - Other threads signal the variable using `signal()` or `broadcast()`
+- Signals are used in UNIX systems to notify processes
+  - Synchronous signals generated internally by process
+  - Asynchronous signals generated external to process by other processes
+    - ctrl+c sends SIGINT asynchronously
+  - Signals are delivered to process and handled by signal handlers
+    - Only signal-safe functions can be called within signal handlers
+  - Signals can be delivered to all threads, just the main thread, or specific threads
+
+## Scheduling
+
+- Different schedule queues contain processes in different states
+  - Queues contain process control blocks
+- Scheduler wants to be as efficient as possible in scheduling jobs
+  - Maximise CPU utilisation and process throughput
+  - Minimise turnaround, waiting, response times
+- Four events that can trigger scheduler
+  - Process switches from running to waiting state
+  - Process terminates
+  - Process switches from running to ready
+  - Process switches from waiting to ready
+  - First two cases are non pre-emptive, where process give up CPU
+  - 2nd two are pre-emptive, where scheduler takes the task off the CPU and gives it to a new task
+- First-come first-serve scheduling is where processes are assigned to CPU in order of arrival
+  - Avg wait time varies massively on order of processes arriving
+  - Non pre-emptive
+  - Shorter jobs first improves performance
+- Shortest first scheduling
+  - Provably optimal in minimising average wait time
+  - Relies on knowing how long each job will take
+  - Can estimate job length by exponential moving average
+    - $t_n$ is the length of the nth CPU burst
+    - $\tau_{n+1}$ is the predicted length of the next CPU burst
+    - $0 \leq \alpha \leq 1$
+    - $\tau_{n+1} = \alpha t_n + (1-\alpha) \tau_n$
+  - Can be either pre-emptive or non pre-emptive
+    - When a new, shorter process arrives when one is already being executed, can either:
+      - Switch to new process
+      - Wait for current job to finish
+    - Pre-emptive can cause race conditions where processes are switched mid-write
+- Priority scheduling assigns a priority to each process, and lowest priority is executed first
+  - Shortest job first is a special case of priority scheduling, where the priority is execution time
+  - Can cause starvation for processes with low priority
+    - Can overcome with aging, where priority is increased over time
+- Round robin scheduling is where each process gets a small amount of CPU time (a quantum $q$), and after that time has elapsed the process is pre-empted and put back into the ready queue
+  - Scheduler visits process in arrival order
+  - No process waits more than $(N-1)q$ for it's next turn
+  - If $q$ is large, becomes first come first served
+  - If $q$ is small, too many context switches
+    - $q$ usually 10 to 100ms
+  - Higher wait time than shortest job first in most cases, but better response time
+
+## Synchronisation
+
+- Synchronisation is important to prevent race conditions
+- Needed for both process and threads as they both share memory
+- The part of code where processes update shared variables is the critical section
+  - No two processes can concurrently execute their critical section
+    - Entry and exit must uphold mutual exclusion
+- Ideal solution to the critical section problem must satisfy:
+  - Mutual exclusion
+  - At least one process must be able to progress into the critical section if no other process is in it
+  - No process should have to wait indefinitely to enter critical section
+- [Peterson's Algorithm](https://en.wikipedia.org/wiki/Peterson%27s_algorithm) is a solution to the problem
+  - `int turn;` shared variable to specify who's turn it is
+  - `boolean flag[2];` flags store who wished to enter
+  - Process runs if both waiting and their turn, or if only one waiting and other not in critical section
+  - Can fail with modern architectures reordering stuff
+- Synchronisation primitives are based on the idea of locking
+  - Two processes cannot hold a lock simultaneously
+  - Locking and unlocking should be atomic operations
+    - Modern hardware provides atomic instructions
+    - Used to build sync primitives
+- Test and set is one type of atomic instruction
+  - Update a register and return it's original value
+  - Can be used to implement a lock using a shared boolean variable
+    - Does not satisfy bounded waiting as the process can instantly reacquire the lock
+  - More complex implementations can satisfy criteria (allow the next waiting process to execute and only release lock if no other process waiting)
+- Mutex locks are lock variables that only one process can hold at a time
+  - If another process tries to acquire the lock then it blocks until the lock is available
+- Semaphores have integer values
+  - 0 means unavailable
+  - Positive value means available
+  - `wait()` on a semaphore makes the process wait until the value is positive
+    - Decrements by 1 if/when positive
+  - `signal()` increments value by one
+  - Both commands must be atomic
+  - Controls the number of processes that can concurrently access resource - more powerful than mutex
+- Deadlocks may occur when both processes are waiting for an event that can only be caused by the other waiting process
+- Starvation occurs when a specifics process has to wait indefinitely while others make progress
+- Priority inversion is a scheduling problem when a lower-priority process holds a lock needed by a higher priority process
+  - Solved via priority inheritance, where the priority of the low priority task is set to highest to prevent it being pre-empted by some medium priority task.
+- There are a few classic synchronisation problems that can be used to test synchronisation schemes
+  - The bounded buffer problem has $n$ buffers where each can old one item. Produces produces items and write to buffers while the consumers consume from buffers
+    - Producer should not write when all buffers full
+    - Consumer should not consume when all buffers empty
+    - Solved with three semaphores
+      - `mutex = 1; full = 0; empty = n`
+    - Producers wait on empty when filling a buffer, and signal on full to indicate a buffer has been filled
+    - Consumers wait on full to indicate emptying a buffer, and wait on empty to indicate one has been emptied
+    - buffer access protected by mutex
+  - Reader/writer problem has some data shared among processes, where multiple readers are allowed but only one writer
+    - Readers are given preference over writers, and writers may starve
+    - A shared integer keeps track of the number of readers, and two mutexes are used, one read/write mutex, and another to protect the shared reader count.
+    - The writer must acquire the writer mutex
+    - Readers increase the read count while reading and decrease when done, both operations synchronised using mutex
+    - Read/write mutex also locked while read count is at least one reading to prevent writes while anyone is reading.
+  - Dining philosophers spend their lives either thinking or eating.
+    - They sit in a circle, with a chopstick between each pair. When they wish to eat, they pick up a chopstick from either side of them, and put them back down when done.
+      - Two neighbouring philosophers cannot eat at the same time
+      - Five mutexes, one for each chopstick
+    - If all five decide to eat at once and pick up the left chopstick, then deadlock occurs
+    - There are multiple solutions:
+      - Allow only $n-1$ philosophers for $n$ chopsticks
+      - Allow a philosopher to only pick up both chopsticks if both are available, which must be done atomically
+      - Use an asymmetric solution, where odd-numbered philosophers pick up left first, and even numbers pick up right first
+
+## Deadlocks
+
+- A set of processes is said to be in deadlock when each process is waiting for an event that can only be caused by another process in the event
+  - All waiting on each other
+  - Usually acquisition/release of a lock or resource
+  - An abstract system model for discussing deadlocks
+    - System has resources $R_1, R_0, ..., R_m$
+      - Resources can have multiple instances
+    - A set of processses $P_0, P_1, ..., P_n$
+    - To utilise a resource a process must request it, use it, then release it
+  - Conditions for deadlock:
+    - Mutual exclusion, only one process can use a resource
+    - Hold and wait, a process must hold some resources and then be waiting to acquire more
+    - No pre-emption, a resource can be released only voluntarily
+    - Circular wait, there must be a subset of processes waiting for each other in a circular manner
+- The resource allocation graph is a directed graph where:
+  - Vertices are processes and resources
+    - Resource nodes show the multiple instances of each resource
+  - Request edge is a directed edge $P_i \leftarrow R_j$
+  - Assignment edge is a directed edge $R_j \leftarrow P_i$
+  - Cycles in graph show circular wait
+  - No cycles means no deadlock
+  - Cycles _may_ mean deadlock, but not sufficient alone to detect deadlock
+- Deadlock detection algorithms are needed to verify if a resource allocation graph contains deadlock
+  - Resource graph can be represented in a table showing allocated, available, and requested resources
+  - Flags show if each process has finished executing
+  - A process may execute and set it's flag if it can satisfy it's requested resources using the currently available resources, which then frees any allocated resources
+  - Can then try to execute other processes
+  - If ever a point where no progress can be made, then the processes are deadlocked
+- Deadlock prevention ensures that at least one of the necessary conditions for deadlock does not hold
+  - Impossible to design system without mutual exclusion
+  - Can prevent hold-and-wait by ensuring a process atomically gets either all or none of its required resources at once, so it is either waiting on one of them or all of them
+  - Can introduce pre-emption into the system to make a process release all it's resources if it is ever waiting on any
+  - Can prevent circular wait by numbering resources, and requiring that each process requests resources in order
+    - Process holding resource $n$ cannot request any resources numbered less than $n$
+  - All of these methods can be restrictive
+    - Harmless requests could be blocked
+- Deadlock avoidance is less restrictive than prevention
+  - Determines if a request should be granted based upon if the resulting allocation leaves the system in a safe state where no deadlock can ever occur in future
+    - Need advanced information on resource requirements
+  - Each process declares the maximum number of instances of each resources it may need
+  - On receiving a resource request, the algorithm checks if granting the resource leaves the system in a safe state
+  - If it can't guarantee a safe state, the system waits until the system changes into a state where the request can be granted safely
+  - How do we determine if a state is safe?
+    - Cycles alone do not guarantee deadlock
+    - The banker's algorithm determines if a state is safe
+- The banker's algorithm:
+  - Take a system with 5 process and three resource types, A, B and C, with 10, 5, and 7 instances respectively.
+  - Table shows the current and maximum usage for each process
+    - Available resources is (instances of resource) - (total current used by each process)
+    - Future needed resources is (maximum usage) - (current usage)
+  - At each step, a process is found who's needs can be satisfied with currently available resources
+    - Can then execute process and reclaim its resources
+    - Keep applying steps to try to reclaim all resources
+      - Gives a sequence that processes can be executed in
+        - If sequence completes all processes then it's a safe sequence and starting state is safe
+        - If some processes cannot be executed and there is no possible safe sequence the starting state is unsafe
+- Resource request algorithm checks if granting a request is safe
+  - Check that we can satisfy request
+  - Pretend request was executed
+  - Use bankers algorithm to see if resulting state would be safe
+    - If not, then keep request pending until state changes into a safe state where we can grant it
+
+## Memory
+
+- Memory is a flat array of addressable bytes
+  - CPU fetches data and instructions from memory
+- Memory protection
+  - Addresses accessible by a process must be unique to that process such that processes cannot write to each others address spaces
+  - Base and limit registers define the range of legal addresses
+    - OS loads these registers when a process is scheduled
+    - Only OS can modify
+    - CPU checks addresses are in legal range, OS takes action if not
+    - Assumes contiguous memory allocations, but other methods exist
+- Address binding
+  - Addresses in source code are usually symbolic (variables)
+    - Typically bound by compilers to relocatable addresses
+    - Addresses in object code are all mapped relative to some base address, which is then mapped to a physical address when loading into memory
+  - Different address binding strategies exist, can be done at compile time, load time, or execution time
+- Addresses generated by a program during its runtime are either logical or physical
+  - Logical/virtual are generated by the CPU to fetch or read/write, may differ from physical address
+    - Must be converted to physical address before being used to access memory
+  - Physical address is the one seen by the memory unit.
+  - Under compile and load time binding, logical and physical addresses are the same
+  - Under execution time binding, the physical addresses may change at runtime
+- The memory management unit is special hardware that translates logical to physical addresses
+  - MMU consits of a relocation register and a limit register under contiguous allocation
+- Three main techniques for memory allocation
+- Contiguous memory allocation
+  - Each process has one chunk of memory
+  - Used in older OSs
+  - MMU checks each logical address against limit register
+    - Registers can only be loaded by OS when a process is scheduled
+  - Memory divided into fixed partitions which are allocated to processes
+    - Fixed number of partitions => fixed number of processes
+  - OS keeps track of free chunks called holes
+  - Processes allocated memory based on their size
+    - Put into a hole large enough to accommodate it
+  - Different strategies for hole allocation
+    - First-fit, allocate first hole
+    - Best-fit, allocate smallest hole possible
+      - Must search entire address space
+    - Worst-fit, allocate the largest hole
+      - Must also search entire address space
+      - Produces largest leftover hold
+  - Can result in fragmentation of the address space
+    - External fragmentation, when there is enough memory space for a process but it is not contiguous
+    - Internal fragmentation, where a process is using more memory than it needs
+    - Can deal with it by compacting holes into one block
+      - Require processes to be relocated during execution and have significant overhead
+    - Can also allow non-contiguous allocation
+- Segmented memory allocation
+  - Program divided into segments, each in its own contiguous block
+  - Each logic address is a two-tuple of `(segment number, offset)`
+    - Segment number mapped to base address and offset is
+  - MMU contains segment table
+    - Table indexed by segment numbers
+    - Each table entry has
+      - Segment base, which is the physical address of the segment in memory
+      - Segment limit, the size of the segment
+  - Still cannot avoid external fragmentation
+- Paging is the best technique for memory management
+  - Avoids external fragmentation
+  - Divide program into blocks called pages
+  - Divide physical memory into blocks called frames
+  - Page size = frame size = 4kB
+  - Pages are assigned to frames
+  - Mapping between pages and frames is stored in a page table, one for each process
+  - Logical addresses have a page number and a page offset
+  - Still suffers from internal fragmentation
+    - Worst case scenario has one byte in a frame
+    - Average wastage is half a frame
+    - Smaller frames means less wastage but larger page tables
+- Page table implementations are complex
+  - There is a page table in memory for each process
+  - MMU consists of registers to hold page table entries
+    - Loaded by OS when a process is scheduled
+    - Can only store a limited number of entries
+  - Holding a page table in memory doubles the time it takes to access an address, because you need an access to translate logical -> physical address first
+  - Translation Lookaside Buffer (TLB) stores frequently used page table entries in a hardware cache
+    - Extremely fast
+    - On a cache miss, the entry is brought into the TLB
+      - Cache miss requires an extra memory access to get page table entry on top of the usual fetch
+      - Different cache replacement algorithms are used (LRU is common)
+      - Different algorithms have different corresponding hit ratios
+    - Effective memory access time depends on hit ratio
+    - Stores page table entries of multiple process
+      - Each entry requires an Address Space Identifier (ASID) to uniquely identify the process requesting the TLB entry
+      - Cache only hits if ASID matches, which guarantees memory protection
+  - It can be beneficial to have smaller page tables to reduce memory overhead
+    - 32 bit word length and 4kB page size gives $2^{20}$ possible entries
+    - If each entry is a 4 byte address, this is 4MB of page table per page
+    - Most processes only use a very small number of the logical entries
+    - A valid-invalid bit is used for each page table entry to indicate if there is a physical memory frame corresponding to a page number
+      - Bit is set high when there is no physical frame corresponding to a a page
+  - Hierarchical page tables divide the page table into pages and store each page in a frame in memory
+    - The mapping is stored in an outer page table
+    - The OS does not need to store the inner page tables that aren't in use
+    - The flat page table requires 4MB of space, which requires 1000 frames of 4kB each
+    - The outer page table will have 1000 entries (one for each inner page table), which fits in a single frame.
+  - Addressing under multi-level paging works by separating the address into chunks
+    - Outer and inner page tables are 4kB, so hold 1000 4 byte addresses.
+      - 10 upper bits address the outer page table
+      - Next 10 bits address the inner page table
+      - Lowest 12 bits used to address the 4kB address space of each page
+      - This takes 3 memory accesses now, which is slow
+        - Less memory used but higher penalty in case of TLB miss
+  - Hashed page tables use the page numbers as hash keys, which are hashed to the index of the page table
+    - Each entry is a pointer to a linked list of page numbers with the same hash value
+      - Each list node is the page number, frame number, and pointer to the next node
+  - Some architectures use inverted page tables, where each index in the table corresponds to a physical frame number
+    - Each entry in the table is a PID and a page number
+    - When a virtual address is generated, each entry is searched until the entry for the frame with the page number and PID is found
+    - Decreases memory needed to store each page table, but increases search time

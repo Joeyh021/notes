@@ -3,13 +3,10 @@
 [Introduction](./intro.md)
 
 - [CS118](./cs118/index.md)
-
   - [IEEE 754](./cs118/floats.md)
   - [OOP Principles](./cs118/oop.md)
   - [Java Exceptions & Generics](./cs118/exceptions.md)
-
 - [CS126](./cs126/index.md)
-
   - [Arrays & Linked Lists](./cs126/arrays.md)
   - [Analysis of Algorithms](./cs126/analysis.md)
   - [Recursive Algorithms](./cs126/recursion.md)
@@ -23,17 +20,13 @@
   - [Heaps](./cs126/heaps.md)
   - [Skip Lists](./cs126/skip-lists.md)
   - [Graphs](./cs126/graphs.md)
-
 - [CS132](./cs132/index.md)
-
   - [Digital Logic](./cs132/logic.md)
   - [Assembly](./cs132/assembly.md)
   - [Memory Systems](./cs132/memory.md)
   - [I/O](./cs132/io.md)
   - [Microprocessor Architecture](./cs132/architecture.md)
-
 - [CS141](./cs141/index.md)
-
   - [Types & Typeclasses](./cs141/types.md)
   - [Recursion](./cs141/recursion.md)
   - [Higher Order Functions](./cs141/functions.md)
@@ -43,9 +36,7 @@
   - [Applicative Functors](./cs141/applicatives.md)
   - [Monads](./cs141/monads.md)
   - [Type-Level Programming](./cs141/tlp.md)
-
 - [ES191](./es191/index.md)
-
   - [Circuit Symbols & Conventions](./es191/symbols-and-conventions.md)
   - [Nodal Analysis](./es191/nodal.md)
   - [Mesh Analysis](./es191/mesh.md)
@@ -58,9 +49,7 @@
   - [Op Amps](./es191/opamps.md)
   - [Passive Filters](./es191/filters.md)
   - [Equation Reference](./es191/equations.md)
-
 - [ES193](./es193/index.md)
-
   - [Functions, Conics & Asymptotes](./es193/functions.md)
   - [Complex Numbers](./es193/complex.md)
   - [Vectors](./es193/vectors.md)
@@ -72,7 +61,6 @@
   - [Laplace Transforms](./es193/laplace.md)
   - [Probability & Statistics](./es193/stats.md)
   - [Equation Reference](./es193/equationref.md)
-
 - [ES197](./es197/index.md)
   - [Translational Mechanical Systems](./es197/mech1.md)
   - [Rotational Mechanical Systems](./es197/mech2.md)
@@ -84,17 +72,37 @@
   - [Transfer Functions](./es197/transfer.md)
   - [First Order Frequency Response](./es197/freq1.md)
   - [Second Order Frequency Response](./es197/freq2.md)
+- [CS241](./cs241/index.md)
+  - [Operating Systems](./cs241/os.md)
+  - [Networks](./cs241/cn.md)
+- [CS257](./cs257/index.md)
+  - [Memory Systems](./cs257/memory.md)
+  - [Processor Architecture](./cs257/architecture.md)
+  - [Parallelism](./cs257/parallelism.md)
+  - [I/O](./cs257/io.md)
+  - [Embedded Systems & Security](./cs257/embedded.md)
+- [CS261](./cs261/index.md)
+  - [Project Management](./cs261/management.md)
+  - [System Design & Implementation](./cs261/design.md)
+  - [Human Computer Interaction](./cs261/hci.md)
+  - [Testing](./cs261/testing.md)
+- [ES2C0](./es2c0/index.md)
+  - [Diodes](./es2c0/diodes.md)
+  - [Oscillators](./es2c0/oscillators.md)
+  - [BJTs](./es2c0/bjt.md)
+  - [BJT Amplifiers](./es2c0/bjt-amps.md)
+  - [MOSFETs](./es2c0/mosfet.md)
+  - [MOSFET Amplifiers](./es2c0/mosfet-amps.md)
+  - [Differential Amplifiers](./es2c0/differential.md)
+  - [Op-Amp Circuits](./es2c0/opamps.md)
 - [ES2C6](./es2c6/index.md)
-
   - [Control Systems](./es2c6/control.md)
   - [Drive Systems](./es2c6/mechanics.md)
   - [Sensors](./es2c6/sensors.md)
   - [Electromagnetics & Motors](./es2c6/electromagnetics.md)
   - [AC Power](./es2c6/ac.md)
   - [Three Phase AC Systems](./es2c6/3phase.md)
-
 - [ES2C7](./es2c7/index.md)
-
   - [Binomial Theorem & Taylor Series](./es2c7/binomial.md)
   - [Matrices & Quadratic Forms](./es2c7/matrices.md)
   - [Linear Simultaneous Equations](./es2c7/equations.md)
@@ -105,8 +113,9 @@
   - [Fourier Series & Transforms](./es2c7/fourier.md)
   - [Z Transforms](./es2c7/z.md)
   - [Partial Differential Equations](./es2c7/pdes.md)
-
 - [ES2E3](./es2e3/index.md)
+      <!-- - [Combinational Logic Circuits](./es2e3/combinational.md)
+      - [Synchronous Logic Circuits](./es2e3/synchronous.md) -->
   - [Logic](./es2e3/logic.md)
   - [Hardware Description Languages](./es2e3/hdl.md)
   - [Structural & Behavioual Verilog](./es2e3/verilog.md)

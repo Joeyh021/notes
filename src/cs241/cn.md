@@ -1,0 +1,344 @@
+# Networks
+
+## Intro
+
+- A network is a group of interconnected dervices that communicate by sending messages
+  - End hosts run applications and send/receive messages
+    - Generate messages and break them down into packets
+    - Add additional info such as IP address and port in packet header
+    - Send bits physically
+  - Access points provide access to the internet
+    - End hosts connect to APs
+    - Most use ethernet/wifi but also 4G/5G mobile networks
+  - Intermediate devices such as switches and routers forward and route messages
+    - Also known as network core
+    - Run routing and forwarding algorithms
+    - Info stored in routing tables
+    - Move packets to correct output link
+- The store-and-forward principle states that an entire packet must arrive at a before it can re-send it
+  - It takes $\frac L R$ seconds to transmit a packet of length $L$ at $R$ bits per second
+  - The router has to receive and send, so total delay is $2 \frac L R$, plus processing time
+  - Packets queue at the router if the rate of incoming packets is greater than the transmittion rate
+  - Packets either queue in buffer or may be dropped if buffer fills
+  - There are four main sources of packet delay:
+    - Transmission delay
+      - $\frac L R$ time to send packet
+    - Queueing delay
+      - Time waiting to be transmitted
+    - Processing delay
+      - Any processing at node
+    - Propagation delay
+      - Time to physically move bits in link cables
+- Throughput is the overall rate at which bits are transferred from a source to a destination in a time window
+  - Can be instantaneous throughput, the rate at a specific point in time
+  - Or average throughput, the mean rate over a longer period of time
+  - Transmission links are bottlenecked by their minimum speeds
+- Protocols are defined rules for communication between nodes
+  - Define packet format, order of messages, actions to take on send and receive
+  - Can be in software or hardware
+  - Routers run IP protocols and switches and network cards implement ethernet
+- The internet uses packet switching to allow different routes to share links between nodes
+  - If one flow of data is not using any shared links then another flow can use it
+  - Circuit switching was used in old telephone networks, where links were reserved for an entire call duration and flows did not get shared
+    - Not ideal for internet traffic due to the bursty nature of packets
+- There are 5 layers in the network stack, each using the services of the layer below it and providing services to the layer above it
+  - **Application layer** generates data
+    - HTTP, SMTP, DNS
+  - **Transport layer** packetises data, adds port number, sequencing and error correcting info
+    - TCP, UDP
+  - **Network layer** adds source and destination IP addresses and routes packets
+    - IP
+  - **Link layer** adds source/destination MAC addresses, passes ethernet frames to network interface hardware drivers
+    - Ethernet, WiFi
+  - **Physical layer** sends the bits down the wire
+    - Different protocol for cables, WiFi, fibre optics, etc
+
+## Application Layer
+
+- Processes such as web browsers, email, file sharing, communicate over networks
+  - Developer has to develop either both client and server so they know how to communicate
+  - Alternatively, processes can implement an application-layer protocol such as HTTP
+- Process send/receive via sockets, which are the API between application and network
+  - Creating, reading, writing to sockets is done by syscalls
+  - Messages need to be addressed to the correct process running on the correct end host
+    - Host identified by IP address
+    - Processes identified by port number
+- Application processes use transport layer services
+  - Transport layer is expected to deliver messages to the intended recipients
+  - All transport layer protocols provide basic services such as packetisation, addressing, sequencing, error correction
+  - Different protocols provide different services
+  - TCP is for reliable and ordered data transfer
+    - Is correction-oriented
+      - TCP handshake is required
+    - Client must contact server, establish connection with IP and Port
+    - Provides a
+  - UDP provides no guarantees on data transfer
+    - Best-effort service
+    - Faster as no handshake is required and headers are smaller
+    - Maintains no connection, data may be lost or our of order
+- HTTP is how web browsers communicate with web servers
+  - Uses TCP port 80
+  - Client sends a HTTP request to request a resource
+  - Server response with a HTTP response with the requested resource
+  - Web pages consist of HTML file and references objects
+  - HTTPv1.0 is non-persistent and downloads each object over a separate TCP connection
+    - New TCP handshake for each object
+  - HTTPv1.1 is persistent and uses the same connection for multiple objects
+    - Server leaves connection open for any referenced objects, which are sent back-to-back as soon as they are encountered
+  - RTT is the round trip time for a request
+    - Needs 1 RTT to establish TCP connection, then another to request and receive first few bytes of data
+    - Non-persistent response time is 2RTT + file transmission time for each file
+    - Persistent response time only requires 2RTT once, then total data transfer
+  - HTTP requests and responses are in ASCII, in a human-readable format
+    - In request, top line is request line with request verb (GET/POST/PUT)
+    - In response, top line is status line with status code and phrase
+- Web clients can be configured to access the web via a cache, which caches objects to reduce response time for client requests
+
+## Transport Layer
+
+- Transport services provide logical communication between application processes running on different hosts
+  - Break messages into segments, add header, pass to network layer on the send side
+  - Reassemble segments into messages and pass up to application layer on the receive side
+- UDP provides bare minimum services
+  - No effort to recover lost packets or re-order packets
+  - Connectionless
+    - Each segment treated individually
+  - No congestion control
+    - Sender can send as fast as they want, possibly overloading receiver or infrastructure
+  - Used when fast and low latency is needed
+    - UDP header is smaller
+    - Can send data as fast as wanted
+      - Video games, internet streaming
+  - It is the programmers responsibility to make UDP reliable
+- TCP is connection-oriented and more reliable
+  - Provides flow and congestion control
+  - Manages packets out of order to make packets appear in order
+  - Enhances unreliable network layer services
+    - Bits often flipped due to noise and packets re-ordered
+  - Checksums in headers detect bit errors
+  - Acknowledgments (ACKs) indicated packets are correctly received
+  - Sender times out if ACK not received within a timeout interval
+  - Automatic Repeat Requests (ARQs) are sent to retransmit lost or corrupt packets
+  - Packets include a sequence number to detect lost or duplicated packets
+- Stop and wait ARQ is a protocol for ARQs
+  - Sender sends a packet and waits until it receives an ACK
+  - If ACK arrives, send the next packet
+  - If ACK times out, retransmit the same packet
+  - Duplicate detection is possible because sequence numbers are used
+    - Sufficient to use 1 bit sequence number since there can be at most one outstanding packet
+      - Known as the alternating bit protocol
+  - Reliable, but slow as sender has to wait for ACK to send next packet
+    - Suppose a 1Gbps ($R=10^9$) link with a packet length of $L=8000$ bits
+    - RTT is 30ms
+    - Utilisation $U$ is the fraction of time the link is spent transmitting
+      - $L/R$ time spent sending, $RTT$ time spent waiting
+      - $U = \frac{L }{R \times RTT +  L } = 0.00027$
+  - The sender should be allowed to send more packets without waiting for an ACK
+    - There is $R \times RTT$ bits of additional data that could be sent during the RTT interval
+    - $R \times RTT$ is the **delay-bandwith product**
+      - Indicates the length of the pipeline
+  - Receiving buffer can also be a bottleneck
+    - Typically has a finite buffer of $B$ bits
+    - May not be reading from buffer all the time
+    - Sender should not send more than $B$ bits at a time to prevent overflow
+    - The maximum number of bits without waiting for an ACK is $\min(B, L + R \times RTT)$
+- Pipelined protocols allow multiple unacknowledged packets in the pipeline
+  - ACKs are sent individually or cumulatively
+  - Range of sequence number must be increased from alternating bits
+  - Go-back-n is a common protocol
+    - Sender maintains a window of $N$ packets that can be sent without waiting for ACK
+      - Depends on delay-bandwith product, receive buffer size, other factors
+    - Receiver maintains expected sequence number variable, keeps track of the next expected packet
+    - If the receiver receives the packet with the expected sequence number, then it sends ACK($n$), which acknowledges all packets up to $n$, making the ACK cumulative
+    - If the sequence number is not the expected one, then the receiver discard the incoming packet and sends ACK($n-1$), acknowledging all up to the last correctly received packet
+      - Waits for packet $n$ to be correctly received before acknowledging any further packets
+    - The sender moves the send window forward for every ACK received
+    - Maintains a timer for the oldest unacknowledged packet, if an ACK times out then the packet is resent
+  - Selective repeat does not discard out of order packets as long as they fall inside a receive window
+    - ACKs are individual and not cumulative
+    - Sender selectively retransmits packets whose ACK did not arrive
+      - Maintains a timer for each unacknowledged packet in the send window
+    - Does not have to retransmit out-of-order packets
+    - Packets arriving out of order are buffered, but receive window not moved forward
+    - Window size should be less than or equal to half the max sequence number
+      - Avoids packets being recognised incorrectly 
+    - Send window moved forward when ACK received
+- TCP uses a combination of GBN and SR protocols
+  - Uses cumulative ACKs
+  - Only retransmits the packet causing timeout
+  - Each byte of data is numbered in TCP
+    - Sequence number of a packet is the byte number of the first byte of the segment
+  - TCP ACK number is the number of the next byte expected from the other side
+    - Cumulative ACKs are used
+  - TCP is duplex, so ACKs are piggybacked onto data segments. A segment can carry data and serve as an ACK
+  - The timout period is often relatively long, so on 3 duplicate ACKs, the sender re-transmits that segment without waiting for timeout
+    - Duplicate ACKs are good indicators of high packet loss
+  - TCP headers contain a few fields
+    - Sequence number is the 32 bit number of the segment indicating the number of the first byte in the packet
+    - Acknowledgement number is the number of the next byte expected to be transmitted
+    - Receive window is used for flow control
+- TCP uses flow control to ensure that the data in the pipeline does not exceed the receive buffer size
+  - Receiver advertises free buffer spaces in the receive windows field - `rwnd`
+  - Sender limits amount of unacknowledged data to the receiver's `rwnd` value
+  - (last byte send - last byte ACK'd) $\leq$ `rwnd`
+- TCP provides congestion control to control the rate of transmission according to the level of perceived congestion in the network
+  - Congestion occurs when input rate > output rate
+  - Results in lost packets, buffer overflows, long delays due to queuing at routers
+  - As a transmission link approaches maximum capacity queues build up and delay approaches infinity
+  - There is no benefit in increasing transmission rate beyond network capacity
+  - In a circular network where the transmission rate via link $i$ is $\lambda '$ and the capacity of the link is $C$
+    - If $\lambda \leq C/2$, then $\lambda'' = \lambda' = \lambda$: the links can all transmit at the same rate and there is no congestion
+    - If $\lambda > C/2$, then only a portion of the traffic can be carried by each link
+      - $\lambda' = (C\lambda) / (\lambda + \lambda')$
+      - $\lambda'' = (C\lambda') / (\lambda' + \lambda)$
+      - $\lambda'' = C - \frac{\lambda}{2}\left( \sqrt{1 + 4C/\lambda} -1 \right)$
+    - The throughput increases linearly up to a max of $\lambda = C/2$, then decreases exponentially towards 0 from there causing congestion collapse
+  - Throughput control aims to limit send rates such that congestion collapse does not occur, and flows get a fair share of network resources
+  - TCP detects network congestion through delays and losses
+    - Congestion is assumed when timeout occurs or 3 duplicate ACKs are received
+  - TCP is a window-based pipelined protocol, where the rate of transmission is window size $W/RTT$
+    - Controlling $W$ controls the transmission rate
+  - Maximum size of a TCP segment is the MSS, Maximum Segment Size, which is determined by the maximum frame size specified by the link layer
+  - Number of segments to transmit all data is $W/MSS$
+  - The sender maintains a congestion window size, denoted `cwnd`
+    - `W = LastByteSent - LastByteAcked <= min(cwnd, rwnd)`
+    - When `rwnd` is large, sender `cwnd` determines the transmission rate, which $\approx \frac{cwnd}{RTT}$ bps
+  - `cwnd` is a function of perceived network congestion
+    - Varied using additive increases and multiplicative decreases (AIMD)
+      - Increase `cwnd` by 1MSS every RTT until loss detected
+      - Cut `cwnd` in half after loss
+      - Achieves a fair allocation rate among competing flows
+        - Additive increase gives a slope of 1 as throughput increases
+        - Multiplicative decrease decreases throughput proportionally
+        - $w(t+1) = w(t) + 1$ if no loss, $0.5w(t)$ if loss
+        - Ideal operating point for two connections sharing $R$ bandwith is that both are sending at $R/2$ bps
+  - TCP starts slowly as AIMD convergence rate is slow
+    - Window size increased exponentially until predefined threshold hit (`ssthresh`)
+      - "slow start" phase, `cwnd` doubled each RTT
+      - `ssthresh` remembers previous window size for which a loss occurred
+    - Initial aggressive behaviour ensure sender reaches correct speed quickly
+  - Losses are detected through timeouts and 3 duplicate ACKs
+    - Harsher on losses than duplicate ACKs
+    - Timeout indicates a packet loss, so drastic action is taken
+      - `ssthresh= 0.5 * cwnd`, `cwnd = 1 MSS`
+      - Sender enters slow start phase again
+    - Losses indicated by duplicate ACKs take less drastic action -
+      - `ssthresh= 0.5 * cwnd`, `cwnd = 0.5 * cwnd`
+      - Window grows again linearly (additively)
+
+## Network Layer
+
+- The main function of the network layer is to move packets from the source to destination node through intermediate nodes (routers)
+- Main protocol on this layer is IP
+  - At the source, the IP header is added with source and destination IP addresses
+  - Routers check destination IP addresses to decide the next hop
+  - At the destination, the IP header is stripped and the packet is delivered to the transport layer
+- Routers have two key functions
+  - Forwarding, moving packets from the input to the appropriate output
+  - Routing, constructing routing tables and running routing protocols
+- Routing tables map destination IP ranges to their output links
+  - Mapping all 4 billion IP addresses would be impractical
+  - If the IP ranges don't divide up so nicely, longest prefix matching is used
+    - When looking for a table entry for a given destinaion address, use the longest address prefix that matches the destination address
+- IPv4 addresses are 32bits to uniquely identify network interfaces
+  - IP addresses belonging to the same subnet have the same prefix, the subnet mask
+  - Interfaces on the same subnet are connected by a link layer switch and communicate directly
+  - IP addresses have their subnet mask specified as the number of bits as a prefix
+    - CIDR notation is xxx.xxx.xxx.xxx/xx
+  - A sender checks if the destination IP has the same subnet mask
+    - If it does then obtain the MAC address of the destination and forward the packet to the link layer switch
+  - If source and destination belong to different subnets, then the source forwards the packet to it's default gateway
+    - Gateway routers connect subnets
+    - If `A` want so communicate with `B` on a different subnet, it forwards the packets to `R`, the default gateway
+    - `R` will look up in it's routing table to forward `A`'s packets to the correct outgoing interface
+    - When the packet reaches the interface, it will be forwarded to `B` through the switch in `B`'s subnet
+- Nodes have two options for acquiring IP addresses
+  - Network admins can manually configure the IP of each host on the network
+  - DHCP is an application layer protocol that dynamically assigns IP addresses from the server to clients
+  - Both subnet mask and default gateway must be provided for both
+- Networks are allocated subnets from the ISP's address space
+  - Global authority ICANN is responsible for allocating IP addresses to ISPs
+- Network Address Translation (NAT) is used so that each IP address on a subnet does not need a globally unique IP, as ICANN have run out of them (4 billion is not enough)
+  - Unique IP addresses are provided to public gateway routers
+  - Private IP addresses that are unique only on the subnet are allocated by the gateway router
+  - Devices in home or private networks need not be visible to the public internet, they can use private IP addresses to communicate with each other and communication with the internet is done via the gateway router
+  - Packets with private IP addresses cannot be carried by the public internet
+  - Private source IP addresses are converted to the public IP address of the router facing the internet
+  - Incoming packets for different hosts are distinguished by different ports on the router
+  - Address shortage is solved by IPv6 with 128-bit addresses, but it is not in wide use yet
+- At each router, a routing protocol such as RIP or OSPF constructs the routing table
+  - Each routing protocol implements a routing algorithm
+  - Networks are abstracted as graphs $G = (N, E)$
+    - $N = {u, v, w, x, y, z}$ is the set of routers
+    - $E = {(u, v), (u, x), (v ,x), (v, w), (x, w), (x, y), (w, y), (w, z), (y, z) }$ is the set of links
+    - Each edge $(x, y)$ has a cost associated with if $c(x, y)$
+      - $c(x, y) = \infty$ if $x$ and $y$ are not direct neighbours
+    - The cost of a path $(x_1 , x_2 , x_3 ,..., x_p ) = c(x_1, x_2) + c(x_2, x_3) + ... + c(x_{p-1}, x_p)$
+    - The idea is that given a source $x$ and destination $y$, what is the least cost path from $x$ to $y$
+      - Need the shortest past from each node to every other node to populate the routing table
+  - Two type of routing algorithm are used
+    - Global requires the knowledge of the complete topology at each router including costs
+      - Link state algorithms
+    - Local requires only knowledge of the network surrounding the router
+- Dijkstra’s algorithm is a link-state routing algorithm that computes leas cost path from one node (the source) to all other nodes
+  - Implemented in Open Shortest Path First (OSPF) protocol
+  - Each node requires the entire topology, which is obtained through broadcasting link states
+  - Maintains a set of visited nodes $N'$, initially only the source
+  - For all nodes $v$
+    - If $v$ adjacent to $u$
+      - D(v) = c(u, v) , store current estimates of shortest distance
+      - p(v) = u, store predecessor node of $v$ along with current shortest path from $u$ to $v$
+    - else, $D(v) = \infty$, $p(v) = \text{null}$, initialise all other nodes to be infinite distance away with no known predecessor yet
+  - While all nodes $w$ not in $N'$, not yet visited
+    - Add node $w$ to $N'$
+    - For all $v$ adjacent to $w$ and not in $N'$
+      - If $D(v) > D(w) + c(w, v)$
+        - $D(v) = D(w) + c(w, v)$, update distance to the unvisited neighbour $v$ of $w$ if it is smaller
+        - $p(v) = w$
+- The Distance Vector (DV) algorithm is used in the Routing Information Protocol (RIP)
+  - Uses local information from neighbouring nodes to compute shortest paths
+  - Based on the Bellman-Ford equation
+    - $d_x(y)$ is the length of the shortest path from $x$ to $y$
+    - BF equation relates $d_x(y)$ to $d_v(y)$, where $v \in N(x)$ (the set of neighbouts of x)
+    - $d_x(y) = \min {c(x, v) + d_v(y)}$
+      - If $v^*$ minimises the above sum, then it is the next-hop node in the shortest path
+  - $D_x(y)$ is the current estimate of the minimum distance from $x$ to $y$ (different to actual minimum distance $d_x(y)$)
+    - DV algorithm tries to converge estimates to their actual values
+    - Each node maintains a distance vector $\mathbf D_x = [D_x (y) : y \in N]$
+    - Node $x$ performs the update $D_x(y) = min_v {c(x, v) + D_v(y)}$
+      - Node $x$ needs toe cost of each neighbour, and the distance vector of each neighbour (obtained via message passind)
+      - Whenever any of these is updated, the node recomputes it's distance vector and update all it's neighbours
+    - Each node:
+      - Wait for a change in local link cost or a message from neighbour
+      - Recompute estimates using BF equation
+      - If DV to any destination has changed, notify neighbours
+
+## Selected Topics
+
+- A network interfaces is how the computer connects to a network
+  - Node can have multiple interfaces
+  - Loopback address (localhost) is simulated interface
+  - Each interface has an IP address
+  - Each NIC has a MAC address
+- Internet protocols specify the structure of internet packets
+  - Packet headers are added at each layer of the network stack
+  - Ethernet header from link layer describes source and destination MAC addresses
+    - Fixed length header
+  - IP header from network layer describes source and destination IP
+    - Variable length header, length stored in `IHL` field
+    - Stores protocol of transport layer too
+  - TCP/UDP header from transport layer has port numbers, control bits
+    - Also has data offset has the header length is variable
+    - Has sequence number, ACK number and checksum
+  - Application message is after the three headers
+- SYN attacks are when a malicious attacker sends a flood of TCP packets with the SYN bit set
+  - This causes the server to reply with SYN ACK for each packet received, creating a bunch of half open connections waiting for an ACK that never arrives
+  - The server is then too busy to respond to any other users
+  - Denial of service attack
+- MAC addresses are the addresses of the physical network interface hardware
+  - Address Resolution Protocol (ARP) determines the MAC addresses of hardware from the IP addresses
+  - The router broadcasts an ARP request packet to all interfaces on the link
+  - The ARP reply is sent by the node with the requested address
+  - MAC address is saved in ARP cache for future use
+- ARP allows unsolicited replies from anyone, so an attacker can send an unsolicited ARP reply pretending to be another address.
+  - This poisons the ARP cache with an incorrect entry, and the device will the send all messages intended for the spoofed address to the attacker

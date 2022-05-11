@@ -164,7 +164,7 @@ wire signed [3:0] x;
 wire signed [15:0] y;
 ```
 
-Signals like this are considered signed, and the design tools take care of generating signed circuits. For signed operations, all operands must be declared singed or verilog will default back to unsigned arithmetic. Signals can be cast using `$signed()` and `$unsigned()` functions
+Signals like this are considered signed, and the design tools take care of generating signed circuits. For signed operations, all operands must be declared singed or verilog will default back to unsigned arithmetic. Signals can be cast using `signed()` and `unsigned()` functions
 
 A basic 4-bit signed adder:
 
@@ -194,7 +194,7 @@ To mix signed and unsigned numbers, it is important to manually cast unsigned to
 
 ```verilog
 module add_signed(input signed [2:0] a,b, input carry_in, output signed [3:0] sum);
-assign sum = a + b + $signed({1'b0, carry_in});
+assign sum = a + b + \$signed({1'b0, carry_in});
 endmodule
 ```
 
@@ -221,7 +221,7 @@ Verilog will always truncate MSBs as needed if not careful, so care must always 
 | ----- | -------- | -------- |
 | 1 bit | 8 bits   | 23 bits  |
 
-$$(-1)^{\text{sign}} \times \text{mantissa} \times 2^{\text{exponent}-127} $$
+$$(-1)^{\text{sign}} \times \text{mantissa} \times 2^{\text{exponent}-127}$$
 
 - Can represent numbers as small as $\pm 2^{-126}$ and as large as $\pm (2-2^{-23}) \times 2^{127}$
 - Not all numbers can be accurately represented
