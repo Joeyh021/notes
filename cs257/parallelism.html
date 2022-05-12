@@ -825,6 +825,79 @@
 </li>
 </ul>
 <h2 id="high-performance-systems"><a class="header" href="#high-performance-systems">High Performance Systems</a></h2>
+<ul>
+<li>Symmetric Multiprocessors (SMP) is an organisation of two or more processors sharing memory
+<ul>
+<li>Processors connected by bus</li>
+<li>Uniform memory access</li>
+<li>All processors are the same and share I/O</li>
+<li>System controlled by integrated OS</li>
+<li>Performant for parallel problems</li>
+<li>All processors are the same so if one processor goes down another is still available</li>
+<li>Can scale incrementally</li>
+<li>Most PCs use a time-shared bus but can also use multi-port memory in more complex organisations</li>
+</ul>
+</li>
+<li>Clusters are an alternative to SMP
+<ul>
+<li>A cluster computer is defined as a group of interconnected computers (nodes) working together as a unified resources</li>
+<li>High performance and availability</li>
+<li>Attractive for server applications</li>
+<li>Absolute and incremental scalability</li>
+<li>Superior price/performance</li>
+<li>High speed message links required to coordinate activity</li>
+<li>Machines in a cluster may or may not share disks</li>
+<li>Cluster middleware provides a unified system image to the user
+<ul>
+<li>Responsible for load balancing, fault tolerance, etc</li>
+<li>Desireable to have:</li>
+<li>A single entry and control point/workstation</li>
+<li>Single file hierarchy</li>
+<li>Single virtual networking</li>
+<li>Single memory space</li>
+<li>Single job-management system</li>
+<li>Single U/I</li>
+<li>Single I/O space</li>
+<li>Single Process space</li>
+<li>Check pointing, to save the process state and intermediate results</li>
+<li>Process migration, to enable load balancing</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Both clusters and SMP provide multiple processors for high-demand applications
+<ul>
+<li>SMP easier to manage and configure, take up less space and power
+<ul>
+<li>Bus architecture limits processors to around 16~64</li>
+</ul>
+</li>
+<li>Clusters dominate high-performance server market
+<ul>
+<li>Scalable to 1000s of nodes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Uniform memory access used in SMP organisations</li>
+<li>Memory access time varies in NUMA systems
+<ul>
+<li>NUMA with no cache coherence is more or less a cluster system</li>
+</ul>
+</li>
+<li>CC-NUMA is NUMA with cache coherence
+<ul>
+<li>Objective is to maintain a transparent system memory while permitting multiple nodes</li>
+<li>Nodes each have own SMP organisations and internal busses/interconnects</li>
+<li>Each processor sees a single addressable memory</li>
+<li>Cache coherence usually done via a directory method</li>
+<li>Can deliver effective performance at higher levels of parallelism than SMP</li>
+<li>Bus traffic on any individual node is limited by bus capacity</li>
+<li>If many memory accesses are to remote performance degrades</li>
+<li>Software changes required to go form SMP to CC-NUMA systems</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
