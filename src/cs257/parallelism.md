@@ -338,3 +338,51 @@
     - Relaxing R -> R and R -> W happens in a variety of models, including weak ordering and release consistency
 
 ## High Performance Systems
+
+- Symmetric Multiprocessors (SMP) is an organisation of two or more processors sharing memory
+  - Processors connected by bus
+  - Uniform memory access
+  - All processors are the same and share I/O
+  - System controlled by integrated OS
+  - Performant for parallel problems
+  - All processors are the same so if one processor goes down another is still available
+  - Can scale incrementally
+  - Most PCs use a time-shared bus but can also use multi-port memory in more complex organisations
+- Clusters are an alternative to SMP
+  - A cluster computer is defined as a group of interconnected computers (nodes) working together as a unified resources
+  - High performance and availability
+  - Attractive for server applications
+  - Absolute and incremental scalability
+  - Superior price/performance
+  - High speed message links required to coordinate activity
+  - Machines in a cluster may or may not share disks
+  - Cluster middleware provides a unified system image to the user
+    - Responsible for load balancing, fault tolerance, etc
+    - Desireable to have:
+    - A single entry and control point/workstation
+    - Single file hierarchy
+    - Single virtual networking
+    - Single memory space
+    - Single job-management system
+    - Single U/I
+    - Single I/O space
+    - Single Process space
+    - Check pointing, to save the process state and intermediate results
+    - Process migration, to enable load balancing
+- Both clusters and SMP provide multiple processors for high-demand applications
+  - SMP easier to manage and configure, take up less space and power
+    - Bus architecture limits processors to around 16~64
+  - Clusters dominate high-performance server market
+    - Scalable to 1000s of nodes
+- Uniform memory access used in SMP organisations
+- Memory access time varies in NUMA systems
+  - NUMA with no cache coherence is more or less a cluster system
+- CC-NUMA is NUMA with cache coherence
+  - Objective is to maintain a transparent system memory while permitting multiple nodes
+  - Nodes each have own SMP organisations and internal busses/interconnects
+  - Each processor sees a single addressable memory
+  - Cache coherence usually done via a directory method
+  - Can deliver effective performance at higher levels of parallelism than SMP
+  - Bus traffic on any individual node is limited by bus capacity
+  - If many memory accesses are to remote performance degrades
+  - Software changes required to go form SMP to CC-NUMA systems
