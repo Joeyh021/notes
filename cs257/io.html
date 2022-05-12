@@ -140,6 +140,91 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="io"><a class="header" href="#io">I/O</a></h1>
 <h2 id="io-mechanisms"><a class="header" href="#io-mechanisms">I/O Mechanisms</a></h2>
+<ul>
+<li>Programmed I/O is a mapping between I/O-related instructions that the processor fetches from memory and commands that the processor issues to I/O modules
+<ul>
+<li>Instruction forms depend on addressing policies for external devices
+<ul>
+<li>Devices given a unique address</li>
+</ul>
+</li>
+<li>When a processor, main memory and I/O share a bus, two addressing modes are possible
+<ul>
+<li>Memory-mapped
+<ul>
+<li>Same addres bus used for both memory and I/O</li>
+<li>Memory on I/O device mapped into the single address space</li>
+<li>Simple, and can use general-purpose memory instructions</li>
+<li>Portions of address space must be reserved</li>
+</ul>
+</li>
+<li>Isolated
+<ul>
+<li>Bus may have input and output command lines, as well as usual read/write</li>
+<li>Command lines specify if address is a memory location or I/O device</li>
+<li>Leaves full range of memory address space for processor</li>
+<li>Requires extra hardware</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Most I/O devices are much slower than CPU, so need some way to synchronise</li>
+<li>Busy-wait polling is when CPU constantly polls I/O device for status
+<ul>
+<li>Can interleave polling with other tasks</li>
+<li>Polling is simple but wastes CPU time and power
+<ul>
+<li>When interleaved can lead to delayed response</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Interrupt-driven I/O is when devices send interrupts to CPU
+<ul>
+<li>IRQs (interrupt requests) and NMIs (non-maskable interrupts)</li>
+<li>Interrupt forces CPU to jump to interrupt service routine</li>
+<li>Fast response, and does not waste CPU time/power</li>
+<li>Complex, and data transfer still controlled by CPU</li>
+</ul>
+</li>
+<li>DMA avoids CPU bottleneck by speeding up transfer of data to memory
+<ul>
+<li>Used where large amounts of data needed at high speed</li>
+<li>Control of system busses surrendered to DMA controller
+<ul>
+<li>DMAC can use cycle stealing or force processor to suspend operation in burst mode</li>
+</ul>
+</li>
+<li>DMA can be more than 10x faster than CPU-driven I/O</li>
+<li>Involves addition of dedicated hardware on the system bus</li>
+<li>Can have single Bus with a detached DMA, where all modules share the bus</li>
+<li>Can connect I/O devices directly to DMA, which reduces bus cycles by integrating I/O and DMA functions</li>
+<li>Can have separate I/O bus, DMA connected to system and I/O bus, devices connected to I/O bus</li>
+</ul>
+</li>
+<li>Thunderbolt is a general purpose I/O channel developed by Apple and Intel
+<ul>
+<li>Combines data, audio, video, power into single high speed connection (up to 10Gbps)</li>
+<li>Based on thunderbolt controller, high speed crossbar switch]</li>
+</ul>
+</li>
+<li>Infiniband is an I/O spec aimed at high-end servers
+<ul>
+<li>Intended to replace PCI in servers</li>
+<li>Provides remote storage, networking, connection</li>
+<li>Scalable and can add nodes as required</li>
+</ul>
+</li>
+<li>PCIe is a serial interconnect between two devices
+<ul>
+<li>Expansion bus standard</li>
+<li>Based on a number of signal lanes</li>
+<li>Packet based with a high bandwith</li>
+</ul>
+</li>
+</ul>
 <h2 id="raid"><a class="header" href="#raid">RAID</a></h2>
 <h2 id="request-level-parallelism"><a class="header" href="#request-level-parallelism">Request Level Parallelism</a></h2>
 
