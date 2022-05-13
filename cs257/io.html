@@ -226,6 +226,145 @@
 </li>
 </ul>
 <h2 id="raid"><a class="header" href="#raid">RAID</a></h2>
+<ul>
+<li>RAID: Redundant Array of Independent Disks</li>
+<li>As performance increased there was a need for larger and faster secondary storage, and one solution is to use disk arrays</li>
+<li>Two general ways to utilise a disk array
+<ul>
+<li><strong>Data striping</strong> transparently distributes data over multiple disks to make the appear as a single large disks
+<ul>
+<li>Improves I/O performance by allowing multiple requests to be serviced in parallel
+<ul>
+<li>Multiple independent requests can be serviced in parallel by separate disks</li>
+<li>Single, multi-block requests can be serviced by disks acting in coordination</li>
+</ul>
+</li>
+<li>More disks = more performance</li>
+</ul>
+</li>
+<li><strong>Redundancy</strong> duplicates data accross disks
+<ul>
+<li>Allows continuous operation without data loss in case of a disk failure in an array</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>RAID 0 - non-redundant striping
+<ul>
+<li>Lowest cost as there is no redundancy</li>
+<li>Data is striped accross all disks</li>
+<li>Best write performance as no need to duplicate data</li>
+<li>Any 1 disk failure will result in data loss</li>
+<li>Used where performance is more important than reliability</li>
+</ul>
+</li>
+<li>RAID 1 - mirrored
+<ul>
+<li>2 copies of all info is kept, on separate disks</li>
+<li>Uses twice as many disks as a non-redundant array, hence is expensive</li>
+<li>On read, data can be retrieved from either disk, hence gives good read performance</li>
+<li>If a disk fails, another copy is used</li>
+<li>Data can also be striped as well as mirrored, which is RAID 10</li>
+</ul>
+</li>
+<li>RAID 2 - redundancy through Hamming codes
+<ul>
+<li>Very small stripes are used, often single byte or word</li>
+<li>Employs fewer disks than mirroring by using Hamming codes, error correction codes that can correct single-but errors and detect double-bit errors</li>
+<li>Number of redundant disks is proportional to the log of the total number of data disks in the system</li>
+<li>On a single write, all data and parity disks must be accessed</li>
+<li>Read access not slowed as controller can detect and correct single-bit errors</li>
+<li>Overkill and not really used, only effective when lots of disk errors</li>
+</ul>
+</li>
+<li>RAID 3 - bit-interleaved parity
+<ul>
+<li>Parallel access, with data in small strips</li>
+<li>Bit parity is computer for the set of bits in the same position on all data disks</li>
+<li>If drive fails, parity accessed and data reconstructed from remaining devices</li>
+<li>Only one redundant disk required</li>
+<li>Can acheive high data rates</li>
+<li>Simple to implement, but only one I/O request can be executed at a time</li>
+</ul>
+</li>
+<li>RAID 4 - block-interleaved parity
+<ul>
+<li>Data striping used, with relatively large strips</li>
+<li>Bit-by-but parity calculated accross corresponding strips on each data disk, parity bits stored in the corresponding strip on parity disk</li>
+<li>Involves a write penalty for small I/O requests
+<ul>
+<li>Parity computed by noting differences between old and new data</li>
+<li>Management software mut read old data and parity, then update new data and parity</li>
+</ul>
+</li>
+<li>For large writes that touch all blocks on all disks, parity computed by XORing the data for each new disk</li>
+<li>Parity disk can become bottleneck</li>
+</ul>
+</li>
+<li>RAID 5 - block-interleaved distributed parity
+<ul>
+<li>Eliminates parity disk bottleneck by distributing parity accross all disks</li>
+<li>One of the best small read, large read, and large write performances</li>
+<li>Small read requests are still inefficient compared to mirroring due to need to perform read-modify-write operations to update parity</li>
+<li>Best parity distribution is left-symmetric
+<ul>
+<li>When traversing striping units sequentially, you access each disk once before accessing any disk twice, which reduces disk conflicts when servicing a large request</li>
+</ul>
+</li>
+<li>Commonly used in file servers, most versatile RAID level</li>
+</ul>
+</li>
+<li>RAID 6 - dual redundancy
+<ul>
+<li>Multiple disk failures require a stronger code than parity</li>
+<li>When disk fails, requires</li>
+<li>One scheme, called P + Q redundancy, uses Reed-Soloman codes to protect against up to two disk failures using a bare minimum of two redundant disks</li>
+<li>Three disks need to fail for data loss</li>
+<li>Significant write penalty, but good for mission-critical applications</li>
+</ul>
+</li>
+<li>SSDs use NAND flash.
+<ul>
+<li>Becoming more popular as cost drops and performance increases</li>
+<li>High performance I/O</li>
+<li>More durable than HDDs</li>
+<li>Longer lifespan, lower power consumption, quieter, cooler</li>
+<li>Lower access times and latency</li>
+<li>Still have some issues
+<ul>
+<li>Performance tends to slow over the device's lifetime</li>
+<li>Flash becomes unusable after a certain number of writes</li>
+<li>Techniques exist for prolonging life, such as front-ending drive with cache and being used in RAID arrays</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Storage area networks are for sharing copies of data between many users on a network so anyone can access
+<ul>
+<li>Must protect against:
+<ul>
+<li>Drive failures - use RAID</li>
+<li>Power failures - have redundant power supplies (UPS)</li>
+<li>Storage controller failures - have dual active controllers</li>
+<li>System unit failures - controllers connect to multiple hosts</li>
+<li>Interface failures - have redundant links</li>
+<li>Site failures - keep backups offsite</li>
+</ul>
+</li>
+<li>Flash copies produce an instantaneous copy while an application is running, eg for online backups
+<ul>
+<li>Use a copy-on-write algorithm</li>
+</ul>
+</li>
+<li>Remote copies are maintained at secondary sites for disaster recovery
+<ul>
+<li>Can use synchronous copy, where data is copied before each command executed on host, keeping secondary copy always in sync</li>
+<li>Asynchronous copy is done after host executes command, which means data lags but is much more scalable and does not impact host performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="request-level-parallelism"><a class="header" href="#request-level-parallelism">Request Level Parallelism</a></h2>
 
                     </main>
