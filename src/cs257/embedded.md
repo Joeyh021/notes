@@ -1,1 +1,68 @@
 # Embedded Systems & Security
+
+## Embedded Systems
+
+- Embedded software is software integrated with physical processes. The technical problem is managing time and concurrency in computational systems.
+- Embedded processing is in everything, and will be in more things as computing becomes more ubiquitous
+- Application areas include:
+  - Automotive
+    - ABS brakes
+    - ESP - electronic stability control
+    - Airbags
+    - Automatic gearboxes
+    - Smart keys
+  - Avionics
+    - Flight control
+    - Anti-collision systems
+    - Flap control
+    - Entertainment systems
+  - Consumer electronics
+    - TVs
+    - Smart Home
+- Dependability is key
+  - Reliability $R(t)$ is the probability of a system working correctly, provided it was working at $t=0$
+  - Maintainability $M(d)$ is the probability of a system working correctly $d$ time units after an error occured
+  - Availability $A(t)$ is the probability of a system working at time $t$
+  - Safety - no harm must be caused
+  - Security - data and communication must be confidential and authenticated
+- Embedded systems bust be efficient:
+  - Code-size efficient (especially for SoCs)
+  - Runtime efficient
+  - Weight and size efficient (small)
+  - Cost and energy efficient
+    - Power is the most important constraint in embedded systems
+- General purpose processors are CPUs like we're used to
+  - Application specific have all the same components but are more optimised with custom hardware
+  - Single-purpose processors have very limited resources and are constrained to run a single program
+- Different types of hardware:
+  - ASICs - Application Specific Integrated Circuits
+    - Custom designed circuits on chips
+    - Necessary if ultimate speed or efficiency is the goal
+    - Can only be produced in volume
+      - Masks to produce are hugely expensive
+    - Suffers from lack of flexibility, long design times and high costs
+    - Power consumption scales with voltage quadratically
+    - Can do dynamic power management
+    - Varying clock speed can save energy
+  - FPGAs - Field Programmable Gate Arrays
+    - hahaha
+  - DSPs - Digital Signal Processors
+  - MPUs - Microprocessor Units
+- Minimising power consumption is important for
+  - Design of power supply
+  - Design of voltage regulators
+  - Dimensioning of interconnect
+  - Cooling - high cost and limited space
+  - Energy availability often restricted (battery powered)
+  - Lower temperatures lead to longer lifetimes
+- Efficiency also a concern in memory
+  - Speed, must have predictable timing
+  - Energy efficiency
+  - Size
+  - Cost
+  - Energy usage and access time increases with size
+- Scratch pad memory is a small separate memory mapped intro address space
+  - Selection done through a simple address decoder
+  - Used as it is far more energy efficient than a cache
+
+## Security
