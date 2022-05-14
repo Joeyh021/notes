@@ -131,3 +131,54 @@
     - Asynchronous copy is done after host executes command, which means data lags but is much more scalable and does not impact host performance
 
 ## Request Level Parallelism
+
+- Request level parallelism is an emphasis on independence of user requests for computational service
+  - Emphasis is on use of commodity hardware to provide parallelism at scale and capacity
+- Applicable when provisioning resources at large scale
+  - Internet services
+  - Corporate infrastructure
+  - The Cloud
+- Exploited in data centres and warehouse-scale computer systems
+- Internet services are sustained by such systems
+  - Cloud computing founded on this premise
+  - Presents system design challenges
+    - Designing for scale and reliability
+    - Implementation and operation at scale
+    - Cost/performance balance
+    - Power consumption
+      - Environmental responsibility
+  - Common measure of data centre efficiency is power utilisation effectiveness
+    - PUE = (total facility power usage) / (IT equipment power usage)
+    - Must be at least 1
+  - Dependability is key - services typically are designed to run indefinitely
+    - Typical to pursue 99.99% uptime, less than 1hour down per year
+    - Can be realised through redundancy in temporal and spatial domains
+    - Usually achieved through replication of affordable hardware
+  - Network I/O is key, servers and warehouse systems must provide consistent network interface
+  - Must be able to support interactive and varying/unpredictable work loads
+  - Support must be provided for batch processing (likely highly data-parallel)
+  - Magnitude of parallelism must be considered to ensure that parallelism provided by hardware is justified
+    - Can support both data and request level parallelism
+  - Operational cost must be considered
+    - High performance servers often designed with best performance in mind
+    - Warehouses must be designed with longevity and efficiency in mind
+  - Exploiting economies of scale allows cloud providers to provide software and infrastructure as services
+- Infrastructure as a service is the most basic cloud service model
+  - Cloud provider rents out machine and other resources
+- Platform as a service makes a computing platform available to users
+  - Used by clients whose focus is software
+  - Underlying resources adapt to demand
+- Software as a service provides access to application software in the cloud
+  - Uses "dumb" clients will all the power in the cloud
+  - Load balancing done in software
+  - Office 365 is prominent example
+- Network as a service refers to cloud providers allowing infrastructure to be used as a network/transport layer
+- Batch provessing workloads for warehouse-scale systems typically involve things like video transcode or search engine indexing
+  - MapReduce is a prominent example of how warehouse systems can necessitate alternative programming models
+    - Maps a function over each item of the input
+    - Exploits data-level parallelism
+    - Then collects outputs (reduces) using another function as an aggregation
+    - Generalisation of SIMD followed by a reduction
+- Servers often fitted with local storage, and rely on ethernet-based exchange of data
+  - Alternative is network attached storage
+    - Can employ high-speed interconnect
