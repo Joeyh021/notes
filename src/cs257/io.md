@@ -180,5 +180,6 @@
     - Then collects outputs (reduces) using another function as an aggregation
     - Generalisation of SIMD followed by a reduction
 - Servers often fitted with local storage, and rely on ethernet-based exchange of data
+  - Potential latency penalties when crossing the local rack switch
   - Alternative is network attached storage
     - Can employ high-speed interconnect
