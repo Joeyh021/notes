@@ -139,6 +139,117 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="embedded-systems--security"><a class="header" href="#embedded-systems--security">Embedded Systems &amp; Security</a></h1>
+<h2 id="embedded-systems"><a class="header" href="#embedded-systems">Embedded Systems</a></h2>
+<ul>
+<li>Embedded software is software integrated with physical processes. The technical problem is managing time and concurrency in computational systems.</li>
+<li>Embedded processing is in everything, and will be in more things as computing becomes more ubiquitous</li>
+<li>Application areas include:
+<ul>
+<li>Automotive
+<ul>
+<li>ABS brakes</li>
+<li>ESP - electronic stability control</li>
+<li>Airbags</li>
+<li>Automatic gearboxes</li>
+<li>Smart keys</li>
+</ul>
+</li>
+<li>Avionics
+<ul>
+<li>Flight control</li>
+<li>Anti-collision systems</li>
+<li>Flap control</li>
+<li>Entertainment systems</li>
+</ul>
+</li>
+<li>Consumer electronics
+<ul>
+<li>TVs</li>
+<li>Smart Home</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Dependability is key
+<ul>
+<li>Reliability <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span> is the probability of a system working correctly, provided it was working at <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></li>
+<li>Maintainability <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mclose">)</span></span></span></span> is the probability of a system working correctly <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">d</span></span></span></span> time units after an error occured</li>
+<li>Availability <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span> is the probability of a system working at time <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span></li>
+<li>Safety - no harm must be caused</li>
+<li>Security - data and communication must be confidential and authenticated</li>
+</ul>
+</li>
+<li>Embedded systems bust be efficient:
+<ul>
+<li>Code-size efficient (especially for SoCs)</li>
+<li>Runtime efficient</li>
+<li>Weight and size efficient (small)</li>
+<li>Cost and energy efficient
+<ul>
+<li>Power is the most important constraint in embedded systems</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>General purpose processors are CPUs like we're used to
+<ul>
+<li>Application specific have all the same components but are more optimised with custom hardware</li>
+<li>Single-purpose processors have very limited resources and are constrained to run a single program</li>
+</ul>
+</li>
+<li>Different types of hardware:
+<ul>
+<li>ASICs - Application Specific Integrated Circuits
+<ul>
+<li>Custom designed circuits on chips</li>
+<li>Necessary if ultimate speed or efficiency is the goal</li>
+<li>Can only be produced in volume
+<ul>
+<li>Masks to produce are hugely expensive</li>
+</ul>
+</li>
+<li>Suffers from lack of flexibility, long design times and high costs</li>
+<li>Power consumption scales with voltage quadratically</li>
+<li>Can do dynamic power management</li>
+<li>Varying clock speed can save energy</li>
+</ul>
+</li>
+<li>FPGAs - Field Programmable Gate Arrays
+<ul>
+<li>hahaha</li>
+</ul>
+</li>
+<li>DSPs - Digital Signal Processors</li>
+<li>MPUs - Microprocessor Units</li>
+</ul>
+</li>
+<li>Minimising power consumption is important for
+<ul>
+<li>Design of power supply</li>
+<li>Design of voltage regulators</li>
+<li>Dimensioning of interconnect</li>
+<li>Cooling - high cost and limited space</li>
+<li>Energy availability often restricted (battery powered)</li>
+<li>Lower temperatures lead to longer lifetimes</li>
+</ul>
+</li>
+<li>Efficiency also a concern in memory
+<ul>
+<li>Speed, must have predictable timing</li>
+<li>Energy efficiency</li>
+<li>Size</li>
+<li>Cost</li>
+<li>Energy usage and access time increases with size</li>
+</ul>
+</li>
+<li>Scratch pad memory is a small separate memory mapped intro address space
+<ul>
+<li>Selection done through a simple address decoder</li>
+<li>Used as it is far more energy efficient than a cache</li>
+</ul>
+</li>
+</ul>
+<h2 id="security"><a class="header" href="#security">Security</a></h2>
 
                     </main>
 
