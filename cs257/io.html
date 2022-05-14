@@ -366,6 +366,106 @@
 </li>
 </ul>
 <h2 id="request-level-parallelism"><a class="header" href="#request-level-parallelism">Request Level Parallelism</a></h2>
+<ul>
+<li>Request level parallelism is an emphasis on independence of user requests for computational service
+<ul>
+<li>Emphasis is on use of commodity hardware to provide parallelism at scale and capacity</li>
+</ul>
+</li>
+<li>Applicable when provisioning resources at large scale
+<ul>
+<li>Internet services</li>
+<li>Corporate infrastructure</li>
+<li>The Cloud</li>
+</ul>
+</li>
+<li>Exploited in data centres and warehouse-scale computer systems</li>
+<li>Internet services are sustained by such systems
+<ul>
+<li>Cloud computing founded on this premise</li>
+<li>Presents system design challenges
+<ul>
+<li>Designing for scale and reliability</li>
+<li>Implementation and operation at scale</li>
+<li>Cost/performance balance</li>
+<li>Power consumption
+<ul>
+<li>Environmental responsibility</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Common measure of data centre efficiency is power utilisation effectiveness
+<ul>
+<li>PUE = (total facility power usage) / (IT equipment power usage)</li>
+<li>Must be at least 1</li>
+</ul>
+</li>
+<li>Dependability is key - services typically are designed to run indefinitely
+<ul>
+<li>Typical to pursue 99.99% uptime, less than 1hour down per year</li>
+<li>Can be realised through redundancy in temporal and spatial domains</li>
+<li>Usually achieved through replication of affordable hardware</li>
+</ul>
+</li>
+<li>Network I/O is key, servers and warehouse systems must provide consistent network interface</li>
+<li>Must be able to support interactive and varying/unpredictable work loads</li>
+<li>Support must be provided for batch processing (likely highly data-parallel)</li>
+<li>Magnitude of parallelism must be considered to ensure that parallelism provided by hardware is justified
+<ul>
+<li>Can support both data and request level parallelism</li>
+</ul>
+</li>
+<li>Operational cost must be considered
+<ul>
+<li>High performance servers often designed with best performance in mind</li>
+<li>Warehouses must be designed with longevity and efficiency in mind</li>
+</ul>
+</li>
+<li>Exploiting economies of scale allows cloud providers to provide software and infrastructure as services</li>
+</ul>
+</li>
+<li>Infrastructure as a service is the most basic cloud service model
+<ul>
+<li>Cloud provider rents out machine and other resources</li>
+</ul>
+</li>
+<li>Platform as a service makes a computing platform available to users
+<ul>
+<li>Used by clients whose focus is software</li>
+<li>Underlying resources adapt to demand</li>
+</ul>
+</li>
+<li>Software as a service provides access to application software in the cloud
+<ul>
+<li>Uses &quot;dumb&quot; clients will all the power in the cloud</li>
+<li>Load balancing done in software</li>
+<li>Office 365 is prominent example</li>
+</ul>
+</li>
+<li>Network as a service refers to cloud providers allowing infrastructure to be used as a network/transport layer</li>
+<li>Batch provessing workloads for warehouse-scale systems typically involve things like video transcode or search engine indexing
+<ul>
+<li>MapReduce is a prominent example of how warehouse systems can necessitate alternative programming models
+<ul>
+<li>Maps a function over each item of the input</li>
+<li>Exploits data-level parallelism</li>
+<li>Then collects outputs (reduces) using another function as an aggregation</li>
+<li>Generalisation of SIMD followed by a reduction</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Servers often fitted with local storage, and rely on ethernet-based exchange of data
+<ul>
+<li>Alternative is network attached storage
+<ul>
+<li>Can employ high-speed interconnect</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
