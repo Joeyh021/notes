@@ -203,7 +203,7 @@
 <ul>
 <li>Custom designed circuits on chips</li>
 <li>Necessary if ultimate speed or efficiency is the goal</li>
-<li>Can only be produced in volume
+<li>Can- only be produced in volume
 <ul>
 <li>Masks to produce are hugely expensive</li>
 </ul>
@@ -250,6 +250,81 @@
 </li>
 </ul>
 <h2 id="security"><a class="header" href="#security">Security</a></h2>
+<ul>
+<li>Hardware typically has ports, which can be a security risk
+<ul>
+<li>USB killer is a thumb drive than charges and then discharges capacitors over the data pins</li>
+</ul>
+</li>
+<li>DMA provides access to memory over the system bus
+<ul>
+<li>High speed expansion puts often connected to DMA</li>
+<li>System may be vulnerable if ports connect directly to physical address space</li>
+<li>Mitigated by signing drivers to verify the operation of a device
+<ul>
+<li>Use IOMMU to implement virtual addressing for I/O devices</li>
+<li>Modify kernel to disable DMA</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Intel has a history of security concerns
+<ul>
+<li>1995 paper warned against a timing channel relating to CPU cache and the TLB</li>
+<li>2012 - Apple XNU kernel adopts Address Space Layout Randomisation (KASLR)
+<ul>
+<li>Linux adopted in 2014</li>
+<li>Primary goal to mitigate address leaks</li>
+</ul>
+</li>
+<li>2016 conference demonstrated &quot;Using Undocumented CPU Behaviour to See into Kernel Mode and Break KASLR&quot;
+<ul>
+<li>Demonstrated techniques for locating kernel modules</li>
+<li>Defeated the point in KASLR</li>
+<li>KASLR was found to have lots of vulnerabilities, but has been updated and replaced with Kernel Page Table Isolation (KPTI)</li>
+</ul>
+</li>
+<li>Work was done looking at side effects of instructions, leaking info form hardware
+<ul>
+<li>Measure memory access timings
+<ul>
+<li>Attacker primes cache</li>
+<li>Victim evicts cache</li>
+<li>Attacker probes data to see if it has been accessed</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Lots of CVEs in 2017 related to speculative execution</li>
+</ul>
+</li>
+<li>Meltdown is a CVE related to rogue data cache load
+<ul>
+<li>Melts security boundaries normally enforced by hardware</li>
+<li>Speculative out-of-order execution may execute code that is never intended to be run</li>
+<li>Separate side-channel attack called flush and reload can highlight what was brought into cache by speculative execution</li>
+<li>3 steps:
+<ul>
+<li>Attacker-chosen memory location is loaded into register</li>
+<li>Transient instruction accesses cache line based on register contents</li>
+<li>Attacker uses flush and reload to determine accessed cache line and hence the secret stored at memory location</li>
+</ul>
+</li>
+<li>Accesses memory-mapped pages
+<ul>
+<li>Mitigation prevents probes from revealing anything useful</li>
+<li>Performance impact can be very high in some workloads</li>
+</ul>
+</li>
+<li>Every intel processor from 1995-2018 vulnerable
+<ul>
+<li>Some ARM and IMB PowerPC too</li>
+</ul>
+</li>
+<li>AMD thought to be immune, by variant discovered in 2021 that exploits branch predictor</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
