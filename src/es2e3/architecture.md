@@ -51,7 +51,7 @@ Understanding FPGA architecture gives us a better understanding of the mapping p
 - As architectures evolve, connectivity keeps improving
   - A mix of wire lengths helps improve performance
 
-## I/O
+## I/O
 
 A key feature of FPGAs is highly flexible I/O.
 
