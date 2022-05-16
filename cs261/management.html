@@ -140,9 +140,290 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="project-management"><a class="header" href="#project-management">Project Management</a></h1>
 <h2 id="software-methodologies"><a class="header" href="#software-methodologies">Software Methodologies</a></h2>
-<p>2,3</p>
+<ul>
+<li>Formal guidelines on how software should be engineered</li>
+<li>Software process model is a sequence of activities that leads to the production of a software product
+<ul>
+<li>Specification - what software should do</li>
+<li>Design and implementation - how should be organised and implemented</li>
+<li>Validation and testing - does it do what it should</li>
+<li>Software evolution - changing software over time</li>
+</ul>
+</li>
+<li>Plan driven
+<ul>
+<li>All activities planned in advance</li>
+<li>Progress measured against plan</li>
+<li>Fixed, detailed spec before development commences</li>
+</ul>
+</li>
+<li>Agile
+<ul>
+<li>Incremental planning</li>
+<li>More adaptable to change</li>
+</ul>
+</li>
+<li>Waterfall model has a strict linear ordering of processes
+<ul>
+<li>Each stage must be completed before moving on</li>
+<li>If anything changes in the plan, go back to the start again</li>
+<li>Stages:
+<ul>
+<li>Requirements analysis
+<ul>
+<li>System's services, constraints, goals are established and defined</li>
+</ul>
+</li>
+<li>System design
+<ul>
+<li>Identification of software components and their relationships</li>
+</ul>
+</li>
+<li>Implementation and unit testing
+<ul>
+<li>Software programmed in unit, each unit tested against specification</li>
+</ul>
+</li>
+<li>Integration and system testing
+<ul>
+<li>Software components integrated and tested together as a complete system</li>
+</ul>
+</li>
+<li>Operation and maintenance
+<ul>
+<li>System installed, any errors that appear are fixed</li>
+<li>System services enhanced as new requirements added</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Works if requirements are fixed an understood</li>
+<li>Fewer team constraints</li>
+<li>Each component can be tested against spec</li>
+<li>Easy to churn team because everything well-documented</li>
+<li>Customers can wait a long time for results</li>
+<li>Difficult to accommodate change</li>
+<li>Difficult to respond to changing requirements</li>
+<li>Can be a problem if project is long running
+<ul>
+<li>Longer time = more likelihood of things changing</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Plan driven too rigid - introduce flexibility with incremental development
+<ul>
+<li>Develop in staged with customer feedback incorporated between iterations</li>
+<li>Specification - development - validation is iterative</li>
+<li>New functionality can be added in each iteration</li>
+<li>Each stage planned in full and validated against plan</li>
+<li>Cost of accommodating change is reduced</li>
+<li>Software available to use quicker so feedback can be gathered easily</li>
+<li>Customers can see development in progress</li>
+<li>Easier to include user acceptance testing</li>
+<li>Difficult to estimate cost of development</li>
+<li>Difficult to maintain consistency</li>
+<li>As progress continues, becomes harder to include new features or make changes</li>
+<li>Not cost effective to document each version</li>
+<li>Increased cost of repeated deployment</li>
+</ul>
+</li>
+<li>Re-writing software from scratch is expensive
+<ul>
+<li>Rely instead on off the shelf components (libraries, frameworks)</li>
+<li>Include component analysis in development flow, identify library/framework</li>
+<li>Requirements may have to accommodate available components</li>
+</ul>
+</li>
+<li>First stage in any process is software specification - requirements engineering
+<ul>
+<li>Requires that we define the services required from the system</li>
+<li>Identify constraints on operation and development</li>
+<li>Produce a requirements document
+<ul>
+<li>End user facing and system developer facing - possibly two documents</li>
+</ul>
+</li>
+<li>Feasibility study determines that task is feasible and cost effective</li>
+<li>Requirements elicitation and analysis derives the system requirements
+<ul>
+<li>Look at existing docs</li>
+<li>Talk to customer</li>
+<li>Discuss features</li>
+<li>Possibly prototype</li>
+</ul>
+</li>
+<li>Requirements specification translates information gathered in elicitation into formal documents</li>
+<li>Requirements validation ensures requirements are achievable and valid</li>
+<li>Need to ensure customer signs off requirements</li>
+</ul>
+</li>
+<li>Agile development is a principle that defines a set of methodologies
+<ul>
+<li>Interleaves specification, design and implementation</li>
+<li>System developed as a series of versions</li>
+<li>Feedback provided at each stage</li>
+<li>Process driven approaches have become too cumbersome as businesses need to be able to evolve more rapidly
+<ul>
+<li>Increased focus on code over design</li>
+</ul>
+</li>
+<li>Principles include
+<ul>
+<li>Customer involvement</li>
+<li>Incremental delivery</li>
+<li>People, not process</li>
+<li>Embrace change</li>
+<li>Maintain simplicity</li>
+</ul>
+</li>
+<li>Focuses on development over documentation - can make it hard to pick up a system later on</li>
+<li>Works well as long as original team continues the evolution - problems can arise if team changes</li>
+</ul>
+</li>
+<li>Possible to use techniques from both plan-based and agile, depending on what is applicable</li>
+<li>Extreme programming is an agile methodology involving incremental delivery with fast iteration
+<ul>
+<li>Build several times a day</li>
+<li>Deliver to customers often</li>
+<li>Automate tests to verify builds</li>
+<li>Strong customer involvement</li>
+<li>Incremental planning with requirements on story cards, stories selected based on priority</li>
+<li>Small releases with initially minimal functionality, then building with more</li>
+<li>Simple design, only enough to meet current requirements</li>
+<li>Write tests before the software - test driven</li>
+<li>Developers expected to continually refactor code</li>
+<li>Pair programming provides support</li>
+<li>Collective code ownership allows for anyone to work on anything</li>
+<li>Continuous Integration integrates components as soon as they are ready</li>
+<li>Working at a sustainable pace is important for developers</li>
+<li>Having customer on-site is useful to incorporate frequent feedback</li>
+</ul>
+</li>
+<li>Scrum is a general agile method that focuses on managing iterative development
+<ul>
+<li>3 primary stages:
+<ul>
+<li>Outline planning phase to establish general goals</li>
+<li>Sprint cycles, each cycle developing an increment of the system</li>
+<li>Project closure, wrap up project, document, deliver</li>
+</ul>
+</li>
+<li>Uses quick development cycles of typically 2-4 weeks
+<ul>
+<li>Daily team meetings to discuss current work</li>
+<li>Each sprint completes item on backlog</li>
+<li>Features selected with customer</li>
+<li>Scrum master interface between team and customer</li>
+<li>End of each sprint, work reviewed and presented</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="requirements-analysis"><a class="header" href="#requirements-analysis">Requirements Analysis</a></h2>
-<p>3</p>
+<ul>
+<li>Requirements are descriptions of what the system should and should not do, the service it provides, and the constraints on its operation</li>
+<li>Enable developers to make software that wil correctly fulfil customers needs</li>
+<li>Provides a basis for tests, validation and verification</li>
+<li>Enable (semi-)cost accurate specification</li>
+<li>Important to distinguish what is built from how it is built</li>
+<li>Requirements act as a bridge between customers and developers
+<ul>
+<li>Notion of C- and D-requirements for customer and development facing
+<ul>
+<li>Technical requirements vs idiot speak</li>
+<li>C-requirements describe operation and constraints from users's point of view</li>
+<li>D-facing give detailed description of system functions, acting as basis for contract with developer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Good requirements are
+<ul>
+<li>Prioritised: features have an implementation priority</li>
+<li>Consistent: requirements do not conflict with each other</li>
+<li>Modifiable: able to revise set of requirements when necessary and maintain history of changes</li>
+<li>Traceable: able to link each requirement to source, which could be higher-level requirement, use case, or customer statement</li>
+<li>Correct: accurately describes functionality to be delivered</li>
+<li>Feasible: must be possible to implement each requirement within the known capabilities and limitations of environment</li>
+<li>Necessary: should document something that customers actually need, or is required for conformance to external standard or interface</li>
+<li>Unambiguous: someone reading requirement should interpret it only one way</li>
+<li>Verifiable: can tests or other approaches be used to verify if requirement has been implemented properly</li>
+</ul>
+</li>
+<li>MoSCoW requirements group requirements into 4 groups:
+<ul>
+<li>Must have</li>
+<li>Should have</li>
+<li>Could have</li>
+<li>Won't have</li>
+</ul>
+</li>
+<li>Requirements document will be read by:
+<ul>
+<li>Customers</li>
+<li>Managers</li>
+<li>Engineers</li>
+<li>Testers</li>
+<li>Maintainers</li>
+</ul>
+</li>
+<li>Sections include:
+<ul>
+<li>Preface - history and purpose of document</li>
+<li>Intro - justify and outline system</li>
+<li>Glossary</li>
+<li>User requirements design - describe services provided for users</li>
+<li>System architecture - high-level overview of system</li>
+<li>Requirements spec - describe functional and non-functional requirements</li>
+<li>System models - show relationships between system components</li>
+<li>System evolution - anticipated changes due to changing future needs</li>
+</ul>
+</li>
+<li>Functional requirements describe what system should do, state system services and how it should behave in different scenarios</li>
+<li>Non-functional requirements are constraints on services or functions offered by system, describe qualities of the system such as availability, performance, etc</li>
+<li>Requirements engineering processes is not a linear sequence, processes often interleaved and iterated upon
+<ul>
+<li>Requirements discovery
+<ul>
+<li>Gather info from stakeholders</li>
+<li>Domain research</li>
+<li>Consider use cases</li>
+</ul>
+</li>
+<li>Classification and organisation - group similar requirements and organise into categories</li>
+<li>Prioritisation and negotiation - assign priorities and sort conflicts between requirements from different stakeholders</li>
+<li>Specification - write the document and give to stakeholders, then iterate</li>
+</ul>
+</li>
+<li>Requirements validation is key once document has been written
+<ul>
+<li>Validity - will system support customer's needs?</li>
+<li>Consistency - are there any conflicts?</li>
+<li>Realism - can system be produced with available resources and technology?</li>
+<li>Verifiability - can system be shown/proved to satisfy requirements?</li>
+<li>Review by both customers and engineers</li>
+<li>Prototyping and test-case generation</li>
+</ul>
+</li>
+<li>Requirements must be managed to see if they should be accepted
+<ul>
+<li>Problem analysis - is new requirement valid and unambiguous?</li>
+<li>Change analysis - what are the effects on the rest of the system?</li>
+<li>Change implementation - do the change</li>
+</ul>
+</li>
+<li>Must take into account legal, social, ethical, professional issues
+<ul>
+<li>Copyright</li>
+<li>Patents</li>
+<li>Developers given fair recognition of work</li>
+<li>Software not produced to do anything illegal or evil</li>
+<li>Work completed in best interest of customer</li>
+</ul>
+</li>
+</ul>
 <h2 id="project-management-1"><a class="header" href="#project-management-1">Project Management</a></h2>
 <p>5,9</p>
 
