@@ -140,6 +140,282 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="system-design--implementation"><a class="header" href="#system-design--implementation">System Design &amp; Implementation</a></h1>
 <h2 id="system-design--modelling-uml"><a class="header" href="#system-design--modelling-uml">System Design &amp; Modelling (UML)</a></h2>
+<ul>
+<li>UML was developed in the 90s as a general purpose modelling language, providing a formal scheme for describing system models.
+<ul>
+<li>Static/structural view of system (objects and their attributes)</li>
+<li>Dynamic/behavioural view - dynamic behaviour of system (collaboration betwen objects and changing state)</li>
+</ul>
+</li>
+<li>Different perspectives for system modelling include:
+<ul>
+<li>External - the context of the system</li>
+<li>Interaction
+<ul>
+<li>Between system and it's environment</li>
+<li>Between components of system</li>
+</ul>
+</li>
+<li>Structural
+<ul>
+<li>Organisation of system</li>
+<li>Structure of data being processed</li>
+</ul>
+</li>
+<li>Behavioural - dynamic behaviour of the system</li>
+</ul>
+</li>
+<li>Creating a static view of a system requires identifying entities, which can be done in one of four ways
+<ul>
+<li>Grammatical approach based on natural language of the system
+<ul>
+<li>Identify key items from the description of the problem</li>
+</ul>
+</li>
+<li>Identification of tangible things in the application domain</li>
+<li>Behavioural approach to identify objects</li>
+<li>Scenario-based, where objects, attributes and methods in each scenario are identified</li>
+</ul>
+</li>
+<li>Class diagram shows system classes and their relationships
+<ul>
+<li>Show structure of design and organisation of components</li>
+<li>UML formal notation move requirements closer to a mathematical description</li>
+<li>Forces us to think about the language used in D-requirements</li>
+<li>Class name is shown in diagram</li>
+<li>Attributes shown with types</li>
+<li>Methods shown with return and argument types</li>
+<li>Use the line with the crows foot for showing one-to-many or many-to-many</li>
+<li>Use ranges to indicate how many objects there are</li>
+</ul>
+</li>
+<li>Activity diagrams are flowcharts to represent workflows of stepwise activities within the system
+<ul>
+<li>Involves actions, decision boxes, bars to introduce parallel actions</li>
+</ul>
+</li>
+<li>Use case diagram represents users interactions within the system, and how they interact with the components
+<ul>
+<li>Shows events occurring within system and how users trigger them</li>
+</ul>
+</li>
+<li>Sequence diagram shows temporal interaction between processes and user
+<ul>
+<li>Time progresses downward</li>
+<li>example in slides</li>
+</ul>
+</li>
+<li>State machine diagram shows how the state of the system changes
+<ul>
+<li>Similar to activity diagram but some fundamental differences</li>
+<li>State diagram performs actions in response to specific events</li>
+<li>Flowchart transitions from node to node on completion of activities</li>
+<li>Executing a program graph (flowchart) results in a state graph</li>
+<li>Instructions vs states</li>
+</ul>
+</li>
+<li>Context models illustrate the operational context of the system and other systems
+<ul>
+<li>Show links between different systems</li>
+</ul>
+</li>
+<li>System modelling encourages us to take something which may not be clear, and resolve ambiguities to late implement
+<ul>
+<li>UML should be clear and precise</li>
+</ul>
+</li>
+<li>Writing correct class diagrams:
+<ul>
+<li>Class name should be at the top
+<ul>
+<li>Abstract classes go in italic</li>
+<li>Interfaces are represented &lt;&lt;interface&gt;&gt;</li>
+</ul>
+</li>
+<li>Attributes represent internal datatypes and are optional</li>
+<li>Methods that make up public interface should be included
+<ul>
+<li>Don't show inherited</li>
+<li>Don't show getters/setters</li>
+</ul>
+</li>
+<li>Symbols indicate access modifier
+<ul>
+<li><code>+</code> - public</li>
+<li><code>-</code> - private</li>
+<li><code>#</code> - protected</li>
+<li><code>~</code> - package private</li>
+<li><code>/</code> - derived</li>
+<li>Static attributes/methos should be underlined</li>
+</ul>
+</li>
+<li>Comments can be associated with classes, use a folded note notation</li>
+<li>Class inheritance hierarchies, drawn top down with arrows pointing to parent
+<ul>
+<li>Solid line with black arrow for class</li>
+<li>Solid line with white arrow for abstract class</li>
+<li>Dashed line with white arrow for interface</li>
+</ul>
+</li>
+<li>Multiplicity shown next to arrow/line ends
+<ul>
+<li><code>*</code> is zero or more</li>
+<li><code>1</code> is exactly one</li>
+<li><code>2..4</code> is between two and four</li>
+<li><code>3..*</code> is 3 or more</li>
+</ul>
+</li>
+<li>Include name and navigability on arrows</li>
+<li>Association (no arrow) shows classes are associated in some way</li>
+<li>White diamond shows aggregation</li>
+<li>Black diamond shows composition</li>
+<li>Dotted line shows a temporary use/dependency</li>
+</ul>
+</li>
+<li>Writing correct sequence diagrams:
+<ul>
+<li>Participants are objects/entities</li>
+<li>Messages (arrows) are communications between objects</li>
+<li>Time moves from top to bottom</li>
+<li>Various ways of representing an object
+<ul>
+<li><code>Name:Type</code>, can omit either name or type</li>
+</ul>
+</li>
+<li>Dashed vertical line is the lifetime of the object, terminated with a cross</li>
+<li>When an object is active, represented with a box
+<ul>
+<li>Nest boxes for recursion</li>
+</ul>
+</li>
+<li>Frame boxes allow for conditionals and loops</li>
+</ul>
+</li>
+<li>Architectural design is concerned with understanding how a system should be organised
+<ul>
+<li>Often represented with box and line diagrams</li>
+<li>Two main uses:
+<ul>
+<li>Facilitating discussion about system design - high level view useful for stakeholders</li>
+<li>Documenting that an architecture has been design with a complete system model</li>
+</ul>
+</li>
+<li>Non-functional requirements refer to system as a whole, so architectural design is closely related. Considers:
+<ul>
+<li>Performance</li>
+<li>Security</li>
+<li>Safety</li>
+<li>Availability</li>
+<li>Maintanability</li>
+</ul>
+</li>
+<li>First need to break system down into subsystems</li>
+<li>Box/arrow diagrams show general interactions
+<ul>
+<li>Arrows show direction of data/control</li>
+<li>May break down larger systems into subsystems</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Patterns are a way to represent and share common knowledge
+<ul>
+<li>Promotes reuse, allows stakeholder communication, system analysis</li>
+<li>Layered architecture structures system into layers that provide services above it
+<ul>
+<li>More separate a system is, more independent each module is, more can localise changes</li>
+<li>Each layer relies on layer below and provides services</li>
+<li>Facilitates incremental design</li>
+<li>Layers can be replaced to improve or allow multiplatform support</li>
+<li>Can be developed layer-by-layer</li>
+<li>Separation of functionality can be hard</li>
+<li>Can have performance implications</li>
+<li>Layers depend on all layers below, can have reliability implications</li>
+<li>Useful when
+<ul>
+<li>Building on top of existing systems</li>
+<li>When development is spread accross teams</li>
+<li>When need to add security at each layer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Repository architecture has a central repository storing all data in the system
+<ul>
+<li>Concerned with data sharing rather than structure</li>
+<li>Have large store of data used by many components
+<ul>
+<li>Database often passive, access and control done by components</li>
+</ul>
+</li>
+<li>All interaction done through repo - subsystems do not interact</li>
+<li>Components can be independent</li>
+<li>All data can be managed consistently</li>
+<li>Efficient means of sharing large amounts of data</li>
+<li>Single point of failure is bad</li>
+<li>Can be inefficient to have all requests going through the repository</li>
+<li>Distributing repository to scale may be difficult as need to maintain consistency in data</li>
+<li>Useful when
+<ul>
+<li>System generates large volumes of data needed in persistent storage</li>
+<li>Data-driven systems where the inclusion of data in the repository triggers an action</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Pipe and filter has discrete processing components that filter data as it flows down a linear pathway (the pipe)
+<ul>
+<li>Focuses on runtime organisation of the system</li>
+<li>Each component transforms input data to produce output</li>
+<li>Flexible - can introduce parallelism and change between batch and item-by-item execution</li>
+<li>Easy to understand and evolve</li>
+<li>Matches structure of many apps</li>
+<li>Supports reuse</li>
+<li>Flexible</li>
+<li>Requires standardised data format
+<ul>
+<li>Modifying standard difficult</li>
+</ul>
+</li>
+<li>Useful when:
+<ul>
+<li>Data processing, both batch transaction based</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Model-View-Controller (MVC) focuses on how to interpret user interactions, update data, then present it to user
+<ul>
+<li>Controller managers user interactions, passes them to view and model to update</li>
+<li>Model manages data, updates according to operations it is asked to perform</li>
+<li>View manages how data from model is presented to user</li>
+<li>Basis of interaction management in many web systems</li>
+<li>Each logical component deals with different aspect: presentation, interaction, data</li>
+<li>Data can be changed independently of how it is displayed</li>
+<li>Allows user to have control over how they see data without changing model</li>
+<li>Adds additional complexity to design</li>
+<li>Simple interactions require considering three different system aspects</li>
+<li>Can be hard to distribute development</li>
+<li>Portability is low due to heavy interaction</li>
+<li>Useful when:
+<ul>
+<li>System offers multiple ways to view and interact with data
+<ul>
+<li>Good for many types of web and mobile apps</li>
+</ul>
+</li>
+<li>Used when future requirements for interaction and presentation of data are unknown
+<ul>
+<li>Allows for flexibility in view without changing model</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="design-patterns"><a class="header" href="#design-patterns">Design Patterns</a></h2>
 
                     </main>
