@@ -2,4 +2,162 @@
 
 ## System Design & Modelling (UML)
 
+- UML was developed in the 90s as a general purpose modelling language, providing a formal scheme for describing system models.
+  - Static/structural view of system (objects and their attributes)
+  - Dynamic/behavioural view - dynamic behaviour of system (collaboration betwen objects and changing state)
+- Different perspectives for system modelling include:
+  - External - the context of the system
+  - Interaction
+    - Between system and it's environment
+    - Between components of system
+  - Structural
+    - Organisation of system
+    - Structure of data being processed
+  - Behavioural - dynamic behaviour of the system
+- Creating a static view of a system requires identifying entities, which can be done in one of four ways
+  - Grammatical approach based on natural language of the system
+    - Identify key items from the description of the problem
+  - Identification of tangible things in the application domain
+  - Behavioural approach to identify objects
+  - Scenario-based, where objects, attributes and methods in each scenario are identified
+- Class diagram shows system classes and their relationships
+  - Show structure of design and organisation of components
+  - UML formal notation move requirements closer to a mathematical description
+  - Forces us to think about the language used in D-requirements
+  - Class name is shown in diagram
+  - Attributes shown with types
+  - Methods shown with return and argument types
+  - Use the line with the crows foot for showing one-to-many or many-to-many
+  - Use ranges to indicate how many objects there are
+- Activity diagrams are flowcharts to represent workflows of stepwise activities within the system
+  - Involves actions, decision boxes, bars to introduce parallel actions
+- Use case diagram represents users interactions within the system, and how they interact with the components
+  - Shows events occurring within system and how users trigger them
+- Sequence diagram shows temporal interaction between processes and user
+  - Time progresses downward
+  - example in slides
+- State machine diagram shows how the state of the system changes
+  - Similar to activity diagram but some fundamental differences
+  - State diagram performs actions in response to specific events
+  - Flowchart transitions from node to node on completion of activities
+  - Executing a program graph (flowchart) results in a state graph
+  - Instructions vs states
+- Context models illustrate the operational context of the system and other systems
+  - Show links between different systems
+- System modelling encourages us to take something which may not be clear, and resolve ambiguities to late implement
+  - UML should be clear and precise
+- Writing correct class diagrams:
+  - Class name should be at the top
+    - Abstract classes go in italic
+    - Interfaces are represented \<\<interface\>\>
+  - Attributes represent internal datatypes and are optional
+  - Methods that make up public interface should be included
+    - Don't show inherited
+    - Don't show getters/setters
+  - Symbols indicate access modifier
+    - `+` - public
+    - `-` - private
+    - `#` - protected
+    - `~` - package private
+    - `/` - derived
+    - Static attributes/methos should be underlined
+  - Comments can be associated with classes, use a folded note notation
+  - Class inheritance hierarchies, drawn top down with arrows pointing to parent
+    - Solid line with black arrow for class
+    - Solid line with white arrow for abstract class
+    - Dashed line with white arrow for interface
+  - Multiplicity shown next to arrow/line ends
+    - `*` is zero or more
+    - `1` is exactly one
+    - `2..4` is between two and four
+    - `3..*` is 3 or more
+  - Include name and navigability on arrows
+  - Association (no arrow) shows classes are associated in some way
+  - White diamond shows aggregation
+  - Black diamond shows composition
+  - Dotted line shows a temporary use/dependency
+- Writing correct sequence diagrams:
+  - Participants are objects/entities
+  - Messages (arrows) are communications between objects
+  - Time moves from top to bottom
+  - Various ways of representing an object
+    - `Name:Type`, can omit either name or type
+  - Dashed vertical line is the lifetime of the object, terminated with a cross
+  - When an object is active, represented with a box
+    - Nest boxes for recursion
+  - Frame boxes allow for conditionals and loops
+- Architectural design is concerned with understanding how a system should be organised
+  - Often represented with box and line diagrams
+  - Two main uses:
+    - Facilitating discussion about system design - high level view useful for stakeholders
+    - Documenting that an architecture has been design with a complete system model
+  - Non-functional requirements refer to system as a whole, so architectural design is closely related. Considers:
+    - Performance
+    - Security
+    - Safety
+    - Availability
+    - Maintanability
+  - First need to break system down into subsystems
+  - Box/arrow diagrams show general interactions
+    - Arrows show direction of data/control
+    - May break down larger systems into subsystems
+- Patterns are a way to represent and share common knowledge
+  - Promotes reuse, allows stakeholder communication, system analysis
+  - Layered architecture structures system into layers that provide services above it
+    - More separate a system is, more independent each module is, more can localise changes
+    - Each layer relies on layer below and provides services
+    - Facilitates incremental design
+    - Layers can be replaced to improve or allow multiplatform support
+    - Can be developed layer-by-layer
+    - Separation of functionality can be hard
+    - Can have performance implications
+    - Layers depend on all layers below, can have reliability implications
+    - Useful when
+      - Building on top of existing systems
+      - When development is spread accross teams
+      - When need to add security at each layer
+  - Repository architecture has a central repository storing all data in the system
+    - Concerned with data sharing rather than structure
+    - Have large store of data used by many components
+      - Database often passive, access and control done by components
+    - All interaction done through repo - subsystems do not interact
+    - Components can be independent
+    - All data can be managed consistently
+    - Efficient means of sharing large amounts of data
+    - Single point of failure is bad
+    - Can be inefficient to have all requests going through the repository
+    - Distributing repository to scale may be difficult as need to maintain consistency in data
+    - Useful when
+      - System generates large volumes of data needed in persistent storage
+      - Data-driven systems where the inclusion of data in the repository triggers an action
+  - Pipe and filter has discrete processing components that filter data as it flows down a linear pathway (the pipe)
+    - Focuses on runtime organisation of the system
+    - Each component transforms input data to produce output
+    - Flexible - can introduce parallelism and change between batch and item-by-item execution
+    - Easy to understand and evolve
+    - Matches structure of many apps
+    - Supports reuse
+    - Flexible
+    - Requires standardised data format
+      - Modifying standard difficult
+    - Useful when:
+      - Data processing, both batch transaction based
+  - Model-View-Controller (MVC) focuses on how to interpret user interactions, update data, then present it to user
+    - Controller managers user interactions, passes them to view and model to update
+    - Model manages data, updates according to operations it is asked to perform
+    - View manages how data from model is presented to user
+    - Basis of interaction management in many web systems
+    - Each logical component deals with different aspect: presentation, interaction, data
+    - Data can be changed independently of how it is displayed
+    - Allows user to have control over how they see data without changing model
+    - Adds additional complexity to design
+    - Simple interactions require considering three different system aspects
+    - Can be hard to distribute development
+    - Portability is low due to heavy interaction
+    - Useful when:
+      - System offers multiple ways to view and interact with data
+        - Good for many types of web and mobile apps
+      - Used when future requirements for interaction and presentation of data are unknown
+        - Allows for flexibility in view without changing model
+
 ## Design Patterns
