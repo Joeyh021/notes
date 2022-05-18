@@ -109,7 +109,7 @@
   - Reservation tables are space-time diagrams that show where data can be admitted to the pipeline
     - `X`s in adjacent columns of the same row show that stages operate for more than one clock period
     - More than one `X`s in a row not next to each other show feedback
-    - Pipelines may not accpet initiations at the start of every clock period, or collisions may occur
+    - Pipelines may not accept initiations at the start of every clock period, or collisions may occur
       - Potential collisions shown by the distance in time slots between `X`s in each row
   - Collision vector is derived from the distance between `X`s
     - $C = C_{n-1} C_{n-2} ... C_2 C_1 C_0$
