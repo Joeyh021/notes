@@ -161,3 +161,149 @@
         - Allows for flexibility in view without changing model
 
 ## Design Patterns
+
+- There are common design patterns in software that we can identify and exploit
+  - Standard solution to common programming problem
+  - Technique for making code more flexible by making it meet certain criteria
+  - Design or implementation structure that achieves a particular purpose
+  - High-level programming idiom
+  - Shorthand for describing certain aspects of program organisation
+  - Connections among program components
+  - The shape of an object model
+- Four essential elements to a design pattern
+  - A name the meaningfully refers to the pattern
+  - Description of the problem to which the pattern applies
+  - Solution describing of the parts of the design
+  - A statement of the consequences, results and tradeoffs, of applying the pattern
+- Goal of patterns is to have general solution that can be widely applied, utilising others experience in design
+- Three kinds of patterns, creational, structural, behavioural
+- Factories
+  - A factory method is a method that manufactures objects of a particular type
+  - Constructors are limited, as they only allow objects of particular type
+  - Factories can bypass this problem to generate objects of different types
+  - Can be used anywhere a constructor can
+  - Example - the bike factory that creates bike and all it's dependencies, instead of creating all manually and passing as constructor arguments
+  - Cuts down on repeated code
+  - Easy to add new variations and scenarios
+  - Have to make additional classes
+  - Factory linked to class it produces
+- Builders
+  - Help create complex objects
+  - Extract construction into a set of methods, builders
+  - Object creation happens in a series of steps, only calling the builders that we need
+  - Each sub-step is a different method that could be called by any builder
+  - Sub-steps in abstract class builder, then make concrete classes for each type of object we want to make
+  - Builders are _not_ factories, they're more flexible versions for complex classes with optional parameters
+  - Give more control over construction
+  - Can re-use code for different instances
+  - Similar to factories, require lots of new classes
+  - Code becomes longer, construction still complex but more modular
+- Prototypes
+  - Make one object, the prototype, then clone it, making copies of itself
+  - Putting the responsibility of duplication on the object itself helps us bypass issues around private/public variables
+  - Guarantees copy is identical
+  - Create a bunch of template objects, then can just clone the ones we want in each situation
+  - Don't need more classes just for creating objects
+  - Remove heavy initialisation in favour of cloning
+  - Circular references can be tricky
+  - Might have to perform heavy changes and updates on the cloned object
+- Proxy patterns
+  - May wish to reference an entity without instantiating it
+  - Create placeholders for other objects, often by adding another level of indirection
+  - Allows us to load on demand
+  - Example, image proxy only loads actual image when `draw()` called
+  - Uses include
+    - Virtual proxy, delay loading of resource until needed (lazy evaluation)
+    - Remote proxy, offers client functionality of an object on another server by handling networking
+    - Protection proxy, provides access control
+    - Logging proxy, keeps track of accesses and requests
+    - Caching proxy, saves results of object
+    - Smart referencing, if no client is using object it can be removed and then retrieved later (garbage collection)
+  - Can hide away parts of the service object so it can be changed or controlled
+  - Allows to manage object life cycle
+  - Provides availability if service object isn't ready or available
+  - New proxies cna be added without changing services or clients
+  - More classes so more complexity
+  - Adds another step so may result is slowdown
+- Decorator pattern
+  - Allows to add new behaviour to objects at runtime
+  - Wrap original object and add new functionality
+  - Alternative to subclassing
+  - Inheritance is static, decorator can be done at runtime
+    - Pass classes to decorator classes dependant upon what requirements are
+  - Can extend behaviour without adding new subclasses
+  - Can combine wrappers and make functionality dynamic
+  - Removing wrappers is difficult
+  - Hard to implement in order-independent way
+  - Code can look messy
+- Adaptor pattern
+  - Adaptors convert data formats we're working with to allow to use other services
+  - Instead of rewriting entire code to change data type, just adapt it
+    - Add new class that inherits original, but converts types
+  - Can do a slightly more complex version
+  - Promote single-responsibility principle
+  - New adaptors can be introduced without refactoring
+  - Depending on code size, converting original object may be cheaper
+- Flyweight pattern
+  - May have lots of objects that share properties, resulting in duplication of resources and wasting memory
+  - Hold one copy of all the properties that objects can then reference
+  - Identify resources or data that each object is referencing, then abstract it out to a static class
+  - Saves memory when lots of objects are in memory
+  - Lots of complexity
+  - May introduce additional overhead in compute time - tradeoff
+- Iterator pattern
+  - Traverse a container to access elements in order
+  - Does not expose container's data structure
+  - Allows to abstract traversal algorithms into own class
+  - New iterators can be introduced without re-designing existing code
+  - Can iterate multiple ways in parallel
+  - Not always necessary - do you really need one for a list
+  - Can be less effective for highly specialised objects
+- Observer pattern
+  - Allows an objects dependents to be notified automatically if state changes are made
+  - Can work in a push model or pull model
+  - Highly customisable, subscribers can be added/removed from what they want to be involved with
+  - `Observer` interface has `notify` method
+  - Class holds list of observing objects, calls their `notify` method when there is an update
+  - Key to many real-time systems and cornerstone of MVC architecture
+  - New subscribers can be added without redesigning the publisher
+  - Relationships can change at runtime
+  - Subscribers notified in random order
+- Memento pattern
+  - Save and restore objects without revealing details of implementation
+  - Make an object responsible for saving its own internal state
+  - Can be used to implement undo functionality for restoring state
+  - Snapshot implements a limited interface so it can be stored externally (in a caretake object) without exposing internal details
+  - Snapshot/memento stores the internal data of object and pointer to original object
+  - Caretaker handles restore
+  - Can make backups without violating encapsulation
+  - Extract out maintenance and resoration, keep original object interface simple
+  - Heavy memory cost
+  - Need caretakers to track original object life cycles to erase unneeded mementos
+- Strategy pattern
+  - Select the method to complete a task at runtime
+  - Want new object to be responsible for choosing the approach to a particular problem
+  - Have a number of classes, multiple strategies, that we can select between
+  - Original class becomes a context, doesn't know details of each strategy
+  - Route finder has many different strategies for finding routes, by car, by foot, by bus
+    - Swap out travel method in route finding class
+  - Can swap implementations at runtime
+  - Separate details of algorithm from code that uses it
+  - Composition replaces inheritance
+  - If only a few choices, no need to increase complexity
+  - Requires clinets to understand key differences between strategies to select appropriate one
+- SOLID principles are five principles that improve OOP design
+  - Single responsibility
+    - Class should be responsible for single piece of functionality
+  - Open/closed
+    - Open for extension, closed for modification
+    - Once classes are complete, should add functionality by extending instead of editing
+  - Liskov substitution
+    - An object that uses a parent class can use its child classes without knowing
+    - Behavioural sub-typing
+  - Interface segregation
+    - Many specific interfaces are better than a general one
+    - No code should depend on methods it does not use
+  - Dependency inversion
+    - Ensure high level classes do not rely on functions from low level classes
+    - Interactions should rely on well-defined interfaces and go from low level to high level
