@@ -2,12 +2,279 @@
 
 ## Software Methodologies
 
-2,3
+- Formal guidelines on how software should be engineered
+- Software process model is a sequence of activities that leads to the production of a software product
+  - Specification - what software should do
+  - Design and implementation - how should be organised and implemented
+  - Validation and testing - does it do what it should
+  - Software evolution - changing software over time
+- Plan driven
+  - All activities planned in advance
+  - Progress measured against plan
+  - Fixed, detailed spec before development commences
+- Agile
+  - Incremental planning
+  - More adaptable to change
+- Waterfall model has a strict linear ordering of processes
+  - Each stage must be completed before moving on
+  - If anything changes in the plan, go back to the start again
+  - Stages:
+    - Requirements analysis
+      - System's services, constraints, goals are established and defined
+    - System design
+      - Identification of software components and their relationships
+    - Implementation and unit testing
+      - Software programmed in unit, each unit tested against specification
+    - Integration and system testing
+      - Software components integrated and tested together as a complete system
+    - Operation and maintenance
+      - System installed, any errors that appear are fixed
+      - System services enhanced as new requirements added
+  - Works if requirements are fixed an understood
+  - Fewer team constraints
+  - Each component can be tested against spec
+  - Easy to churn team because everything well-documented
+  - Customers can wait a long time for results
+  - Difficult to accommodate change
+  - Difficult to respond to changing requirements
+  - Can be a problem if project is long running
+    - Longer time = more likelihood of things changing
+- Plan driven too rigid - introduce flexibility with incremental development
+  - Develop in staged with customer feedback incorporated between iterations
+  - Specification - development - validation is iterative
+  - New functionality can be added in each iteration
+  - Each stage planned in full and validated against plan
+  - Cost of accommodating change is reduced
+  - Software available to use quicker so feedback can be gathered easily
+  - Customers can see development in progress
+  - Easier to include user acceptance testing
+  - Difficult to estimate cost of development
+  - Difficult to maintain consistency
+  - As progress continues, becomes harder to include new features or make changes
+  - Not cost effective to document each version
+  - Increased cost of repeated deployment
+- Re-writing software from scratch is expensive
+  - Rely instead on off the shelf components (libraries, frameworks)
+  - Include component analysis in development flow, identify library/framework
+  - Requirements may have to accommodate available components
+- First stage in any process is software specification - requirements engineering
+  - Requires that we define the services required from the system
+  - Identify constraints on operation and development
+  - Produce a requirements document
+    - End user facing and system developer facing - possibly two documents
+  - Feasibility study determines that task is feasible and cost effective
+  - Requirements elicitation and analysis derives the system requirements
+    - Look at existing docs
+    - Talk to customer
+    - Discuss features
+    - Possibly prototype
+  - Requirements specification translates information gathered in elicitation into formal documents
+  - Requirements validation ensures requirements are achievable and valid
+  - Need to ensure customer signs off requirements
+- Agile development is a principle that defines a set of methodologies
+  - Interleaves specification, design and implementation
+  - System developed as a series of versions
+  - Feedback provided at each stage
+  - Process driven approaches have become too cumbersome as businesses need to be able to evolve more rapidly
+    - Increased focus on code over design
+  - Principles include
+    - Customer involvement
+    - Incremental delivery
+    - People, not process
+    - Embrace change
+    - Maintain simplicity
+  - Focuses on development over documentation - can make it hard to pick up a system later on
+  - Works well as long as original team continues the evolution - problems can arise if team changes
+- Possible to use techniques from both plan-based and agile, depending on what is applicable
+- Extreme programming is an agile methodology involving incremental delivery with fast iteration
+  - Build several times a day
+  - Deliver to customers often
+  - Automate tests to verify builds
+  - Strong customer involvement
+  - Incremental planning with requirements on story cards, stories selected based on priority
+  - Small releases with initially minimal functionality, then building with more
+  - Simple design, only enough to meet current requirements
+  - Write tests before the software - test driven
+  - Developers expected to continually refactor code
+  - Pair programming provides support
+  - Collective code ownership allows for anyone to work on anything
+  - Continuous Integration integrates components as soon as they are ready
+  - Working at a sustainable pace is important for developers
+  - Having customer on-site is useful to incorporate frequent feedback
+- Scrum is a general agile method that focuses on managing iterative development
+  - 3 primary stages:
+    - Outline planning phase to establish general goals
+    - Sprint cycles, each cycle developing an increment of the system
+    - Project closure, wrap up project, document, deliver
+  - Uses quick development cycles of typically 2-4 weeks
+    - Daily team meetings to discuss current work
+    - Each sprint completes item on backlog
+    - Features selected with customer
+    - Scrum master interface between team and customer
+    - End of each sprint, work reviewed and presented
 
 ## Requirements Analysis
 
-3
+- Requirements are descriptions of what the system should and should not do, the service it provides, and the constraints on its operation
+- Enable developers to make software that wil correctly fulfil customers needs
+- Provides a basis for tests, validation and verification
+- Enable (semi-)cost accurate specification
+- Important to distinguish what is built from how it is built
+- Requirements act as a bridge between customers and developers
+  - Notion of C- and D-requirements for customer and development facing
+    - Technical requirements vs idiot speak
+    - C-requirements describe operation and constraints from users's point of view
+    - D-facing give detailed description of system functions, acting as basis for contract with developer
+- Good requirements are
+  - Prioritised: features have an implementation priority
+  - Consistent: requirements do not conflict with each other
+  - Modifiable: able to revise set of requirements when necessary and maintain history of changes
+  - Traceable: able to link each requirement to source, which could be higher-level requirement, use case, or customer statement
+  - Correct: accurately describes functionality to be delivered
+  - Feasible: must be possible to implement each requirement within the known capabilities and limitations of environment
+  - Necessary: should document something that customers actually need, or is required for conformance to external standard or interface
+  - Unambiguous: someone reading requirement should interpret it only one way
+  - Verifiable: can tests or other approaches be used to verify if requirement has been implemented properly
+- MoSCoW requirements group requirements into 4 groups:
+  - Must have
+  - Should have
+  - Could have
+  - Won't have
+- Requirements document will be read by:
+  - Customers
+  - Managers
+  - Engineers
+  - Testers
+  - Maintainers
+- Sections include:
+  - Preface - history and purpose of document
+  - Intro - justify and outline system
+  - Glossary
+  - User requirements design - describe services provided for users
+  - System architecture - high-level overview of system
+  - Requirements spec - describe functional and non-functional requirements
+  - System models - show relationships between system components
+  - System evolution - anticipated changes due to changing future needs
+- Functional requirements describe what system should do, state system services and how it should behave in different scenarios
+- Non-functional requirements are constraints on services or functions offered by system, describe qualities of the system such as availability, performance, etc
+- Requirements engineering processes is not a linear sequence, processes often interleaved and iterated upon
+  - Requirements discovery
+    - Gather info from stakeholders
+    - Domain research
+    - Consider use cases
+  - Classification and organisation - group similar requirements and organise into categories
+  - Prioritisation and negotiation - assign priorities and sort conflicts between requirements from different stakeholders
+  - Specification - write the document and give to stakeholders, then iterate
+- Requirements validation is key once document has been written
+  - Validity - will system support customer's needs?
+  - Consistency - are there any conflicts?
+  - Realism - can system be produced with available resources and technology?
+  - Verifiability - can system be shown/proved to satisfy requirements?
+  - Review by both customers and engineers
+  - Prototyping and test-case generation
+- Requirements must be managed to see if they should be accepted
+  - Problem analysis - is new requirement valid and unambiguous?
+  - Change analysis - what are the effects on the rest of the system?
+  - Change implementation - do the change
+- Must take into account legal, social, ethical, professional issues
+  - Copyright
+  - Patents
+  - Developers given fair recognition of work
+  - Software not produced to do anything illegal or evil
+  - Work completed in best interest of customer
 
 ## Project Management
 
-5,9
+- Software projects often fail, for many reasons
+  - Requirements gathering was poor
+  - Project or deadline was unrealistic
+  - Insufficient budget (escalating costs)
+  - Poor communicaton between team and customer
+  - Poor testing
+  - Team member slacking
+- Good project management is essential to ensure a project remains on schedule and in budget
+  - Delive software on time
+  - Keep costs within budge
+  - Meet customer expectations
+  - Maintain a happy and well-functioning team
+    - Motivating people is important
+- Project manager resonsible for
+  - Project planning
+  - Reporting
+  - Risk management
+  - Project management
+- Different roles within teams have different responsibilities
+  - Project manager
+  - Business analyst deals with customers and specifies project direction
+  - Software architect develops design of software, taking into account customer requirements
+  - Designer is a creative person responsible for look and feel of product
+  - Developer actually writes the code
+  - Tested applies various testing techniques to verify functionality during and after development
+- Different ways to organise groups teams
+  - Informal groups can be successful when most group members are experienced
+    - Decisions made by concensus
+    - Lack of experience can lead to project failure
+  - Hierarchical groups have a leader and management levels
+    - Work best when system can be broken into subproblems
+    - Rare due to changing requirements
+- Risk management is the identifaction, assessment and prioritisation of risks
+  - 4 Steps:
+    - Risk identification - list potential risks
+    - Risk analysis - prioritise risks
+    - Planning - avoidance and contingency plans
+    - Monitoring - risk assessment
+  - Risks can be grouped by what they affect:
+    - Project risks - affecting the project schedule or resources
+    - Product risks - affecting the software quality or performance
+    - Business risks - affecting the organisation
+  - Common softeng risks include:
+    - Staff turnover (project)
+    - Hardware unavailability (project)
+    - Specification delays (project and product)
+    - Tool underperformance (product)
+    - Management change (project)
+    - Requirements change (project and product)
+    - Size/complexity underestimation (project and product)
+    - Technology change (business)
+    - Product competition (business)
+  - Risks are considered and their severity judged:
+    - Catastrophic - threaten survival of project
+    - Serious - would cause major delays
+    - Tolerable - delays, but within contingency
+    - Insignificant
+  - Risk planning involves 3 things
+    - Avoid the risk - reduce probability of risk happening
+    - Minimisation - reduce impact of risk
+    - Contingency plans - make sure plan in place to deal with risk
+  - Risk registers are common:
+    - Show the risk, how has been planned for
+    - Inherent risk is severity if not planned for
+    - Residual risk is severity taking into account plans
+    - Cannot mitigate all risks
+- Project planning
+  - Managers must break down problems into parts, assign parts, and deal with problems that arise
+  - Project plan communicates this to team and stakeholders
+  - 3 stages:
+    - Proposal stage, planning to ensure have necessary resources
+    - Startup stage, planning who will work on project and how it will be broken down
+    - Periodical planning, plans modifier through project in reaction to events
+  - Scheduling is key
+    - Identify activities - separate tasks and decide when will be executed
+    - Identify activity dependencies - reduce dependencies between tasks
+    - Estimate resources - how much time/effort/people will each task take
+    - Allocate people and create project charts
+  - Gantt charts show tasks listed vertically against time horizontally
+  - Activity networks are task based, showing duration and logical relationships between tasks
+    - Critical path is path for an MVP
+    - Total float is the amount of time something can be delayed without delaying project
+      - Only for non-critical tasks
+    - Drag is the possible delay on critical path
+  - Estimating how long a project takes is hard
+    - Can either be experience-based, using a rough guesstimate
+    - Algorithmic cost-based approaches exist but are rarely accurate
+- Measuring Success
+  - Two parts
+    - How well does project meet spec (unit/system testing)
+      - Measuring against requirements is quantitative
+    - How well does it meet customer expectatitons (user acceptance testing)
+      - More qualitative - can't be easily determined

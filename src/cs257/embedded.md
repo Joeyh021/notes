@@ -1,1 +1,106 @@
 # Embedded Systems & Security
+
+## Embedded Systems
+
+- Embedded software is software integrated with physical processes. The technical problem is managing time and concurrency in computational systems.
+- Embedded processing is in everything, and will be in more things as computing becomes more ubiquitous
+- Application areas include:
+  - Automotive
+    - ABS brakes
+    - ESP - electronic stability control
+    - Airbags
+    - Automatic gearboxes
+    - Smart keys
+  - Avionics
+    - Flight control
+    - Anti-collision systems
+    - Flap control
+    - Entertainment systems
+  - Consumer electronics
+    - TVs
+    - Smart Home
+- Dependability is key
+  - Reliability $R(t)$ is the probability of a system working correctly, provided it was working at $t=0$
+  - Maintainability $M(d)$ is the probability of a system working correctly $d$ time units after an error occured
+  - Availability $A(t)$ is the probability of a system working at time $t$
+  - Safety - no harm must be caused
+  - Security - data and communication must be confidential and authenticated
+- Embedded systems bust be efficient:
+  - Code-size efficient (especially for SoCs)
+  - Runtime efficient
+  - Weight and size efficient (small)
+  - Cost and energy efficient
+    - Power is the most important constraint in embedded systems
+- General purpose processors are CPUs like we're used to
+  - Application specific have all the same components but are more optimised with custom hardware
+  - Single-purpose processors have very limited resources and are constrained to run a single program
+- Different types of hardware:
+  - ASICs - Application Specific Integrated Circuits
+    - Custom designed circuits on chips
+    - Necessary if ultimate speed or efficiency is the goal
+    - Can- only be produced in volume
+      - Masks to produce are hugely expensive
+    - Suffers from lack of flexibility, long design times and high costs
+    - Power consumption scales with voltage quadratically
+    - Can do dynamic power management
+    - Varying clock speed can save energy
+  - FPGAs - Field Programmable Gate Arrays
+    - hahaha
+  - DSPs - Digital Signal Processors
+  - MPUs - Microprocessor Units
+- Minimising power consumption is important for
+  - Design of power supply
+  - Design of voltage regulators
+  - Dimensioning of interconnect
+  - Cooling - high cost and limited space
+  - Energy availability often restricted (battery powered)
+  - Lower temperatures lead to longer lifetimes
+- Efficiency also a concern in memory
+  - Speed, must have predictable timing
+  - Energy efficiency
+  - Size
+  - Cost
+  - Energy usage and access time increases with size
+- Scratch pad memory is a small separate memory mapped intro address space
+  - Selection done through a simple address decoder
+  - Used as it is far more energy efficient than a cache
+
+## Security
+
+- Hardware typically has ports, which can be a security risk
+  - USB killer is a thumb drive than charges and then discharges capacitors over the data pins
+- DMA provides access to memory over the system bus
+  - High speed expansion puts often connected to DMA
+  - System may be vulnerable if ports connect directly to physical address space
+  - Mitigated by signing drivers to verify the operation of a device
+    - Use IOMMU to implement virtual addressing for I/O devices
+    - Modify kernel to disable DMA
+- Intel has a history of security concerns
+  - 1995 paper warned against a timing channel relating to CPU cache and the TLB
+  - 2012 - Apple XNU kernel adopts Address Space Layout Randomisation (KASLR)
+    - Linux adopted in 2014
+    - Primary goal to mitigate address leaks
+  - 2016 conference demonstrated "Using Undocumented CPU Behaviour to See into Kernel Mode and Break KASLR"
+    - Demonstrated techniques for locating kernel modules
+    - Defeated the point in KASLR
+    - KASLR was found to have lots of vulnerabilities, but has been updated and replaced with Kernel Page Table Isolation (KPTI)
+  - Work was done looking at side effects of instructions, leaking info form hardware
+    - Measure memory access timings
+      - Attacker primes cache
+      - Victim evicts cache
+      - Attacker probes data to see if it has been accessed
+  - Lots of CVEs in 2017 related to speculative execution
+- Meltdown is a CVE related to rogue data cache load
+  - Melts security boundaries normally enforced by hardware
+  - Speculative out-of-order execution may execute code that is never intended to be run
+  - Separate side-channel attack called flush and reload can highlight what was brought into cache by speculative execution
+  - 3 steps:
+    - Attacker-chosen memory location is loaded into register
+    - Transient instruction accesses cache line based on register contents
+    - Attacker uses flush and reload to determine accessed cache line and hence the secret stored at memory location
+  - Accesses memory-mapped pages
+    - Mitigation prevents probes from revealing anything useful
+    - Performance impact can be very high in some workloads
+  - Every intel processor from 1995-2018 vulnerable
+    - Some ARM and IMB PowerPC too
+  - AMD thought to be immune, by variant discovered in 2021 that exploits branch predictor
