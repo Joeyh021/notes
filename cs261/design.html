@@ -417,6 +417,222 @@
 </li>
 </ul>
 <h2 id="design-patterns"><a class="header" href="#design-patterns">Design Patterns</a></h2>
+<ul>
+<li>There are common design patterns in software that we can identify and exploit
+<ul>
+<li>Standard solution to common programming problem</li>
+<li>Technique for making code more flexible by making it meet certain criteria</li>
+<li>Design or implementation structure that achieves a particular purpose</li>
+<li>High-level programming idiom</li>
+<li>Shorthand for describing certain aspects of program organisation</li>
+<li>Connections among program components</li>
+<li>The shape of an object model</li>
+</ul>
+</li>
+<li>Four essential elements to a design pattern
+<ul>
+<li>A name the meaningfully refers to the pattern</li>
+<li>Description of the problem to which the pattern applies</li>
+<li>Solution describing of the parts of the design</li>
+<li>A statement of the consequences, results and tradeoffs, of applying the pattern</li>
+</ul>
+</li>
+<li>Goal of patterns is to have general solution that can be widely applied, utilising others experience in design</li>
+<li>Three kinds of patterns, creational, structural, behavioural</li>
+<li>Factories
+<ul>
+<li>A factory method is a method that manufactures objects of a particular type</li>
+<li>Constructors are limited, as they only allow objects of particular type</li>
+<li>Factories can bypass this problem to generate objects of different types</li>
+<li>Can be used anywhere a constructor can</li>
+<li>Example - the bike factory that creates bike and all it's dependencies, instead of creating all manually and passing as constructor arguments</li>
+<li>Cuts down on repeated code</li>
+<li>Easy to add new variations and scenarios</li>
+<li>Have to make additional classes</li>
+<li>Factory linked to class it produces</li>
+</ul>
+</li>
+<li>Builders
+<ul>
+<li>Help create complex objects</li>
+<li>Extract construction into a set of methods, builders</li>
+<li>Object creation happens in a series of steps, only calling the builders that we need</li>
+<li>Each sub-step is a different method that could be called by any builder</li>
+<li>Sub-steps in abstract class builder, then make concrete classes for each type of object we want to make</li>
+<li>Builders are <em>not</em> factories, they're more flexible versions for complex classes with optional parameters</li>
+<li>Give more control over construction</li>
+<li>Can re-use code for different instances</li>
+<li>Similar to factories, require lots of new classes</li>
+<li>Code becomes longer, construction still complex but more modular</li>
+</ul>
+</li>
+<li>Prototypes
+<ul>
+<li>Make one object, the prototype, then clone it, making copies of itself</li>
+<li>Putting the responsibility of duplication on the object itself helps us bypass issues around private/public variables</li>
+<li>Guarantees copy is identical</li>
+<li>Create a bunch of template objects, then can just clone the ones we want in each situation</li>
+<li>Don't need more classes just for creating objects</li>
+<li>Remove heavy initialisation in favour of cloning</li>
+<li>Circular references can be tricky</li>
+<li>Might have to perform heavy changes and updates on the cloned object</li>
+</ul>
+</li>
+<li>Proxy patterns
+<ul>
+<li>May wish to reference an entity without instantiating it</li>
+<li>Create placeholders for other objects, often by adding another level of indirection</li>
+<li>Allows us to load on demand</li>
+<li>Example, image proxy only loads actual image when <code>draw()</code> called</li>
+<li>Uses include
+<ul>
+<li>Virtual proxy, delay loading of resource until needed (lazy evaluation)</li>
+<li>Remote proxy, offers client functionality of an object on another server by handling networking</li>
+<li>Protection proxy, provides access control</li>
+<li>Logging proxy, keeps track of accesses and requests</li>
+<li>Caching proxy, saves results of object</li>
+<li>Smart referencing, if no client is using object it can be removed and then retrieved later (garbage collection)</li>
+</ul>
+</li>
+<li>Can hide away parts of the service object so it can be changed or controlled</li>
+<li>Allows to manage object life cycle</li>
+<li>Provides availability if service object isn't ready or available</li>
+<li>New proxies cna be added without changing services or clients</li>
+<li>More classes so more complexity</li>
+<li>Adds another step so may result is slowdown</li>
+</ul>
+</li>
+<li>Decorator pattern
+<ul>
+<li>Allows to add new behaviour to objects at runtime</li>
+<li>Wrap original object and add new functionality</li>
+<li>Alternative to subclassing</li>
+<li>Inheritance is static, decorator can be done at runtime
+<ul>
+<li>Pass classes to decorator classes dependant upon what requirements are</li>
+</ul>
+</li>
+<li>Can extend behaviour without adding new subclasses</li>
+<li>Can combine wrappers and make functionality dynamic</li>
+<li>Removing wrappers is difficult</li>
+<li>Hard to implement in order-independent way</li>
+<li>Code can look messy</li>
+</ul>
+</li>
+<li>Adaptor pattern
+<ul>
+<li>Adaptors convert data formats we're working with to allow to use other services</li>
+<li>Instead of rewriting entire code to change data type, just adapt it
+<ul>
+<li>Add new class that inherits original, but converts types</li>
+</ul>
+</li>
+<li>Can do a slightly more complex version</li>
+<li>Promote single-responsibility principle</li>
+<li>New adaptors can be introduced without refactoring</li>
+<li>Depending on code size, converting original object may be cheaper</li>
+</ul>
+</li>
+<li>Flyweight pattern
+<ul>
+<li>May have lots of objects that share properties, resulting in duplication of resources and wasting memory</li>
+<li>Hold one copy of all the properties that objects can then reference</li>
+<li>Identify resources or data that each object is referencing, then abstract it out to a static class</li>
+<li>Saves memory when lots of objects are in memory</li>
+<li>Lots of complexity</li>
+<li>May introduce additional overhead in compute time - tradeoff</li>
+</ul>
+</li>
+<li>Iterator pattern
+<ul>
+<li>Traverse a container to access elements in order</li>
+<li>Does not expose container's data structure</li>
+<li>Allows to abstract traversal algorithms into own class</li>
+<li>New iterators can be introduced without re-designing existing code</li>
+<li>Can iterate multiple ways in parallel</li>
+<li>Not always necessary - do you really need one for a list</li>
+<li>Can be less effective for highly specialised objects</li>
+</ul>
+</li>
+<li>Observer pattern
+<ul>
+<li>Allows an objects dependents to be notified automatically if state changes are made</li>
+<li>Can work in a push model or pull model</li>
+<li>Highly customisable, subscribers can be added/removed from what they want to be involved with</li>
+<li><code>Observer</code> interface has <code>notify</code> method</li>
+<li>Class holds list of observing objects, calls their <code>notify</code> method when there is an update</li>
+<li>Key to many real-time systems and cornerstone of MVC architecture</li>
+<li>New subscribers can be added without redesigning the publisher</li>
+<li>Relationships can change at runtime</li>
+<li>Subscribers notified in random order</li>
+</ul>
+</li>
+<li>Memento pattern
+<ul>
+<li>Save and restore objects without revealing details of implementation</li>
+<li>Make an object responsible for saving its own internal state</li>
+<li>Can be used to implement undo functionality for restoring state</li>
+<li>Snapshot implements a limited interface so it can be stored externally (in a caretake object) without exposing internal details</li>
+<li>Snapshot/memento stores the internal data of object and pointer to original object</li>
+<li>Caretaker handles restore</li>
+<li>Can make backups without violating encapsulation</li>
+<li>Extract out maintenance and resoration, keep original object interface simple</li>
+<li>Heavy memory cost</li>
+<li>Need caretakers to track original object life cycles to erase unneeded mementos</li>
+</ul>
+</li>
+<li>Strategy pattern
+<ul>
+<li>Select the method to complete a task at runtime</li>
+<li>Want new object to be responsible for choosing the approach to a particular problem</li>
+<li>Have a number of classes, multiple strategies, that we can select between</li>
+<li>Original class becomes a context, doesn't know details of each strategy</li>
+<li>Route finder has many different strategies for finding routes, by car, by foot, by bus
+<ul>
+<li>Swap out travel method in route finding class</li>
+</ul>
+</li>
+<li>Can swap implementations at runtime</li>
+<li>Separate details of algorithm from code that uses it</li>
+<li>Composition replaces inheritance</li>
+<li>If only a few choices, no need to increase complexity</li>
+<li>Requires clinets to understand key differences between strategies to select appropriate one</li>
+</ul>
+</li>
+<li>SOLID principles are five principles that improve OOP design
+<ul>
+<li>Single responsibility
+<ul>
+<li>Class should be responsible for single piece of functionality</li>
+</ul>
+</li>
+<li>Open/closed
+<ul>
+<li>Open for extension, closed for modification</li>
+<li>Once classes are complete, should add functionality by extending instead of editing</li>
+</ul>
+</li>
+<li>Liskov substitution
+<ul>
+<li>An object that uses a parent class can use its child classes without knowing</li>
+<li>Behavioural sub-typing</li>
+</ul>
+</li>
+<li>Interface segregation
+<ul>
+<li>Many specific interfaces are better than a general one</li>
+<li>No code should depend on methods it does not use</li>
+</ul>
+</li>
+<li>Dependency inversion
+<ul>
+<li>Ensure high level classes do not rely on functions from low level classes</li>
+<li>Interactions should rely on well-defined interfaces and go from low level to high level</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
