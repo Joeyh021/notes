@@ -60,4 +60,39 @@
 
 ## System Testing
 
+- Testing shows that a program does what it was intended to do
+- Highlights defects before a software is in use
+- Forms a part of verification and validation
+- Demonstrates software meets requirements
+- Only shows presence of, not lack of error
+- Verification - does a product meet spec?
+- Validation - does it meet customer's needs?
+- Error - human action that produces incorrect result
+- Failure - deviation of software from expectations
+- Defects/bugs - manifestation of a software error
+- Testing - exercise software to assess if it meets requirements
+- Test case - a set of inputs, preconditions and expected outcomes developed to exercise compliance against a specific requirement
+- Reliability - probability software will not cause failure for a specified time
+- Test plan - record of the application of test cases and rationale
+- System testing - covers both functional and non-functional requirements
+- Static testing is testing without execution
+  - Code review, inspection
+  - Works well with pair programming
+  - Static testing is verification - does code meet spec?
+  - Static code analysis are becoming more common
+  - Not limited to code, can also consider documents
+  - Should use inspection:
+    - Errors interact and hide other errors, inspection can uncover all errors
+    - Code does not need to be complete to inspect it
+    - Allows to consider code quality too
+    - 90% of errors can be found through inspection
+- Dynamic testing executes code with given test cases
+  - Inspections bad at discovering timing and performance based issues
+  - Execute code with given test case
+  - Structural/white box testing is test cases derived from control/data flow of system
+  - Involves validation - does product meet needs of customer?
+  - Functional/black box testing is test cases derived form formal component specification
+  - Control flow graph shows all possible cases for program flow
+    - Used to reason about test coverage
+
 ## Release Management
