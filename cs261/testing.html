@@ -140,6 +140,99 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="testing"><a class="header" href="#testing">Testing</a></h1>
 <h2 id="dependability"><a class="header" href="#dependability">Dependability</a></h2>
+<ul>
+<li>Dependability is the trustworthiness of a computer system such that reliance can justifiably be placed in the service it delivers</li>
+<li>It's important that we trust systems as they become more crucial to society and everyday life
+<ul>
+<li>System failures affect people</li>
+<li>Users reject unreliable systems</li>
+<li>System failures are costly</li>
+<li>Undependable systems cause information loss</li>
+</ul>
+</li>
+<li>Reliability is a measure of how likely a system is to provide its service for a specified period of time</li>
+<li><em>Perceived</em> reliability is how reliable the system actually appears to users
+<ul>
+<li>The two differ because systems may be unreliable in ways users do not see</li>
+</ul>
+</li>
+<li>There are a number of ways to measure reliability
+<ul>
+<li>Probability of failure on demand - how likely is it that a request will fail</li>
+<li>Rate of occurrence of failures - how many failures will we expect to see in a fixed time period</li>
+<li>Mean time to failure - how long can system run without failing</li>
+<li>Availability - if a request is made to a system, what is the probability it will be operational</li>
+</ul>
+</li>
+<li>Attributes of dependability:
+<ul>
+<li>Availability - likeliness a service is ready for use when invoked</li>
+<li>Reliability - a measure of how likely system is to provide it's designated service for a specified period of time</li>
+<li>Safety - extent to which system can operate without causing damage or danger to its environment</li>
+<li>Confidentiality - don't disclose undue information to unauthorised entities</li>
+<li>Integrity - capacity of a system to ensure absence of improper alterations with regard to the modification or deletion of information</li>
+<li>Maintanability - a function of time representing the probability that a failed computer system will be repaird in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> time or less</li>
+</ul>
+</li>
+<li>Some system properties are directly related to dependability:
+<ul>
+<li>Repairability - how easy is the system to fix when it breaks?</li>
+<li>Future maintanability - is it economical to add new requirements and keep system relevant?</li>
+<li>Error tolerance - system must be able to avoid errors when the user inputs data</li>
+</ul>
+</li>
+<li>A fault is the cause of an error</li>
+<li>An error is the manifestation of a fault</li>
+<li>Failure is the result of an error propagating beyond a system boundary
+<ul>
+<li>Systems can fail due to hardware/software failure, or operational failure</li>
+</ul>
+</li>
+<li>Provide dependability by:
+<ul>
+<li>Fault avoidance - write software to be robust</li>
+<li>Fault detection and correction - verification and validation processes</li>
+<li>Fault tolerance - design the system to manage faults</li>
+</ul>
+</li>
+<li>Dependable processes are designed to produce dependable software
+<ul>
+<li>Documentable - should have a well-defined model</li>
+<li>Standardised - should be applicable for many different systems</li>
+<li>Auditable - should be understandable by other people</li>
+<li>Diverse - should include redundant and diverse verification techniques</li>
+<li>Robust - should be able to recover from failures of process activities</li>
+</ul>
+</li>
+<li>System architectures should also be designed to be dependable
+<ul>
+<li>Diversity should be created by giving the same problem to different teams</li>
+<li>Protection systems
+<ul>
+<li>Specialised system monitors control system, equipment, hardware, environment</li>
+<li>Takes action if a fault is detected</li>
+<li>Moves system to safe state once problem detected</li>
+</ul>
+</li>
+<li>Self-monitoring architectures
+<ul>
+<li>Designed to monitor own operation and take action if problem detected</li>
+<li>Computations carried out in duplicate on separate channels, outputs compared</li>
+<li>If any difference then failure detected</li>
+<li>Hardware and software on channels should be diverse</li>
+</ul>
+</li>
+<li>N-version programming
+<ul>
+<li>Multiple software units each made by different teams under same specification</li>
+<li>Each version executed on separate computers</li>
+<li>Outputs are compared using a voting system</li>
+<li>High software cost so used where other dependable systems are impractical</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="system-testing"><a class="header" href="#system-testing">System Testing</a></h2>
 <h2 id="release-management"><a class="header" href="#release-management">Release Management</a></h2>
 
