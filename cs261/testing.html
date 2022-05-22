@@ -281,6 +281,90 @@
 </li>
 </ul>
 </li>
+<li>Unit tests involve initialising system with inputs and expected output, calling method, then checking the result
+<ul>
+<li>May use mock objects to make testing faster if objects have heavy dependencies</li>
+<li>Testing is expensive, should aim to be effective with test cases</li>
+<li>May miss errors that occur in interactions between objects - integration tests</li>
+</ul>
+</li>
+<li>Interface errors are the most common in complex systems
+<ul>
+<li>Interface misuse</li>
+<li>Interface misunderstanding</li>
+<li>Timing errors</li>
+<li>Guidelines for component testing:
+<ul>
+<li>Check extremes of ranges</li>
+<li>Test interface culls with null pointers</li>
+<li>Design tests that cause failure and see how failure handled</li>
+<li>Stress test</li>
+<li>Vary order order in which memory is accessed</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Goal of system testing is to check that components are compatible and interact as expected
+<ul>
+<li>Similar to integration testing but different</li>
+<li>Check full system including off-the-shelf components and components built by other teams</li>
+<li>Looking for emergent behaviour
+<ul>
+<li>The characteristics we only see when components interact</li>
+<li>Both expected and unexpected</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Test-driven development was originally part of XP but has become more mainstream
+<ul>
+<li>Tests are developed for a bit of code, write the code so the test passes, move on</li>
+<li>Writing test first helps clarify and understand functionality</li>
+<li>Simplifies regression testing, debugging, improves documentation</li>
+<li>Can be bad if you don't know enough to write the tests, or forget important test cases</li>
+<li>Most effective when developing new system</li>
+<li>Does not replace system testing</li>
+<li>Bad when concurrency involved</li>
+</ul>
+</li>
+<li>User testing is important, as it tests the system in the actual case it will be used
+<ul>
+<li>Alpha testing - early version, small group
+<ul>
+<li>During development</li>
+<li>Requirements do not reflect all factors</li>
+<li>Reduces risk of unanticipated changes to software</li>
+<li>Requires heavy user involvement</li>
+</ul>
+</li>
+<li>Beta testing - less early version, larger group
+<ul>
+<li>Test on version nearly complete</li>
+<li>Large group of users find potential issues</li>
+<li>Discovers issues in interaction between system and operating environment</li>
+<li>Can be a form of marketing</li>
+</ul>
+</li>
+<li>Acceptance testing - test release candidate with real people
+<ul>
+<li>Crucial for custom systems</li>
+<li>Customers test system with their own data, decide if acceptable</li>
+<li>Define acceptance criteria</li>
+<li>Plan the testing</li>
+<li>Derive the acceptance test cases, covering all requirements (functional and non-functional)</li>
+<li>Do the tests with the users in a deployment</li>
+<li>Negotiate tests results with customer, unlikely all will pass</li>
+<li>Customer either accepts or rejects system
+<ul>
+<li>Can be accepted conditionally</li>
+</ul>
+</li>
+<li>In XP, is no acceptance tests as customer involved throughout</li>
+<li>Best testers are typical users but can be difficult</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="release-management"><a class="header" href="#release-management">Release Management</a></h2>
 
