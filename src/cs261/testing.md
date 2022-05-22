@@ -94,5 +94,56 @@
   - Functional/black box testing is test cases derived form formal component specification
   - Control flow graph shows all possible cases for program flow
     - Used to reason about test coverage
+- Unit tests involve initialising system with inputs and expected output, calling method, then checking the result
+  - May use mock objects to make testing faster if objects have heavy dependencies
+  - Testing is expensive, should aim to be effective with test cases
+  - May miss errors that occur in interactions between objects - integration tests
+- Interface errors are the most common in complex systems
+  - Interface misuse
+  - Interface misunderstanding
+  - Timing errors
+  - Guidelines for component testing:
+    - Check extremes of ranges
+    - Test interface culls with null pointers
+    - Design tests that cause failure and see how failure handled
+    - Stress test
+    - Vary order order in which memory is accessed
+- Goal of system testing is to check that components are compatible and interact as expected
+  - Similar to integration testing but different
+  - Check full system including off-the-shelf components and components built by other teams
+  - Looking for emergent behaviour
+    - The characteristics we only see when components interact
+    - Both expected and unexpected
+- Test-driven development was originally part of XP but has become more mainstream
+  - Tests are developed for a bit of code, write the code so the test passes, move on
+  - Writing test first helps clarify and understand functionality
+  - Simplifies regression testing, debugging, improves documentation
+  - Can be bad if you don't know enough to write the tests, or forget important test cases
+  - Most effective when developing new system
+  - Does not replace system testing
+  - Bad when concurrency involved
+- User testing is important, as it tests the system in the actual case it will be used
+  - Alpha testing - early version, small group
+    - During development
+    - Requirements do not reflect all factors
+    - Reduces risk of unanticipated changes to software
+    - Requires heavy user involvement
+  - Beta testing - less early version, larger group
+    - Test on version nearly complete
+    - Large group of users find potential issues
+    - Discovers issues in interaction between system and operating environment
+    - Can be a form of marketing
+  - Acceptance testing - test release candidate with real people
+    - Crucial for custom systems
+    - Customers test system with their own data, decide if acceptable
+    - Define acceptance criteria
+    - Plan the testing
+    - Derive the acceptance test cases, covering all requirements (functional and non-functional)
+    - Do the tests with the users in a deployment
+    - Negotiate tests results with customer, unlikely all will pass
+    - Customer either accepts or rejects system
+      - Can be accepted conditionally
+    - In XP, is no acceptance tests as customer involved throughout
+    - Best testers are typical users but can be difficult
 
 ## Release Management
