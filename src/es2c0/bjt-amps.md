@@ -84,7 +84,7 @@ The hybrid-pi model of this circuit looks like, as without the collector the cir
 
 ![](./img/emitter-follower-model.png)
 
-The output voltage is the voltage accross the emitter resistor, and as $i_E = (1+\beta) i_v$:
+The output voltage is the voltage accross the emitter resistor, and as $i_E = (1+\beta) i_b$:
 
 $$
 V_o = i_b (1+ \beta) R_E
