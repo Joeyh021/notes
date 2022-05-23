@@ -1,5 +1,70 @@
 # Human Computer Interaction
 
-## A Brief History of Microsoft Windows
-
-whatever other bullshit goes here
+- The success of software is determined by the people who use it
+- Attention is important, as we have to make use of it to make good UIs
+  - Can force or divide attention, or make use of involuntary attention
+  - Selective attention is when we focus on a particular stimuli
+  - Sustained attention is our ability to focus on a single task for a long period of time
+  - Divided attention is our ability to focus on multiple things at once, can depend on how complex tasks are
+  - Executive attention is a more organised version of sustained attention, when have a clear goal/plan and keep track of steps
+- Memory is important, have to make UIs intuitive and easy to remember
+  - Consider the context of the task - how much attention can we afford to give?
+  - Three components to memory:
+    - Sensory stores - visual and auditory stores hold info before it enters working memory
+    - Working memory - short term memory that holds transitory info and makes it available for further processing
+      - Decays rapidly and has limited capacity
+      - Most key in UI design
+    - Long-term memory - holds info for long term storage
+      - Episodic memory is knowledge of events and experiences
+      - Semantic memory is a record of facts, concepts and skills
+  - Decrease cognitive load to make UI sparse and keep as few things as possible in short term memory
+- Cognition is the process by which we gain knowledge
+- Norman's human action cycle describes the actions people take when interacting with computer systems
+  - Steps:
+    - Form a goal - user decides what they want to accomplish
+    - Intention to act - user makes their intent explicit, considers options they could choose to achieve their goal
+    - Planning to act - user chooses an action
+    - Execution - user executed the action
+    - Feedback - user receives feedback on their action
+    - Interpret feedback - user makes their own interpretation of feedback compared to their expectations
+    - Evaluate outcome - user determines if they have achieved their goal
+  - Gulf of evaluation - the gap which must be crossed to interpret a UI
+    - Important to minimise cognitive load so UI is easy to evaluate
+  - Gulf of execution - the gap between the user's goals and the means to execute the goals
+    - Number of steps it takes to complete an action
+    - Should minimise for common tasks
+  - Can extract four goals from the cycle:
+    - Provide visibility
+    - Provide good mappings
+    - Provide a good conceptual model
+    - Provide feedback
+- Gestalt's laws or perceptual organisation are a set of principles around human visual perception
+  - Figure ground principle - people tend to segment their vision into the figure and the ground, the figure being the focus
+  - Similarity principle - if two things look similar we assume they behave the same way, form informs function
+  - Proximity principle - if two objects are close together they must be related, often overrides other visual attributes
+  - Common region principle - similar to proximity, if we have objects in a bordered region we assume they are related
+  - Continuity principle - objects on a line or curve are perceived as related
+  - Closure principle - complex arrangements can be seen as single patterns (eg, the blanks in the shapes showing a tiger)
+  - Focal point principle - will be drawn to the most obvious bit of an image first
+- Affordances are what an object allows us to do
+  - Important to make them as clear as possible to the user
+  - Signifiers are cues/hints about an objects affordances
+    - ie, a save icon means you can save a file
+  - Can be perceptible or invisible
+  - Many exist by convention
+- Several usability concepts impact system design
+  - Feedback - give user visual/auditory feedback on actions performed
+  - Constraint - restrain users actions (gaussian blur)
+  - Mapping - relationship between controls and their effects (a trash can icon)
+  - Consistency - similar operations should use similar elements for similar tasks
+- Neilsons usability principles:
+  - Visibility of system status
+  - Match system and real world - use familiar language to user
+  - User control and freedom - give escape routes such as an undo button
+  - Consistency and standards (especially consistency in the use of language)
+  - Help user recognise and recover from error
+  - Error prevention - Are you sure?” dialogue
+  - Recognition over recall of action flows
+  - Flexibility and efficiency of use - eg, macros for advanced users
+  - Aesthetic and minimalist design
+  - Provide help and documentation
