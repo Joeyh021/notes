@@ -1,6 +1,4 @@
-# Project Management
-
-## Software Methodologies
+# Requirements & Software Methodologies
 
 - Formal guidelines on how software should be engineered
 - Software process model is a sequence of activities that leads to the production of a software product
@@ -15,6 +13,9 @@
 - Agile
   - Incremental planning
   - More adaptable to change
+
+## Plan-Based Methodologies
+
 - Waterfall model has a strict linear ordering of processes
   - Each stage must be completed before moving on
   - If anything changes in the plan, go back to the start again
@@ -57,20 +58,9 @@
   - Rely instead on off the shelf components (libraries, frameworks)
   - Include component analysis in development flow, identify library/framework
   - Requirements may have to accommodate available components
-- First stage in any process is software specification - requirements engineering
-  - Requires that we define the services required from the system
-  - Identify constraints on operation and development
-  - Produce a requirements document
-    - End user facing and system developer facing - possibly two documents
-  - Feasibility study determines that task is feasible and cost effective
-  - Requirements elicitation and analysis derives the system requirements
-    - Look at existing docs
-    - Talk to customer
-    - Discuss features
-    - Possibly prototype
-  - Requirements specification translates information gathered in elicitation into formal documents
-  - Requirements validation ensures requirements are achievable and valid
-  - Need to ensure customer signs off requirements
+
+## Agile Methodologies
+
 - Agile development is a principle that defines a set of methodologies
   - Interleaves specification, design and implementation
   - System developed as a series of versions
@@ -121,6 +111,20 @@
 - Enable (semi-)cost accurate specification
 - Important to distinguish what is built from how it is built
 - Requirements act as a bridge between customers and developers
+- First stage in any process is software specification - requirements engineering
+  - Requires that we define the services required from the system
+  - Identify constraints on operation and development
+  - Produce a requirements document
+    - End user facing and system developer facing - possibly two documents
+  - Feasibility study determines that task is feasible and cost effective
+  - Requirements elicitation and analysis derives the system requirements
+    - Look at existing docs
+    - Talk to customer
+    - Discuss features
+    - Possibly prototype
+  - Requirements specification translates information gathered in elicitation into formal documents
+  - Requirements validation ensures requirements are achievable and valid
+  - Need to ensure customer signs off requirements
   - Notion of C- and D-requirements for customer and development facing
     - Technical requirements vs idiot speak
     - C-requirements describe operation and constraints from users's point of view
