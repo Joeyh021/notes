@@ -31,6 +31,10 @@
 - An error is the manifestation of a fault
 - Failure is the result of an error propagating beyond a system boundary
   - Systems can fail due to hardware/software failure, or operational failure
+  - Types of failure include:
+    - Hardware failure: Components do not function
+    - Software failure: Errors in specification, design or implementation
+    - Operational failure: Error between the chair and the keyboard
 - Provide dependability by:
   - Fault avoidance - write software to be robust
   - Fault detection and correction - verification and validation processes
