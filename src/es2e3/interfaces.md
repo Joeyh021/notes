@@ -164,7 +164,7 @@ endmodule
   - PCIe gen 3 had a transfer rate of 8Gb/s per lane and uses a 128b/130b encoding
     - 985 MB/s
     - 1.5% encoding overhead
-    - 16 lanes (PCIe3 x16) gives about 16Gbps
+    - 16 lanes (PCIe3 x16) gives about 16GBps
 - Use in many interfaces
   - Serial ATA for disks and storage
   - Gigabit ethernet

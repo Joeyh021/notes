@@ -1,6 +1,4 @@
-# Project Management
-
-## Software Methodologies
+# Requirements & Software Methodologies
 
 - Formal guidelines on how software should be engineered
 - Software process model is a sequence of activities that leads to the production of a software product
@@ -15,6 +13,9 @@
 - Agile
   - Incremental planning
   - More adaptable to change
+
+## Plan-Based Methodologies
+
 - Waterfall model has a strict linear ordering of processes
   - Each stage must be completed before moving on
   - If anything changes in the plan, go back to the start again
@@ -57,20 +58,9 @@
   - Rely instead on off the shelf components (libraries, frameworks)
   - Include component analysis in development flow, identify library/framework
   - Requirements may have to accommodate available components
-- First stage in any process is software specification - requirements engineering
-  - Requires that we define the services required from the system
-  - Identify constraints on operation and development
-  - Produce a requirements document
-    - End user facing and system developer facing - possibly two documents
-  - Feasibility study determines that task is feasible and cost effective
-  - Requirements elicitation and analysis derives the system requirements
-    - Look at existing docs
-    - Talk to customer
-    - Discuss features
-    - Possibly prototype
-  - Requirements specification translates information gathered in elicitation into formal documents
-  - Requirements validation ensures requirements are achievable and valid
-  - Need to ensure customer signs off requirements
+
+## Agile Methodologies
+
 - Agile development is a principle that defines a set of methodologies
   - Interleaves specification, design and implementation
   - System developed as a series of versions
@@ -121,6 +111,20 @@
 - Enable (semi-)cost accurate specification
 - Important to distinguish what is built from how it is built
 - Requirements act as a bridge between customers and developers
+- First stage in any process is software specification - requirements engineering
+  - Requires that we define the services required from the system
+  - Identify constraints on operation and development
+  - Produce a requirements document
+    - End user facing and system developer facing - possibly two documents
+  - Feasibility study determines that task is feasible and cost effective
+  - Requirements elicitation and analysis derives the system requirements
+    - Look at existing docs
+    - Talk to customer
+    - Discuss features
+    - Possibly prototype
+  - Requirements specification translates information gathered in elicitation into formal documents
+  - Requirements validation ensures requirements are achievable and valid
+  - Need to ensure customer signs off requirements
   - Notion of C- and D-requirements for customer and development facing
     - Technical requirements vs idiot speak
     - C-requirements describe operation and constraints from users's point of view
@@ -183,98 +187,3 @@
   - Software not produced to do anything illegal or evil
   - Work completed in best interest of customer
 
-## Project Management
-
-- Software projects often fail, for many reasons
-  - Requirements gathering was poor
-  - Project or deadline was unrealistic
-  - Insufficient budget (escalating costs)
-  - Poor communicaton between team and customer
-  - Poor testing
-  - Team member slacking
-- Good project management is essential to ensure a project remains on schedule and in budget
-  - Delive software on time
-  - Keep costs within budge
-  - Meet customer expectations
-  - Maintain a happy and well-functioning team
-    - Motivating people is important
-- Project manager resonsible for
-  - Project planning
-  - Reporting
-  - Risk management
-  - Project management
-- Different roles within teams have different responsibilities
-  - Project manager
-  - Business analyst deals with customers and specifies project direction
-  - Software architect develops design of software, taking into account customer requirements
-  - Designer is a creative person responsible for look and feel of product
-  - Developer actually writes the code
-  - Tested applies various testing techniques to verify functionality during and after development
-- Different ways to organise groups teams
-  - Informal groups can be successful when most group members are experienced
-    - Decisions made by concensus
-    - Lack of experience can lead to project failure
-  - Hierarchical groups have a leader and management levels
-    - Work best when system can be broken into subproblems
-    - Rare due to changing requirements
-- Risk management is the identifaction, assessment and prioritisation of risks
-  - 4 Steps:
-    - Risk identification - list potential risks
-    - Risk analysis - prioritise risks
-    - Planning - avoidance and contingency plans
-    - Monitoring - risk assessment
-  - Risks can be grouped by what they affect:
-    - Project risks - affecting the project schedule or resources
-    - Product risks - affecting the software quality or performance
-    - Business risks - affecting the organisation
-  - Common softeng risks include:
-    - Staff turnover (project)
-    - Hardware unavailability (project)
-    - Specification delays (project and product)
-    - Tool underperformance (product)
-    - Management change (project)
-    - Requirements change (project and product)
-    - Size/complexity underestimation (project and product)
-    - Technology change (business)
-    - Product competition (business)
-  - Risks are considered and their severity judged:
-    - Catastrophic - threaten survival of project
-    - Serious - would cause major delays
-    - Tolerable - delays, but within contingency
-    - Insignificant
-  - Risk planning involves 3 things
-    - Avoid the risk - reduce probability of risk happening
-    - Minimisation - reduce impact of risk
-    - Contingency plans - make sure plan in place to deal with risk
-  - Risk registers are common:
-    - Show the risk, how has been planned for
-    - Inherent risk is severity if not planned for
-    - Residual risk is severity taking into account plans
-    - Cannot mitigate all risks
-- Project planning
-  - Managers must break down problems into parts, assign parts, and deal with problems that arise
-  - Project plan communicates this to team and stakeholders
-  - 3 stages:
-    - Proposal stage, planning to ensure have necessary resources
-    - Startup stage, planning who will work on project and how it will be broken down
-    - Periodical planning, plans modifier through project in reaction to events
-  - Scheduling is key
-    - Identify activities - separate tasks and decide when will be executed
-    - Identify activity dependencies - reduce dependencies between tasks
-    - Estimate resources - how much time/effort/people will each task take
-    - Allocate people and create project charts
-  - Gantt charts show tasks listed vertically against time horizontally
-  - Activity networks are task based, showing duration and logical relationships between tasks
-    - Critical path is path for an MVP
-    - Total float is the amount of time something can be delayed without delaying project
-      - Only for non-critical tasks
-    - Drag is the possible delay on critical path
-  - Estimating how long a project takes is hard
-    - Can either be experience-based, using a rough guesstimate
-    - Algorithmic cost-based approaches exist but are rarely accurate
-- Measuring Success
-  - Two parts
-    - How well does project meet spec (unit/system testing)
-      - Measuring against requirements is quantitative
-    - How well does it meet customer expectatitons (user acceptance testing)
-      - More qualitative - can't be easily determined
