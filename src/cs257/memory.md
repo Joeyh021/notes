@@ -48,9 +48,9 @@
 
 - A collection of multiple DRAM chips grouped to form a memory bank
 - $n$ banks can service $n$ requests simultaneously, increading memory read/write rates by a factor of $n$
-- If consecutive words of memory are stored in different banks, the transfer of a block of memory is speeded up
+- If consecutive words of memory are stored in different banks, the transfer of a block of memory is sped up
 - Distributing addresses among memory units/banks is called interleaving
-  - Interleaving addresses among n memory units is known as n-way interleaving
+  - Interleaving addresses among $n$ memory units is known as $n$-way interleaving
 - Most effective when the number of memory banks is equal to number of words in a cache line
 
 ## Virtual Memory
