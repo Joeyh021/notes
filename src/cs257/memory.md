@@ -96,8 +96,8 @@
   - Average address translation time $t_t = t_{tlb} + (1-H_{tlb})t_{tlb}$
   - TLB miss ratio usually low, less than 0.01
 - Page size $S_p$ has an impact on memory space utilisation factor
-  - Too small, then excessive internal fragmentation
-  - Too large, then page tables become large and reduces space utilisation
+  - Too large, then excessive internal fragmentation
+  - Too small, then page tables become large and reduces space utilisation
   - $S_s$ is the segment size in words, so when $S_s > S_p$, the last page assigned to a segment will contain on average $S_p/2$ words
   - Size of the page table associated with each segment is approx $S_s/S_p$ words, assuming each table entry is 1 word
   - Memory overhead for each segment is $S= \frac{S_p}{2} + \frac{S_s}{S_p}$
