@@ -160,7 +160,7 @@
     - With write through, every write operation to cache is repeated to main memory in parallel
       - Adds overhead to write to memory, but usually there are several reads between each write
       - Average access time $t_a = t_c + (1-h)t_b + w(t_m-t_c) = (1-w)t_c + (1-h+w)t_m$
-        - Assumes $t_b = t_m$ is time to transfer block to cache, and $w$ is fraction of write references
+        - Assumes $t_b = t_m$ is time to transfer block to cache, and $w$ is the fraction of references that are writes
       - Main memory write operation must complete before any further cache operations
         - If size of block matches datapath width, then whole block can be transferred in one operation, $t_b = t_m$
           - If not, then $b$ transfers are required and $t_b = b t_m$
@@ -170,9 +170,13 @@
     - With write back, a write operation to main memory is performed only at block replacement time
       - Increases efficiency if variables are changed a number of times
       - Simple write back refers to always writing back a block when a swap is required, even if data is unaltered
+      - Average access time becomes $t_a = t_c + 2(1-h)t_b$
+        - x2 because you write the block back then fetch a new one
       - Tagged write back only writes back a block if the contents have altered
         - 1-bit tag stored with each block, and is set when block altered
         - Tags examined at replacement time
+        - Access time $t_1 = t_c + (1-h)t_b + w_b(1-h)t_b$
+          - $w_b$ is the probability a block has been altered
       - Write buffers can also be implemented
 - Most modern processors have at least two cache levels
   - Normal memory hierarchy principles apply, though on an L2 miss data is written to L1 and L2
