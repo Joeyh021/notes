@@ -126,7 +126,7 @@
       - A diagram of all pipeline states and changes starting with the initial collision vector
       - Shifting the collision vector to the right gives the next state
         - If shifted vector has $C_0 = 1$, cannot initiate
-        - If $C_0=1$, then can do new initiation, new vector is bitwise OR of shifted vector and initial vector
+        - If $C_0=0$, then can do new initiation, new vector is bitwise OR of shifted vector and initial vector
       - State diagram can be reduced to show only changes where initiations are taken
         - Numbers on edges indicate number of clock periods to reach the next tate shown
         - Can identify cycles in graph
