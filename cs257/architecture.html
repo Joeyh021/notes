@@ -272,14 +272,12 @@
 </ul>
 <h2 id="pipelining"><a class="header" href="#pipelining">Pipelining</a></h2>
 <ul>
-<li>
-<p>The problem with an instruction/execute pipeline is contention over memory access</p>
+<li>The problem with an instruction/execute pipeline is contention over memory access
 <ul>
 <li>Overcome with interleaved memory</li>
 </ul>
 </li>
-<li>
-<p>Two possible methods of controlling the transfer of information between pipeline stages</p>
+<li>Two possible methods of controlling the transfer of information between pipeline stages
 <ul>
 <li>Asynchronously using handshake signals
 <ul>
@@ -289,11 +287,8 @@
 <li>Synchronously, where there are latches between each stage all synced to a clock</li>
 </ul>
 </li>
-<li>
-<p>Example 5-stage I/E pipeline: fetch instruction, decode instruction, fetch operands, execute instruction, store results</p>
-</li>
-<li>
-<p>Pipelining assumes the only interaction between stages is the passage of information, but there are 3 major things that can cause hazards and stall the pipeline</p>
+<li>Example 5-stage I/E pipeline: fetch instruction, decode instruction, fetch operands, execute instruction, store results</li>
+<li>Pipelining assumes the only interaction between stages is the passage of information, but there are 3 major things that can cause hazards and stall the pipeline
 <ul>
 <li>Structural hazards, resource conflicts where two stages wish to use the same resource, ie a memory port
 <ul>
@@ -333,23 +328,18 @@
 <li>Data hazards, where an instruction depends on the result of a previous instruction that has not yet completed</li>
 </ul>
 </li>
-<li>
-<p>Pipeline clock period is determined by the slowest stage, usually execution</p>
+<li>Pipeline clock period is determined by the slowest stage, usually execution
 <ul>
 <li>Pipeline execution unit separately or have multiple execution units</li>
 </ul>
 </li>
-<li>
-<p>Sometimes useful to add feedback between stages (recursion), where the output of one stage becomes the input to a previous one</p>
+<li>Sometimes useful to add feedback between stages (recursion), where the output of one stage becomes the input to a previous one
 <ul>
 <li>Used in accumulation</li>
 </ul>
 </li>
-<li>
-<p>Alternative designs are always possible, which come with their own performance tradeoffs</p>
-</li>
-<li>
-<p>Space-time diagrams show pipeline usage</p>
+<li>Alternative designs are always possible, which come with their own performance tradeoffs</li>
+<li>Space-time diagrams show pipeline usage
 <ul>
 <li>Efficiency <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> = (busy area)/(total area)
 <ul>
@@ -364,8 +354,7 @@
 </li>
 </ul>
 </li>
-<li>
-<p>Complex pipelines with feedback and differently clocked stages can be difficult to design and optimise</p>
+<li>Complex pipelines with feedback and differently clocked stages can be difficult to design and optimise
 <ul>
 <li>Reservation tables are space-time diagrams that show where data can be admitted to the pipeline
 <ul>
