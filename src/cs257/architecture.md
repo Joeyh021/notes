@@ -105,7 +105,6 @@
     - $n$ is number of stages, $N$ is instructions executed
     - As $N \to \infty$, $S(n) \to \n$
 - Complex pipelines with feedback and differently clocked stages can be difficult to design and optimise
-
   - Reservation tables are space-time diagrams that show where data can be admitted to the pipeline
     - `X`s in adjacent columns of the same row show that stages operate for more than one clock period
     - More than one `X`s in a row not next to each other show feedback
