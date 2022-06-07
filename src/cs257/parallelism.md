@@ -364,7 +364,7 @@
     - Single virtual networking
     - Single memory space
     - Single job-management system
-    - Single U/I
+    - Single UI
     - Single I/O space
     - Single Process space
     - Check pointing, to save the process state and intermediate results
