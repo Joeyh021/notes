@@ -66,7 +66,7 @@ try {
 }
 
 // Get string as html
-let html = marked(data);
+let html = marked.marked(data);
 
 // Parse into dom object
 const $ = cheerio.load(html);
@@ -92,7 +92,9 @@ $(".equations").each(function () {
         //Title
         string += `| [${$(this).text()}](#${$(this).attr("id")}) | `;
         try {
-            string += `$${this.nextSibling.nextSibling.children[0].data.split("$$")[1]}$ | \n`;
+            let temp = this.nextSibling.nextSibling.children[0].data.split("$$")[1];
+            temp = temp.trim();
+            string += `$${temp}$ | \n`;
         } catch (error) {
             string += `ERR | \n`;
         }
