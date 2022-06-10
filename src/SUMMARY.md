@@ -95,6 +95,7 @@
   - [MOSFET Amplifiers](./es2c0/mosfet-amps.md)
   - [Differential Amplifiers](./es2c0/differential.md)
   - [Op-Amp Circuits](./es2c0/opamps.md)
+  - [Equation Reference](./es2c0/equations.md)
 - [ES2C6](./es2c6/index.md)
   - [Control Systems](./es2c6/control.md)
   - [Drive Systems](./es2c6/mechanics.md)
