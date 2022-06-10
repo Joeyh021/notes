@@ -27,7 +27,7 @@ Understanding FPGA architecture gives us a better understanding of the mapping p
   - Flip-flops
 - LUTs and flip-flops can be used together or independently
 - Most FPGAs are built using SRAM technology
-  - An n-input LUT is just a $2^n-1$ x 1-bit memory
+  - An n-input LUT is just a $2^n$ x 1-bit memory
   - The truth table for the function is stored in the LUT
   - When an input pattern is applied, the bit at the corresponding location is the output
 - The propagation delay through a LUT is independent of the function it computes

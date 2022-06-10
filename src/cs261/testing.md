@@ -2,6 +2,221 @@
 
 ## Dependability
 
+- Dependability is the trustworthiness of a computer system such that reliance can justifiably be placed in the service it delivers
+- It's important that we trust systems as they become more crucial to society and everyday life
+  - System failures affect people
+  - Users reject unreliable systems
+  - System failures are costly
+  - Undependable systems cause information loss
+- Reliability is a measure of how likely a system is to provide its service for a specified period of time
+- _Perceived_ reliability is how reliable the system actually appears to users
+  - The two differ because systems may be unreliable in ways users do not see
+- There are a number of ways to measure reliability
+  - Probability of failure on demand - how likely is it that a request will fail
+  - Rate of occurrence of failures - how many failures will we expect to see in a fixed time period
+  - Mean time to failure - how long can system run without failing
+  - Availability - if a request is made to a system, what is the probability it will be operational
+- Attributes of dependability:
+  - Availability - likeliness a service is ready for use when invoked
+  - Reliability - a measure of how likely system is to provide it's designated service for a specified period of time
+  - Safety - extent to which system can operate without causing damage or danger to its environment
+  - Confidentiality - don't disclose undue information to unauthorised entities
+  - Integrity - capacity of a system to ensure absence of improper alterations with regard to the modification or deletion of information
+  - Maintanability - a function of time representing the probability that a failed computer system will be repaird in $t$ time or less
+- Some system properties are directly related to dependability:
+  - Repairability - how easy is the system to fix when it breaks?
+  - Future maintanability - is it economical to add new requirements and keep system relevant?
+  - Error tolerance - system must be able to avoid errors when the user inputs data
+- A fault is the cause of an error
+- An error is the manifestation of a fault
+- Failure is the result of an error propagating beyond a system boundary
+  - Systems can fail due to hardware/software failure, or operational failure
+  - Types of failure include:
+    - Hardware failure: Components do not function
+    - Software failure: Errors in specification, design or implementation
+    - Operational failure: Error between the chair and the keyboard
+- Provide dependability by:
+  - Fault avoidance - write software to be robust
+  - Fault detection and correction - verification and validation processes
+  - Fault tolerance - design the system to manage faults
+- Dependable processes are designed to produce dependable software
+  - Documentable - should have a well-defined model
+  - Standardised - should be applicable for many different systems
+  - Auditable - should be understandable by other people
+  - Diverse - should include redundant and diverse verification techniques
+  - Robust - should be able to recover from failures of process activities
+- System architectures should also be designed to be dependable
+  - Diversity should be created by giving the same problem to different teams
+  - Protection systems
+    - Specialised system monitors control system, equipment, hardware, environment
+    - Takes action if a fault is detected
+    - Moves system to safe state once problem detected
+  - Self-monitoring architectures
+    - Designed to monitor own operation and take action if problem detected
+    - Computations carried out in duplicate on separate channels, outputs compared
+    - If any difference then failure detected
+    - Hardware and software on channels should be diverse
+  - N-version programming
+    - Multiple software units each made by different teams under same specification
+    - Each version executed on separate computers
+    - Outputs are compared using a voting system
+    - High software cost so used where other dependable systems are impractical
+
 ## System Testing
 
-## Release Management
+- Testing shows that a program does what it was intended to do
+- Highlights defects before a software is in use
+- Forms a part of verification and validation
+- Demonstrates software meets requirements
+- Only shows presence of, not lack of error
+- Verification - does a product meet spec?
+- Validation - does it meet customer's needs?
+- Error - human action that produces incorrect result
+- Failure - deviation of software from expectations
+- Defects/bugs - manifestation of a software error
+- Testing - exercise software to assess if it meets requirements
+- Test case - a set of inputs, preconditions and expected outcomes developed to exercise compliance against a specific requirement
+- Reliability - probability software will not cause failure for a specified time
+- Test plan - record of the application of test cases and rationale
+- System testing - covers both functional and non-functional requirements
+- Static testing is testing without execution
+  - Code review, inspection
+  - Works well with pair programming
+  - Static testing is verification - does code meet spec?
+  - Static code analysis are becoming more common
+  - Not limited to code, can also consider documents
+  - Should use inspection:
+    - Errors interact and hide other errors, inspection can uncover all errors
+    - Code does not need to be complete to inspect it
+    - Allows to consider code quality too
+    - 90% of errors can be found through inspection
+- Dynamic testing executes code with given test cases
+  - Inspections bad at discovering timing and performance based issues
+  - Execute code with given test case
+  - Structural/white box testing is test cases derived from control/data flow of system
+  - Involves validation - does product meet needs of customer?
+  - Functional/black box testing is test cases derived form formal component specification
+  - Control flow graph shows all possible cases for program flow
+    - Used to reason about test coverage
+- Unit tests involve initialising system with inputs and expected output, calling method, then checking the result
+  - May use mock objects to make testing faster if objects have heavy dependencies
+  - Testing is expensive, should aim to be effective with test cases
+  - May miss errors that occur in interactions between objects - integration tests
+- Interface errors are the most common in complex systems
+  - Interface misuse
+  - Interface misunderstanding
+  - Timing errors
+  - Guidelines for component testing:
+    - Check extremes of ranges
+    - Test interface culls with null pointers
+    - Design tests that cause failure and see how failure handled
+    - Stress test
+    - Vary order order in which memory is accessed
+- Goal of system testing is to check that components are compatible and interact as expected
+  - Similar to integration testing but different
+  - Check full system including off-the-shelf components and components built by other teams
+  - Looking for emergent behaviour
+    - The characteristics we only see when components interact
+    - Both expected and unexpected
+- Test-driven development was originally part of XP but has become more mainstream
+  - Tests are developed for a bit of code, write the code so the test passes, move on
+  - Writing test first helps clarify and understand functionality
+  - Simplifies regression testing, debugging, improves documentation
+  - Can be bad if you don't know enough to write the tests, or forget important test cases
+  - Most effective when developing new system
+  - Does not replace system testing
+  - Bad when concurrency involved
+- User testing is important, as it tests the system in the actual case it will be used
+  - Alpha testing - early version, small group
+    - During development
+    - Requirements do not reflect all factors
+    - Reduces risk of unanticipated changes to software
+    - Requires heavy user involvement
+  - Beta testing - less early version, larger group
+    - Test on version nearly complete
+    - Large group of users find potential issues
+    - Discovers issues in interaction between system and operating environment
+    - Can be a form of marketing
+  - Acceptance testing - test release candidate with real people
+    - Crucial for custom systems
+    - Customers test system with their own data, decide if acceptable
+    - Define acceptance criteria
+    - Plan the testing
+    - Derive the acceptance test cases, covering all requirements (functional and non-functional)
+    - Do the tests with the users in a deployment
+    - Negotiate tests results with customer, unlikely all will pass
+    - Customer either accepts or rejects system
+      - Can be accepted conditionally
+    - In XP, is no acceptance tests as customer involved throughout
+    - Best testers are typical users but can be difficult
+
+## Human-Computer Interaction
+
+- The success of software is determined by the people who use it
+- Attention is important, as we have to make use of it to make good UIs
+  - Can force or divide attention, or make use of involuntary attention
+  - Selective attention is when we focus on a particular stimuli
+  - Sustained attention is our ability to focus on a single task for a long period of time
+  - Divided attention is our ability to focus on multiple things at once, can depend on how complex tasks are
+  - Executive attention is a more organised version of sustained attention, when have a clear goal/plan and keep track of steps
+- Memory is important, have to make UIs intuitive and easy to remember
+  - Consider the context of the task - how much attention can we afford to give?
+  - Three components to memory:
+    - Sensory stores - visual and auditory stores hold info before it enters working memory
+    - Working memory - short term memory that holds transitory info and makes it available for further processing
+      - Decays rapidly and has limited capacity
+      - Most key in UI design
+    - Long-term memory - holds info for long term storage
+      - Episodic memory is knowledge of events and experiences
+      - Semantic memory is a record of facts, concepts and skills
+  - Decrease cognitive load to make UI sparse and keep as few things as possible in short term memory
+- Cognition is the process by which we gain knowledge
+- Norman's human action cycle describes the actions people take when interacting with computer systems
+  - Steps:
+    - Form a goal - user decides what they want to accomplish
+    - Intention to act - user makes their intent explicit, considers options they could choose to achieve their goal
+    - Planning to act - user chooses an action
+    - Execution - user executed the action
+    - Feedback - user receives feedback on their action
+    - Interpret feedback - user makes their own interpretation of feedback compared to their expectations
+    - Evaluate outcome - user determines if they have achieved their goal
+  - Gulf of evaluation - the gap which must be crossed to interpret a UI
+    - Important to minimise cognitive load so UI is easy to evaluate
+  - Gulf of execution - the gap between the user's goals and the means to execute the goals
+    - Number of steps it takes to complete an action
+    - Should minimise for common tasks
+  - Can extract four goals from the cycle:
+    - Provide visibility
+    - Provide good mappings
+    - Provide a good conceptual model
+    - Provide feedback
+- Gestalt's laws or perceptual organisation are a set of principles around human visual perception
+  - Figure ground principle - people tend to segment their vision into the figure and the ground, the figure being the focus
+  - Similarity principle - if two things look similar we assume they behave the same way, form informs function
+  - Proximity principle - if two objects are close together they must be related, often overrides other visual attributes
+  - Common region principle - similar to proximity, if we have objects in a bordered region we assume they are related
+  - Continuity principle - objects on a line or curve are perceived as related
+  - Closure principle - complex arrangements can be seen as single patterns (eg, the blanks in the shapes showing a tiger)
+  - Focal point principle - will be drawn to the most obvious bit of an image first
+- Affordances are what an object allows us to do
+  - Important to make them as clear as possible to the user
+  - Signifiers are cues/hints about an objects affordances
+    - ie, a save icon means you can save a file
+  - Can be perceptible or invisible
+  - Many exist by convention
+- Several usability concepts impact system design
+  - Feedback - give user visual/auditory feedback on actions performed
+  - Constraint - restrain users actions (gaussian blur)
+  - Mapping - relationship between controls and their effects (a trash can icon)
+  - Consistency - similar operations should use similar elements for similar tasks
+- Neilsons usability principles:
+  - Visibility of system status
+  - Match system and real world - use familiar language to user
+  - User control and freedom - give escape routes such as an undo button
+  - Consistency and standards (especially consistency in the use of language)
+  - Help user recognise and recover from error
+  - Error prevention - Are you sure?” dialogue
+  - Recognition over recall of action flows
+  - Flexibility and efficiency of use - eg, macros for advanced users
+  - Aesthetic and minimalist design
+  - Provide help and documentation

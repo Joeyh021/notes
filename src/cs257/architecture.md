@@ -105,7 +105,6 @@
     - $n$ is number of stages, $N$ is instructions executed
     - As $N \to \infty$, $S(n) \to \n$
 - Complex pipelines with feedback and differently clocked stages can be difficult to design and optimise
-
   - Reservation tables are space-time diagrams that show where data can be admitted to the pipeline
     - `X`s in adjacent columns of the same row show that stages operate for more than one clock period
     - More than one `X`s in a row not next to each other show feedback
@@ -126,7 +125,7 @@
       - A diagram of all pipeline states and changes starting with the initial collision vector
       - Shifting the collision vector to the right gives the next state
         - If shifted vector has $C_0 = 1$, cannot initiate
-        - If $C_0=1$, then can do new initiation, new vector is bitwise OR of shifted vector and initial vector
+        - If $C_0=0$, then can do new initiation, new vector is bitwise OR of shifted vector and initial vector
       - State diagram can be reduced to show only changes where initiations are taken
         - Numbers on edges indicate number of clock periods to reach the next tate shown
         - Can identify cycles in graph

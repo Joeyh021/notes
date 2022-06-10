@@ -1,163 +1,215 @@
-# System Design & Implementation
-
-## System Design & Modelling (UML)
-
-- UML was developed in the 90s as a general purpose modelling language, providing a formal scheme for describing system models.
-  - Static/structural view of system (objects and their attributes)
-  - Dynamic/behavioural view - dynamic behaviour of system (collaboration betwen objects and changing state)
-- Different perspectives for system modelling include:
-  - External - the context of the system
-  - Interaction
-    - Between system and it's environment
-    - Between components of system
-  - Structural
-    - Organisation of system
-    - Structure of data being processed
-  - Behavioural - dynamic behaviour of the system
-- Creating a static view of a system requires identifying entities, which can be done in one of four ways
-  - Grammatical approach based on natural language of the system
-    - Identify key items from the description of the problem
-  - Identification of tangible things in the application domain
-  - Behavioural approach to identify objects
-  - Scenario-based, where objects, attributes and methods in each scenario are identified
-- Class diagram shows system classes and their relationships
-  - Show structure of design and organisation of components
-  - UML formal notation move requirements closer to a mathematical description
-  - Forces us to think about the language used in D-requirements
-  - Class name is shown in diagram
-  - Attributes shown with types
-  - Methods shown with return and argument types
-  - Use the line with the crows foot for showing one-to-many or many-to-many
-  - Use ranges to indicate how many objects there are
-- Activity diagrams are flowcharts to represent workflows of stepwise activities within the system
-  - Involves actions, decision boxes, bars to introduce parallel actions
-- Use case diagram represents users interactions within the system, and how they interact with the components
-  - Shows events occurring within system and how users trigger them
-- Sequence diagram shows temporal interaction between processes and user
-  - Time progresses downward
-  - example in slides
-- State machine diagram shows how the state of the system changes
-  - Similar to activity diagram but some fundamental differences
-  - State diagram performs actions in response to specific events
-  - Flowchart transitions from node to node on completion of activities
-  - Executing a program graph (flowchart) results in a state graph
-  - Instructions vs states
-- Context models illustrate the operational context of the system and other systems
-  - Show links between different systems
-- System modelling encourages us to take something which may not be clear, and resolve ambiguities to late implement
-  - UML should be clear and precise
-- Writing correct class diagrams:
-  - Class name should be at the top
-    - Abstract classes go in italic
-    - Interfaces are represented \<\<interface\>\>
-  - Attributes represent internal datatypes and are optional
-  - Methods that make up public interface should be included
-    - Don't show inherited
-    - Don't show getters/setters
-  - Symbols indicate access modifier
-    - `+` - public
-    - `-` - private
-    - `#` - protected
-    - `~` - package private
-    - `/` - derived
-    - Static attributes/methos should be underlined
-  - Comments can be associated with classes, use a folded note notation
-  - Class inheritance hierarchies, drawn top down with arrows pointing to parent
-    - Solid line with black arrow for class
-    - Solid line with white arrow for abstract class
-    - Dashed line with white arrow for interface
-  - Multiplicity shown next to arrow/line ends
-    - `*` is zero or more
-    - `1` is exactly one
-    - `2..4` is between two and four
-    - `3..*` is 3 or more
-  - Include name and navigability on arrows
-  - Association (no arrow) shows classes are associated in some way
-  - White diamond shows aggregation
-  - Black diamond shows composition
-  - Dotted line shows a temporary use/dependency
-- Writing correct sequence diagrams:
-  - Participants are objects/entities
-  - Messages (arrows) are communications between objects
-  - Time moves from top to bottom
-  - Various ways of representing an object
-    - `Name:Type`, can omit either name or type
-  - Dashed vertical line is the lifetime of the object, terminated with a cross
-  - When an object is active, represented with a box
-    - Nest boxes for recursion
-  - Frame boxes allow for conditionals and loops
-- Architectural design is concerned with understanding how a system should be organised
-  - Often represented with box and line diagrams
-  - Two main uses:
-    - Facilitating discussion about system design - high level view useful for stakeholders
-    - Documenting that an architecture has been design with a complete system model
-  - Non-functional requirements refer to system as a whole, so architectural design is closely related. Considers:
-    - Performance
-    - Security
-    - Safety
-    - Availability
-    - Maintanability
-  - First need to break system down into subsystems
-  - Box/arrow diagrams show general interactions
-    - Arrows show direction of data/control
-    - May break down larger systems into subsystems
-- Patterns are a way to represent and share common knowledge
-  - Promotes reuse, allows stakeholder communication, system analysis
-  - Layered architecture structures system into layers that provide services above it
-    - More separate a system is, more independent each module is, more can localise changes
-    - Each layer relies on layer below and provides services
-    - Facilitates incremental design
-    - Layers can be replaced to improve or allow multiplatform support
-    - Can be developed layer-by-layer
-    - Separation of functionality can be hard
-    - Can have performance implications
-    - Layers depend on all layers below, can have reliability implications
-    - Useful when
-      - Building on top of existing systems
-      - When development is spread accross teams
-      - When need to add security at each layer
-  - Repository architecture has a central repository storing all data in the system
-    - Concerned with data sharing rather than structure
-    - Have large store of data used by many components
-      - Database often passive, access and control done by components
-    - All interaction done through repo - subsystems do not interact
-    - Components can be independent
-    - All data can be managed consistently
-    - Efficient means of sharing large amounts of data
-    - Single point of failure is bad
-    - Can be inefficient to have all requests going through the repository
-    - Distributing repository to scale may be difficult as need to maintain consistency in data
-    - Useful when
-      - System generates large volumes of data needed in persistent storage
-      - Data-driven systems where the inclusion of data in the repository triggers an action
-  - Pipe and filter has discrete processing components that filter data as it flows down a linear pathway (the pipe)
-    - Focuses on runtime organisation of the system
-    - Each component transforms input data to produce output
-    - Flexible - can introduce parallelism and change between batch and item-by-item execution
-    - Easy to understand and evolve
-    - Matches structure of many apps
-    - Supports reuse
-    - Flexible
-    - Requires standardised data format
-      - Modifying standard difficult
-    - Useful when:
-      - Data processing, both batch transaction based
-  - Model-View-Controller (MVC) focuses on how to interpret user interactions, update data, then present it to user
-    - Controller managers user interactions, passes them to view and model to update
-    - Model manages data, updates according to operations it is asked to perform
-    - View manages how data from model is presented to user
-    - Basis of interaction management in many web systems
-    - Each logical component deals with different aspect: presentation, interaction, data
-    - Data can be changed independently of how it is displayed
-    - Allows user to have control over how they see data without changing model
-    - Adds additional complexity to design
-    - Simple interactions require considering three different system aspects
-    - Can be hard to distribute development
-    - Portability is low due to heavy interaction
-    - Useful when:
-      - System offers multiple ways to view and interact with data
-        - Good for many types of web and mobile apps
-      - Used when future requirements for interaction and presentation of data are unknown
-        - Allows for flexibility in view without changing model
+# System Design
 
 ## Design Patterns
+
+- There are common design patterns in software that we can identify and exploit
+  - Standard solution to common programming problem
+  - Technique for making code more flexible by making it meet certain criteria
+  - Design or implementation structure that achieves a particular purpose
+  - High-level programming idiom
+  - Shorthand for describing certain aspects of program organisation
+  - Connections among program components
+  - The shape of an object model
+- Four essential elements to a design pattern
+  - A name the meaningfully refers to the pattern
+  - Description of the problem to which the pattern applies
+  - Solution describing of the parts of the design
+  - A statement of the consequences, results and tradeoffs, of applying the pattern
+- Goal of patterns is to have general solution that can be widely applied, utilising others experience in design
+- SOLID principles are five principles that improve OOP design
+  - Single responsibility
+    - Class should be responsible for single piece of functionality
+  - Open/closed
+    - Open for extension, closed for modification
+    - Once classes are complete, should add functionality by extending instead of editing
+  - Liskov substitution
+    - An object that uses a parent class can use its child classes without knowing
+    - Behavioural sub-typing
+  - Interface segregation
+    - Many specific interfaces are better than a general one
+    - No code should depend on methods it does not use
+  - Dependency inversion
+    - Ensure high level classes do not rely on functions from low level classes
+    - Interactions should rely on well-defined interfaces and go from low level to high level
+
+### Creational
+
+- Factories
+  - A factory method is a method that manufactures objects of a particular type
+  - Constructors are limited, as they only allow objects of particular type
+  - Factories can bypass this problem to generate objects of different types
+  - Can be used anywhere a constructor can
+  - Example - the bike factory that creates bike and all it's dependencies, instead of creating all manually and passing as constructor arguments
+  - Cuts down on repeated code
+  - Easy to add new variations and scenarios
+  - Have to make additional classes
+  - Factory linked to class it produces
+- Builders
+  - Help create complex objects
+  - Extract construction into a set of methods, builders
+  - Object creation happens in a series of steps, only calling the builders that we need
+  - Each sub-step is a different method that could be called by any builder
+  - Sub-steps in abstract class builder, then make concrete classes for each type of object we want to make
+  - Builders are _not_ factories, they're more flexible versions for complex classes with optional parameters
+  - Give more control over construction
+  - Can re-use code for different instances
+  - Similar to factories, require lots of new classes
+  - Code becomes longer, construction still complex but more modular
+- Prototypes
+  - Make one object, the prototype, then clone it, making copies of itself
+  - Putting the responsibility of duplication on the object itself helps us bypass issues around private/public variables
+  - Guarantees copy is identical
+  - Create a bunch of template objects, then can just clone the ones we want in each situation
+  - Don't need more classes just for creating objects
+  - Remove heavy initialisation in favour of cloning
+  - Circular references can be tricky
+  - Might have to perform heavy changes and updates on the cloned object
+
+### Structural
+
+- Proxy patterns
+  - May wish to reference an entity without instantiating it
+  - Create placeholders for other objects, often by adding another level of indirection
+  - Allows us to load on demand
+  - Example, image proxy only loads actual image when `draw()` called
+  - Uses include
+    - Virtual proxy, delay loading of resource until needed (lazy evaluation)
+    - Remote proxy, offers client functionality of an object on another server by handling networking
+    - Protection proxy, provides access control
+    - Logging proxy, keeps track of accesses and requests
+    - Caching proxy, saves results of object
+    - Smart referencing, if no client is using object it can be removed and then retrieved later (garbage collection)
+  - Can hide away parts of the service object so it can be changed or controlled
+  - Allows to manage object life cycle
+  - Provides availability if service object isn't ready or available
+  - New proxies cna be added without changing services or clients
+  - More classes so more complexity
+  - Adds another step so may result is slowdown
+- Decorator pattern
+  - Allows to add new behaviour to objects at runtime
+  - Wrap original object and add new functionality
+  - Alternative to subclassing
+  - Inheritance is static, decorator can be done at runtime
+    - Pass classes to decorator classes dependant upon what requirements are
+  - Can extend behaviour without adding new subclasses
+  - Can combine wrappers and make functionality dynamic
+  - Removing wrappers is difficult
+  - Hard to implement in order-independent way
+  - Code can look messy
+- Adaptor pattern
+  - Adaptors convert data formats we're working with to allow to use other services
+  - Instead of rewriting entire code to change data type, just adapt it
+    - Add new class that inherits original, but converts types
+  - Can do a slightly more complex version
+  - Promote single-responsibility principle
+  - New adaptors can be introduced without refactoring
+  - Depending on code size, converting original object may be cheaper
+- Flyweight pattern
+  - May have lots of objects that share properties, resulting in duplication of resources and wasting memory
+  - Hold one copy of all the properties that objects can then reference
+  - Identify resources or data that each object is referencing, then abstract it out to a static class
+  - Saves memory when lots of objects are in memory
+  - Lots of complexity
+  - May introduce additional overhead in compute time - tradeoff
+
+### Behavioural
+
+- Iterator pattern
+  - Traverse a container to access elements in order
+  - Does not expose container's data structure
+  - Allows to abstract traversal algorithms into own class
+  - New iterators can be introduced without re-designing existing code
+  - Can iterate multiple ways in parallel
+  - Not always necessary - do you really need one for a list
+  - Can be less effective for highly specialised objects
+- Observer pattern
+  - Allows an objects dependents to be notified automatically if state changes are made
+  - Can work in a push model or pull model
+  - Highly customisable, subscribers can be added/removed from what they want to be involved with
+  - `Observer` interface has `notify` method
+  - Class holds list of observing objects, calls their `notify` method when there is an update
+  - Key to many real-time systems and cornerstone of MVC architecture
+  - New subscribers can be added without redesigning the publisher
+  - Relationships can change at runtime
+  - Subscribers notified in random order
+- Memento pattern
+  - Save and restore objects without revealing details of implementation
+  - Make an object responsible for saving its own internal state
+  - Can be used to implement undo functionality for restoring state
+  - Snapshot implements a limited interface so it can be stored externally (in a caretake object) without exposing internal details
+  - Snapshot/memento stores the internal data of object and pointer to original object
+  - Caretaker handles restore
+  - Can make backups without violating encapsulation
+  - Extract out maintenance and resoration, keep original object interface simple
+  - Heavy memory cost
+  - Need caretakers to track original object life cycles to erase unneeded mementos
+- Strategy pattern
+  - Select the method to complete a task at runtime
+  - Want new object to be responsible for choosing the approach to a particular problem
+  - Have a number of classes, multiple strategies, that we can select between
+  - Original class becomes a context, doesn't know details of each strategy
+  - Route finder has many different strategies for finding routes, by car, by foot, by bus
+    - Swap out travel method in route finding class
+  - Can swap implementations at runtime
+  - Separate details of algorithm from code that uses it
+  - Composition replaces inheritance
+  - If only a few choices, no need to increase complexity
+  - Requires clinets to understand key differences between strategies to select appropriate one
+
+## Architectural Patterns
+
+- Layered architecture structures system into layers that provide services above it
+  - More separate a system is, more independent each module is, more can localise changes
+  - Each layer relies on layer below and provides services
+  - Facilitates incremental design
+  - Layers can be replaced to improve or allow multiplatform support
+  - Can be developed layer-by-layer
+  - Separation of functionality can be hard
+  - Can have performance implications
+  - Layers depend on all layers below, can have reliability implications
+  - Useful when
+    - Building on top of existing systems
+    - When development is spread accross teams
+    - When need to add security at each layer
+- Repository architecture has a central repository storing all data in the system
+  - Concerned with data sharing rather than structure
+  - Have large store of data used by many components
+    - Database often passive, access and control done by components
+  - All interaction done through repo - subsystems do not interact
+  - Components can be independent
+  - All data can be managed consistently
+  - Efficient means of sharing large amounts of data
+  - Single point of failure is bad
+  - Can be inefficient to have all requests going through the repository
+  - Distributing repository to scale may be difficult as need to maintain consistency in data
+  - Useful when
+    - System generates large volumes of data needed in persistent storage
+    - Data-driven systems where the inclusion of data in the repository triggers an action
+- Pipe and filter has discrete processing components that filter data as it flows down a linear pathway (the pipe)
+  - Focuses on runtime organisation of the system
+  - Each component transforms input data to produce output
+  - Flexible - can introduce parallelism and change between batch and item-by-item execution
+  - Easy to understand and evolve
+  - Matches structure of many apps
+  - Supports reuse
+  - Flexible
+  - Requires standardised data format
+    - Modifying standard difficult
+  - Useful when data processing
+- Model-View-Controller (MVC) focuses on how to interpret user interactions, update data, then present it to user
+  - Controller managers user interactions, passes them to view and model to update
+  - Model manages data, updates according to operations it is asked to perform
+  - View manages how data from model is presented to user
+  - Basis of interaction management in many web systems
+  - Each logical component deals with different aspect: presentation, interaction, data
+  - Data can be changed independently of how it is displayed
+  - Allows user to have control over how they see data without changing model
+  - Adds additional complexity to design
+  - Simple interactions require considering three different system aspects
+  - Can be hard to distribute development
+  - Portability is low due to heavy interaction
+  - Useful when:
+    - System offers multiple ways to view and interact with data
+      - Good for many types of web and mobile apps
+    - Used when future requirements for interaction and presentation of data are unknown
+      - Allows for flexibility in view without changing model

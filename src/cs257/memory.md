@@ -48,9 +48,9 @@
 
 - A collection of multiple DRAM chips grouped to form a memory bank
 - $n$ banks can service $n$ requests simultaneously, increading memory read/write rates by a factor of $n$
-- If consecutive words of memory are stored in different banks, the transfer of a block of memory is speeded up
+- If consecutive words of memory are stored in different banks, the transfer of a block of memory is sped up
 - Distributing addresses among memory units/banks is called interleaving
-  - Interleaving addresses among n memory units is known as n-way interleaving
+  - Interleaving addresses among $n$ memory units is known as $n$-way interleaving
 - Most effective when the number of memory banks is equal to number of words in a cache line
 
 ## Virtual Memory
@@ -96,8 +96,8 @@
   - Average address translation time $t_t = t_{tlb} + (1-H_{tlb})t_{tlb}$
   - TLB miss ratio usually low, less than 0.01
 - Page size $S_p$ has an impact on memory space utilisation factor
-  - Too small, then excessive internal fragmentation
-  - Too large, then page tables become large and reduces space utilisation
+  - Too large, then excessive internal fragmentation
+  - Too small, then page tables become large and reduces space utilisation
   - $S_s$ is the segment size in words, so when $S_s > S_p$, the last page assigned to a segment will contain on average $S_p/2$ words
   - Size of the page table associated with each segment is approx $S_s/S_p$ words, assuming each table entry is 1 word
   - Memory overhead for each segment is $S= \frac{S_p}{2} + \frac{S_s}{S_p}$
@@ -160,7 +160,7 @@
     - With write through, every write operation to cache is repeated to main memory in parallel
       - Adds overhead to write to memory, but usually there are several reads between each write
       - Average access time $t_a = t_c + (1-h)t_b + w(t_m-t_c) = (1-w)t_c + (1-h+w)t_m$
-        - Assumes $t_b = t_m$ is time to transfer block to cache, and $w$ is fraction of write references
+        - Assumes $t_b = t_m$ is time to transfer block to cache, and $w$ is the fraction of references that are writes
       - Main memory write operation must complete before any further cache operations
         - If size of block matches datapath width, then whole block can be transferred in one operation, $t_b = t_m$
           - If not, then $b$ transfers are required and $t_b = b t_m$
@@ -170,9 +170,13 @@
     - With write back, a write operation to main memory is performed only at block replacement time
       - Increases efficiency if variables are changed a number of times
       - Simple write back refers to always writing back a block when a swap is required, even if data is unaltered
+      - Average access time becomes $t_a = t_c + 2(1-h)t_b$
+        - x2 because you write the block back then fetch a new one
       - Tagged write back only writes back a block if the contents have altered
         - 1-bit tag stored with each block, and is set when block altered
         - Tags examined at replacement time
+        - Access time $t_1 = t_c + (1-h)t_b + w_b(1-h)t_b$
+          - $w_b$ is the probability a block has been altered
       - Write buffers can also be implemented
 - Most modern processors have at least two cache levels
   - Normal memory hierarchy principles apply, though on an L2 miss data is written to L1 and L2

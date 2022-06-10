@@ -17,14 +17,14 @@ However, if $Z_2$ was a capacitor $C$, $Z_2 = \frac{1}{j \omega C}$:
 $$H(j \omega) = \frac{Z_2}{Z_1 + Z_2} = \frac{1}{1 + j \omega R C}$$
 
 The gain and phase of the output are then the magnitude and argument of the transfer function, respectively:
-$$|H(j \omega)| = \frac{1}{\sqrt{(1 + \omega R C)^2}}$$
+$$|H(j \omega)| = \frac{1}{\sqrt{1 + (\omega R C)^2}}$$
 $$\angle H(j \omega) = \frac{\angle 0^{\circ}}{\tan^{-1}(\omega R C)} = -\tan^{-1}(\omega R C)$$
 
 ## Cutoff Frequency
 
 Similar to active filters, passive filters also have a cutoff frequency $f_c$. This is the point at which the power output of the circuit falls by $\frac{1}{2}$, or the output gain falls by -3dB, a factor of $\frac{1}{\sqrt{2}}$. Using the above example again (a low pass RC filter):
 
-$$|H(j \omega)| = \frac{1}{\sqrt{(1 + \omega R C)^2}} = \frac{1}{\sqrt{2}}$$
+$$|H(j \omega)| = \frac{1}{\sqrt{1 +(\omega R C)^2}} = \frac{1}{\sqrt{2}}$$
 $$2 = 1 + (\omega R C)^2$$
 $$\omega^2 = \frac{1}{R^2C^2}$$
 $$\omega = \frac{1}{RC}$$
@@ -39,7 +39,7 @@ The filter bandwith is the range of frequencies that get through the filter. Thi
 ![](./img/RC-high.png)
 
 $$H(j \omega) = \frac{j \omega R C}{1 + j \omega R C}$$
-$$|H(j \omega)| = \frac{\omega R C}{\sqrt{(1 + \omega R C)^2}}$$
+$$|H(j \omega)| = \frac{\omega R C}{\sqrt{1 + (\omega R C)^2}}$$
 $$\angle H(j \omega) = \frac{\angle 90^{\circ}}{\tan^{-1}(\omega R C)} = 90 -\tan^{-1}(\omega R C)$$
 $$f_c = \frac{1}{2\pi RC}$$
 
@@ -48,7 +48,7 @@ $$f_c = \frac{1}{2\pi RC}$$
 ![](./img/RC-low.png)
 
 $$H(j \omega) =  \frac{1}{1 + j \omega R C}$$
-$$|H(j \omega)| = \frac{1}{\sqrt{(1 + \omega R C)^2}}$$
+$$|H(j \omega)| = \frac{1}{\sqrt{1 + (\omega R C)^2}}$$
 $$\angle H(j \omega) = \frac{\angle 0^{\circ}}{\tan^{-1}(\omega R C)} = -\tan^{-1}(\omega R C)$$
 $$f_c = \frac{1}{2\pi RC}$$
 
