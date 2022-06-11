@@ -47,7 +47,7 @@ Below are some of the main equations that I have found useful to have on hand.
 
 | [Operational Amplifiers](#operational-amplifiers)  | | 
 | ----------- | -----------  | 
-| [Output of Inverting Amplifier](#output-of-inverting-amplifier) | $\frac{V_{out}}{V_{in}} = \frac{ - R_{in}}{R_F}$ | 
+| [Output of Inverting Amplifier](#output-of-inverting-amplifier) | $\frac{V_{out}}{V_{in}} = \frac{R_{in}}{R_F}$ | 
 | [Output of Non-Inverting Amplifier](#output-of-non-inverting-amplifier) | $\frac{V_{out}}{V_{in}} = 1 + \frac{ - R_{in}}{R_F}$ | 
 
 | [Filters](#filters)  | | 
@@ -270,7 +270,7 @@ $$\frac{V_{out}}{V_{in}} = \frac{ - R_{in}}{R_F}$$
 
 ### Output of Non-Inverting Amplifier
 Non-inverting amplifiers don't invert the voltage output, and use input at the non-inverting terminal of the op amp instead.
-$$\frac{V_{out}}{V_{in}} = 1 + \frac{ - R_{in}}{R_F}$$
+$$\frac{V_{out}}{V_{in}} = 1 + \frac{ R_{in}}{R_F}$$
 
 ![](./img/noninv-opamp.png)
 
