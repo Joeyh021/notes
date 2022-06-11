@@ -3,16 +3,6 @@ if [ $# -eq 1 ]
 then
     # If it is a directory, then run
     if [ -d "$1" ]; then
-        # Check node, npm, cheerio and marked are installed
-        if [ ! command -v node &> /dev/null  || ! command -v npm &> /dev/null ]
-        then
-            echo "node not installed."
-            exit
-        fi
-        
-        # Make sure cheerio and marked is installed, if not then it is installed
-        dev=$(npm list | grep cheerio || npm install cheerio --no-shrinkwrap)
-        dev=$(npm list | grep marked || npm install marked --no-shrinkwrap)
         
         
         echo "Generating tables..."
@@ -37,6 +27,9 @@ then
     then
         node generateTable.js $1 $1
     fi
+    
+    # Format Table
+    markdown-table-formatter $1
     
 else
     # No directory so run in current directory
