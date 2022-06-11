@@ -12,8 +12,9 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | [Frequency Potential Divider ($s$)](#frequency-potential-divider-s)                                                                 | $\frac{V_o}{V_i}(s) = \frac{Z_2}{Z_1 + Z_2} = \frac{sCR}{1 + 3sCR + s^2 C^2 R^2}$       |
 | [Frequency Potential Divider ($jw$)](#frequency-potential-divider-jw)                                                               | $\frac{V_o}{V_i}(jw) = \frac{j\omega CR }{1 - \omega^2 C^2 R^2 + 3j \omega CR}$         |
 | [Frequency of Unity Gain (0 phase shift)](#frequency-of-unity-gain-0-phase-shift)                                                   | $\omega_0 = \frac{1}{RC} \Rightarrow f_0 = \frac{1}{2\pi RC}$                           |
-| [60 Degrees of phase shift in CR network](#60-degrees-of-phase-shift-in-cr-network)                                                 | $\omega_{60\degree} = \frac{1}{\sqrt{3} RC}$                                            |
+| [60 Degrees of phase shift in CR network](#60-degrees-of-phase-shift-in-cr-network)                                                 | $\omega_{60\degree} = \frac{1}{sqrt{3} \times{}RC}$                                     |
 | [Transfer function of CR Network](#transfer-function-of-cr-network)                                                                 | $\frac{v_o}{v_i} = \frac{j \omega RC}{1 + j \omega RC}$                                 |
+| [Transfer function of RC Network](#transfer-function-of-rc-network)                                                                 | $\frac{v_o}{v_i} = \frac{1}{1+sCR} = \frac{1}{1+jwCR}$                                  |
 | [Transfer function of Inverse Frequency potential divider ($s$)](#transfer-function-of-inverse-frequency-potential-divider-s)       | $\frac{V_o}{V_i}(s) = \frac{Z_2}{Z_1 + Z_2} = \frac{(1+sCR)^2}{1 + 3sCR + s^2 C^2 R^2}$ |
 | [Transfer function of Inverse Frequency potential divider ($jw$)](#transfer-function-of-inverse-frequency-potential-divider-jw)     | $\frac{V_o}{V_i}(jw) = \frac{(1+jwCR)^2 }{(1-w^2C^2R^2) + 3jwCR}$                       |
 | [Transfer function of Frequency potential divider (Inductor) ($s$)](#transfer-function-of-frequency-potential-divider-inductor-s)   | $\frac{V_o}{V_i}(s)  = \frac{sLR}{(R^2 + s^2L^2) + 3sLR}$                               |
@@ -66,13 +67,18 @@ $$\omega_0 = \frac{1}{RC} \Rightarrow f_0 = \frac{1}{2\pi RC}$$
 
 
 ### 60 Degrees of phase shift in CR network
-$$\omega_{60\degree} = \frac{1}{\sqrt{3} RC}$$
+$$\omega_{60\degree} = \frac{1}{sqrt{3} \times{}RC}$$
 
 ### Transfer function of CR Network
 $$\frac{v_o}{v_i} = \frac{j \omega RC}{1 + j \omega RC}$$
  $\frac{v_o}{v_i}$= Gain of CR network
 
 ![](img/cr-network.png)
+### Transfer function of RC Network
+$$\frac{v_o}{v_i} = \frac{1}{1+sCR} = \frac{1}{1+jwCR}$$
+ $\frac{v_o}{v_i}$= Gain of RC network
+
+![](img/rc-network.png)
 
 ### Transfer function of Inverse Frequency potential divider ($s$)
 $$\frac{V_o}{V_i}(s) = \frac{Z_2}{Z_1 + Z_2} = \frac{(1+sCR)^2}{1 + 3sCR + s^2 C^2 R^2}$$
