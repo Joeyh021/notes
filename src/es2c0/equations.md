@@ -21,6 +21,22 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | [Transfer function of Frequency potential divider (Inductor) ($jw$)](#transfer-function-of-frequency-potential-divider-inductor-jw) | $\frac{V_o}{V_i}(jw) = \frac{jwLR}{(R^2-w^2L^2) + 3jwLR}$                               |
 | [Frequency of Unity Gain (0 phase shift) (Inductor)](#frequency-of-unity-gain-0-phase-shift-inductor)                               | $\omega_0 = \frac{R}{L} \Rightarrow f_0 = \frac{R}{2\pi{}L}$                            |
 
+| [BJT Transitors](#bjt-transitors)                                                     |                                                                                   |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [Common Emitter Forward Gain, $\beta$](#common-emitter-forward-gain-beta)             | $\beta{} = \frac{I_C}{I_B} = \frac{\alpha}{1-\alpha}$                             |
+| [Common Base Forward current gain, $\alpha$](#common-base-forward-current-gain-alpha) | $\alpha = \frac{\beta}{\beta + 1}$                                                |
+| [NPN Emitter Current](#npn-emitter-current)                                           | $I_E = I_B + I_C = \frac{I_C}{\alpha} = I_C + \frac{I_C}{\beta} = (1+\beta{})I_B$ |
+| [Emmitter Voltage Rule of Thumb](#emmitter-voltage-rule-of-thumb)                     | $V_E \approx \frac{V_{cc}}{10}$                                                   |
+| [Thevin Resistance Rule of Thumb](#thevin-resistance-rule-of-thumb)                   | $R_{TH} = \frac{\beta{}R_E}{10}$                                                  |
+| [Four Resistor Bias Circuit $R_{TH}$](#four-resistor-bias-circuit-r_th)               | $R_{TH} = R_1//R_2 = \frac{R_1R_2}{R_1 + R_2}$                                    |
+| [Four Resistor Bias Circuit $V_{TH}$](#four-resistor-bias-circuit-v_th)               | $V_{TH} = V_{CC} \frac{R_2}{R_1 + R_2}$                                           |
+
+| [AC BJT Analysis](#ac-bjt-analysis)                           |                                                                                                        |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [Amplifier Topologies](#amplifier-topologies)                 | $x$                                                                                                    |
+| [Transistor Input Impedance](#transistor-input-impedance)     | $r_\pi{} = \frac{\beta{}V_T}{I_{CQ}}$                                                                  |
+| [Gain of Emmitter Follower AC](#gain-of-emmitter-follower-ac) | $A_v = \frac{V_O}{V_{in}} = \frac{-\beta{}R_C}{r_{\pi{}} + (1 + \beta{})R_E} \approx -\frac{R_C}{R_E}$ |
+
 | [Impedance Laplace](#impedance-laplace)                     |                                                     |
 | ----------------------------------------------------------- | --------------------------------------------------- |
 | [Resistor](#resistor)                                       | $Z = R$                                             |
@@ -104,6 +120,51 @@ $$\omega_0 = \frac{R}{L} \Rightarrow f_0 = \frac{R}{2\pi{}L}$$
 
 <div class="equations">
 
+## BJT Transitors
+![](img/bjt-equations.png)
+
+### Common Emitter Forward Gain, $\beta$
+$$ \beta{} = \frac{I_C}{I_B} = \frac{\alpha}{1-\alpha}$$
+
+### Common Base Forward current gain, $\alpha$
+$$ \alpha = \frac{\beta}{\beta + 1}$$
+### NPN Emitter Current
+$$ I_E = I_B + I_C = \frac{I_C}{\alpha} = I_C + \frac{I_C}{\beta} = (1+\beta{})I_B$$
+
+### Emmitter Voltage Rule of Thumb
+$$ V_E \approx \frac{V_{cc}}{10} $$
+
+### Thevin Resistance Rule of Thumb
+$$ R_{TH} = \frac{\beta{}R_E}{10} $$
+
+### Four Resistor Bias Circuit $R_{TH}$
+$$ R_{TH} = R_1//R_2 = \frac{R_1R_2}{R_1 + R_2}$$
+![](img/four-resistor.png)
+### Four Resistor Bias Circuit $V_{TH}$
+$$ V_{TH} = V_{CC} \frac{R_2}{R_1 + R_2}$$
+
+
+</div>
+<div class="equations">
+
+## AC BJT Analysis
+
+### Amplifier Topologies
+$$x$$
+![](img/amplifier-topologies.png)
+
+### Transistor Input Impedance
+$$ r_\pi{} = \frac{\beta{}V_T}{I_{CQ}}$$
+Where $V_T$ = 25mV, $I_CQ$ = Collector current at Q point.
+
+
+### Gain of Emmitter Follower AC
+$$ A_v = \frac{V_O}{V_{in}} = \frac{-\beta{}R_C}{r_{\pi{}} + (1 + \beta{})R_E} \approx -\frac{R_C}{R_E}$$
+</div>
+
+
+<div class="equations">
+
 ## Impedance Laplace
 
 ### Resistor
@@ -125,6 +186,8 @@ $$ Z = \frac{R}{1+sCR} $$
 $$ Z = R + sL $$
 ### Resistor Inductor Parallel
 $$ Z = \frac{sLR}{R+sL} $$
+
+
 
 </div>
 
