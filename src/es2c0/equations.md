@@ -31,11 +31,19 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | [Four Resistor Bias Circuit $R_{TH}$](#four-resistor-bias-circuit-r_th)               | $R_{TH} = R_1//R_2 = \frac{R_1R_2}{R_1 + R_2}$                                    |
 | [Four Resistor Bias Circuit $V_{TH}$](#four-resistor-bias-circuit-v_th)               | $V_{TH} = V_{CC} \frac{R_2}{R_1 + R_2}$                                           |
 
-| [AC BJT Analysis](#ac-bjt-analysis)                           |                                                                                                        |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [Amplifier Topologies](#amplifier-topologies)                 | $x$                                                                                                    |
-| [Transistor Input Impedance](#transistor-input-impedance)     | $r_\pi{} = \frac{\beta{}V_T}{I_{CQ}}$                                                                  |
-| [Gain of Emmitter Follower AC](#gain-of-emmitter-follower-ac) | $A_v = \frac{V_O}{V_{in}} = \frac{-\beta{}R_C}{r_{\pi{}} + (1 + \beta{})R_E} \approx -\frac{R_C}{R_E}$ |
+| [AC BJT Analysis](#ac-bjt-analysis)                                                                                               |                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [Amplifier Topologies](#amplifier-topologies)                                                                                     | $x$                                                                                                    |
+| [Transistor Input Impedance](#transistor-input-impedance)                                                                         | $r_\pi{} = \frac{\beta{}V_T}{I_{CQ}}$                                                                  |
+| [Gain of Collector Follower (Common Emitter) AC](#gain-of-collector-follower-common-emitter-ac)                                   | $A_v = \frac{V_O}{V_{in}} = \frac{-\beta{}R_C}{r_{\pi{}} + (1 + \beta{})R_E} \approx -\frac{R_C}{R_E}$ |
+| [Input Impedance of Collector Follower (Common Emitter)](#input-impedance-of-collector-follower-common-emitter)                   | $R_{in} = r_\pi + (1+\beta)R_E$                                                                        |
+| [Output Impedance of Collector Follower (Common Emitter)](#output-impedance-of-collector-follower-common-emitter)                 | $R_{out} = R_C$                                                                                        |
+| [Emitter Follower (Common Collector)](#emitter-follower-common-collector)                                                         | $N/A$                                                                                                  |
+| [Voltage Gain of Emitter Follower (Common Collector)](#voltage-gain-of-emitter-follower-common-collector)                         | ERR                                                                                                    |
+| [Current Gain of Emitter Follower (Common Collector)](#current-gain-of-emitter-follower-common-collector)                         | $A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)}$                                                    |
+| [Input Impedance of Emitter Follower (Common Collector)](#input-impedance-of-emitter-follower-common-collector)                   | $R_{in} = r_\pi{} + (1+\beta{})R_E$                                                                    |
+| [Output Impedence of Emitter Follower  (Common Collector)](#output-impedence-of-emitter-follower--common-collector)               | $R_{out} = \frac{R_E(r_\pi{} + R_S)}{(r_\pi+R_S) + R_E(1+\beta)}$                                      |
+| [Output Impedence of Emitter Follower  (Common Collector) Simple](#output-impedence-of-emitter-follower--common-collector-simple) | $R_{out} = \frac{r_\pi{}}{(1+\beta)} = \frac{1}{g_m}$                                                  |
 
 | [Impedance Laplace](#impedance-laplace)                     |                                                     |
 | ----------------------------------------------------------- | --------------------------------------------------- |
@@ -157,9 +165,42 @@ $$x$$
 $$ r_\pi{} = \frac{\beta{}V_T}{I_{CQ}}$$
 Where $V_T$ = 25mV, $I_CQ$ = Collector current at Q point.
 
-
-### Gain of Emmitter Follower AC
+### Gain of Collector Follower (Common Emitter) AC
 $$ A_v = \frac{V_O}{V_{in}} = \frac{-\beta{}R_C}{r_{\pi{}} + (1 + \beta{})R_E} \approx -\frac{R_C}{R_E}$$
+![](img/bjt-example.png)
+
+### Input Impedance of Collector Follower (Common Emitter)
+$$ R_{in} = r_\pi + (1+\beta)R_E $$ 
+Into the transistor
+### Output Impedance of Collector Follower (Common Emitter)
+$$ R_{out} = R_C$$
+As current source has infinite impedance.
+
+
+### Emitter Follower (Common Collector)
+$$N/A$$
+![](img/emitter-follower.png)
+- High Input, low ouput impedence
+- High current gain
+- So acts as impedence trasnformer and buffer
+### Voltage Gain of Emitter Follower (Common Collector)
+$$ A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)}$$
+$A_v \approx 1$ as $r_\pi >> RE(1+\beta)$ So low voltage gain, so instead current amplifier.
+
+### Current Gain of Emitter Follower (Common Collector)
+$$ A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)} $$
+
+### Input Impedance of Emitter Follower (Common Collector)
+$$R_{in} = r_\pi{} + (1+\beta{})R_E $$
+
+### Output Impedence of Emitter Follower  (Common Collector)
+$$R_{out} = \frac{R_E(r_\pi{} + R_S)}{(r_\pi+R_S) + R_E(1+\beta)} $$
+Where $R_S$ = source input impedance
+
+### Output Impedence of Emitter Follower  (Common Collector) Simple
+$$R_{out} = \frac{r_\pi{}}{(1+\beta)} = \frac{1}{g_m}$$
+Where $R_S$ = source input impedance
+
 </div>
 
 
