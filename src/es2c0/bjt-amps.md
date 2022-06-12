@@ -82,7 +82,7 @@ The common collector (or emitter-follower) amplifier is another amplifier circui
 
 The hybrid-pi model of this circuit looks like, as without the collector the circuit can be re-arranged to:
 
-![](./img/emitter-follower-model.png)
+![](./img/emitter-follower.jpg)
 
 The output voltage is the voltage accross the emitter resistor, and as $i_E = (1+\beta) i_b$:
 

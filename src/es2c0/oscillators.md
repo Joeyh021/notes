@@ -124,7 +124,7 @@ $$
 The gain loss for one RC stage is 0.5, so the 3 stages has a gain loss of $0.5^3 = 1/8$. The inverting op-amp therefore must have a gain of -8 to give overall unity gain.
 
 $$
-A_3 = \frac{-R_2}[R] = -8
+A_3 = \frac{-R_2}{R_1} = -8
 $$
 
 So the value of $R_2$ must be set accordingly.

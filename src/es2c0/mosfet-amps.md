@@ -56,5 +56,6 @@ The gain of the amplifier with a bypass capacitor is much higher.
 
 - The input impedance of a MOSFET is infinite, as no current flows between gate and source.
 - The overall input impedance of a common source MOSFET amp is $R_{in} = R_{TH} = R_1 || R_2$, as the two gate bias resisisors will act as impedances to input signals
-- The output impedance of the bypassed amplifier above is just $R_D$, as thats the only impedance in the model.
+- The output impedance of the bypassed amplifier above is just $R_D$, as that's the only impedance in the model.
+  - If $R_D = 0$, like in a common drain/source follower, then this becomes $1/g_m$
 - MOSFETs have higher input impedances for this reason, so MOSFET amplifiers are used over BJTs where high impedance is required.
