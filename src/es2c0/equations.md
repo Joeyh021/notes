@@ -58,16 +58,27 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | [MOSFET Bias Network](#mosfet-bias-network)                        | $\text{sqrt }{i_D} = \frac{-K_n^{-1/2} \pm ({K_n^{-1} - 4R_s(V_{TN} - V_{TH})})^{\frac{1}{2}}}{2R_s}$ |
 | [MOSFET input impedence](#mosfet-input-impedence)                  | $R_{in} = \infin$                                                                                     |
 
-| [MOSFET Common Source](#mosfet-common-source)         |                                                    |
-| ----------------------------------------------------- | -------------------------------------------------- |
-| [Overall Input Impedence](#overall-input-impedence)   | $R_{in} = R_{TH}$                                  |
-| [Overall Output Impedance](#overall-output-impedance) | $R_{out} = R_D$                                    |
-| [Bypassed Gain](#bypassed-gain)                       | $A_v = \frac{-g_m R_D V_{GS}}{V_{GS}} = - g_m R_D$ |
+| [MOSFET Common Source](#mosfet-common-source)                   |                                                    |
+| --------------------------------------------------------------- | -------------------------------------------------- |
+| [Overall Input Impedence](#overall-input-impedence)             | $R_{in} = R_{TH}$                                  |
+| [Overall Output Impedance](#overall-output-impedance)           | $R_{out} = R_D$                                    |
+| [Bypassed Gain](#bypassed-gain)                                 | $A_v = \frac{-g_m R_D V_{GS}}{V_{GS}} = - g_m R_D$ |
+| [Common Drain (Source Follower)](#common-drain-source-follower) | $z$                                                |
+| [Output Impedance](#output-impedance)                           | $R_{out} = \frac{1}{gm}$                           |
 
-| [](#undefined)                                                  |                          |
-| --------------------------------------------------------------- | ------------------------ |
-| [Common Drain (Source Follower)](#common-drain-source-follower) | ERR                      |
-| [Output Impedance](#output-impedance)                           | $R_{out} = \frac{1}{gm}$ |
+| [Differential Amplifier](#differential-amplifier)                                             |                                               |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| [Quiescent Current of Long Tail Pair](#quiescent-current-of-long-tail-pair)                   | $I_Q = I_{E1} + I_{E2}$                       |
+| [Biasing](#biasing)                                                                           | $I_Q = \frac{(V_{EE}) + V_{E}}{R_{EE}}$       |
+| [Collector Voltage of Grounded Long Tail Pair](#collector-voltage-of-grounded-long-tail-pair) | $V_{C_1} = V_{C_2} = V_{CC} - I_C R_C$        |
+| [Differential Gain without ground](#differential-gain-without-ground)                         | $A_{id} = \left                               | \frac{V_{od}}{V_d}\right    | = g_m R_C$                                                                |
+| [Differential Gain - Single Ended](#differential-gain---single-ended)                         | $\left                                        | \frac{V_{o}}{V_d}\right     | = \frac{g_m R_C}{2}$                                                      |
+| [Differential Input Resistance](#differential-input-resistance)                               | $R_{id} = 2 r_\pi$                            |
+| [Differential Output Resistance](#differential-output-resistance)                             | $R_{od} = 2 R_E$                              |
+| [Common Mode Gain](#common-mode-gain)                                                         | $A_{cm} = \left                               | \frac{V_{o1}}{V_{cm}}\right | = \frac{-\beta R_C}{r_\pi + 2(1+\beta)R_{EE}} \approx \frac{-R_C}{2R_EE}$ |
+| [Common Mode Input Resistance](#common-mode-input-resistance)                                 | $R_{ic} = \frac{r_\pi}{2} + R_{EE} (1+\beta)$ |
+| [CMRR - Common Mode Rejection Ratio](#cmrr---common-mode-rejection-ratio)                     | $CMRR =\left                                  | \frac{A_{id}}{A_{cm}}\right | $                                                                         |
+| [Generalised Differential Amplifier Output](#generalised-differential-amplifier-output)       | $V_{out} = A_{id} V_{id} + A_{cm} V_{cm}$     |
 
 | [Impedance Laplace](#impedance-laplace)                     |                                                     |
 | ----------------------------------------------------------- | --------------------------------------------------- |
@@ -314,12 +325,8 @@ Unless there is an $R_{load}$ which would be in parallel with $R_D$.
 $$ A_v = \frac{-g_m R_D V_{GS}}{V_{GS}} = - g_m R_D$$
 ![](./img/bypass-cap.png)
 
-</div>
-
-
-<div class="equations">
-
 ### Common Drain (Source Follower)
+$$ z $$
 
 ### Output Impedance
 $$ R_{out} = \frac{1}{gm} $$
@@ -328,6 +335,70 @@ $$ R_{out} = \frac{1}{gm} $$
 </div>
  
  
+<div class="equations">
+
+## Differential Amplifier
+Long tail pair:
+
+
+![](./img/long-tail-pair.jpg)
+
+**Modes**
+Can operate in two modes.
+- Differential (Amplfies Difference between two input signals)
+- Common mode (Works similar to regular BJT amp)
+  
+> Common Mode
+Same signal is connected to both input terminals.
+- Ideal differential amp rejects common mode input, but not realistic
+- Defined by CMRR
+
+Better amps, have high ratio of differnetial to common gain, AKA *Common Mode Rejection Ratio (CMRR)*.
+### Quiescent Current of Long Tail Pair
+$$ I_Q = I_{E1} + I_{E2} $$
+Current through shared emitter resistor, $R_{EE}$. 
+
+### Biasing 
+$$ I_Q = \frac{(V_{EE}) + V_{E}}{R_{EE}} $$
+$V_1$ and $V_2$ are grounded, therefore collector voltages are the same.
+
+### Collector Voltage of Grounded Long Tail Pair
+$$V_{C_1} = V_{C_2} = V_{CC} - I_C R_C$$
+And for matched transistors,  $V_{C_1} - V_{C_2} = 0$.
+
+### Differential Gain without ground
+$$ A_{id} = \left| \frac{V_{od}}{V_d}\right| = g_m R_C $$
+![](./img/differential-input.jpg)
+Not really used
+
+### Differential Gain - Single Ended
+$$ \left| \frac{V_{o}}{V_d}\right| = \frac{g_m R_C}{2} $$
+![](./img/diff-mode-grounded-input.jpg)
+
+### Differential Input Resistance
+$$R_{id} = 2 r_\pi$$
+
+### Differential Output Resistance
+$$R_{od} = 2 R_E$$
+
+
+### Common Mode Gain
+$$ A_{cm} = \left|\frac{V_{o1}}{V_{cm}}\right| = \frac{-\beta R_C}{r_\pi + 2(1+\beta)R_{EE}} \approx \frac{-R_C}{2R_EE}$$
+
+### Common Mode Input Resistance
+$$ R_{ic} = \frac{r_\pi}{2} + R_{EE} (1+\beta)$$
+
+### CMRR - Common Mode Rejection Ratio
+$$ CMRR =\left|\frac{A_{id}}{A_{cm}}\right| $$ 
+
+### Generalised Differential Amplifier Output
+$$ V_{out} = A_{id} V_{id} + A_{cm} V_{cm} $$
+Both common mode and differential mode input signals are factored in.
+
+</div>
+ 
+
+
  
 <div class="equations">
 
@@ -365,6 +436,15 @@ $$ Z = \frac{sLR}{R+sL} $$
 $$A = 1 + \frac{R2}{R1}$$
 ### Inverting Gain
 $$A = -\frac{R2}{R1}$$
+
+### Active Filter Gain
+$$\frac{V_{out}}{V_{in}} = A(j \omega)=  -\frac{Z_2}{Z_1}$$
+![](./img/inverting.jpg)
+
+### Active Filter Gain, Z2 = R2 || C
+$$ A(j \omega) = - \frac{R_2/R_1}{1 + j \omega C R_2}$$
+- Low Pass filter
+- Cutoff where $A(jw) = 1+j$ = $\frac{1}{2\pi{}R_2C}$Hz
 
 </div>
 
