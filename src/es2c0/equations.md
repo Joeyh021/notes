@@ -31,6 +31,7 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | [Thevin Resistance Rule of Thumb](#thevin-resistance-rule-of-thumb)                   | $R_{TH} = \frac{\beta{}R_E}{10}$                                                  |
 | [Four Resistor Bias Circuit $R_{TH}$](#four-resistor-bias-circuit-r_th)               | $R_{TH} = R_1//R_2 = \frac{R_1R_2}{R_1 + R_2}$                                    |
 | [Four Resistor Bias Circuit $V_{TH}$](#four-resistor-bias-circuit-v_th)               | $V_{TH} = V_{CC} \frac{R_2}{R_1 + R_2}$                                           |
+| [Transconductance](#transconductance)                                                 | $g_m = \frac{I_{CQ}}{V_T} \approxeq 40I_{CQ}$                                     |
 
 | [AC BJT Analysis](#ac-bjt-analysis)                                                                                               |                                                                                                        |
 | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -40,11 +41,33 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | [Input Impedance of Collector Follower (Common Emitter)](#input-impedance-of-collector-follower-common-emitter)                   | $R_{in} = r_\pi + (1+\beta)R_E$                                                                        |
 | [Output Impedance of Collector Follower (Common Emitter)](#output-impedance-of-collector-follower-common-emitter)                 | $R_{out} = R_C$                                                                                        |
 | [Emitter Follower (Common Collector)](#emitter-follower-common-collector)                                                         | $N/A$                                                                                                  |
-| [Voltage Gain of Emitter Follower (Common Collector)](#voltage-gain-of-emitter-follower-common-collector)                         | ERR                                                                                                    |
-| [Current Gain of Emitter Follower (Common Collector)](#current-gain-of-emitter-follower-common-collector)                         | $A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)}$                                                    |
+| [Voltage Gain of Emitter Follower (Common Collector)](#voltage-gain-of-emitter-follower-common-collector)                         | $A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)}$                                                    |
+| [Current Gain of Emitter Follower (Common Collector)](#current-gain-of-emitter-follower-common-collector)                         | $A_i = \frac{(1+\beta)i_b}{i_b}$                                                                       |
 | [Input Impedance of Emitter Follower (Common Collector)](#input-impedance-of-emitter-follower-common-collector)                   | $R_{in} = r_\pi{} + (1+\beta{})R_E$                                                                    |
 | [Output Impedence of Emitter Follower  (Common Collector)](#output-impedence-of-emitter-follower--common-collector)               | $R_{out} = \frac{R_E(r_\pi{} + R_S)}{(r_\pi+R_S) + R_E(1+\beta)}$                                      |
 | [Output Impedence of Emitter Follower  (Common Collector) Simple](#output-impedence-of-emitter-follower--common-collector-simple) | $R_{out} = \frac{r_\pi{}}{(1+\beta)} = \frac{1}{g_m}$                                                  |
+
+| [MOSFETs DC](#mosfets-dc)                                          |                                                                                                       |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| [Stages](#stages)                                                  | $V_{DS(sat)} = V_{GS} - V_{TN}$                                                                       |
+| [Linear Region Drain Current](#linear-region-drain-current)        | $i_D = K_n \left[ 2(V_{GS} - V_{TN})-V_{DS}\right]V_{DS}$                                             |
+| [Saturation Drain Current](#saturation-drain-current)              | $i_D = K_n (V_{GS} - V_{TN})^2$                                                                       |
+| [Saturation Drain Current -> VGS](#saturation-drain-current---vgs) | $V_{GS} = (\frac{i_d}{K_n})^{1/2} + V_{TN}$                                                           |
+| [Small Signal Model](#small-signal-model)                          | $i_D = g_m \times{} V_{GS}$                                                                           |
+| [Transconductance $g_m$](#transconductance-g_m)                    | $g_m = \frac{2I_{DQ}}{V_{GS}-V_{TN}}$                                                                 |
+| [MOSFET Bias Network](#mosfet-bias-network)                        | $\text{sqrt }{i_D} = \frac{-K_n^{-1/2} \pm ({K_n^{-1} - 4R_s(V_{TN} - V_{TH})})^{\frac{1}{2}}}{2R_s}$ |
+| [MOSFET input impedence](#mosfet-input-impedence)                  | $R_{in} = \infin$                                                                                     |
+
+| [MOSFET Common Source](#mosfet-common-source)         |                                                    |
+| ----------------------------------------------------- | -------------------------------------------------- |
+| [Overall Input Impedence](#overall-input-impedence)   | $R_{in} = R_{TH}$                                  |
+| [Overall Output Impedance](#overall-output-impedance) | $R_{out} = R_D$                                    |
+| [Bypassed Gain](#bypassed-gain)                       | $A_v = \frac{-g_m R_D V_{GS}}{V_{GS}} = - g_m R_D$ |
+
+| [](#undefined)                                                  |                          |
+| --------------------------------------------------------------- | ------------------------ |
+| [Common Drain (Source Follower)](#common-drain-source-follower) | ERR                      |
+| [Output Impedance](#output-impedance)                           | $R_{out} = \frac{1}{gm}$ |
 
 | [Impedance Laplace](#impedance-laplace)                     |                                                     |
 | ----------------------------------------------------------- | --------------------------------------------------- |
@@ -60,7 +83,6 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 | ----------------------------------------- | ----------------------- |
 | [Non-inverting Gain](#non-inverting-gain) | $A = 1 + \frac{R2}{R1}$ |
 | [Inverting Gain](#inverting-gain)         | $A = -\frac{R2}{R1}$    |
-
 
 | [Misc](#misc)                           |                                     |
 | --------------------------------------- | ----------------------------------- |
@@ -158,6 +180,8 @@ $$ R_{TH} = R_1//R_2 = \frac{R_1R_2}{R_1 + R_2}$$
 ### Four Resistor Bias Circuit $V_{TH}$
 $$ V_{TH} = V_{CC} \frac{R_2}{R_1 + R_2}$$
 
+### Transconductance
+$$ g_m = \frac{I_{CQ}}{V_T} \approxeq 40I_{CQ}$$
 
 </div>
 <div class="equations">
@@ -190,12 +214,15 @@ $$N/A$$
 - High Input, low ouput impedence
 - High current gain
 - So acts as impedence trasnformer and buffer
+  
+  
+
 ### Voltage Gain of Emitter Follower (Common Collector)
 $$ A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)}$$
 $A_v \approx 1$ as $r_\pi >> RE(1+\beta)$ So low voltage gain, so instead current amplifier.
 
 ### Current Gain of Emitter Follower (Common Collector)
-$$ A_v = \frac{R_E(1+\beta)}{r_\pi{} + R_E(1+\beta)} $$
+$$ A_i = \frac{(1+\beta)i_b}{i_b} $$
 
 ### Input Impedance of Emitter Follower (Common Collector)
 $$R_{in} = r_\pi{} + (1+\beta{})R_E $$
@@ -210,7 +237,98 @@ Where $R_S$ = source input impedance
 
 </div>
 
+<div class="equations">
 
+
+## MOSFETs DC
+No current through gate in MOSFET (as voltage controlled) (infinite input impedence)
+$$ i_G = 0 \rightarrow i_D = i_S$$
+
+
+### Stages
+$$V_{DS(sat)} = V_{GS} - V_{TN}$$
+![](img/regions.png)
+- Cut off (no current flows, $V_{GS} < V_{TN})$
+- Linear $V_{DS} > V_{DS(sat)}$
+- Saturation $V_{DS} < V_{DS(sat)}$
+
+Where $V_{TN}$ = **Threshold Voltage**
+
+
+### Linear Region Drain Current
+$$ i_D = K_n \left[ 2(V_{GS} - V_{TN})-V_{DS}\right]V_{DS} $$
+
+$\text{for} \quad  0 < V_{DS} < (V_{GS} - V_{TN})$, where $K_n$ = transconductance constant
+
+
+### Saturation Drain Current 
+$$ i_D = K_n (V_{GS} - V_{TN})^2 $$
+
+### Saturation Drain Current -> VGS
+$$ V_{GS} = (\frac{i_d}{K_n})^{1/2} + V_{TN} $$
+
+### Small Signal Model
+$$ i_D = g_m \times{} V_{GS} $$
+![](img/mosfet-model.png)
+
+### Transconductance $g_m$
+$$ g_m = \frac{2I_{DQ}}{V_{GS}-V_{TN}}$$
+
+
+### MOSFET Bias Network
+$$ \text{sqrt }{i_D} = \frac{-K_n^{-1/2} \pm ({K_n^{-1} - 4R_s(V_{TN} - V_{TH})})^{\frac{1}{2}}}{2R_s} $$
+Must check the two different values to see which ones are valid solutions. 
+
+$$ V_{GS} > V_{TN} \quad \text{and} \quad V_{DS} > V_{DS(sat)} $$
+![](img/mosfet-bias.png)
+
+### MOSFET input impedence
+$$ R_{in} = \infin$$
+As no current flows into gate
+
+
+</div>
+
+<div class="equations">
+
+## MOSFET Common Source
+Similar to BJT common emmitter amplifier
+![](img/common-source.png)
+![](img/common-source-model.png)
+
+### Overall Input Impedence
+$$ R_{in} = R_{TH} $$
+As two gate bias resistors act as impedances to input signals. Therefore used over BJTs when high impedence required.
+
+Is actually in parallel with source (input) impedence $R_{s}$ if it has it. 
+
+### Overall Output Impedance
+$$ R_{out} = R_D $$
+What the load resistor sees.
+
+As current source has infinite impedence, therefore $R_D$ is the only impedence seen. 
+
+Unless there is an $R_{load}$ which would be in parallel with $R_D$.
+
+### Bypassed Gain
+$$ A_v = \frac{-g_m R_D V_{GS}}{V_{GS}} = - g_m R_D$$
+![](./img/bypass-cap.png)
+
+</div>
+
+
+<div class="equations">
+
+### Common Drain (Source Follower)
+
+### Output Impedance
+$$ R_{out} = \frac{1}{gm} $$
+
+
+</div>
+ 
+ 
+ 
 <div class="equations">
 
 ## Impedance Laplace
