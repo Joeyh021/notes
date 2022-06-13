@@ -403,6 +403,7 @@ Both common mode and differential mode input signals are factored in.
 <div class="equations">
 
 ## Impedance Laplace
+![](img/impedences.png)
 
 ### Resistor
 $$Z = R$$
