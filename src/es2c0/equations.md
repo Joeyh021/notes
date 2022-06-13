@@ -105,7 +105,7 @@ Use `./generateTables.sh ../src/es2c0/equations.md ` in the scripts folder.
 <div class="equations">
 
 ## Oscillators
-
+![](img/wein-bridge-alex.png)
 ### Closed Loop Gain
 
 $$A_{cl}(j \omega) = \frac{v_o}{v_i} = \frac{A}{1-A\beta(j\omega)}$$
