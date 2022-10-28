@@ -127,3 +127,5 @@
   - [Timing & Pipelining](./es2e3/timing.md)
   - [Hardware Interfaces](./es2e3/interfaces.md)
   - [Processor Implementation](./es2e3/processors.md)
+- [ES3C5](./es3c5/index.md)
+  - [Brief Notes + Equations (Aaron)](./es3c5/brief-notes.md)
