@@ -17,11 +17,16 @@ fs = require('fs');
  * npm install -y marked cheerio
  * 
  * To add equations to the files simply make a equations div for each category followed by a `##` with the name of the category.
- * Below that, you then can add the equation title, followed by a description (optional) with the equation after that in double dollar signs. Anything after that is ignored.
+ * Below that, you then can add the equation title (### Title), followed by a description (optional) with the equation after that in
+ * double dollar signs ($$ equation $$). Anything after that is ignored. If there is no double dollar signs (no big equations, then it
+ *  will add the first 80 characters (see const characterLimit)).
+ * 
  * Then to add the equation table, simply add a <equation-table></equation-table> tag. This is then replaced every time this is run. 
  * Also only ever add 1 of these, otherwise it will get replaced.
  * 
  * Then simply run the generateTables.sh file at the root of the project.
+ * 
+ * Change character limit (default 60) to the number of characters to print in the table when using simple text.
  * 
  * EG: 
  * 
@@ -38,9 +43,15 @@ fs = require('fs');
  * 
  * - $C$ = Capacitance, Farads, F
  * - $V$ = Voltage, Volts, V
+ * 
+ * ### Just text
+ * 
+ * This here is an explantation that will be added, as long as there are no double dollar equations
  *   
  * </div>
  */
+
+const characterLimit = 80; // The limit to characters added to the table when generating tables using text.
 
 // Run by using `node equations2table <source> <output>`
 if (process.argv.length >= 3) {
@@ -96,7 +107,19 @@ $(".equations").each(function () {
             temp = temp.trim();
             string += `$${temp}$ | \n`;
         } catch (error) {
-            string += `ERR | \n`;
+            // Try getting first line
+            try {
+                let text = this.nextSibling.nextSibling.children[0].data.split("\n")[0]
+                if (text.length >= characterLimit) {
+                    text = text.substring(0, characterLimit) + "..."
+                }
+
+                string += `${text} | \n`;
+            }
+            catch (e2) {
+                string += `ERR | \n`;
+            }
+
         }
 
     });
