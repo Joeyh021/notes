@@ -7,7 +7,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 <equation-table>
 
 | [Laplace Conversion](#laplace-conversion)                              |                   |
-| ---------------------------------------------------------------------- | ----------------- |
+|------------------------------------------------------------------------|-------------------|
 | [Laplace Table](#laplace-table)                                        | Insert table here |
 | [Finding Time Domain Output $y(t)$](#finding-time-domain-output-yt)    |                   |
 | [Input as Delta Function $\delta(t)$](#input-as-delta-function-deltat) | $x(t)=\delta(t)$  |
@@ -15,13 +15,13 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [LTI System Properties](#lti-system-properties)                        | LTI =             |
 
 | [Poles and Zeros](#poles-and-zeros)                                                       |                                                                                                               |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | [General Transfer Function as 2 polynomials](#general-transfer-function-as-2-polynomials) | $H (s) = \frac{b_0s^M + b_1s^{M-1} + \cdots + b_{M-1}s + b_M}{a_0s^N + a_1s^{N-1} + \cdots + a_{N-1}s + a_N}$ |
 | [Factorised Transfer Function](#factorised-transfer-function)                             | $H (s) = K \frac{(s - z_1)(s - z_2) \cdots (s - z_M)}{(s - p_1)(s - p_2) \cdots (s - p_N)}$                   |
 | [Real system as real](#real-system-as-real)                                               | $M \le N$                                                                                                     |
 | [Zero Definition](#zero-definition)                                                       | Roots z of the numerator. When $s =$ any $z$, $H(s)=0$                                                        |
 | [Pole Definition](#pole-definition)                                                       | Poles p of the denominator. When $s =$ any $p$, $H(s)$ approaches $\inf$                                      |
-| [Transfer Function Gain](#transfer-function-gain)                                         | K is th overall transfer function gain. (Where the coefficient of $s^M$ and $s^N...                           |
+| [Transfer Function Gain](#transfer-function-gain)                                         | K is the overall transfer function gain. (Coefficient of $s^M$ and $s^N$ is 1.)                               |
 | [Stable System](#stable-system)                                                           | A system is considered stable if its impulse response tends to zero or a finite ...                           |
 | [Components to Response](#components-to-response)                                         | Real Components $\rArr$ Exponential Response $\vert$ Imaginary $\rArr$ angular f...                           |
 
@@ -76,7 +76,7 @@ $$
 $$
 ### Real system as real
 $$ M \le N $$
-Where the numerator i a $M$th order polynomial with coefficients $b$s and the denominator is a $N$th order polynomial with coefficients $a$s. For a system to be real, the ordr of the numerator polynomial must be no greater than the order of the denominator polynomial, ie: $M \le N$.
+Where the numerator i a $M$th order polynomial with coefficients $b$s and the denominator is a $N$th order polynomial with coefficients $a$s. For a system to be real, the order of the numerator polynomial must be no greater than the order of the denominator polynomial, ie: $M \le N$.
 
 ### Zero Definition
 Roots z of the numerator. When $s =$ any $z$, $H(s)=0$ 
@@ -85,7 +85,7 @@ Roots z of the numerator. When $s =$ any $z$, $H(s)=0$
 Poles p of the denominator. When $s =$ any $p$, $H(s)$ approaches $\inf$ 
 
 ### Transfer Function Gain
-K is th overall transfer function gain. (Where the coefficient of $s^M$ and $s^N$ is 1.)
+K is the overall transfer function gain. (Coefficient of $s^M$ and $s^N$ is 1.)
 
 ### Stable System
 A system is considered stable if its impulse response tends to zero or a finite value in the time domain. 
