@@ -5,6 +5,8 @@ multilingual = false
 src = "src"
 title = "Computer Systems Engineering Notes"
 
+[output.katex]
+
 [preprocessor.katex]
 
 [output.html]
