@@ -1,0 +1,961 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Parallelism - Computer Systems Engineering Notes</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item "><a href="../cs118/index.html"><strong aria-hidden="true">1.</strong> CS118</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs118/floats.html"><strong aria-hidden="true">1.1.</strong> IEEE 754</a></li><li class="chapter-item "><a href="../cs118/oop.html"><strong aria-hidden="true">1.2.</strong> OOP Principles</a></li><li class="chapter-item "><a href="../cs118/exceptions.html"><strong aria-hidden="true">1.3.</strong> Java Exceptions & Generics</a></li></ol></li><li class="chapter-item "><a href="../cs126/index.html"><strong aria-hidden="true">2.</strong> CS126</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs126/arrays.html"><strong aria-hidden="true">2.1.</strong> Arrays & Linked Lists</a></li><li class="chapter-item "><a href="../cs126/analysis.html"><strong aria-hidden="true">2.2.</strong> Analysis of Algorithms</a></li><li class="chapter-item "><a href="../cs126/recursion.html"><strong aria-hidden="true">2.3.</strong> Recursive Algorithms</a></li><li class="chapter-item "><a href="../cs126/stacks.html"><strong aria-hidden="true">2.4.</strong> Stacks & Queues</a></li><li class="chapter-item "><a href="../cs126/lists.html"><strong aria-hidden="true">2.5.</strong> Lists</a></li><li class="chapter-item "><a href="../cs126/maps.html"><strong aria-hidden="true">2.6.</strong> Maps</a></li><li class="chapter-item "><a href="../cs126/hash.html"><strong aria-hidden="true">2.7.</strong> Hash Tables</a></li><li class="chapter-item "><a href="../cs126/sets.html"><strong aria-hidden="true">2.8.</strong> Sets</a></li><li class="chapter-item "><a href="../cs126/trees.html"><strong aria-hidden="true">2.9.</strong> Trees</a></li><li class="chapter-item "><a href="../cs126/pqs.html"><strong aria-hidden="true">2.10.</strong> Priority Queues</a></li><li class="chapter-item "><a href="../cs126/heaps.html"><strong aria-hidden="true">2.11.</strong> Heaps</a></li><li class="chapter-item "><a href="../cs126/skip-lists.html"><strong aria-hidden="true">2.12.</strong> Skip Lists</a></li><li class="chapter-item "><a href="../cs126/graphs.html"><strong aria-hidden="true">2.13.</strong> Graphs</a></li></ol></li><li class="chapter-item "><a href="../cs132/index.html"><strong aria-hidden="true">3.</strong> CS132</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs132/logic.html"><strong aria-hidden="true">3.1.</strong> Digital Logic</a></li><li class="chapter-item "><a href="../cs132/assembly.html"><strong aria-hidden="true">3.2.</strong> Assembly</a></li><li class="chapter-item "><a href="../cs132/memory.html"><strong aria-hidden="true">3.3.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs132/io.html"><strong aria-hidden="true">3.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs132/architecture.html"><strong aria-hidden="true">3.5.</strong> Microprocessor Architecture</a></li></ol></li><li class="chapter-item "><a href="../cs141/index.html"><strong aria-hidden="true">4.</strong> CS141</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs141/types.html"><strong aria-hidden="true">4.1.</strong> Types & Typeclasses</a></li><li class="chapter-item "><a href="../cs141/recursion.html"><strong aria-hidden="true">4.2.</strong> Recursion</a></li><li class="chapter-item "><a href="../cs141/functions.html"><strong aria-hidden="true">4.3.</strong> Higher Order Functions</a></li><li class="chapter-item "><a href="../cs141/lazy.html"><strong aria-hidden="true">4.4.</strong> Lazy Evaluation</a></li><li class="chapter-item "><a href="../cs141/reasoning.html"><strong aria-hidden="true">4.5.</strong> Reasoning About Programs</a></li><li class="chapter-item "><a href="../cs141/functors.html"><strong aria-hidden="true">4.6.</strong> Functors & Foldables</a></li><li class="chapter-item "><a href="../cs141/applicatives.html"><strong aria-hidden="true">4.7.</strong> Applicative Functors</a></li><li class="chapter-item "><a href="../cs141/monads.html"><strong aria-hidden="true">4.8.</strong> Monads</a></li><li class="chapter-item "><a href="../cs141/tlp.html"><strong aria-hidden="true">4.9.</strong> Type-Level Programming</a></li></ol></li><li class="chapter-item "><a href="../es191/index.html"><strong aria-hidden="true">5.</strong> ES191</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es191/symbols-and-conventions.html"><strong aria-hidden="true">5.1.</strong> Circuit Symbols & Conventions</a></li><li class="chapter-item "><a href="../es191/nodal.html"><strong aria-hidden="true">5.2.</strong> Nodal Analysis</a></li><li class="chapter-item "><a href="../es191/mesh.html"><strong aria-hidden="true">5.3.</strong> Mesh Analysis</a></li><li class="chapter-item "><a href="../es191/thevenin.html"><strong aria-hidden="true">5.4.</strong> Thevenin Circuits</a></li><li class="chapter-item "><a href="../es191/rc.html"><strong aria-hidden="true">5.5.</strong> First Order RC Circuits</a></li><li class="chapter-item "><a href="../es191/rl.html"><strong aria-hidden="true">5.6.</strong> First Order RL Circuits</a></li><li class="chapter-item "><a href="../es191/ac.html"><strong aria-hidden="true">5.7.</strong> AC Circuits</a></li><li class="chapter-item "><a href="../es191/diodes.html"><strong aria-hidden="true">5.8.</strong> Diodes</a></li><li class="chapter-item "><a href="../es191/transistors.html"><strong aria-hidden="true">5.9.</strong> Transistors</a></li><li class="chapter-item "><a href="../es191/opamps.html"><strong aria-hidden="true">5.10.</strong> Op Amps</a></li><li class="chapter-item "><a href="../es191/filters.html"><strong aria-hidden="true">5.11.</strong> Passive Filters</a></li><li class="chapter-item "><a href="../es191/equations.html"><strong aria-hidden="true">5.12.</strong> Equation Reference</a></li></ol></li><li class="chapter-item "><a href="../es193/index.html"><strong aria-hidden="true">6.</strong> ES193</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es193/functions.html"><strong aria-hidden="true">6.1.</strong> Functions, Conics & Asymptotes</a></li><li class="chapter-item "><a href="../es193/complex.html"><strong aria-hidden="true">6.2.</strong> Complex Numbers</a></li><li class="chapter-item "><a href="../es193/vectors.html"><strong aria-hidden="true">6.3.</strong> Vectors</a></li><li class="chapter-item "><a href="../es193/matrices.html"><strong aria-hidden="true">6.4.</strong> Matrices</a></li><li class="chapter-item "><a href="../es193/equations.html"><strong aria-hidden="true">6.5.</strong> Simultaneous Linear Equations</a></li><li class="chapter-item "><a href="../es193/diff.html"><strong aria-hidden="true">6.6.</strong> Differentiation</a></li><li class="chapter-item "><a href="../es193/int.html"><strong aria-hidden="true">6.7.</strong> Integration</a></li><li class="chapter-item "><a href="../es193/diffeq.html"><strong aria-hidden="true">6.8.</strong> Differential Equations</a></li><li class="chapter-item "><a href="../es193/laplace.html"><strong aria-hidden="true">6.9.</strong> Laplace Transforms</a></li><li class="chapter-item "><a href="../es193/stats.html"><strong aria-hidden="true">6.10.</strong> Probability & Statistics</a></li><li class="chapter-item "><a href="../es193/equationref.html"><strong aria-hidden="true">6.11.</strong> Equation Reference</a></li></ol></li><li class="chapter-item "><a href="../es197/index.html"><strong aria-hidden="true">7.</strong> ES197</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es197/mech1.html"><strong aria-hidden="true">7.1.</strong> Translational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/mech2.html"><strong aria-hidden="true">7.2.</strong> Rotational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/electrical.html"><strong aria-hidden="true">7.3.</strong> Electrical Systems</a></li><li class="chapter-item "><a href="../es197/thermal.html"><strong aria-hidden="true">7.4.</strong> Thermal Systems</a></li><li class="chapter-item "><a href="../es197/data.html"><strong aria-hidden="true">7.5.</strong> Data Driven Models</a></li><li class="chapter-item "><a href="../es197/step1.html"><strong aria-hidden="true">7.6.</strong> First Order Step Response</a></li><li class="chapter-item "><a href="../es197/step2.html"><strong aria-hidden="true">7.7.</strong> Second Order Step Response</a></li><li class="chapter-item "><a href="../es197/transfer.html"><strong aria-hidden="true">7.8.</strong> Transfer Functions</a></li><li class="chapter-item "><a href="../es197/freq1.html"><strong aria-hidden="true">7.9.</strong> First Order Frequency Response</a></li><li class="chapter-item "><a href="../es197/freq2.html"><strong aria-hidden="true">7.10.</strong> Second Order Frequency Response</a></li></ol></li><li class="chapter-item "><a href="../cs241/index.html"><strong aria-hidden="true">8.</strong> CS241</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs241/os.html"><strong aria-hidden="true">8.1.</strong> Operating Systems</a></li><li class="chapter-item "><a href="../cs241/cn.html"><strong aria-hidden="true">8.2.</strong> Networks</a></li></ol></li><li class="chapter-item expanded "><a href="../cs257/index.html"><strong aria-hidden="true">9.</strong> CS257</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs257/memory.html"><strong aria-hidden="true">9.1.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs257/architecture.html"><strong aria-hidden="true">9.2.</strong> Processor Architecture</a></li><li class="chapter-item expanded "><a href="../cs257/parallelism.html" class="active"><strong aria-hidden="true">9.3.</strong> Parallelism</a></li><li class="chapter-item "><a href="../cs257/io.html"><strong aria-hidden="true">9.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs257/embedded.html"><strong aria-hidden="true">9.5.</strong> Embedded Systems & Security</a></li></ol></li><li class="chapter-item "><a href="../cs261/index.html"><strong aria-hidden="true">10.</strong> CS261</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs261/methodologies.html"><strong aria-hidden="true">10.1.</strong> Requirements & Software Methodologies</a></li><li class="chapter-item "><a href="../cs261/modelling.html"><strong aria-hidden="true">10.2.</strong> System Modelling</a></li><li class="chapter-item "><a href="../cs261/design.html"><strong aria-hidden="true">10.3.</strong> System Design</a></li><li class="chapter-item "><a href="../cs261/testing.html"><strong aria-hidden="true">10.4.</strong> Testing & HCI</a></li></ol></li><li class="chapter-item "><a href="../es2c0/index.html"><strong aria-hidden="true">11.</strong> ES2C0</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2c0/diodes.html"><strong aria-hidden="true">11.1.</strong> Diodes</a></li><li class="chapter-item "><a href="../es2c0/oscillators.html"><strong aria-hidden="true">11.2.</strong> Oscillators</a></li><li class="chapter-item "><a href="../es2c0/bjt.html"><strong aria-hidden="true">11.3.</strong> BJTs</a></li><li class="chapter-item "><a href="../es2c0/bjt-amps.html"><strong aria-hidden="true">11.4.</strong> BJT Amplifiers</a></li><li class="chapter-item "><a href="../es2c0/mosfet.html"><strong aria-hidden="true">11.5.</strong> MOSFETs</a></li><li class="chapter-item "><a href="../es2c0/mosfet-amps.html"><strong aria-hidden="true">11.6.</strong> MOSFET Amplifiers</a></li><li class="chapter-item "><a href="../es2c0/differential.html"><strong aria-hidden="true">11.7.</strong> Differential Amplifiers</a></li><li class="chapter-item "><a href="../es2c0/opamps.html"><strong aria-hidden="true">11.8.</strong> Op-Amps</a></li><li class="chapter-item "><a href="../es2c0/equations.html"><strong aria-hidden="true">11.9.</strong> Equation Reference</a></li></ol></li><li class="chapter-item "><a href="../es2c6/index.html"><strong aria-hidden="true">12.</strong> ES2C6</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2c6/control.html"><strong aria-hidden="true">12.1.</strong> Control Systems</a></li><li class="chapter-item "><a href="../es2c6/mechanics.html"><strong aria-hidden="true">12.2.</strong> Drive Systems</a></li><li class="chapter-item "><a href="../es2c6/sensors.html"><strong aria-hidden="true">12.3.</strong> Sensors</a></li><li class="chapter-item "><a href="../es2c6/electromagnetics.html"><strong aria-hidden="true">12.4.</strong> Electromagnetics & Motors</a></li><li class="chapter-item "><a href="../es2c6/ac.html"><strong aria-hidden="true">12.5.</strong> AC Power</a></li><li class="chapter-item "><a href="../es2c6/3phase.html"><strong aria-hidden="true">12.6.</strong> Three Phase AC Systems</a></li></ol></li><li class="chapter-item "><a href="../es2c7/index.html"><strong aria-hidden="true">13.</strong> ES2C7</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2c7/binomial.html"><strong aria-hidden="true">13.1.</strong> Binomial Theorem & Taylor Series</a></li><li class="chapter-item "><a href="../es2c7/matrices.html"><strong aria-hidden="true">13.2.</strong> Matrices & Quadratic Forms</a></li><li class="chapter-item "><a href="../es2c7/equations.html"><strong aria-hidden="true">13.3.</strong> Linear Simultaneous Equations</a></li><li class="chapter-item "><a href="../es2c7/eigen.html"><strong aria-hidden="true">13.4.</strong> Eigenvalues & Eigenvectors</a></li><li class="chapter-item "><a href="../es2c7/systems.html"><strong aria-hidden="true">13.5.</strong> Oscillators & State Space Systems</a></li><li class="chapter-item "><a href="../es2c7/calculus.html"><strong aria-hidden="true">13.6.</strong> Matrix Differential Calculus</a></li><li class="chapter-item "><a href="../es2c7/optimisation.html"><strong aria-hidden="true">13.7.</strong> Optimisation</a></li><li class="chapter-item "><a href="../es2c7/fourier.html"><strong aria-hidden="true">13.8.</strong> Fourier Series & Transforms</a></li><li class="chapter-item "><a href="../es2c7/z.html"><strong aria-hidden="true">13.9.</strong> Z Transforms</a></li><li class="chapter-item "><a href="../es2c7/pdes.html"><strong aria-hidden="true">13.10.</strong> Partial Differential Equations</a></li></ol></li><li class="chapter-item "><a href="../es2e3/index.html"><strong aria-hidden="true">14.</strong> ES2E3</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2e3/logic.html"><strong aria-hidden="true">14.1.</strong> Logic</a></li><li class="chapter-item "><a href="../es2e3/hdl.html"><strong aria-hidden="true">14.2.</strong> Hardware Description Languages</a></li><li class="chapter-item "><a href="../es2e3/verilog.html"><strong aria-hidden="true">14.3.</strong> Structural & Behavioual Verilog</a></li><li class="chapter-item "><a href="../es2e3/design.html"><strong aria-hidden="true">14.4.</strong> FPGA Design Flow</a></li><li class="chapter-item "><a href="../es2e3/architecture.html"><strong aria-hidden="true">14.5.</strong> FPGA Architecture</a></li><li class="chapter-item "><a href="../es2e3/sequential.html"><strong aria-hidden="true">14.6.</strong> Sequential Verilog</a></li><li class="chapter-item "><a href="../es2e3/fsm.html"><strong aria-hidden="true">14.7.</strong> Finite State Machines</a></li><li class="chapter-item "><a href="../es2e3/verification.html"><strong aria-hidden="true">14.8.</strong> Verification</a></li><li class="chapter-item "><a href="../es2e3/arithmetic.html"><strong aria-hidden="true">14.9.</strong> FPGA Arithmetic</a></li><li class="chapter-item "><a href="../es2e3/timing.html"><strong aria-hidden="true">14.10.</strong> Timing & Pipelining</a></li><li class="chapter-item "><a href="../es2e3/interfaces.html"><strong aria-hidden="true">14.11.</strong> Hardware Interfaces</a></li><li class="chapter-item "><a href="../es2e3/processors.html"><strong aria-hidden="true">14.12.</strong> Processor Implementation</a></li></ol></li><li class="chapter-item "><a href="../es3c5/index.html"><strong aria-hidden="true">15.</strong> ES3C5</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es3c5/brief-notes.html"><strong aria-hidden="true">15.1.</strong> Brief Notes + Equations (Aaron)</a></li></ol></li><li class="chapter-item "><a href="../es3e6/index.html"><strong aria-hidden="true">16.</strong> ES3E6</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es3e6/semiconductors.html"><strong aria-hidden="true">16.1.</strong> RF Semiconductors</a></li><li class="chapter-item "><a href="../es3e6/tlines.html"><strong aria-hidden="true">16.2.</strong> Transmission Lines</a></li><li class="chapter-item "><a href="../es3e6/smithchart.html"><strong aria-hidden="true">16.3.</strong> The Smith Chart</a></li><li class="chapter-item "><a href="../es3e6/narrowband.html"><strong aria-hidden="true">16.4.</strong> Narrowband Matching</a></li><li class="chapter-item "><a href="../es3e6/broadband.html"><strong aria-hidden="true">16.5.</strong> Broadband Matching</a></li><li class="chapter-item "><a href="../es3e6/waveguides.html"><strong aria-hidden="true">16.6.</strong> Waveguides</a></li><li class="chapter-item "><a href="../es3e6/coax.html"><strong aria-hidden="true">16.7.</strong> Coax & Striplines</a></li><li class="chapter-item "><a href="../es3e6/params.html"><strong aria-hidden="true">16.8.</strong> Network Parameters</a></li><li class="chapter-item "><a href="../es3e6/filters.html"><strong aria-hidden="true">16.9.</strong> Filters</a></li><li class="chapter-item "><a href="../es3e6/dividers.html"><strong aria-hidden="true">16.10.</strong> Power Dividers, Couplers & Resonators</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Computer Systems Engineering Notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/Joeyh021/notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/Joeyh021/notes/edit/master/src/cs257/parallelism.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="parallelism"><a class="header" href="#parallelism">Parallelism</a></h1>
+<h2 id="parallel-organisation"><a class="header" href="#parallel-organisation">Parallel Organisation</a></h2>
+<ul>
+<li>Flynn's Taxonomy:
+<ul>
+<li>SISD
+<ul>
+<li>Standard uniprocessor stuff</li>
+</ul>
+</li>
+<li>SIMD
+<ul>
+<li>Vector/Array Processors</li>
+<li>Single machine instruction executes on a number of processing elements in lockstep</li>
+</ul>
+</li>
+<li>MISD
+<ul>
+<li>Not really used</li>
+</ul>
+</li>
+<li>MIMD
+<ul>
+<li>Distributed memory systems (cluster-based)
+<ul>
+<li>Communicate via message passing, very scalable</li>
+</ul>
+</li>
+<li>Shared memory systems
+<ul>
+<li>Communicate via memory and are easy to program but memory contention can happen</li>
+<li>Symmetric multiprocessors</li>
+<li>NUMA</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Vector computers employ lots of arithmetic pipelines for SIMD processing
+<ul>
+<li>Instructions operate on vectors of numbers (one or two dimensional)</li>
+<li>One operation specified for all elements of the vector</li>
+<li>2 main types of architecture:
+<ul>
+<li>memory-to-memory</li>
+<li>register-to-register (specific vector registers)</li>
+</ul>
+</li>
+<li>Chaining often used - chain pipelines together for operations such as FMA
+<ul>
+<li>Connect inputs/outputs via crossbar switches</li>
+</ul>
+</li>
+<li>SIMD array computers had good performance for specific applications, but they're old and no-one makes them anymore
+<ul>
+<li>Special set of instructions broadcast to processing elements for execution</li>
+</ul>
+</li>
+<li>Array computer are dead but MMX, SSE, AVX are big in x86</li>
+<li>ARM has NEON coprocessor, a 10-stage SIMD pipeline</li>
+</ul>
+</li>
+<li>Interconnection structure are important in allowing data or memory to be shared
+<ul>
+<li>In distributed memory systems, communication is in software via ethernet or infiniband</li>
+<li>More efficient interconnects are needed to share memory
+<ul>
+<li>A shared bus allows processor and memory to share a communication network
+<ul>
+<li>Need to resolve bus contention issues</li>
+<li>Poor reliability</li>
+<li>Only good for small systems</li>
+</ul>
+</li>
+<li>A cross-bar switch matrix uses a matrix of interconnects
+<ul>
+<li>Functional units require minimal logic</li>
+<li>Switch is complex, large and costly</li>
+<li>Potentially high bandwith, but still struggles with contention</li>
+</ul>
+</li>
+<li>Static links between each processor enable dedicated communication
+<ul>
+<li>More links -&gt; better communication rate</li>
+<li>Different patterns have different performance properties</li>
+<li>Chosen architecture of links usually is a tradeoff between cost and performance
+<ul>
+<li>Hypercube is a good balance</li>
+<li>Number of connections and links per node are a good indication of cost</li>
+<li>Maximum inter-node distance is an indicator of worst-case communication delay</li>
+</ul>
+</li>
+<li>Can have a dedicated link for each pair but that's expensive and rarely necessary</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Multistage switching networks can be either cross-bar or cell-based
+<ul>
+<li>Requirement is to connector each processor to any other processor
+<ul>
+<li>Known as the full access property</li>
+</ul>
+</li>
+<li>Another useful property is that connections are non-blocking</li>
+<li>CLOS networks (multi-stage cross-bar switches) showed that a network with 3 or more stages can be non-blocking</li>
+<li>A CLOS network with 2x2 cross-bar elements is known as a Benes Network, classified as cell-based
+<ul>
+<li>Most cell-based networks are highly blocking but require few switches</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
+<ul>
+<li>Shared memory MIMD systems are easy to program, and can overcome memory contention via cache</li>
+<li>Copies of the same data may now be in different places
+<ul>
+<li>Cache coherence must be maintained</li>
+<li>A write-through policy is not sufficient as that only updates main memory</li>
+<li>It is necessary to update other caches too</li>
+</ul>
+</li>
+<li>Possible solutions include:
+<ul>
+<li>Shared caches
+<ul>
+<li>Poor performance for more than a few processors</li>
+</ul>
+</li>
+<li>Non-cacheable items
+<ul>
+<li>Can only write to main memory, causes problems</li>
+</ul>
+</li>
+<li>Broadcast write
+<ul>
+<li>Every cache write request is broadcast to all other caches</li>
+<li>Copies either updated or invalidated, preferably the latter as it is faster</li>
+<li>Increases memory transactions and wastes bus bandwidth</li>
+</ul>
+</li>
+<li>Snoop bus
+<ul>
+<li>Suitable for single-bus architectures</li>
+<li>Cache write-through is used</li>
+<li>A bus watcher (cache controller) is used and snoops on the system bus
+<ul>
+<li>Detects memory write operations, and invalidates local cached copies if main memory updated</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Directory methods
+<ul>
+<li>A directory is a list of entries identifying cached copies
+<ul>
+<li>Used when a processor writes to a cached location to invalidate or update other copies</li>
+</ul>
+</li>
+<li>Various methods exist</li>
+<li>Suitably for shared memory systems with multistage or hierarchical interconnects where broadcast systems are hard to implement</li>
+<li>Full directory has a directory in main memory
+<ul>
+<li>A set of pointers per cache and a dirty bit is used with each shared data item</li>
+<li>Bit set high if cache has a copy</li>
+<li>Each word/block/line in cache has two state bits:
+<ul>
+<li>Valid bit, set if cache data is valid</li>
+<li>Private bit, set if processor is allowed to write to the block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Limited directories only stored pointer for the number of caches that have the data
+<ul>
+<li>Saves memory storing pointers for caches that don't have data</li>
+<li>Only <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> pointers required, but each pointer must uniquely identify one of the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> caches
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> pointers required for each pointer instead of 1 bit</li>
+</ul>
+</li>
+<li>Requires <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> bits instead of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> bits</li>
+<li>Scales much better as entries grow less than linearly</li>
+</ul>
+</li>
+<li>Chained directories also attempt to reduce the size of the directory
+<ul>
+<li>Use a linked list to hold directory items</li>
+<li>Shared memory directory entry points to one copy in a cache, from there a pointer points to next copy, so on..</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> copies may be maintained</li>
+<li>Whenever a new copy called for, list broken and pointers altered</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MESI is the good protocol
+<ul>
+<li>Snoop bus arrangement used with a write-back policy</li>
+<li>Two status bits per cache line tag so it can be in one of four states
+<ul>
+<li>Modified: entry valid, main memory invalid, no copies exist</li>
+<li>Exclusive: no other cache holds line, memory up to date</li>
+<li>Shared: multiple caches hold line, memory is up to date</li>
+<li>Invalid: cache entry is garbage</li>
+</ul>
+</li>
+<li>When machine booted, all entries are invalid</li>
+<li>First time memory is read, block referenced is fetched by CPU 1 and marked exclusive
+<ul>
+<li>Subsequent reads by same processor use cache</li>
+</ul>
+</li>
+<li>CPU 2 fetches same block
+<ul>
+<li>CPU 1 sees by snooping it is no longer alone and announces it has a copy</li>
+<li>Both copies marked shared</li>
+</ul>
+</li>
+<li>CPU 2 wants to write to the block
+<ul>
+<li>Puts invalidate signal on bus</li>
+<li>Cached copy goes into modified state</li>
+<li>If block was exclusive, no need to signal on bus</li>
+</ul>
+</li>
+<li>CPU 3 wants to read block from memory
+<ul>
+<li>CPU 2 has the modified block, so tells 3 to wait while it writes it back</li>
+</ul>
+</li>
+<li>CPU 1 wants to write a word in the block (cache)
+<ul>
+<li>Assuming fetch on write, block must be read before writing</li>
+<li>CPU 1 generates a Read With Intend To Modify (RWITM) sequence
+<ul>
+<li>CPU 2 has a modified copy so interrupts the sequence and write to memory, invaliding it's own copy</li>
+<li>CPU 1 reads block from memory, updates it and marks it modified</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>All read hits do not alter block state</li>
+<li>All read misses cause a change to shared state</li>
+</ul>
+</li>
+<li>Intel and AMD took different approaches to extending MESI
+<ul>
+<li>Intel uses MESIF
+<ul>
+<li>Forward state is a specialised shared state</li>
+<li>Serving multiple caches in shared state is inefficient, so only the cache with the special forward state responds to requests
+<ul>
+<li>Allows cache-to-cache speeds</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AMD uses MOESI
+<ul>
+<li>Owned state is when a cache has exclusive write rights, but other caches may read from it
+<ul>
+<li>Changes to line are broadcast to other caches</li>
+</ul>
+</li>
+<li>Avoids writing dirty line back to main memory
+<ul>
+<li>Modified line provided from the owning cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="data-level-parallelism"><a class="header" href="#data-level-parallelism">Data Level Parallelism</a></h2>
+<ul>
+<li>The utilisation of SIMD depends on applications having a degree of data-level parallelism
+<ul>
+<li>Matrix oriented computation</li>
+<li>Image and sound processing</li>
+</ul>
+</li>
+<li>Sequential thinking but parallel processing makes it easy to reason about</li>
+<li>Vector-specific architecures make SIMD easy but practicality is limited
+<ul>
+<li>Reduced fetch/decode bandwith as fewer instructions</li>
+<li>Programmers view is:
+<ul>
+<li>Transfer data elements to register files
+<ul>
+<li>Essentially compiler-managed buffers for data</li>
+<li>Fixed length buffer to store a single vector
+<ul>
+<li>Eg, each register holds 64 words</li>
+<li>Needs enough ports to service all functional units</li>
+<li>Ports connect to functional units over crossbar switch</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Operate on register files
+<ul>
+<li>Functional units heavily pipleined</li>
+<li>Integrated control units detect structural or data hazards</li>
+<li>Also provide scalar units to compute addresses
+<ul>
+<li>Can be chained with vector units</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Place results back in memory</li>
+</ul>
+</li>
+<li>Loads and stores are pipleined
+<ul>
+<li>Program pays memory latency cost just once, instead of once per data element</li>
+</ul>
+</li>
+<li>Three contributing performance factors are:
+<ul>
+<li>Length of vector ops</li>
+<li>Structural hazards</li>
+<li>Data dependencies</li>
+</ul>
+</li>
+<li>Performance can be considered in terms of vector length or initiation rate</li>
+<li>Modern vector computers employ parallel pipelines known as lanes
+<ul>
+<li>Superscalar architecture</li>
+</ul>
+</li>
+<li>Convoys are sets of vector instructions that can execute together
+<ul>
+<li>Performance of code sections can be estimated by counting number of convoys</li>
+<li>Need to ensure no structural hazards exist</li>
+<li>A chime refers to the unit of time to execute a single convoy
+<ul>
+<li>A vector sequence of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> convoys executes in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> chimes</li>
+<li>Approximation ignores processor specific overhead and allows to readon about inherent data-level parallelism</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Chaining can be used to acheive performance, as it allows operations to be initiated as soon as individual elements of the vector source are available
+<ul>
+<li>Earliest implementations work in a similar way to forwarding in scalar pipelines</li>
+<li>Flexible chaining allows a vector instruction to chain to almost any other active vector instruction
+<ul>
+<li>Have to take care not to introduce hazards</li>
+<li>Supported by modern architectures</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A number of techniques can be applied to optimise vector architectures
+<ul>
+<li>Can have multiple lanes, a single vector instruction can be split up to execute accross the lanes
+<ul>
+<li>Doubling lanes but halving clock rate does not change speed</li>
+<li>Increases size and energy consumption</li>
+</ul>
+</li>
+<li>Vector length registers vary the size of the vector operations
+<ul>
+<li>Value cannot be greater than the max vector length, the physical register size</li>
+<li>Strip mining is a technique that generates code such that each vector operation is done for a size less than or equal to the max vector length</li>
+</ul>
+</li>
+<li>Vector mask registers allow for conditional execution of each element operation, when usually conditionals would be needed that hinder performance</li>
+<li>Memory banking spreads memory accesses across multiple memory banks to improve the start up time for a vector load</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MMX/SSE/AVX provide SIMD in x86
+<ul>
+<li>Many media applications operate on a narrower range of data types than 32-bit processors are designed for
+<ul>
+<li>8-bit colour components</li>
+<li>16-bit audio samples</li>
+</ul>
+</li>
+<li>A 256-bit adder can operate on 32 8-bit values at once</li>
+<li>MMX was introduced by intel in 1996
+<ul>
+<li>Used 64-bit FP registers to provide 8 and 16-bit operations</li>
+</ul>
+</li>
+<li>SSE was introduced as the successor, adding 128-but wide registers</li>
+<li>AVX introduced in 2010 adds 256 bit registers with a focus on double precision FP
+<ul>
+<li>AVX-512 introduced doubles register size again</li>
+</ul>
+</li>
+<li>Focus of SIMD extensions is to accelerate carefully implemented code
+<ul>
+<li>Low cost to use</li>
+<li>Require little extra state compared to vector architectures</li>
+<li>No virtual memory problems</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>GPUs are powerful vector units that are similar to vector architectures
+<ul>
+<li>Hardware designed for graphics but usually supplemented to improve the performance of a wider range of applications</li>
+<li>Heterogeneous execution model
+<ul>
+<li>CPU is host, GPU is device</li>
+</ul>
+</li>
+<li>NVIDIA have CUDA for programming, OpenCL is vendor-independent</li>
+<li>GPUs provide high levels of every form of parallelism, but it is hard to achieve performance as must also manage
+<ul>
+<li>Scheduling of computation</li>
+<li>Transfer of data to GPU memory</li>
+</ul>
+</li>
+<li>CUDA threads are the lowest form of parallelism, one associated with each data element
+<ul>
+<li>Can group thousands of threads to yield other forms of parallelism</li>
+<li>Threads organised into blocks, multithreaded SIMD processor executed a whole thread block</li>
+<li>Blocks organised into grids, executed independently and in any order</li>
+<li>GPU hardware handles thread management</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="multicore-systems"><a class="header" href="#multicore-systems">Multicore Systems</a></h2>
+<ul>
+<li>Can consider the performance of a processor in terms of the rate at which it executes instructions
+<ul>
+<li>MIPS = freq * IPC</li>
+<li>Leads to an focus on increasing clock frequency and processor efficiency
+<ul>
+<li>We've kinda hit a ceiling with this</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Alternative approach is multithreading
+<ul>
+<li>Divide instruction stream into smaller streams to execute threads in parallel</li>
+<li>Various designs and implementations
+<ul>
+<li>Threads may or may not be the same as software threads in multiprogrammed OS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A process is an instance of a running program
+<ul>
+<li>Processes own resources in their virtual address space</li>
+<li>Processes are scheduled by the OS</li>
+<li>Process switch is an operation that switches the processor form one process to another</li>
+</ul>
+</li>
+<li>A thread is a unit of work within a process
+<ul>
+<li>Thread switch switches processor control from one to another within the same process</li>
+<li>Far less costly than processes &amp; process switches</li>
+</ul>
+</li>
+<li>Implicit multithreading is the concurrent execution of multiple threads from a single sequential program
+<ul>
+<li>Statically defined by compiler or dynamically in hardware</li>
+<li>Rarely done as it hard</li>
+</ul>
+</li>
+<li>Most processors have adopted explicit multithreading, which concurrently execute instructions form different threads by either:
+<ul>
+<li>Uses separate program counter for each thread</li>
+<li>Instruction fetching happens per thread</li>
+<li>Each thread treated and optimised separately</li>
+<li>Multiple approaches:
+<ul>
+<li>Interleaved, where processor deals with more than one at a time, switching at each clock cycle
+<ul>
+<li>Thread skipped when blocking</li>
+</ul>
+</li>
+<li>Blocking or coarse grained, where threads execute successively until an event occurs that may cause a delay
+<ul>
+<li>Delay prompts a switch to another thread</li>
+</ul>
+</li>
+<li>SMT, where instructions are issues from multiple threads to the execution units of a superscalar processor
+<ul>
+<li>Performance comes from superscalar capability combined with multiple thread contexts</li>
+</ul>
+</li>
+<li>Chip multiprocessing replicates entire processor on same chip
+<ul>
+<li>Multicore</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Interleaved and blocked do not provied true concurrency, whereas SMT and multicore are actual simultaneous execution</li>
+<li>Multicore systems combine multiple cores on a single die
+<ul>
+<li>Each core has its own components (ALU, registers, PC) and caches</li>
+<li>Pollack's rule: performance increase is roughly proportional to square root of increase in complexity
+<ul>
+<li>If we double the logic, will deliver 40% perf boost</li>
+<li>Multicore has potential for near-linear improvement but is hard to acheive</li>
+</ul>
+</li>
+<li>Main variables are number of cores, and levels and amount of shared cache
+<ul>
+<li>Can have dedicated L1/L2</li>
+<li>Can share L2 or have dedicated L2 and share L3</li>
+<li>Shared L2 cache has advantages over reliance on dedicated cache
+<ul>
+<li>Constructive interference can reduce miss rates</li>
+<li>Data shared is not replicated in shared cache</li>
+<li>Amount of shared cache for each core is dynamic</li>
+<li>Interprocessor communication can happen through cache</li>
+<li>Confines cache coherence problem to L1 cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Clusters
+<ul>
+<li>A group of interconnected whole computers working together as a unified computing resource, that creates the illusion of a single machine</li>
+<li>Alternative to multiprocessing for high performance and availability</li>
+<li>Attractive for servers</li>
+<li>Absolute and incremental scalability, high reliability, superior price/performance ratio</li>
+<li>High-speed interconnects needed</li>
+</ul>
+</li>
+<li>With uniform memory access, all processors have access to all the memory in uniform time
+<ul>
+<li>NUMA, Non Uniform Memory Access, gives different access times to different processors for different regions of memory
+<ul>
+<li>All processors can still access all memory, just slower</li>
+<li>Cache Coherent NUMA (CC-NUMA) extends NUMA with cache coherence between the processors</li>
+</ul>
+</li>
+<li>Used because SMP approaches don't scale, and allows for transparent-system wide memory</li>
+<li>Could motivate clusters, but clusters are hard to program effectively</li>
+</ul>
+</li>
+</ul>
+<h2 id="thread-level-parallelism"><a class="header" href="#thread-level-parallelism">Thread Level Parallelism</a></h2>
+<ul>
+<li>Synchronisation primitives exist in hardware that allow high-level synchronisation constructs to be built
+<ul>
+<li>Establish building blocks to build actual constructs used by programmers</li>
+</ul>
+</li>
+<li>Most important hardware provision is the atomic instruction
+<ul>
+<li>Uninterruptible and capable of incurring value change</li>
+<li>May actually be an atomic instruction sequence</li>
+</ul>
+</li>
+<li>In high-contention sequence, synchronisation can become a performance bottleneck</li>
+<li>Atomic exchange is a primitive that swaps a value in a register for a value in memory
+<ul>
+<li>Can be used to build locks for synchronisation
+<ul>
+<li>Assume a value of 0 indicates the lock is free, 1 indicates it is unavailable</li>
+</ul>
+</li>
+<li>Simplest possible situation where two processors both wish to perform an atomic exchange
+<ul>
+<li>One processor will enter the exchange first</li>
+<li>This processor will ensure that a value of 1 is returned to any other processor that next attempts an exchange</li>
+<li>The two simultaneous exchange operations will be ordered by write serialisation mechanisms</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Older microprocessors feature a test-and-set atomic instruction in hardware
+<ul>
+<li>Allowed to define a test against which a value can be tested</li>
+<li>Value modified if defined test succeeded</li>
+</ul>
+</li>
+<li>Some current gen microprocessors have fetch-and-increment atomic
+<ul>
+<li>Return the value at a pointer and increment it</li>
+</ul>
+</li>
+<li>Atomic instructions usually consist of some read and write</li>
+<li>Requiring an uninterruptible read-write fucks with a good number of things
+<ul>
+<li>Cache coherence</li>
+<li>Instruction pipelining</li>
+<li>Cache performance</li>
+</ul>
+</li>
+<li>Possible to have a pair of atomic instructions where the second instruction returns a value that indicates if the pair executed atomically
+<ul>
+<li>Pair includes a special load known as load linked, followed by a special write, store conditional
+<ul>
+<li>If they memory location specified by load linked is accessed prior to the store conditional then the store fails</li>
+<li>Also fails if there is a context switch</li>
+</ul>
+</li>
+<li>Can implement atomic exchange using this
+<ul>
+<li>If the store conditional returns a value indicating failure, then a branch jumps back and retries</li>
+</ul>
+</li>
+<li>Can also implement fetch-and-increment
+<ul>
+<li>Maintain a record of the address specified by linked load in a link register</li>
+<li>If an interrupt occurs or cache block containing address is invalidated, register is cleared</li>
+<li>Conditional store checks register for address matching to determine success</li>
+<li>To avoid deadlock, only register to register operations are permitted between linked-store instructions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Spin locks are locks that processors repeatedly attempt to required
+<ul>
+<li>Effective when low latency required and lock held for short periods</li>
+<li>Processors with cache coherence provide a convenient mechanism for spin locks
+<ul>
+<li>Testing the status of a lock requires local cache access rather than main memory access</li>
+<li>Temporal locality decreases lock acquisition times</li>
+</ul>
+</li>
+<li>Linked-store can avoid needless bus access when multiple processors attempt to acquire a lock</li>
+</ul>
+</li>
+<li>Cache coherence ensures multiple processors have a consistent view of memory, so allows communication through shared memory
+<ul>
+<li>Shared memory communications means we only need consider the rules enforced on reads and writes of different processors
+<ul>
+<li>Don't need to sync <em>everything</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Different models of memory consistency exist
+<ul>
+<li>Simplest is sequential consistency
+<ul>
+<li>Requires the results of execution be the same if memory accesses of processors were kept in order and interleaved</li>
+<li>Ensured all processors delay memory accesses until all cache invalidations are complete</li>
+<li>Simple but slow</li>
+</ul>
+</li>
+<li>Synchronised consistency orders all accesses to shared data using synchronisation operations
+<ul>
+<li>A data reference is ordered by a synchronisation operation if, in every possible execution, a write by one processor and an access by another are separated by a pair of synchronisation operations</li>
+<li>Whenever a variable might be updated without ordering by synchronisation is a data rate</li>
+</ul>
+</li>
+<li>There are relaxed consistency models that allow reads and writes to complete out-of-order but use synchronisation to enforce ordering
+<ul>
+<li>Three general models</li>
+<li>A -&gt; B denotes that A must complete before B</li>
+<li>Total store ordering relaxes W -&gt; R
+<ul>
+<li>Retrains ordering among writes</li>
+</ul>
+</li>
+<li>Partial order store model relaxes W -&gt; W
+<ul>
+<li>Impractical for most programs</li>
+</ul>
+</li>
+<li>Relaxing R -&gt; R and R -&gt; W happens in a variety of models, including weak ordering and release consistency</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="high-performance-systems"><a class="header" href="#high-performance-systems">High Performance Systems</a></h2>
+<ul>
+<li>Symmetric Multiprocessors (SMP) is an organisation of two or more processors sharing memory
+<ul>
+<li>Processors connected by bus</li>
+<li>Uniform memory access</li>
+<li>All processors are the same and share I/O</li>
+<li>System controlled by integrated OS</li>
+<li>Performant for parallel problems</li>
+<li>All processors are the same so if one processor goes down another is still available</li>
+<li>Can scale incrementally</li>
+<li>Most PCs use a time-shared bus but can also use multi-port memory in more complex organisations</li>
+</ul>
+</li>
+<li>Clusters are an alternative to SMP
+<ul>
+<li>A cluster computer is defined as a group of interconnected computers (nodes) working together as a unified resources</li>
+<li>High performance and availability</li>
+<li>Attractive for server applications</li>
+<li>Absolute and incremental scalability</li>
+<li>Superior price/performance</li>
+<li>High speed message links required to coordinate activity</li>
+<li>Machines in a cluster may or may not share disks</li>
+<li>Cluster middleware provides a unified system image to the user
+<ul>
+<li>Responsible for load balancing, fault tolerance, etc</li>
+<li>Desireable to have:</li>
+<li>A single entry and control point/workstation</li>
+<li>Single file hierarchy</li>
+<li>Single virtual networking</li>
+<li>Single memory space</li>
+<li>Single job-management system</li>
+<li>Single UI</li>
+<li>Single I/O space</li>
+<li>Single Process space</li>
+<li>Check pointing, to save the process state and intermediate results</li>
+<li>Process migration, to enable load balancing</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Both clusters and SMP provide multiple processors for high-demand applications
+<ul>
+<li>SMP easier to manage and configure, take up less space and power
+<ul>
+<li>Bus architecture limits processors to around 16~64</li>
+</ul>
+</li>
+<li>Clusters dominate high-performance server market
+<ul>
+<li>Scalable to 1000s of nodes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Uniform memory access used in SMP organisations</li>
+<li>Memory access time varies in NUMA systems
+<ul>
+<li>NUMA with no cache coherence is more or less a cluster system</li>
+</ul>
+</li>
+<li>CC-NUMA is NUMA with cache coherence
+<ul>
+<li>Objective is to maintain a transparent system memory while permitting multiple nodes</li>
+<li>Nodes each have own SMP organisations and internal busses/interconnects</li>
+<li>Each processor sees a single addressable memory</li>
+<li>Cache coherence usually done via a directory method</li>
+<li>Can deliver effective performance at higher levels of parallelism than SMP</li>
+<li>Bus traffic on any individual node is limited by bus capacity</li>
+<li>If many memory accesses are to remote performance degrades</li>
+<li>Software changes required to go form SMP to CC-NUMA systems</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../cs257/architecture.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../cs257/io.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../cs257/architecture.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../cs257/io.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Types &amp; Typeclasses - Computer Systems Engineering Notes</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item "><a href="../cs118/index.html"><strong aria-hidden="true">1.</strong> CS118</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs118/floats.html"><strong aria-hidden="true">1.1.</strong> IEEE 754</a></li><li class="chapter-item "><a href="../cs118/oop.html"><strong aria-hidden="true">1.2.</strong> OOP Principles</a></li><li class="chapter-item "><a href="../cs118/exceptions.html"><strong aria-hidden="true">1.3.</strong> Java Exceptions & Generics</a></li></ol></li><li class="chapter-item "><a href="../cs126/index.html"><strong aria-hidden="true">2.</strong> CS126</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs126/arrays.html"><strong aria-hidden="true">2.1.</strong> Arrays & Linked Lists</a></li><li class="chapter-item "><a href="../cs126/analysis.html"><strong aria-hidden="true">2.2.</strong> Analysis of Algorithms</a></li><li class="chapter-item "><a href="../cs126/recursion.html"><strong aria-hidden="true">2.3.</strong> Recursive Algorithms</a></li><li class="chapter-item "><a href="../cs126/stacks.html"><strong aria-hidden="true">2.4.</strong> Stacks & Queues</a></li><li class="chapter-item "><a href="../cs126/lists.html"><strong aria-hidden="true">2.5.</strong> Lists</a></li><li class="chapter-item "><a href="../cs126/maps.html"><strong aria-hidden="true">2.6.</strong> Maps</a></li><li class="chapter-item "><a href="../cs126/hash.html"><strong aria-hidden="true">2.7.</strong> Hash Tables</a></li><li class="chapter-item "><a href="../cs126/sets.html"><strong aria-hidden="true">2.8.</strong> Sets</a></li><li class="chapter-item "><a href="../cs126/trees.html"><strong aria-hidden="true">2.9.</strong> Trees</a></li><li class="chapter-item "><a href="../cs126/pqs.html"><strong aria-hidden="true">2.10.</strong> Priority Queues</a></li><li class="chapter-item "><a href="../cs126/heaps.html"><strong aria-hidden="true">2.11.</strong> Heaps</a></li><li class="chapter-item "><a href="../cs126/skip-lists.html"><strong aria-hidden="true">2.12.</strong> Skip Lists</a></li><li class="chapter-item "><a href="../cs126/graphs.html"><strong aria-hidden="true">2.13.</strong> Graphs</a></li></ol></li><li class="chapter-item "><a href="../cs132/index.html"><strong aria-hidden="true">3.</strong> CS132</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs132/logic.html"><strong aria-hidden="true">3.1.</strong> Digital Logic</a></li><li class="chapter-item "><a href="../cs132/assembly.html"><strong aria-hidden="true">3.2.</strong> Assembly</a></li><li class="chapter-item "><a href="../cs132/memory.html"><strong aria-hidden="true">3.3.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs132/io.html"><strong aria-hidden="true">3.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs132/architecture.html"><strong aria-hidden="true">3.5.</strong> Microprocessor Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../cs141/index.html"><strong aria-hidden="true">4.</strong> CS141</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cs141/types.html" class="active"><strong aria-hidden="true">4.1.</strong> Types & Typeclasses</a></li><li class="chapter-item "><a href="../cs141/recursion.html"><strong aria-hidden="true">4.2.</strong> Recursion</a></li><li class="chapter-item "><a href="../cs141/functions.html"><strong aria-hidden="true">4.3.</strong> Higher Order Functions</a></li><li class="chapter-item "><a href="../cs141/lazy.html"><strong aria-hidden="true">4.4.</strong> Lazy Evaluation</a></li><li class="chapter-item "><a href="../cs141/reasoning.html"><strong aria-hidden="true">4.5.</strong> Reasoning About Programs</a></li><li class="chapter-item "><a href="../cs141/functors.html"><strong aria-hidden="true">4.6.</strong> Functors & Foldables</a></li><li class="chapter-item "><a href="../cs141/applicatives.html"><strong aria-hidden="true">4.7.</strong> Applicative Functors</a></li><li class="chapter-item "><a href="../cs141/monads.html"><strong aria-hidden="true">4.8.</strong> Monads</a></li><li class="chapter-item "><a href="../cs141/tlp.html"><strong aria-hidden="true">4.9.</strong> Type-Level Programming</a></li></ol></li><li class="chapter-item "><a href="../es191/index.html"><strong aria-hidden="true">5.</strong> ES191</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es191/symbols-and-conventions.html"><strong aria-hidden="true">5.1.</strong> Circuit Symbols & Conventions</a></li><li class="chapter-item "><a href="../es191/nodal.html"><strong aria-hidden="true">5.2.</strong> Nodal Analysis</a></li><li class="chapter-item "><a href="../es191/mesh.html"><strong aria-hidden="true">5.3.</strong> Mesh Analysis</a></li><li class="chapter-item "><a href="../es191/thevenin.html"><strong aria-hidden="true">5.4.</strong> Thevenin Circuits</a></li><li class="chapter-item "><a href="../es191/rc.html"><strong aria-hidden="true">5.5.</strong> First Order RC Circuits</a></li><li class="chapter-item "><a href="../es191/rl.html"><strong aria-hidden="true">5.6.</strong> First Order RL Circuits</a></li><li class="chapter-item "><a href="../es191/ac.html"><strong aria-hidden="true">5.7.</strong> AC Circuits</a></li><li class="chapter-item "><a href="../es191/diodes.html"><strong aria-hidden="true">5.8.</strong> Diodes</a></li><li class="chapter-item "><a href="../es191/transistors.html"><strong aria-hidden="true">5.9.</strong> Transistors</a></li><li class="chapter-item "><a href="../es191/opamps.html"><strong aria-hidden="true">5.10.</strong> Op Amps</a></li><li class="chapter-item "><a href="../es191/filters.html"><strong aria-hidden="true">5.11.</strong> Passive Filters</a></li><li class="chapter-item "><a href="../es191/equations.html"><strong aria-hidden="true">5.12.</strong> Equation Reference</a></li></ol></li><li class="chapter-item "><a href="../es193/index.html"><strong aria-hidden="true">6.</strong> ES193</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es193/functions.html"><strong aria-hidden="true">6.1.</strong> Functions, Conics & Asymptotes</a></li><li class="chapter-item "><a href="../es193/complex.html"><strong aria-hidden="true">6.2.</strong> Complex Numbers</a></li><li class="chapter-item "><a href="../es193/vectors.html"><strong aria-hidden="true">6.3.</strong> Vectors</a></li><li class="chapter-item "><a href="../es193/matrices.html"><strong aria-hidden="true">6.4.</strong> Matrices</a></li><li class="chapter-item "><a href="../es193/equations.html"><strong aria-hidden="true">6.5.</strong> Simultaneous Linear Equations</a></li><li class="chapter-item "><a href="../es193/diff.html"><strong aria-hidden="true">6.6.</strong> Differentiation</a></li><li class="chapter-item "><a href="../es193/int.html"><strong aria-hidden="true">6.7.</strong> Integration</a></li><li class="chapter-item "><a href="../es193/diffeq.html"><strong aria-hidden="true">6.8.</strong> Differential Equations</a></li><li class="chapter-item "><a href="../es193/laplace.html"><strong aria-hidden="true">6.9.</strong> Laplace Transforms</a></li><li class="chapter-item "><a href="../es193/stats.html"><strong aria-hidden="true">6.10.</strong> Probability & Statistics</a></li><li class="chapter-item "><a href="../es193/equationref.html"><strong aria-hidden="true">6.11.</strong> Equation Reference</a></li></ol></li><li class="chapter-item "><a href="../es197/index.html"><strong aria-hidden="true">7.</strong> ES197</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es197/mech1.html"><strong aria-hidden="true">7.1.</strong> Translational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/mech2.html"><strong aria-hidden="true">7.2.</strong> Rotational Mechanical Systems</a></li><li class="chapter-item "><a href="../es197/electrical.html"><strong aria-hidden="true">7.3.</strong> Electrical Systems</a></li><li class="chapter-item "><a href="../es197/thermal.html"><strong aria-hidden="true">7.4.</strong> Thermal Systems</a></li><li class="chapter-item "><a href="../es197/data.html"><strong aria-hidden="true">7.5.</strong> Data Driven Models</a></li><li class="chapter-item "><a href="../es197/step1.html"><strong aria-hidden="true">7.6.</strong> First Order Step Response</a></li><li class="chapter-item "><a href="../es197/step2.html"><strong aria-hidden="true">7.7.</strong> Second Order Step Response</a></li><li class="chapter-item "><a href="../es197/transfer.html"><strong aria-hidden="true">7.8.</strong> Transfer Functions</a></li><li class="chapter-item "><a href="../es197/freq1.html"><strong aria-hidden="true">7.9.</strong> First Order Frequency Response</a></li><li class="chapter-item "><a href="../es197/freq2.html"><strong aria-hidden="true">7.10.</strong> Second Order Frequency Response</a></li></ol></li><li class="chapter-item "><a href="../cs241/index.html"><strong aria-hidden="true">8.</strong> CS241</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs241/os.html"><strong aria-hidden="true">8.1.</strong> Operating Systems</a></li><li class="chapter-item "><a href="../cs241/cn.html"><strong aria-hidden="true">8.2.</strong> Networks</a></li></ol></li><li class="chapter-item "><a href="../cs257/index.html"><strong aria-hidden="true">9.</strong> CS257</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs257/memory.html"><strong aria-hidden="true">9.1.</strong> Memory Systems</a></li><li class="chapter-item "><a href="../cs257/architecture.html"><strong aria-hidden="true">9.2.</strong> Processor Architecture</a></li><li class="chapter-item "><a href="../cs257/parallelism.html"><strong aria-hidden="true">9.3.</strong> Parallelism</a></li><li class="chapter-item "><a href="../cs257/io.html"><strong aria-hidden="true">9.4.</strong> I/O</a></li><li class="chapter-item "><a href="../cs257/embedded.html"><strong aria-hidden="true">9.5.</strong> Embedded Systems & Security</a></li></ol></li><li class="chapter-item "><a href="../cs261/index.html"><strong aria-hidden="true">10.</strong> CS261</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../cs261/methodologies.html"><strong aria-hidden="true">10.1.</strong> Requirements & Software Methodologies</a></li><li class="chapter-item "><a href="../cs261/modelling.html"><strong aria-hidden="true">10.2.</strong> System Modelling</a></li><li class="chapter-item "><a href="../cs261/design.html"><strong aria-hidden="true">10.3.</strong> System Design</a></li><li class="chapter-item "><a href="../cs261/testing.html"><strong aria-hidden="true">10.4.</strong> Testing & HCI</a></li></ol></li><li class="chapter-item "><a href="../es2c0/index.html"><strong aria-hidden="true">11.</strong> ES2C0</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2c0/diodes.html"><strong aria-hidden="true">11.1.</strong> Diodes</a></li><li class="chapter-item "><a href="../es2c0/oscillators.html"><strong aria-hidden="true">11.2.</strong> Oscillators</a></li><li class="chapter-item "><a href="../es2c0/bjt.html"><strong aria-hidden="true">11.3.</strong> BJTs</a></li><li class="chapter-item "><a href="../es2c0/bjt-amps.html"><strong aria-hidden="true">11.4.</strong> BJT Amplifiers</a></li><li class="chapter-item "><a href="../es2c0/mosfet.html"><strong aria-hidden="true">11.5.</strong> MOSFETs</a></li><li class="chapter-item "><a href="../es2c0/mosfet-amps.html"><strong aria-hidden="true">11.6.</strong> MOSFET Amplifiers</a></li><li class="chapter-item "><a href="../es2c0/differential.html"><strong aria-hidden="true">11.7.</strong> Differential Amplifiers</a></li><li class="chapter-item "><a href="../es2c0/opamps.html"><strong aria-hidden="true">11.8.</strong> Op-Amps</a></li><li class="chapter-item "><a href="../es2c0/equations.html"><strong aria-hidden="true">11.9.</strong> Equation Reference</a></li></ol></li><li class="chapter-item "><a href="../es2c6/index.html"><strong aria-hidden="true">12.</strong> ES2C6</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2c6/control.html"><strong aria-hidden="true">12.1.</strong> Control Systems</a></li><li class="chapter-item "><a href="../es2c6/mechanics.html"><strong aria-hidden="true">12.2.</strong> Drive Systems</a></li><li class="chapter-item "><a href="../es2c6/sensors.html"><strong aria-hidden="true">12.3.</strong> Sensors</a></li><li class="chapter-item "><a href="../es2c6/electromagnetics.html"><strong aria-hidden="true">12.4.</strong> Electromagnetics & Motors</a></li><li class="chapter-item "><a href="../es2c6/ac.html"><strong aria-hidden="true">12.5.</strong> AC Power</a></li><li class="chapter-item "><a href="../es2c6/3phase.html"><strong aria-hidden="true">12.6.</strong> Three Phase AC Systems</a></li></ol></li><li class="chapter-item "><a href="../es2c7/index.html"><strong aria-hidden="true">13.</strong> ES2C7</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2c7/binomial.html"><strong aria-hidden="true">13.1.</strong> Binomial Theorem & Taylor Series</a></li><li class="chapter-item "><a href="../es2c7/matrices.html"><strong aria-hidden="true">13.2.</strong> Matrices & Quadratic Forms</a></li><li class="chapter-item "><a href="../es2c7/equations.html"><strong aria-hidden="true">13.3.</strong> Linear Simultaneous Equations</a></li><li class="chapter-item "><a href="../es2c7/eigen.html"><strong aria-hidden="true">13.4.</strong> Eigenvalues & Eigenvectors</a></li><li class="chapter-item "><a href="../es2c7/systems.html"><strong aria-hidden="true">13.5.</strong> Oscillators & State Space Systems</a></li><li class="chapter-item "><a href="../es2c7/calculus.html"><strong aria-hidden="true">13.6.</strong> Matrix Differential Calculus</a></li><li class="chapter-item "><a href="../es2c7/optimisation.html"><strong aria-hidden="true">13.7.</strong> Optimisation</a></li><li class="chapter-item "><a href="../es2c7/fourier.html"><strong aria-hidden="true">13.8.</strong> Fourier Series & Transforms</a></li><li class="chapter-item "><a href="../es2c7/z.html"><strong aria-hidden="true">13.9.</strong> Z Transforms</a></li><li class="chapter-item "><a href="../es2c7/pdes.html"><strong aria-hidden="true">13.10.</strong> Partial Differential Equations</a></li></ol></li><li class="chapter-item "><a href="../es2e3/index.html"><strong aria-hidden="true">14.</strong> ES2E3</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es2e3/logic.html"><strong aria-hidden="true">14.1.</strong> Logic</a></li><li class="chapter-item "><a href="../es2e3/hdl.html"><strong aria-hidden="true">14.2.</strong> Hardware Description Languages</a></li><li class="chapter-item "><a href="../es2e3/verilog.html"><strong aria-hidden="true">14.3.</strong> Structural & Behavioual Verilog</a></li><li class="chapter-item "><a href="../es2e3/design.html"><strong aria-hidden="true">14.4.</strong> FPGA Design Flow</a></li><li class="chapter-item "><a href="../es2e3/architecture.html"><strong aria-hidden="true">14.5.</strong> FPGA Architecture</a></li><li class="chapter-item "><a href="../es2e3/sequential.html"><strong aria-hidden="true">14.6.</strong> Sequential Verilog</a></li><li class="chapter-item "><a href="../es2e3/fsm.html"><strong aria-hidden="true">14.7.</strong> Finite State Machines</a></li><li class="chapter-item "><a href="../es2e3/verification.html"><strong aria-hidden="true">14.8.</strong> Verification</a></li><li class="chapter-item "><a href="../es2e3/arithmetic.html"><strong aria-hidden="true">14.9.</strong> FPGA Arithmetic</a></li><li class="chapter-item "><a href="../es2e3/timing.html"><strong aria-hidden="true">14.10.</strong> Timing & Pipelining</a></li><li class="chapter-item "><a href="../es2e3/interfaces.html"><strong aria-hidden="true">14.11.</strong> Hardware Interfaces</a></li><li class="chapter-item "><a href="../es2e3/processors.html"><strong aria-hidden="true">14.12.</strong> Processor Implementation</a></li></ol></li><li class="chapter-item "><a href="../es3c5/index.html"><strong aria-hidden="true">15.</strong> ES3C5</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es3c5/brief-notes.html"><strong aria-hidden="true">15.1.</strong> Brief Notes + Equations (Aaron)</a></li></ol></li><li class="chapter-item "><a href="../es3e6/index.html"><strong aria-hidden="true">16.</strong> ES3E6</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../es3e6/semiconductors.html"><strong aria-hidden="true">16.1.</strong> RF Semiconductors</a></li><li class="chapter-item "><a href="../es3e6/tlines.html"><strong aria-hidden="true">16.2.</strong> Transmission Lines</a></li><li class="chapter-item "><a href="../es3e6/smithchart.html"><strong aria-hidden="true">16.3.</strong> The Smith Chart</a></li><li class="chapter-item "><a href="../es3e6/narrowband.html"><strong aria-hidden="true">16.4.</strong> Narrowband Matching</a></li><li class="chapter-item "><a href="../es3e6/broadband.html"><strong aria-hidden="true">16.5.</strong> Broadband Matching</a></li><li class="chapter-item "><a href="../es3e6/waveguides.html"><strong aria-hidden="true">16.6.</strong> Waveguides</a></li><li class="chapter-item "><a href="../es3e6/coax.html"><strong aria-hidden="true">16.7.</strong> Coax & Striplines</a></li><li class="chapter-item "><a href="../es3e6/params.html"><strong aria-hidden="true">16.8.</strong> Network Parameters</a></li><li class="chapter-item "><a href="../es3e6/filters.html"><strong aria-hidden="true">16.9.</strong> Filters</a></li><li class="chapter-item "><a href="../es3e6/dividers.html"><strong aria-hidden="true">16.10.</strong> Power Dividers, Couplers & Resonators</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Computer Systems Engineering Notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/Joeyh021/notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/Joeyh021/notes/edit/master/src/cs141/types.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="types--typeclasses"><a class="header" href="#types--typeclasses">Types &amp; Typeclasses</a></h1>
+<p>Haskell is a strongly, statically typed programming language, which helps prevent us from writing bad programs.</p>
+<ul>
+<li>Java, C, Rust - strongly typed</li>
+<li>Python, Ruby - dynamically typed</li>
+</ul>
+<p>Types have many benefits:</p>
+<ul>
+<li>Describe the value of an expression</li>
+<li>Prevent us from doing silly things
+<ul>
+<li><code>not 7</code> gives <code>Type Error</code></li>
+</ul>
+</li>
+<li>Good for documentation</li>
+<li>Type errors occur at compile time</li>
+</ul>
+<p>GHC checks types and infers the type of expressions for us. Types are discarded after type checking, and are not available at runtime.</p>
+<h2 id="type-notation"><a class="header" href="#type-notation">Type notation</a></h2>
+<p>We say an expression has a type by writing <code>expression :: type</code>, read as &quot;expression has type&quot;.</p>
+<ul>
+<li>If we can assign a type to an expression, it is &quot;well typed&quot;</li>
+<li>A type approximates and describes the value of an expression.</li>
+</ul>
+<pre><code class="language-haskell">42 :: Int
+True :: Bool
+'c' :: Char
+&quot;Cake&quot; :: String
+0.5 :: Double
+4 + 8 :: Int
+2 * 9 + 3 :: Int
+True &amp;&amp; False :: Bool
+&quot;AB&quot; ++ &quot;CD&quot; :: String
+even 9 :: Bool
+</code></pre>
+<p>Before writing a definition, it is good practice to write its type.</p>
+<pre><code class="language-haskell">daysPerWeek :: Int
+daysperWeek = 7
+</code></pre>
+<h3 id="function-types"><a class="header" href="#function-types">Function Types</a></h3>
+<p>The types of functions are denoted using arrows <code>-&gt;</code>. The <code>not</code> function is defined as <code>not :: Bool -&gt; Bool</code>, read &quot;not has type bool to bool&quot;. It means if you give me a <code>Bool</code>, I will give you back another <code>Bool</code>.</p>
+<p>The definition of the <code>not</code> function is shown below.</p>
+<pre><code class="language-haskell">not :: Bool -&gt; Bool
+not True = False
+not False = True
+not True :: Bool
+</code></pre>
+<p>The last line shows how function application eliminates function types, as by applying a function to a value, one of the types from the function definition is removed as it has already been applied.</p>
+<p>The <code>xor</code> function takes two boolean arguments and is defined:</p>
+<pre><code class="language-haskell">xor :: Bool -&gt; Bool -&gt; Bool
+xor False True = True
+xor False False = False
+xor True True = False
+xor True False = True
+</code></pre>
+<p>Applying one argument to a function that takes two is called <em>partial function application</em>, as it partially applies arguments to a function to return another function. This is because all functions in haskell are <em>curried</em>, meaning all functions actually only take one argument, and functions taking more than one argument are constructed from applying multiple functions with one argument.</p>
+<pre><code class="language-haskell">xor :: Bool -&gt; Bool -&gt; Bool
+xor True :: Bool -&gt; Bool -- partially applied function
+xor True False :: Bool
+</code></pre>
+<h2 id="polymorphic-types"><a class="header" href="#polymorphic-types">Polymorphic Types</a></h2>
+<p>What is the type of <code>\x -&gt; x</code> ? Could be:</p>
+<pre><code class="language-haskell">f :: Int -&gt; Int
+f :: Bool -&gt; Bool
+f :: Char -&gt; Char
+</code></pre>
+<p>These are all permissible types. To save redifining a function, we can use type variables. Anything with a single lowercase character is a type variable (<code>a</code> in this case).</p>
+<pre><code class="language-haskell">\x -&gt; x :: a -&gt; a
+</code></pre>
+<p><code>\x -&gt; x</code> is the identity function, as it returns its argument unchanged. We can also have functions with more than one type variable, to specify that arguments have different types:</p>
+<pre><code class="language-haskell">const :: a -&gt; b -&gt; a
+const x y = x
+</code></pre>
+<h2 id="tuples"><a class="header" href="#tuples">Tuples</a></h2>
+<p>Tuples are a useful data structure</p>
+<pre><code class="language-haskell">(4, 7) :: (Int, Int)
+(4, 7.0) :: (Int, Double)
+('a', 9, &quot;Hello&quot;) :: (Char, Int, String)
+
+--can nest tuples
+((4, 'g'), False) :: ((Int, Char), Bool)
+
+--can also contain functions
+(\x -&gt; x, 8.15) :: (a-&gt;a, Double)
+</code></pre>
+<p>Functions on pairs. These are all in the standard library</p>
+<pre><code class="language-haskell">fst :: (a,b) -&gt; a
+snd :: (a,b) -&gt; b
+swap :: (a,b) -&gt; (b,a)
+
+-- these functions can also be defined by pattern matching
+fst (x,y) = x
+snd (x,y) = y
+swap (x,y) = (y,x)
+</code></pre>
+<h2 id="type-classes"><a class="header" href="#type-classes">Type Classes</a></h2>
+<p>Type classes are used for restricting polymorphism and overloading functions.</p>
+<ul>
+<li>The <code>(+)</code> operator probably has type <code>(+) :: Int -&gt; Int -&gt; Int</code>,
+<ul>
+<li>This is correct, as this typing is permissible</li>
+</ul>
+</li>
+<li>What about <code>1.2 + 3.4</code>?
+<ul>
+<li>Will raise an error with this definition of <code>(+)</code></li>
+</ul>
+</li>
+<li>Can polymorphism help?</li>
+<li><code>(+) :: a -&gt; a -&gt; a</code>
+<ul>
+<li>This is stupid</li>
+<li>Allows any types</li>
+<li>Won't work</li>
+</ul>
+</li>
+<li>A <em>type class constraint</em> is needed</li>
+<li>The actual type is <code>(+) :: Num a =&gt; a -&gt; a -&gt; a</code>
+<ul>
+<li>The <code>Num a =&gt;</code> part is the constraint part</li>
+<li>Tells the compiler that <code>a</code> has to belong to the typeclass <code>Num</code></li>
+</ul>
+</li>
+<li>Type class constraints are used to constrain type variables to only types which support the functions or operators specified by the type class</li>
+<li>Type class names start with an uppercase character</li>
+<li><code>Num</code> is a type class that represents all types which support arithmetic operations</li>
+</ul>
+<h3 id="defining-type-classes"><a class="header" href="#defining-type-classes">Defining Type Classes</a></h3>
+<p>A type class is defined as follows:</p>
+<pre><code class="language-haskell">class Num a where
+    (+) :: a -&gt; a -&gt; a
+    (-) :: a -&gt; a -&gt; a
+    abs :: a -&gt; a
+</code></pre>
+<ul>
+<li><code>Num</code> is the name of the type class</li>
+<li><code>a</code> is the type variable representing it in the method typings</li>
+<li>The type class contains method signatures for all functions that members of the type class must implement</li>
+</ul>
+<p>The type class contains type definitions, but no implementations for the functions. To implement them, we need to tell the compiler which types implement the type class and <em>how</em> they implement the functions in the type class. The <code>Show</code> typeclass tells the compiler that a type can be converted to a string.</p>
+<pre><code class="language-haskell">-- typeclass definition
+class Show a where
+    show :: a -&gt; String
+
+-- instance of typeclass for bool type
+instance Show Bool where
+    show True = &quot;True&quot;
+    show False = &quot;False&quot;
+</code></pre>
+<p>The <code>instance</code> definition tells the compiler that <code>Bool</code> is a member of <code>Show</code>, and how it implements the functions that <code>Show</code> defines.</p>
+<h3 id="prelude-type-classes"><a class="header" href="#prelude-type-classes">Prelude Type Classes</a></h3>
+<ul>
+<li><code>Num</code> for numbers</li>
+<li><code>Eq</code> for equality operators <code>==</code> <code>/=</code></li>
+<li><code>Ord</code> for inequality/comparison operators <code>&gt;</code> <code>&lt;=</code> etc</li>
+<li><code>Show</code> for converting things to string</li>
+<li>Many More</li>
+</ul>
+<p>The REPL makes extensive use of <code>Show</code> to print things. There are no show instances for function types, so you get an error if you try to <code>Show</code> functions. Typing <code>:i</code> in the REPL gets info on a type class. <code>:i Num</code> gives:</p>
+<pre><code class="language-haskell">class Num a where
+  (+) :: a -&gt; a -&gt; a
+  (-) :: a -&gt; a -&gt; a
+  (*) :: a -&gt; a -&gt; a
+  negate :: a -&gt; a
+  abs :: a -&gt; a
+  signum :: a -&gt; a
+  fromInteger :: Integer -&gt; a
+  {-# MINIMAL (+), (*), abs, signum, fromInteger, (negate | (-)) #-}
+        -- Defined in ‘GHC.Num’
+instance Num Word -- Defined in ‘GHC.Num’
+instance Num Integer -- Defined in ‘GHC.Num’
+instance Num Int -- Defined in ‘GHC.Num’
+instance Num Float -- Defined in ‘GHC.Float’
+instance Num Double -- Defined in ‘GHC.Float’
+</code></pre>
+<h3 id="types-of-polymorphism"><a class="header" href="#types-of-polymorphism">Types of Polymorphism</a></h3>
+<p>In Java, there are two kinds of polymorphism:</p>
+<ul>
+<li>Parametric polymorphism
+<ul>
+<li>(Generics/Templates)</li>
+<li>A class is generic over certain types</li>
+<li>Can put whatever type you like in there to make a concrete class of that type</li>
+</ul>
+</li>
+<li>Subtype polymorphism
+<ul>
+<li>Can do <code>class Duck extends Bird</code></li>
+<li>Can put <code>Duck</code>s wherever <code>Bird</code>s are expected</li>
+</ul>
+</li>
+</ul>
+<p>Haskell has two kinds of polymorphism also:</p>
+<ul>
+<li>Parametric polymorphism
+<ul>
+<li>Type variables</li>
+<li><code>id :: a -&gt; a</code></li>
+<li>Can accept any type where <code>a</code> is</li>
+</ul>
+</li>
+<li>Ad-hoc polymorphism
+<ul>
+<li>Uses type classes</li>
+<li><code>double :: Num a =&gt; a -&gt; a</code></li>
+<li><code>double x = x * 2</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="further-uses-of-constraints"><a class="header" href="#further-uses-of-constraints">Further Uses of Constraints</a></h3>
+<p>An example <code>Show</code> instance for pairs:</p>
+<pre><code class="language-haskell">instance (Show a, Show b) =&gt; Show (a,b) Show where
+    show (x,y) = &quot;(&quot; ++ show x ++ &quot;, &quot; ++ show y ++ &quot;)&quot;
+</code></pre>
+<p>The <code>(Show a, Show b) =&gt; </code> defines a constraint on <code>a</code> and <code>b</code> that they must both be instances of show for them to be used with this instance. The instance is actually defined on the type <code>(a,b)</code>.</p>
+<p>Can also define that a typeclass has a superclass, meaning that for a type to be an instance of a typeclass, it must be an instance of some other typeclass first. The <code>Ord</code> typeclass has a superclass constraint of the <code>Eq</code> typeclass, meaning something cant be <code>Ord</code> without it first being <code>Eq</code>. This makes sense, as you can't have an ordering without first some notion of equality.</p>
+<pre><code class="language-haskell">class Eq a =&gt; Ord a where
+    (&lt;) :: a -&gt; a -&gt; Bool
+    (&lt;=) :: a -&gt; a -&gt; Bool
+</code></pre>
+<h3 id="default-implementations"><a class="header" href="#default-implementations">Default Implementations</a></h3>
+<p>Type classes can provide default method implementations. For example, <code>(&lt;=)</code> can be defined using the definition of <code>(&lt;)</code>, so a default one can be provided using <code>(==)</code></p>
+<pre><code class="language-haskell">class Eq a =&gt; Ord a where
+    (&lt;) :: a -&gt; a -&gt; Bool
+    (&lt;=) :: a -&gt; a -&gt; Bool
+    (&lt;=) x y = x &lt; y || x == y
+    -- or defined infix
+    x &lt;= y = x &lt; y || x == y
+</code></pre>
+<h3 id="derivable-type-classes"><a class="header" href="#derivable-type-classes">Derivable Type Classes</a></h3>
+<p>Writing type class instances can be tedious. Can use the <code>deriving</code> keyword to automatically generate them, which does the same as manually defining type class instances.</p>
+<pre><code class="language-haskell">data Bool = False | True
+    deriving Eq
+data Module = CS141 | CS118 | CS126
+    deriving (Eq, Ord, Show)
+</code></pre>
+<p>Certain other typeclasses can be dervied too, by enabling language extensions within GHC. The extension <code>XDeriveFunctor</code> allows for types to include a <code>deriving Functor</code> statement.</p>
+<h2 id="data-types"><a class="header" href="#data-types">Data Types</a></h2>
+<p>How do we make our own data types in haskell? Algebraic data types.</p>
+<ul>
+<li><code>Bool</code> is a type</li>
+<li>There are two values of type <code>Bool</code>
+<ul>
+<li><code>True</code></li>
+<li><code>False</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-haskell">data Bool = True | False
+</code></pre>
+<p>A type definition consists of the type name <code>Bool</code> and it's data constructors, or values <code>True | False</code>. A type definition introduces data constructors into scope, which are just functions.</p>
+<pre><code class="language-haskell">True :: Bool
+False :: Bool
+</code></pre>
+<p>We can pattern match on data constructors, and also use them as values. This is true for <em>all</em> types.</p>
+<pre><code class="language-haskell">not :: Bool -&gt; Bool
+not True = False
+not False = True
+</code></pre>
+<p>More examples:</p>
+<pre><code class="language-haskell">data Module = CS141 | CS256 | CS263
+
+data Language = PHP | Java | Haskell | CPP
+
+--for this one, the type name and constructor name are separate names in the namespace
+data Unit = Unit
+
+-- this one has no values
+data Void
+</code></pre>
+<h3 id="parametrised-data-constructors"><a class="header" href="#parametrised-data-constructors">Parametrised Data Constructors</a></h3>
+<p>Parameters can be added to a data constructor by adding their types after the constructor's name. The example below defines a type to represent shapes. Remember that data constructors are just functions, and can be partially applied just like other functions.</p>
+<pre><code class="language-haskell">data Shape = Rect Double Double | Circle Double
+Rect :: Double -&gt; Double -&gt; Shape
+Circle :: Double -&gt; Shape
+
+-- functions utilising the Shape type
+
+-- constructs a square
+square x :: Double -&gt; Shape
+square x = Rect x x
+
+-- calculates area of a shape using pattern matching on constructors
+area :: Shape -&gt; Double
+area (Rect w h) = w * h
+area (Circle r) = pi * r * r
+
+isLine :: Shape -&gt; Bool#
+isLine (Rect 1 h) = True
+isLine (Rect w 1) = True
+isLine _ = False
+
+-- examples
+area (square 4.0)
+=&gt; area (Rect 4.0 4.0)
+=&gt; 4.0 * 4.0
+=&gt; 16.0
+
+area (Circle 5.0)
+=&gt; pi * 5.0 * 5.0
+=&gt; pi * 25.0
+=&gt; 78.53981...
+
+</code></pre>
+<h3 id="parametrised-data-types"><a class="header" href="#parametrised-data-types">Parametrised Data Types</a></h3>
+<p>The <code>Maybe</code> type is an example of a data type parametrised over some type variable <code>a</code>. It exists within the standard library, defined as <code>data Maybe a = Nothing | Just a</code>. This type is used to show that either there is no result, or some type <code>a</code>.</p>
+<p>A function using the <code>Maybe</code> type to perform devision safely, returning <code>Nothing</code> if the divisor is 0, and the result wrapped in a <code>Just</code> if the division can be done.</p>
+<pre><code class="language-haskell">data Maybe a = Nothing | Just a
+
+safediv :: Int -&gt; Int -&gt; Maybe Int
+safediv x 0 = Nothing
+safediv x y = Just (x `div y)
+-- safediv 8 0 =&gt; Nothing
+-- safediv 8 4 = Just (8 `div` 4) = Just 2
+
+-- this is included in stdlib for extracting the value using pattern matching
+fromMaybe :: a -&gt; Maybe a -&gt; a
+fromMaybe x Nothing = x
+fromMaybe _ (Just x) = x
+</code></pre>
+<p>Null references were invented in the 1960s ... the guy who invented them called them his &quot;billion dollar mistake&quot;. The <code>Maybe</code> type is a good alternative, which makes it clear that a value may be absent. Similar concepts exist in other procedural languages (Swift, Rust)</p>
+<h3 id="recursive-data-types"><a class="header" href="#recursive-data-types">Recursive Data Types</a></h3>
+<p>In Haskell, data types can be defined in terms of themselves. An example definition of the natural numbers is shown below, where a number is either zero, or one plus another number.</p>
+<pre><code class="language-haskell">data Nat = Zero | Succ Nat
+
+Zero :: Nat
+Succ :: Nat -&gt; Nat
+
+one = Succ Zero
+two = Succ one
+three = Succ two
+
+add :: Nat -&gt; Nat -&gt; Nat
+add Zero     m = m
+add (Succ n) m = Succ (add n m)
+
+mul :: Nat -&gt; Nat -&gt; Nat
+mul Zero     m = Zero
+mul (Succ n) m = add m (mul n m)
+</code></pre>
+<p>Another example defining binary trees in terms of themselves. A binary tree consists of subtrees (smaller binary trees). This type is parametrised over some type variable <code>a</code> also.</p>
+<pre><code class="language-haskell">Data BinTree a = Leaf a | Node (BinTree a) (BinTree a)
+
+--converts a binary tree to a list
+flatten :: BinTree a -&gt; [a]
+flatten (Leaf x)   = [x]
+flatten (Node l r) = flatten l ++ flatten r
+
+-- computes the max depth of the tree
+depth :: BinTree a -&gt; Int
+depth (Leaf _)   = 1
+depth (Node l r) = 1 + max (depth l) (depth r)
+</code></pre>
+<h2 id="type-aliases"><a class="header" href="#type-aliases">Type Aliases</a></h2>
+<p>Types can be aliased. For example, <code>String</code> has been an alias of <code>[Char]</code> all along.</p>
+<pre><code class="language-haskell">type String = [Char]
+</code></pre>
+<p>Another example, defining a <code>Predicate</code> type</p>
+<pre><code class="language-haskell">type Predicate a = a -&gt; Bool
+
+isEven :: Predicate Int
+isEven n = n `mod` 2 == 0
+
+isEven' :: (Eq a, Integral a) =&gt; Predicate a
+isEven' n = n `mod` 2 == 0
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../cs141/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../cs141/recursion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../cs141/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../cs141/recursion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
