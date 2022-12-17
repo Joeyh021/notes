@@ -102,7 +102,11 @@ h6:target::before {
 .content ul { line-height: 1.45em; }
 .content a { text-decoration: none; }
 .content a:hover { text-decoration: underline; }
-.content img, .content video { max-width: 100%; }
+.content img, .content video {
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+    }
 .content .header:link,
 .content .header:visited {
     color: var(--fg);
