@@ -136,7 +136,7 @@
   - [Narrowband Matching](./es3e6/narrowband.md)
   - [Broadband Matching](./es3e6/broadband.md)
   - [Waveguides](./es3e6/waveguides.md)
-  - [Coax & Striplines](./es3e6/coax.md)
+  - [Coax & Microstrip Lines](./es3e6/coax.md)
   - [Network Parameters](./es3e6/params.md)
   - [Filters](./es3e6/filters.md)
   - [Power Dividers, Couplers & Resonators](./es3e6/dividers.md)
