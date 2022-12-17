@@ -123,7 +123,7 @@ The ratio of $|\tilde V|_{max}$ to $|\tilde V|_{min}$ is called the Voltage Stan
 
 ## Input Impedance of Lossless Lines
 
-The input impedance $ Z\_{in}$ of a transmission line is the ratio of the total voltage to the total current at any point $z = -l$ on the line
+The input impedance $Z_{in}$ of a transmission line is the ratio of the total voltage to the total current at any point $z = -l$ on the line
 
 $$
 Z_{in} = Z(z = -l) = \frac{\tilde V(z = -l)}{\tilde I(z = -l)} = Z_0 \frac{1 + \Gamma e ^{-j2\beta l}}{1 - \Gamma e ^{-j2\beta l}} = Z_0 \frac{Z_L + j Z_0 \tan(\beta l)}{Z_0 + j Z_L \tan(\beta l)}
