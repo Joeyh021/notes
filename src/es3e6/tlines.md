@@ -53,7 +53,7 @@ Both the voltage and current waves propagate with a phase velocity $u_p = f \lam
 In most practical situations, we can assume a transmission line to be lossless:
 
 - $R' \ll \omega L'$, and $G \ll \omega C'$
-- Assume $R' = G' \approxeq 0$, so $\gamma = j\omega \sqrt{L' C'}$
+- Assume $R' = G' \approx 0$, so $\gamma = j\omega \sqrt{L' C'}$
 - Therefore, as $\gamma = \alpha + j\beta$:
   - $\alpha =0$
   - $\beta = \omega \sqrt{L'C'} = \omega \sqrt{\mu \epsilon}$
