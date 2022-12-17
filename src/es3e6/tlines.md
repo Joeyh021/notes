@@ -26,10 +26,10 @@ The table below gives parameters for some common transmission lines
 ![](./img/tline-table.png)
 
 - Conductors have magnetic permeability $\mu_c$ and conductivity $\sigma_c$
-- The insulating/spacing material has permittivity $\epsilon$, permeability $\mu$ and conductivity $\sigma_c$
+- The insulating/spacing material has permittivity $\varepsilon$, permeability $\mu$ and conductivity $\sigma_c$
 - All TEM transmission lines share the relations
-  - $L'C' = \mu \epsilon$
-  - $G'/C' = \sigma/\epsilon$
+  - $L'C' = \mu \varepsilon$
+  - $G'/C' = \sigma/\varepsilon$
 - The constant propogation constant of a line $\gamma = \alpha + j \beta = \sqrt{(R' + j \omega L')(G' + j \omega C')}$
   - $\alpha$ is the attenuation constant (Np/m)
   - $\beta$ is the phase constant (rad/m)
@@ -56,25 +56,25 @@ In most practical situations, we can assume a transmission line to be lossless:
 - Assume $R' = G' \approx 0$, so $\gamma = j\omega \sqrt{L' C'}$
 - Therefore, as $\gamma = \alpha + j\beta$:
   - $\alpha =0$
-  - $\beta = \omega \sqrt{L'C'} = \omega \sqrt{\mu \epsilon}$
+  - $\beta = \omega \sqrt{L'C'} = \omega \sqrt{\mu \varepsilon}$
   - $Z_0 = \sqrt{L'/C'}$
 
 This then gives velocity and wavelength:
 
 $$
-u_p = \frac{\omega}{\beta} = \frac{1}{\sqrt{L'C'}} = \frac{1}{\sqrt{\mu \epsilon}}
+u_p = \frac{\omega}{\beta} = \frac{1}{\sqrt{L'C'}} = \frac{1}{\sqrt{\mu \varepsilon}}
 \qquad
-\lambda = \frac{2 \pi}{\beta} = \frac{2\pi}{\omega \sqrt{L'C'}} = \frac{1}{f \sqrt{\mu \epsilon}}
+\lambda = \frac{2 \pi}{\beta} = \frac{2\pi}{\omega \sqrt{L'C'}} = \frac{1}{f \sqrt{\mu \varepsilon}}
 $$
 
 As the insulating material is usually non-magnetic, we have $\mu = \mu_0$
 
 $$
-c = \frac{1}{\sqrt{\mu_0 \epsilon_0}}
+c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}}
 \qquad
-u_p = \frac{c}{\sqrt \epsilon_r}
+u_p = \frac{c}{\sqrt \varepsilon_r}
 \qquad
-\lambda = \frac{c}{f\sqrt{\epsilon_r}} = \frac{\lambda_0}{\sqrt \epsilon_r}
+\lambda = \frac{c}{f\sqrt{\varepsilon_r}} = \frac{\lambda_0}{\sqrt \varepsilon_r}
 $$
 
 ## Voltage Reflection Coefficient
