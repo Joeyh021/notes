@@ -58,7 +58,7 @@ For some problems, it is more convenient to work with admittances than with impe
 
 $$Y = G + jB = \frac{1}{Z} = \frac{1}{R + jX}$$
 
-Normalised impedance $y$ is therefore:
+Normalised admittance $y$ is therefore:
 
 $$
 y = \frac{Y}{Y_0} = \frac{G}{Y_0} + j{B}{Y_0} = g + jb
