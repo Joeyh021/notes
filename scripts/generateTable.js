@@ -89,6 +89,7 @@ let string = "<equation-table>\n\n";
 $(".equations").each(function () {
 
     let thisHTMl = $(this);
+    let replacement_string = ""
     //Row start
 
     // Section Title
@@ -99,27 +100,34 @@ $(".equations").each(function () {
 
     // For each equation
     $("h3", thisHTMl).each(function () {
-
-        //Title
+        // Title
         string += `| [${$(this).text()}](#${$(this).attr("id")}) | `;
         try {
             let temp = this.nextSibling.nextSibling.children[0].data.split("$$")[1];
-            temp = temp.trim();
-            string += `$${temp}$ | \n`;
+            replacement_string = temp.trim();
+            string += `$${replacement_string}$ | \n`;
         } catch (error) {
             // Try getting first line
             try {
-                let text = this.nextSibling.nextSibling.children[0].data.split("\n")[0]
-                if (text.length >= characterLimit) {
-                    text = text.substring(0, characterLimit) + "..."
+                replacement_string = this.nextSibling.nextSibling.children[0].data.split("\n")[0]
+                if (replacement_string.length >= characterLimit) {
+                    replacement_string = replacement_string.substring(0, characterLimit) + "..."
                 }
 
-                string += `${text} | \n`;
+                string += `${replacement_string} | \n`;
             }
             catch (e2) {
                 string += `ERR | \n`;
             }
 
+        }
+
+        // Check for unclosed $
+        // Get count of $
+        let dollar_count = replacement_string.split("$").length - 1;
+        if (dollar_count % 2 != 0) {
+            console.log(`Unclosed $ found in equation (${$(this).text()})`)
+            console.log(`"${replacement_string}"`)
         }
 
     });
