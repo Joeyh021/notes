@@ -75,6 +75,8 @@ function stringValidation(str) {
 
         replacement_string = replacement_string.replace("\\sqrt", "sqrt")
     }
+
+    return replacement_string
 }
 
 // Run by using `node equations2table <source> <output>`
