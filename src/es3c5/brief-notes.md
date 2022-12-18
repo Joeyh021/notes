@@ -25,8 +25,14 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Stable System](#stable-system)                                                           | A system is considered stable if its impulse response tends to zero or a finite ...                           |
 | [Components to Response](#components-to-response)                                         | Real Components $\rArr$ Exponential Response $\vert$ Imaginary $\rArr$ angular f...                           |
 
-| [4 - Analog Frequency Response](#4---analog-frequency-response) |     |
-| --------------------------------------------------------------- | --- |
+| [4 - Analog Frequency Response](#4---analog-frequency-response)                                                                          |                                                                                                        |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [Frequency Response](#frequency-response)                                                                                                | Frequency response of a system = output in response to sinusoid input of unit ma...                    |
+| [Continuous Fourier Transform](#continuous-fourier-transform)                                                                            | $F(jw) = \int{}^{\infty}_{t=0} ,f(t) , e^{-j\omega{}t} , dt$                                           |
+| [Inverse Fourier Transform](#inverse-fourier-transform)                                                                                  | $f(t) = \frac{1}{2\pi} \int{}^{\infty}_{\omega{}=-\infty} , F(j\omega{}) , e^{j\omega{}t} , d\omega{}$ |
+| [Magnitude of Frequency Response (MFR) $                                                                                                 | H(j\omega{})                                                                                           | $](#magnitude-of-frequency-response-mfr--hjomega) | $\left | H(j\omega ) \right | = \left | K \right | \frac{\prod _{i=1}^{M} \left | j\omega -z_i \right | }{\prod _{i=1}^{N} \left | j\omega -p_i \right | }$ |
+| [Phase Angle of Frequency Response (PAFR) $\angle H(j\omega)$ - $K > 0$](#phase-angle-of-frequency-response-pafr-angle-hjomega---k--0)   | $\angle H(j\omega) = \sum _{i=1}^{M}\angle(j\omega -z_i) - \sum _{i=1}^{N}\angle(j\omega -p_i)$        |
+| [Phase Angle of Frequency Response (PAFR) $\angle H(j\omega)$ - $K < 0$](#phase-angle-of-frequency-response-pafr-angle-hjomega---k--0-1) | $\angle H(j\omega) = \sum _{i=1}^{M}\angle(j\omega -z_i) - \sum _{i=1}^{N}\angle(j\omega -p_i) + \pi$  |
 
 | [5 - Analog Filter Design](#5---analog-filter-design) |     |
 | ----------------------------------------------------- | --- |
@@ -154,6 +160,43 @@ Real Components $\rArr$ Exponential Response $\vert$ Imaginary $\rArr$ angular f
 <div class="equations">
 
 ## 4 - Analog Frequency Response
+
+
+### Frequency Response
+Frequency response of a system = output in response to sinusoid input of unit magnitude and specified frequency, $\omega{}$. Response is measured as **magnitude** and **phase angle**.
+
+### Continuous Fourier Transform
+$$  F(jw) = \int{}^{\infty}_{t=0} \,f(t) \, e^{-j\omega{}t} \, dt$$
+
+Laplace transform evaluated on the imaginary s-axis at some frequency $s = j\omega{}$.
+
+$\omega{}=$ radial frequency, $\frac{rad}{s}$
+
+### Inverse Fourier Transform
+$$  f(t) = \frac{1}{2\pi} \int{}^{\infty}_{\omega{}=-\infty} \, F(j\omega{}) \, e^{j\omega{}t} \, d\omega{}$$
+
+### Magnitude of Frequency Response (MFR) $| H(j\omega{})|$ 
+$$\left | H(j\omega ) \right | = \left | K \right | \frac{\prod _{i=1}^{M} \left | j\omega -z_i \right |}{\prod _{i=1}^{N} \left | j\omega -p_i \right |}$$
+
+
+
+In words, the **magnitude** of the frequency response (MFR) $| H(j\omega{})|$  is equal
+to the **gain** multiplied by the **magnitudes** of the **vectors** corresponding to the **zeros**,
+divided by the **magnitudes** of the vectors corresponding to the **poles**.
+
+### Phase Angle of Frequency Response (PAFR) $\angle H(j\omega)$ - $K > 0$
+$$ \angle H(j\omega) = \sum _{i=1}^{M}\angle(j\omega -z_i) - \sum _{i=1}^{N}\angle(j\omega -p_i) $$
+
+### Phase Angle of Frequency Response (PAFR) $\angle H(j\omega)$ - $K < 0$
+$$ \angle H(j\omega) = \sum _{i=1}^{M}\angle(j\omega -z_i) - \sum _{i=1}^{N}\angle(j\omega -p_i) + \pi$$
+
+
+In words, the **phase angle** of the frequency response (**PAFR**) $\angle H(j\omega)$ is
+equal to the **sum** of the **phases** of the vectors corresponding to the **zeros**, **minus** the
+**sum** of the phases of the vectors correspond to the **poles**, plus $\pi$ if the gain is **negative**.
+
+Each phase vector is measured from the **positive** real s-axis (or a line parallel to the
+real s-axis if the pole or zero is not on the real s-axis).
 
 
 </div>
