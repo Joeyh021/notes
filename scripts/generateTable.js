@@ -53,6 +53,30 @@ fs = require('fs');
 
 const characterLimit = 80; // The limit to characters added to the table when generating tables using text.
 
+// Checks for errors with the replacement string. Returns a validated and cleaned version.
+function stringValidation(str) {
+    replacement_string = str
+    // Check for unclosed $
+    // Get count of $
+    let dollar_count = str.split("$").length - 1;
+    if (dollar_count % 2 != 0) {
+        console.log(`WARNING | Unclosed $ found in equation (${$(this).text()}), closing...`)
+        console.log(`"${str}"`)
+
+        replacement_string = replacement_string + "$";
+
+    }
+
+    // Check for included sqrt
+    // For some reason can't be drawn
+    if (str.includes("\\sqrt")) {
+        console.log(`WARNING | \\sqrt found in equation (${$(this).text()}). Known to cause issues. Replacing...`)
+        console.log(`"${str}"`)
+
+        replacement_string = replacement_string.replace("\\sqrt", "sqrt")
+    }
+}
+
 // Run by using `node equations2table <source> <output>`
 if (process.argv.length >= 3) {
     if (process.argv[2] != "-h") {
@@ -105,7 +129,8 @@ $(".equations").each(function () {
         try {
             let temp = this.nextSibling.nextSibling.children[0].data.split("$$")[1];
             replacement_string = temp.trim();
-            string += `$${replacement_string}$ | \n`;
+
+            string += `$${stringValidation(replacement_string)}$ | \n`;
         } catch (error) {
             // Try getting first line
             try {
@@ -114,7 +139,7 @@ $(".equations").each(function () {
                     replacement_string = replacement_string.substring(0, characterLimit) + "..."
                 }
 
-                string += `${replacement_string} | \n`;
+                string += `${stringValidation(replacement_string)} | \n`;
             }
             catch (e2) {
                 string += `ERR | \n`;
@@ -122,20 +147,7 @@ $(".equations").each(function () {
 
         }
 
-        // Check for unclosed $
-        // Get count of $
-        let dollar_count = replacement_string.split("$").length - 1;
-        if (dollar_count % 2 != 0) {
-            console.log(`WARNING | Unclosed $ found in equation (${$(this).text()})`)
-            console.log(`"${replacement_string}"`)
-        }
 
-        // Check for included sqrt
-        // For some reason can't be drawn
-        if (replacement_string.includes("\\sqrt")) {
-            console.log(`WARNING | \\sqrt found in equation (${$(this).text()}). Known to cause issues.`)
-            console.log(`"${replacement_string}"`)
-        }
 
 
     });
