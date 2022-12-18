@@ -79,6 +79,7 @@ function stringValidation(title, str) {
     return replacement_string
 }
 
+
 // Run by using `node equations2table <source> <output>`
 if (process.argv.length >= 3) {
     if (process.argv[2] != "-h") {
@@ -147,6 +148,7 @@ $(".equations").each(function () {
             catch (e2) {
                 string += `ERR | \n`;
                 console.log(`WARNING | Equation generation error for equation ${title}.`)
+
             }
 
         }

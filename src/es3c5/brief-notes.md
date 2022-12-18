@@ -7,6 +7,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 <equation-table>
 
 | [Laplace Conversion](#laplace-conversion)                              |                   |
+
 | ---------------------------------------------------------------------- | ----------------- |
 | [Laplace Table](#laplace-table)                                        | Insert table here |
 | [Finding Time Domain Output $y(t)$](#finding-time-domain-output-yt)    |                   |
@@ -24,6 +25,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Transfer Function Gain](#transfer-function-gain)                                         | K is the overall transfer function gain. (Coefficient of $s^M$ and $s^N$ is 1.)                               |
 | [Stable System](#stable-system)                                                           | A system is considered stable if its impulse response tends to zero or a finite ...                           |
 | [Components to Response](#components-to-response)                                         | Real Components $\rArr$ Exponential Response $\vert$ Imaginary $\rArr$ angular f...                           |
+
 
 | [4 - Analog Frequency Response](#4---analog-frequency-response)                                                                          |                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -94,6 +96,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [20 - Image Processing](#20---image-processing) |     |
 | ----------------------------------------------- | --- |
 
+
 </equation-table>
 
 # Part 1 - Analogue Signals and Systems
@@ -134,6 +137,7 @@ LTI = **Linear Time Invariant**.
 <div class="equations">
 
 ## 3 - Poles and Zeros
+
 ### General Transfer Function as 2 polynomials
 $$ H (s) = \frac{b_0s^M + b_1s^{M-1} + \cdots + b_{M-1}s + b_M}{a_0s^N + a_1s^{N-1} + \cdots + a_{N-1}s + a_N} $$
 
@@ -391,3 +395,4 @@ Gain in dB
 
 
 </div>
+
