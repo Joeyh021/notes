@@ -54,13 +54,13 @@ fs = require('fs');
 const characterLimit = 80; // The limit to characters added to the table when generating tables using text.
 
 // Checks for errors with the replacement string. Returns a validated and cleaned version.
-function stringValidation(str) {
+function stringValidation(title, str) {
     replacement_string = str
     // Check for unclosed $
     // Get count of $
     let dollar_count = str.split("$").length - 1;
     if (dollar_count % 2 != 0) {
-        console.log(`WARNING | Unclosed $ found in equation (${$(this).text()}), closing...`)
+        console.log(`WARNING | Unclosed $ found in equation (${title}), closing...`)
         console.log(`"${str}"`)
 
         replacement_string = replacement_string + "$";
@@ -70,7 +70,7 @@ function stringValidation(str) {
     // Check for included sqrt
     // For some reason can't be drawn
     if (str.includes("\\sqrt")) {
-        console.log(`WARNING | \\sqrt found in equation (${$(this).text()}). Known to cause issues. Replacing...`)
+        console.log(`WARNING | \\sqrt found in equation (${title}). Known to cause issues. Replacing...`)
         console.log(`"${str}"`)
 
         replacement_string = replacement_string.replace("\\sqrt", "sqrt")
@@ -127,12 +127,13 @@ $(".equations").each(function () {
     // For each equation
     $("h3", thisHTMl).each(function () {
         // Title
-        string += `| [${$(this).text()}](#${$(this).attr("id")}) | `;
+        let title = $(this).text();
+        string += `| [${title}](#${$(this).attr("id")}) | `;
         try {
             let temp = this.nextSibling.nextSibling.children[0].data.split("$$")[1];
             replacement_string = temp.trim();
 
-            string += `$${stringValidation(replacement_string)}$ | \n`;
+            string += `$${stringValidation(title, replacement_string)}$ | \n`;
         } catch (error) {
             // Try getting first line
             try {
@@ -141,10 +142,11 @@ $(".equations").each(function () {
                     replacement_string = replacement_string.substring(0, characterLimit) + "..."
                 }
 
-                string += `${stringValidation(replacement_string)} | \n`;
+                string += `${stringValidation(title, replacement_string)} | \n`;
             }
             catch (e2) {
                 string += `ERR | \n`;
+                console.log(`WARNING | Equation generation error for equation ${title}.`)
             }
 
         }
