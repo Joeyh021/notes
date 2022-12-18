@@ -126,9 +126,17 @@ $(".equations").each(function () {
         // Get count of $
         let dollar_count = replacement_string.split("$").length - 1;
         if (dollar_count % 2 != 0) {
-            console.log(`Unclosed $ found in equation (${$(this).text()})`)
+            console.log(`WARNING | Unclosed $ found in equation (${$(this).text()})`)
             console.log(`"${replacement_string}"`)
         }
+
+        // Check for included sqrt
+        // For some reason can't be drawn
+        if (replacement_string.includes("\\sqrt")) {
+            console.log(`WARNING | \\sqrt found in equation (${$(this).text()}). Known to cause issues.`)
+            console.log(`"${replacement_string}"`)
+        }
+
 
     });
 
