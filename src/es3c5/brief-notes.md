@@ -302,6 +302,57 @@ Gain in dB
 
 ## 6 - Periodic Analogue Functions
 
+### Exponential Representation from  Trigonometric representation
+$$ e^{jx} = \cos x + j\sin x $$
+
+### Trigonometric from exponential - Real (cos)
+$$ \cos x = Re\{e^{jx}\} = \frac{e^{jx} + e^{-jx}}{2}$$
+
+### Trigonometric from exponential - Imaginary (cos)
+$$ \sin x = Im\{e^{jx}\} = \frac{e^{jx} + e^{-jx}}{2j}$$
+
+### Fourier Series
+$$ x(t) = \sum_{k=-\infty}^{\infty}X_ke^{jk\omega_0t} $$
+Period signal = sum of complex exponentials.
+
+Fundamental frequency $f_0$, such that all frequencies in signal are multiples of $f_0$.
+
+Fundamental period $T_0 = 1/f_0$
+
+$w_0 = 2\pi f_0 = 2\pi / T_0$
+
+Fourier spectra **only** exist at **harmonic frequencies** (ie integer multiples of fundamental frequency)
+
+### Fourier Coefficients
+$$ X_k = \frac{1}{T_0} \int_{T_0}x(t)e^{-jk\omega_0t}dt$$
+
+Important property of Fourier series is how is represents **real** signals $x(t)$.
+- **Even** magnitude spectrum  $\rightarrow \vert X_k \vert = \vert X_{-k} \vert$
+- **Odd** phase spectrum = $\rightarrow \angle X_k = -\angle X_{-k}$
+
+### Fourier Series of Periodic Square Wave (Example)
+$$ x(t) = \sum_{k=-\infty }^{\infty} \frac{A\tau}{T_0} sinc(k\omega_0\frac{\tau}{2}) e^{jk\omega_0t} $$
+
+Where $X_k = \frac{A\tau}{T_0} sinc(k\omega_0\frac{\tau}{2})$
+
+![](img/6.2-fourier-series-peridodic-square.png)
+
+### Output of LTI system from Signal with multiple frequency components
+$$ y(t) = \sum_{k=-\infty }^{\infty} H(jk\omega_0) X_k e^{jk\omega_0t} $$
+
+Or in other words:
+
+$$ Y_k = H(jk\omega_0)X_k$$
+
+The output of an LTI system due to a signal with multiple frequency components can be found by superposition of the outputs due to the individual frequency components.
+IE  system will change amplitude and phase of each frequency in the input.
+
+### Filtering Periodic Signal (Example 6.2)
+See example 6.2 below...
+
+![](img/6.2-example.png)
+
+![](img/6.2-example-diagrams.png)
 
 </div>
 <div class="equations">
