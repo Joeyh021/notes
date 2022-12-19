@@ -1,13 +1,15 @@
 # Brief Notes + Equations
 This is just a collection of notes for ES3C5 Signal Processing that I have found useful to have on hand and easily accessible.
 
+The notes made by Adam (MO) cover everything so this is just intended to be an easy to search document.
+
+Download [lecture notes here](https://moodle.warwick.ac.uk/mod/resource/view.php?id=1673561)
 
 Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 
 <equation-table>
 
 | [Laplace Conversion](#laplace-conversion)                              |                   |
-
 | ---------------------------------------------------------------------- | ----------------- |
 | [Laplace Table](#laplace-table)                                        | Insert table here |
 | [Finding Time Domain Output $y(t)$](#finding-time-domain-output-yt)    |                   |
@@ -25,7 +27,6 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Transfer Function Gain](#transfer-function-gain)                                         | K is the overall transfer function gain. (Coefficient of $s^M$ and $s^N$ is 1.)                               |
 | [Stable System](#stable-system)                                                           | A system is considered stable if its impulse response tends to zero or a finite ...                           |
 | [Components to Response](#components-to-response)                                         | Real Components $\rArr$ Exponential Response $\vert$ Imaginary $\rArr$ angular f...                           |
-
 
 | [4 - Analog Frequency Response](#4---analog-frequency-response)                                                                          |                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -51,8 +52,16 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Low pass Butterworth Cut-off frequency $\omega_c$ (Pass)](#low-pass-butterworth-cut-off-frequency-omega_c-pass)                            | $\omega_c = \frac{\omega_p}{(10^{-\frac{G_p}{10}}-1)^\frac{1}{2N}}$                                                                  |
 | [Low pass Butterworth Cut-off frequency $\omega_c$ (Stop)](#low-pass-butterworth-cut-off-frequency-omega_c-stop)                            | $\omega_c = \frac{\omega_s}{(10^{-\frac{G_s}{10}}-1)^\frac{1}{2N}}$                                                                  |
 
-| [6 - Periodic Analogue Functions](#6---periodic-analogue-functions) |     |
-| ------------------------------------------------------------------- | --- |
+| [6 - Periodic Analogue Functions](#6---periodic-analogue-functions)                                                                         |                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| [Exponential Representation from  Trigonometric representation](#exponential-representation-from--trigonometric-representation)             | $e^{jx} = \cos x + j\sin x$                                                                         |
+| [Trigonometric from exponential - Real (cos)](#trigonometric-from-exponential---real-cos)                                                   | $\cos x = Re{e^{jx}} = \frac{e^{jx} + e^{-jx}}{2}$                                                  |
+| [Trigonometric from exponential - Imaginary (cos)](#trigonometric-from-exponential---imaginary-cos)                                         | $\sin x = Im{e^{jx}} = \frac{e^{jx} + e^{-jx}}{2j}$                                                 |
+| [Fourier Series](#fourier-series)                                                                                                           | $x(t) = \sum_{k=-\infty}^{\infty}X_ke^{jk\omega_0t}$                                                |
+| [Fourier Coefficients](#fourier-coefficients)                                                                                               | $X_k = \frac{1}{T_0} \int_{T_0}x(t)e^{-jk\omega_0t}dt$                                              |
+| [Fourier Series of Periodic Square Wave (Example)](#fourier-series-of-periodic-square-wave-example)                                         | $x(t) = \sum_{k=-\infty }^{\infty} \frac{A\tau}{T_0} sinc(k\omega_0\frac{\tau}{2}) e^{jk\omega_0t}$ |
+| [Output of LTI system from Signal with multiple frequency components](#output-of-lti-system-from-signal-with-multiple-frequency-components) | $y(t) = \sum_{k=-\infty }^{\infty} H(jk\omega_0) X_k e^{jk\omega_0t}$                               |
+| [Filtering Periodic Signal (Example 6.2)](#filtering-periodic-signal-example-62)                                                            | See example 6.2 below...                                                                            |
 
 | [7 - Computing with Analogue Signals](#7---computing-with-analogue-signals) |     |
 | --------------------------------------------------------------------------- | --- |
@@ -95,7 +104,6 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 
 | [20 - Image Processing](#20---image-processing) |     |
 | ----------------------------------------------- | --- |
-
 
 </equation-table>
 
@@ -302,6 +310,57 @@ Gain in dB
 
 ## 6 - Periodic Analogue Functions
 
+### Exponential Representation from  Trigonometric representation
+$$ e^{jx} = \cos x + j\sin x $$
+
+### Trigonometric from exponential - Real (cos)
+$$ \cos x = Re\{e^{jx}\} = \frac{e^{jx} + e^{-jx}}{2}$$
+
+### Trigonometric from exponential - Imaginary (cos)
+$$ \sin x = Im\{e^{jx}\} = \frac{e^{jx} + e^{-jx}}{2j}$$
+
+### Fourier Series
+$$ x(t) = \sum_{k=-\infty}^{\infty}X_ke^{jk\omega_0t} $$
+Period signal = sum of complex exponentials.
+
+Fundamental frequency $f_0$, such that all frequencies in signal are multiples of $f_0$.
+
+Fundamental period $T_0 = 1/f_0$
+
+$w_0 = 2\pi f_0 = 2\pi / T_0$
+
+Fourier spectra **only** exist at **harmonic frequencies** (ie integer multiples of fundamental frequency)
+
+### Fourier Coefficients
+$$ X_k = \frac{1}{T_0} \int_{T_0}x(t)e^{-jk\omega_0t}dt$$
+
+Important property of Fourier series is how is represents **real** signals $x(t)$.
+- **Even** magnitude spectrum  $\rightarrow \vert X_k \vert = \vert X_{-k} \vert$
+- **Odd** phase spectrum = $\rightarrow \angle X_k = -\angle X_{-k}$
+
+### Fourier Series of Periodic Square Wave (Example)
+$$ x(t) = \sum_{k=-\infty }^{\infty} \frac{A\tau}{T_0} sinc(k\omega_0\frac{\tau}{2}) e^{jk\omega_0t} $$
+
+Where $X_k = \frac{A\tau}{T_0} sinc(k\omega_0\frac{\tau}{2})$
+
+![](img/6.2-fourier-series-peridodic-square.png)
+
+### Output of LTI system from Signal with multiple frequency components
+$$ y(t) = \sum_{k=-\infty }^{\infty} H(jk\omega_0) X_k e^{jk\omega_0t} $$
+
+Or in other words:
+
+$$ Y_k = H(jk\omega_0)X_k$$
+
+The output of an LTI system due to a signal with multiple frequency components can be found by superposition of the outputs due to the individual frequency components.
+IE  system will change amplitude and phase of each frequency in the input.
+
+### Filtering Periodic Signal (Example 6.2)
+See example 6.2 below...
+
+![](img/6.2-example.png)
+
+![](img/6.2-example-diagrams.png)
 
 </div>
 <div class="equations">
