@@ -66,14 +66,42 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [7 - Computing with Analogue Signals](#7---computing-with-analogue-signals) |     |
 | --------------------------------------------------------------------------- | --- |
 
-| [8 - Signal Conversion between Analog and Digital](#8---signal-conversion-between-analog-and-digital) |     |
-| ----------------------------------------------------------------------------------------------------- | --- |
+| [8 - Signal Conversion between Analog and Digital](#8---signal-conversion-between-analog-and-digital) |                                                                                     |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Digital Signal Processing Workflow](#digital-signal-processing-workflow)                             | See diagram:                                                                        |
+| [Sampling](#sampling)                                                                                 | Convert signal from continuous-time to discrete-time. Record amplitude of the an... |
+| [Oversample](#oversample)                                                                             | Sample too often, use more complexity, wasting energy                               |
+| [Undersample](#undersample)                                                                           | Not sampling often enough, get                                                      |
+| [Aliasing](#aliasing)                                                                                 | Multiple signals of different frequencies yield the same data when sampled.         |
+| [Nyquist Rate](#nyquist-rate)                                                                         | $\omega_s = 2\omega_B$                                                              |
+| [Quantisation](#quantisation)                                                                         | The mapping of                                                                      |
+| [Data Interpolation](#data-interpolation)                                                             | Convert digital signal back to analogue domain, reconstruct continous signal fro... |
+| [Hold Circuit](#hold-circuit)                                                                         | Simplest interpolation in a DAC, where amplitude of continuous-time signal match... |
+| [Resolution](#resolution)                                                                             | $\frac{1}{2^W} \times 100%$                                                         |
+| [Dynamic range](#dynamic-range)                                                                       | $,20log_{10}2^W \approx 6WdB$                                                       |
 
-| [9 - Z-Transforms and LSI Systems](#9---z-transforms-and-lsi-systems) |     |
-| --------------------------------------------------------------------- | --- |
+| [9 - Z-Transforms and LSI Systems](#9---z-transforms-and-lsi-systems)                                 |                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [LSI Rules](#lsi-rules)                                                                               | Linear Shift-Invariant                                                                                                           |
+| [Common Components of LSI Systems](#common-components-of-lsi-systems)                                 | For digital systems, only need 3 types of LSI circuit components.                                                                |
+| [Discrete Time Impulse Function](#discrete-time-impulse-function)                                     | Impulse response is very similar in digital domain, as it is the system output w...                                              |
+| [Impulse Response Sequence](#impulse-response-sequence)                                               | $h[n] = \mathcal{F}{\delta[n]}$                                                                                                  |
+| [LSI Output](#lsi-output)                                                                             | $y[n] = \sum _{k=-\infty}^{\infty}x[k]h[n-k] = x[n] *h[n] = h[n]*x[n]$                                                           |
+| [Z-Transform](#z-transform)                                                                           | $\mathcal{Z}{f[n]} = F(z) = \sum _{k=0}^{\infty}f[k]z^{-k}$                                                                      |
+| [Z-Transform Examples](#z-transform-examples)                                                         | Simple examples...                                                                                                               |
+| [Binomial Theorem for Inverse Z-Transform](#binomial-theorem-for-inverse-z-transform)                 | $\sum _{n=0}^{\infty} a^n = \frac{1}{1-a}$                                                                                       |
+| [Z-Transform Properties](#z-transform-properties)                                                     | Linearity, Time Shifting and Convolution                                                                                         |
+| [Sample Pairs](#sample-pairs)                                                                         | See example                                                                                                                      |
+| [Z-Transform of Output Signal](#z-transform-of-output-signal)                                         | $Y(z) = \mathcal{Z}{y[n]} = \mathcal{Z}{x[n]*h[n]} = \mathcal{Z}{x[n]}\mathcal{Z}{h[n]} = X(z)H(z) \Rightarrow Y(z) = X(z) H(z)$ |
+| [Finding time-domain output $y[n]$ of an LSI System](#finding-time-domain-output-yn-of-an-lsi-system) | Transform, product, inverse.                                                                                                     |
+| [Difference Equation](#difference-equation)                                                           | Time domain output $y[n]$ directly as a function of time-domain input $x[n]$ as ...                                              |
+| [Z-Transform Table](#z-transform-table)                                                               | See table...                                                                                                                     |
 
-| [10 - Stability of Digital Systems](#10---stability-of-digital-systems) |     |
-| ----------------------------------------------------------------------- | --- |
+| [10 - Stability of Digital Systems](#10---stability-of-digital-systems)                               |                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [Z-Domain Transfer Function](#z-domain-transfer-function)                                             | $H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$            |
+| [Poles and Zeros of Transfer Function](#poles-and-zeros-of-transfer-function)                         | $H(z) = K\frac{(z-z_1)(z-z_2)\cdots (z-z_M)}{(z-p_1)(z-p_2)\cdots (z-p_M)} = K\frac{\prod_{i=1}^{M}z-z_i}{\prod_{i=1}^{N}z-p_i}$ |
+| [Bounded Input and Bounded Output (BIBO) Stability](#bounded-input-and-bounded-output-bibo-stability) | Stable if bounded input sequence yields bounded output sequence.                                                                 |
 
 | [11 - Digital Frequency Response](#11---digital-frequency-response) |     |
 | ------------------------------------------------------------------- | --- |
@@ -366,7 +394,7 @@ See example 6.2 below...
 <div class="equations">
 
 ## 7 - Computing with Analogue Signals
-
+***This topic isn't examined as it is MATLAB***
 
 </div>
 
@@ -374,19 +402,201 @@ See example 6.2 below...
 
 ## 8 - Signal Conversion between Analog and Digital
 
+### Digital Signal Processing Workflow
+
+See diagram:
+
+![](img/8.1-digital-sig-proc-workflow.png)
+
+- Low pass filter applied to time-domain input signal $x(t)$ to limit frequencies
+- An **analogue-to-digital converter** (ADC) samples and quantises the continuous time analogue signal to convert it to discrete time digital signal $x[n]$.
+- Digital signal processing (DSP) performs operations required and generates output signal $y[n]$.
+- A **digital-to-analogue converter** (DAC) uses hold operations to reconstruct an analogue signal from $y[n]$
+- An output low pass filter removes high frequency components introduced by the DAC operation to give the final output $y(t)$.
+
+### Sampling
+Convert signal from continuous-time to discrete-time. Record amplitude of the analogue signal at specified times. 
+Usually sampling period is fixed.
+
+### Oversample
+Sample too often, use more complexity, wasting energy
+
+### Undersample
+Not sampling often enough, get **aliasing** of our signal (multiple signals of different frequencies yield the same data when sampled.)
+
+### Aliasing
+Multiple signals of different frequencies yield the same data when sampled.
+
+![](img/8.3-aliasing-time-domain.png)
+
+If we sample the **black** sinusoid at the times indicated with the **blue** marker, it could be mistaken for the red dashed sinusoid. This happens when *under-sampling*, and the lower signal is called the alias. The alias makes it **impossible** to recover the original data.
+
+### Nyquist Rate
+$$\omega_s = 2\omega_B$$
+
+Minimum ant-aliasing sampling Frequency.
+
+Frequencies above this $\omega_s \ge 2\omega_B$ remain *distinguishable*. 
+
+
+### Quantisation
+The mapping of **continuous** amplitude levels to a **binary** representation.
+
+IE: $W$ bits then there are $2^W$ quantisation levels. ADC Word length $= W$.
+
+Continuous amplitude levels are *approximated* to the nearest level (rounding). Resulting error between nearest level and actual level = **quantisation noise**
+
+![](img/8.5-quantisation.png)
+
+
+### Data Interpolation
+Convert digital signal back to analogue domain, reconstruct continous signal from discrete time series of points.
+
+### Hold Circuit
+Simplest interpolation in a DAC, where amplitude of continuous-time signal matches that of the previous discrete time signal.
+
+IE: *Hold* amplitude until the next discrete time value. Produces staircase like output.
+
+![](img/8.6-hold-circuit.png)
+
+### Resolution
+$$ \frac{1}{2^W} \times 100\% $$
+
+Space between levels, often represented as a **percentage**.
+
+For $W$-bit DAC, with uniform levels
+
+### Dynamic range
+$$ \,20log_{10}2^W \approx 6WdB$$
+
+Range of signal amplitudes that a DAC can resolve between its smallest and largest (undistorted) values.
 
 </div>
 <div class="equations">
 
 ## 9 - Z-Transforms and LSI Systems
 
+### LSI Rules
+Linear Shift-Invariant
+
+![](img/9.1-LSI-rules.png)
+
+### Common Components of LSI Systems
+For digital systems, only need 3 types of LSI circuit components.
+
+![](img/9.1-common-lsi-components.png)
+
+1. A multiplier **scales** the current input by a constant, i.e., $y [n] = b [1] x [n]$.
+2. An adder outputs the **sum** of two or more inputs, e.g., $y [n] = x_1 [n] + x_2 [n]$.
+3. A unit delay imposes a **delay** of one sample on the input, i.e, $y [n] = x [n - 1]$.
+
+
+### Discrete Time Impulse Function
+Impulse response is very similar in digital domain, as it is the system output when the input is an impulse.
+
+### Impulse Response Sequence
+$$ h[n] = \mathcal{F}\{\delta[n]\}$$
+
+### LSI Output
+$$y[n] = \sum _{k=-\infty}^{\infty}x[k]h[n-k] = x[n] *h[n] = h[n]*x[n]  $$
+
+**Discrete Convolution** of input signal with the impulse response.
+
+### Z-Transform
+$$ \mathcal{Z}\{f[n]\} = F(z) = \sum _{k=0}^{\infty}f[k]z^{-k} $$
+
+Converts discrete-time domain function $f[n]$ into complex domain function $F(z)$, in the z-domain
+Assume $f[n]$ is causal, ie $f[n]= 0, \forall n < 0$
+
+Discrete time equivalent to Laplace Transform. However can be written by *direct inspection* (as have summation instead of intergral). Inverse equally as simple.
+
+### Z-Transform Examples
+Simple examples...
+
+![](img/9.2a-example.png)
+![](img/9.2b-example.png)
+
+![](img/9.3-example.png)
+
+### Binomial Theorem for Inverse Z-Transform
+$$ \sum _{n=0}^{\infty} a^n = \frac{1}{1-a}$$
+
+Cannot always find inverse Z-tranform by immediate inspection, in particular if the Z-transform is written as a **ratio of polynomials of z**. Can use *Binomial theorem* to convert into single (sometimes infinite length) polynomial of $z$
+
+![](img/9.4a-example.png)
+![](img/9.4b-example.png)
+
+### Z-Transform Properties
+Linearity, Time Shifting and Convolution
+
+![](img/9.3.1-z-transform-properties.png)
+
+### Sample Pairs
+See example
+
+![](img/9.5-example-sample-pairs.png)
+
+### Z-Transform of Output Signal
+$$ Y(z) = \mathcal{Z}\{y[n]\} = \mathcal{Z}\{x[n]*h[n]\} = \mathcal{Z}\{x[n]\}\mathcal{Z}\{h[n]\} = X(z)H(z) \Rightarrow Y(z) = X(z) H(z)    $$
+
+Where $H(z)$ = **Pulse Transfer Function** (as it is also the system output when the time-domain input is a unit impulse.) but by convention can refer to $H(z)$ as the **Transfer Function**
+
+### Finding time-domain output $y[n]$ of an LSI System
+Transform, product, inverse.
+
+1. Transform $x[n]$ and $h[n]$ into z-domain
+2. Find product $Y(z) = X(z)H(z)$ 
+3. Taking the inverse Z-transform of $Y(z)$
+   
+### Difference Equation
+Time domain output $y[n]$ directly as a function of time-domain input $x[n]$ as well as *previous* time-domain outputs $x[n-k]$ (ie can be feedback).
+
+![](img/9.7-example.png)
+
+### Z-Transform Table
+See table...
+
+![](img/z-transform-a.png)
+![](img/z-transform-b.png)
 
 </div>
+
 
 <div class="equations">
 
 ## 10 - Stability of Digital Systems
 
+### Z-Domain Transfer Function
+$$H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$$
+
+**Negative** powers of z.
+
+No constraint on $M$ and $N$to be real (unlike analogue) but often assume $M=N$
+
+### Poles and Zeros of Transfer Function
+$$ H(z) = K\frac{(z-z_1)(z-z_2)\cdots (z-z_M)}{(z-p_1)(z-p_2)\cdots (z-p_M)} = K\frac{\prod_{i=1}^{M}z-z_i}{\prod_{i=1}^{N}z-p_i} $$
+
+- Coefficient of each $z$ in this form is 1.
+- Poles $p_i$ and zeros $z_i$ carry same meaning as analogue
+- Unfortunately symbol for variable $z$ and zeros $z_i$ are very similar (take care)
+- Insightful to plot
+
+
+![](img/10.1-example.png)
+![](img/10.1-figure.png)
+
+### Bounded Input and Bounded Output (BIBO) Stability 
+Stable if bounded input sequence yields bounded output sequence. 
+
+A system is **BIBO** **stable** if all of the poles lie inside the $\vert z \vert = 1$ unit circle
+
+A system is **Conditionally** stable if there is atleast 1 pole directly on the unit circle.
+
+![](img/10.2-stability.png)
+
+Explanation:
+- An input sequence $x [n]$ is bounded if each element in the sequence is smaller than some value $A$. 
+- An output sequence $y [n]$ corresponding to $x [n]$ is bounded if each element in the sequence is smaller than some value $B$.
 
 </div>
 <div class="equations">
@@ -418,7 +628,7 @@ See example 6.2 below...
 <div class="equations">
 
 ## 15 - Computing Digital Signals
-
+***This topic isn't examined as it is MATLAB***
 
 </div>
 
