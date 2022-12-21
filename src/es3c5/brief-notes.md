@@ -97,8 +97,11 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Difference Equation](#difference-equation)                                                           | Time domain output $y[n]$ directly as a function of time-domain input $x[n]$ as ...                                              |
 | [Z-Transform Table](#z-transform-table)                                                               | See table...                                                                                                                     |
 
-| [10 - Stability of Digital Systems](#10---stability-of-digital-systems) |     |
-| ----------------------------------------------------------------------- | --- |
+| [10 - Stability of Digital Systems](#10---stability-of-digital-systems)                               |                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [Z-Domain Transfer Function](#z-domain-transfer-function)                                             | $H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$            |
+| [Poles and Zeros of Transfer Function](#poles-and-zeros-of-transfer-function)                         | $H(z) = K\frac{(z-z_1)(z-z_2)\cdots (z-z_M)}{(z-p_1)(z-p_2)\cdots (z-p_M)} = K\frac{\prod_{i=1}^{M}z-z_i}{\prod_{i=1}^{N}z-p_i}$ |
+| [Bounded Input and Bounded Output (BIBO) Stability](#bounded-input-and-bounded-output-bibo-stability) | Stable if bounded input sequence yields bounded output sequence.                                                                 |
 
 | [11 - Digital Frequency Response](#11---digital-frequency-response) |     |
 | ------------------------------------------------------------------- | --- |
@@ -563,6 +566,37 @@ See table...
 
 ## 10 - Stability of Digital Systems
 
+### Z-Domain Transfer Function
+$$H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$$
+
+**Negative** powers of z.
+
+No constraint on $M$ and $N$to be real (unlike analogue) but often assume $M=N$
+
+### Poles and Zeros of Transfer Function
+$$ H(z) = K\frac{(z-z_1)(z-z_2)\cdots (z-z_M)}{(z-p_1)(z-p_2)\cdots (z-p_M)} = K\frac{\prod_{i=1}^{M}z-z_i}{\prod_{i=1}^{N}z-p_i} $$
+
+- Coefficient of each $z$ in this form is 1.
+- Poles $p_i$ and zeros $z_i$ carry same meaning as analogue
+- Unfortunately symbol for variable $z$ and zeros $z_i$ are very similar (take care)
+- Insightful to plot
+
+
+![](img/10.1-example.png)
+![](img/10.1-figure.png)
+
+### Bounded Input and Bounded Output (BIBO) Stability 
+Stable if bounded input sequence yields bounded output sequence. 
+
+A system is **BIBO** **stable** if all of the poles lie inside the $\vert z \vert = 1$ unit circle
+
+A system is **Conditionally** stable if there is atleast 1 pole directly on the unit circle.
+
+![](img/10.2-stability.png)
+
+Explanation:
+- An input sequence $x [n]$ is bounded if each element in the sequence is smaller than some value $A$. 
+- An output sequence $y [n]$ corresponding to $x [n]$ is bounded if each element in the sequence is smaller than some value $B$.
 
 </div>
 <div class="equations">
