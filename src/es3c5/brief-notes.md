@@ -66,8 +66,19 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [7 - Computing with Analogue Signals](#7---computing-with-analogue-signals) |     |
 | --------------------------------------------------------------------------- | --- |
 
-| [8 - Signal Conversion between Analog and Digital](#8---signal-conversion-between-analog-and-digital) |     |
-| ----------------------------------------------------------------------------------------------------- | --- |
+| [8 - Signal Conversion between Analog and Digital](#8---signal-conversion-between-analog-and-digital) |                                                                                     |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Digital Signal Processing Workflow](#digital-signal-processing-workflow)                             | See diagram:                                                                        |
+| [Sampling](#sampling)                                                                                 | Convert signal from continuous-time to discrete-time. Record amplitude of the an... |
+| [Oversample](#oversample)                                                                             | Sample too often, use more complexity, wasting energy                               |
+| [Undersample](#undersample)                                                                           | Not sampling often enough, get                                                      |
+| [Aliasing](#aliasing)                                                                                 | Multiple signals of different frequencies yield the same data when sampled.         |
+| [Nyquist Rate](#nyquist-rate)                                                                         | $\omega_s = 2\omega_B$                                                              |
+| [Quantisation](#quantisation)                                                                         | The mapping of                                                                      |
+| [Data Interpolation](#data-interpolation)                                                             | Convert digital signal back to analogue domain, reconstruct continous signal fro... |
+| [Hold Circuit](#hold-circuit)                                                                         | Simplest interpolation in a DAC, where amplitude of continuous-time signal match... |
+| [Resolution](#resolution)                                                                             | $\frac{1}{2^W} \times 100%$                                                         |
+| [Dynamic range](#dynamic-range)                                                                       | $,20log_{10}2^W \approx 6WdB$                                                       |
 
 | [9 - Z-Transforms and LSI Systems](#9---z-transforms-and-lsi-systems) |     |
 | --------------------------------------------------------------------- | --- |
@@ -366,7 +377,7 @@ See example 6.2 below...
 <div class="equations">
 
 ## 7 - Computing with Analogue Signals
-
+***This topic isn't examined as it is MATLAB***
 
 </div>
 
@@ -374,6 +385,74 @@ See example 6.2 below...
 
 ## 8 - Signal Conversion between Analog and Digital
 
+### Digital Signal Processing Workflow
+
+See diagram:
+
+![](img/8.1-digital-sig-proc-workflow.png)
+
+- Low pass filter applied to time-domain input signal $x(t)$ to limit frequencies
+- An **analogue-to-digital converter** (ADC) samples and quantises the continuous time analogue signal to convert it to discrete time digital signal $x[n]$.
+- Digital signal processing (DSP) performs operations required and generates output signal $y[n]$.
+- A **digital-to-analogue converter** (DAC) uses hold operations to reconstruct an analogue signal from $y[n]$
+- An output low pass filter removes high frequency components introduced by the DAC operation to give the final output $y(t)$.
+
+### Sampling
+Convert signal from continuous-time to discrete-time. Record amplitude of the analogue signal at specified times. 
+Usually sampling period is fixed.
+
+### Oversample
+Sample too often, use more complexity, wasting energy
+
+### Undersample
+Not sampling often enough, get **aliasing** of our signal (multiple signals of different frequencies yield the same data when sampled.)
+
+### Aliasing
+Multiple signals of different frequencies yield the same data when sampled.
+
+![](img/8.3-aliasing-time-domain.png)
+
+If we sample the **black** sinusoid at the times indicated with the **blue** marker, it could be mistaken for the red dashed sinusoid. This happens when *under-sampling*, and the lower signal is called the alias. The alias makes it **impossible** to recover the original data.
+
+### Nyquist Rate
+$$\omega_s = 2\omega_B$$
+
+Minimum ant-aliasing sampling Frequency.
+
+Frequencies above this $\omega_s \ge 2\omega_B$ remain *distinguishable*. 
+
+
+### Quantisation
+The mapping of **continuous** amplitude levels to a **binary** representation.
+
+IE: $W$ bits then there are $2^W$ quantisation levels. ADC Word length $= W$.
+
+Continuous amplitude levels are *approximated* to the nearest level (rounding). Resulting error between nearest level and actual level = **quantisation noise**
+
+![](img/8.5-quantisation.png)
+
+
+### Data Interpolation
+Convert digital signal back to analogue domain, reconstruct continous signal from discrete time series of points.
+
+### Hold Circuit
+Simplest interpolation in a DAC, where amplitude of continuous-time signal matches that of the previous discrete time signal.
+
+IE: *Hold* amplitude until the next discrete time value. Produces staircase like output.
+
+![](img/8.6-hold-circuit.png)
+
+### Resolution
+$$ \frac{1}{2^W} \times 100\% $$
+
+Space between levels, often represented as a **percentage**.
+
+For $W$-bit DAC, with uniform levels
+
+### Dynamic range
+$$ \,20log_{10}2^W \approx 6WdB$$
+
+Range of signal amplitudes that a DAC can resolve between its smallest and largest (undistorted) values.
 
 </div>
 <div class="equations">
@@ -418,7 +497,7 @@ See example 6.2 below...
 <div class="equations">
 
 ## 15 - Computing Digital Signals
-
+***This topic isn't examined as it is MATLAB***
 
 </div>
 
