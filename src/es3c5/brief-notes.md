@@ -80,8 +80,22 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Resolution](#resolution)                                                                             | $\frac{1}{2^W} \times 100%$                                                         |
 | [Dynamic range](#dynamic-range)                                                                       | $,20log_{10}2^W \approx 6WdB$                                                       |
 
-| [9 - Z-Transforms and LSI Systems](#9---z-transforms-and-lsi-systems) |     |
-| --------------------------------------------------------------------- | --- |
+| [9 - Z-Transforms and LSI Systems](#9---z-transforms-and-lsi-systems)                                 |                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [LSI Rules](#lsi-rules)                                                                               | Linear Shift-Invariant                                                                                                           |
+| [Common Components of LSI Systems](#common-components-of-lsi-systems)                                 | For digital systems, only need 3 types of LSI circuit components.                                                                |
+| [Discrete Time Impulse Function](#discrete-time-impulse-function)                                     | Impulse response is very similar in digital domain, as it is the system output w...                                              |
+| [Impulse Response Sequence](#impulse-response-sequence)                                               | $h[n] = \mathcal{F}{\delta[n]}$                                                                                                  |
+| [LSI Output](#lsi-output)                                                                             | $y[n] = \sum _{k=-\infty}^{\infty}x[k]h[n-k] = x[n] *h[n] = h[n]*x[n]$                                                           |
+| [Z-Transform](#z-transform)                                                                           | $\mathcal{Z}{f[n]} = F(z) = \sum _{k=0}^{\infty}f[k]z^{-k}$                                                                      |
+| [Z-Transform Examples](#z-transform-examples)                                                         | Simple examples...                                                                                                               |
+| [Binomial Theorem for Inverse Z-Transform](#binomial-theorem-for-inverse-z-transform)                 | $\sum _{n=0}^{\infty} a^n = \frac{1}{1-a}$                                                                                       |
+| [Z-Transform Properties](#z-transform-properties)                                                     | Linearity, Time Shifting and Convolution                                                                                         |
+| [Sample Pairs](#sample-pairs)                                                                         | See example                                                                                                                      |
+| [Z-Transform of Output Signal](#z-transform-of-output-signal)                                         | $Y(z) = \mathcal{Z}{y[n]} = \mathcal{Z}{x[n]*h[n]} = \mathcal{Z}{x[n]}\mathcal{Z}{h[n]} = X(z)H(z) \Rightarrow Y(z) = X(z) H(z)$ |
+| [Finding time-domain output $y[n]$ of an LSI System](#finding-time-domain-output-yn-of-an-lsi-system) | Transform, product, inverse.                                                                                                     |
+| [Difference Equation](#difference-equation)                                                           | Time domain output $y[n]$ directly as a function of time-domain input $x[n]$ as ...                                              |
+| [Z-Transform Table](#z-transform-table)                                                               | See table...                                                                                                                     |
 
 | [10 - Stability of Digital Systems](#10---stability-of-digital-systems) |     |
 | ----------------------------------------------------------------------- | --- |
@@ -459,8 +473,91 @@ Range of signal amplitudes that a DAC can resolve between its smallest and large
 
 ## 9 - Z-Transforms and LSI Systems
 
+### LSI Rules
+Linear Shift-Invariant
+
+![](img/9.1-LSI-rules.png)
+
+### Common Components of LSI Systems
+For digital systems, only need 3 types of LSI circuit components.
+
+![](img/9.1-common-lsi-components.png)
+
+1. A multiplier **scales** the current input by a constant, i.e., $y [n] = b [1] x [n]$.
+2. An adder outputs the **sum** of two or more inputs, e.g., $y [n] = x_1 [n] + x_2 [n]$.
+3. A unit delay imposes a **delay** of one sample on the input, i.e, $y [n] = x [n - 1]$.
+
+
+### Discrete Time Impulse Function
+Impulse response is very similar in digital domain, as it is the system output when the input is an impulse.
+
+### Impulse Response Sequence
+$$ h[n] = \mathcal{F}\{\delta[n]\}$$
+
+### LSI Output
+$$y[n] = \sum _{k=-\infty}^{\infty}x[k]h[n-k] = x[n] *h[n] = h[n]*x[n]  $$
+
+**Discrete Convolution** of input signal with the impulse response.
+
+### Z-Transform
+$$ \mathcal{Z}\{f[n]\} = F(z) = \sum _{k=0}^{\infty}f[k]z^{-k} $$
+
+Converts discrete-time domain function $f[n]$ into complex domain function $F(z)$, in the z-domain
+Assume $f[n]$ is causal, ie $f[n]= 0, \forall n < 0$
+
+Discrete time equivalent to Laplace Transform. However can be written by *direct inspection* (as have summation instead of intergral). Inverse equally as simple.
+
+### Z-Transform Examples
+Simple examples...
+
+![](img/9.2a-example.png)
+![](img/9.2b-example.png)
+
+![](img/9.3-example.png)
+
+### Binomial Theorem for Inverse Z-Transform
+$$ \sum _{n=0}^{\infty} a^n = \frac{1}{1-a}$$
+
+Cannot always find inverse Z-tranform by immediate inspection, in particular if the Z-transform is written as a **ratio of polynomials of z**. Can use *Binomial theorem* to convert into single (sometimes infinite length) polynomial of $z$
+
+![](img/9.4a-example.png)
+![](img/9.4b-example.png)
+
+### Z-Transform Properties
+Linearity, Time Shifting and Convolution
+
+![](img/9.3.1-z-transform-properties.png)
+
+### Sample Pairs
+See example
+
+![](img/9.5-example-sample-pairs.png)
+
+### Z-Transform of Output Signal
+$$ Y(z) = \mathcal{Z}\{y[n]\} = \mathcal{Z}\{x[n]*h[n]\} = \mathcal{Z}\{x[n]\}\mathcal{Z}\{h[n]\} = X(z)H(z) \Rightarrow Y(z) = X(z) H(z)    $$
+
+Where $H(z)$ = **Pulse Transfer Function** (as it is also the system output when the time-domain input is a unit impulse.) but by convention can refer to $H(z)$ as the **Transfer Function**
+
+### Finding time-domain output $y[n]$ of an LSI System
+Transform, product, inverse.
+
+1. Transform $x[n]$ and $h[n]$ into z-domain
+2. Find product $Y(z) = X(z)H(z)$ 
+3. Taking the inverse Z-transform of $Y(z)$
+   
+### Difference Equation
+Time domain output $y[n]$ directly as a function of time-domain input $x[n]$ as well as *previous* time-domain outputs $x[n-k]$ (ie can be feedback).
+
+![](img/9.7-example.png)
+
+### Z-Transform Table
+See table...
+
+![](img/z-transform-a.png)
+![](img/z-transform-b.png)
 
 </div>
+
 
 <div class="equations">
 
