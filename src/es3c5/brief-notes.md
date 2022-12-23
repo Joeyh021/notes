@@ -10,7 +10,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 <equation-table>
 
 | [Laplace Conversion](#laplace-conversion)                              |                   |
-|------------------------------------------------------------------------|-------------------|
+| ---------------------------------------------------------------------- | ----------------- |
 | [Laplace Table](#laplace-table)                                        | Insert table here |
 | [Finding Time Domain Output $y(t)$](#finding-time-domain-output-yt)    |                   |
 | [Input as Delta Function $\delta(t)$](#input-as-delta-function-deltat) | $x(t)=\delta(t)$  |
@@ -18,7 +18,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [LTI System Properties](#lti-system-properties)                        | LTI =             |
 
 | [3 - Poles and Zeros](#3---poles-and-zeros)                                               |                                                                                                               |
-|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | [General Transfer Function as 2 polynomials](#general-transfer-function-as-2-polynomials) | $H (s) = \frac{b_0s^M + b_1s^{M-1} + \cdots + b_{M-1}s + b_M}{a_0s^N + a_1s^{N-1} + \cdots + a_{N-1}s + a_N}$ |
 | [Factorised Transfer Function](#factorised-transfer-function)                             | $H (s) = K \frac{(s - z_1)(s - z_2) \cdots (s - z_M)}{(s - p_1)(s - p_2) \cdots (s - p_N)}$                   |
 | [Real system as real](#real-system-as-real)                                               | $M \le N$                                                                                                     |
@@ -29,7 +29,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Components to Response](#components-to-response)                                         | Real Components $\rArr$ Exponential Response $\vert$ Imaginary $\rArr$ angular f...                           |
 
 | [4 - Analog Frequency Response](#4---analog-frequency-response)                                                                          |                                                                                                                                                                                           |
-|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Frequency Response](#frequency-response)                                                                                                | Frequency response of a system = output in response to sinusoid input of unit ma...                                                                                                       |
 | [Continuous Fourier Transform](#continuous-fourier-transform)                                                                            | $F(jw) = \int{}^{\infty}_{t=0} ,f(t) , e^{-j\omega{}t} , dt$                                                                                                                              |
 | [Inverse Fourier Transform](#inverse-fourier-transform)                                                                                  | $f(t) = \frac{1}{2\pi} \int{}^{\infty}_{\omega{}=-\infty} , F(j\omega{}) , e^{j\omega{}t} , d\omega{}$                                                                                    |
@@ -38,7 +38,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Phase Angle of Frequency Response (PAFR) $\angle H(j\omega)$ - $K < 0$](#phase-angle-of-frequency-response-pafr-angle-hjomega---k--0-1) | $\angle H(j\omega) = \sum _{i=1}^{M}\angle(j\omega -z_i) - \sum _{i=1}^{N}\angle(j\omega -p_i) + \pi$                                                                                     |
 
 | [5 - Analog Filter Design](#5---analog-filter-design)                                                                                       |                                                                                                                                      |
-|---------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | [Ideal Filters](#ideal-filters)                                                                                                             | Each ideal filter has unambiguous                                                                                                    |
 | [Realisability](#realisability)                                                                                                             | System starts to respond to input before input is applied. Non-zero for $t<0$.                                                       |
 | [Causality](#causality)                                                                                                                     | Output depends only on past and current inputs, not future inputs.                                                                   |
@@ -53,7 +53,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Low pass Butterworth Cut-off frequency $\omega_c$ (Stop)](#low-pass-butterworth-cut-off-frequency-omega_c-stop)                            | $\omega_c = \frac{\omega_s}{(10^{-\frac{G_s}{10}}-1)^\frac{1}{2N}}$                                                                  |
 
 | [6 - Periodic Analogue Functions](#6---periodic-analogue-functions)                                                                         |                                                                                                     |
-|---------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | [Exponential Representation from  Trigonometric representation](#exponential-representation-from--trigonometric-representation)             | $e^{jx} = \cos x + j\sin x$                                                                         |
 | [Trigonometric from exponential - Real (cos)](#trigonometric-from-exponential---real-cos)                                                   | $\cos x = Re{e^{jx}} = \frac{e^{jx} + e^{-jx}}{2}$                                                  |
 | [Trigonometric from exponential - Imaginary (cos)](#trigonometric-from-exponential---imaginary-cos)                                         | $\sin x = Im{e^{jx}} = \frac{e^{jx} + e^{-jx}}{2j}$                                                 |
@@ -63,11 +63,11 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Output of LTI system from Signal with multiple frequency components](#output-of-lti-system-from-signal-with-multiple-frequency-components) | $y(t) = \sum_{k=-\infty }^{\infty} H(jk\omega_0) X_k e^{jk\omega_0t}$                               |
 | [Filtering Periodic Signal (Example 6.2)](#filtering-periodic-signal-example-62)                                                            | See example 6.2 below...                                                                            |
 
-| [7 - Computing with Analogue Signals](#7---computing-with-analogue-signals)  | | 
-| ----------- | -----------  | 
+| [7 - Computing with Analogue Signals](#7---computing-with-analogue-signals) |     |
+| --------------------------------------------------------------------------- | --- |
 
 | [8 - Signal Conversion between Analog and Digital](#8---signal-conversion-between-analog-and-digital) |                                                                                     |
-|-------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | [Digital Signal Processing Workflow](#digital-signal-processing-workflow)                             | See diagram:                                                                        |
 | [Sampling](#sampling)                                                                                 | Convert signal from continuous-time to discrete-time. Record amplitude of the an... |
 | [Oversample](#oversample)                                                                             | Sample too often, use more complexity, wasting energy                               |
@@ -81,7 +81,7 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Dynamic range](#dynamic-range)                                                                       | $,20log_{10}2^W \approx 6WdB$                                                       |
 
 | [9 - Z-Transforms and LSI Systems](#9---z-transforms-and-lsi-systems)                                 |                                                                                                                                  |
-|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | [LSI Rules](#lsi-rules)                                                                               | Linear Shift-Invariant                                                                                                           |
 | [Common Components of LSI Systems](#common-components-of-lsi-systems)                                 | For digital systems, only need 3 types of LSI circuit components.                                                                |
 | [Discrete Time Impulse Function](#discrete-time-impulse-function)                                     | Impulse response is very similar in digital domain, as it is the system output w...                                              |
@@ -98,13 +98,14 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Z-Transform Table](#z-transform-table)                                                               | See table...                                                                                                                     |
 
 | [10 - Stability of Digital Systems](#10---stability-of-digital-systems)                               |                                                                                                                                  |
-|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | [Z-Domain Transfer Function](#z-domain-transfer-function)                                             | $H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$            |
+| [General Difference Equation](#general-difference-equation)                                           | $y[n] = \sum_{k=0}^{M}b[k]x[n-k] - \sum_{k=0}^{N}a[k]y[n-k]$                                                                     |
 | [Poles and Zeros of Transfer Function](#poles-and-zeros-of-transfer-function)                         | $H(z) = K\frac{(z-z_1)(z-z_2)\cdots (z-z_M)}{(z-p_1)(z-p_2)\cdots (z-p_M)} = K\frac{\prod_{i=1}^{M}z-z_i}{\prod_{i=1}^{N}z-p_i}$ |
 | [Bounded Input and Bounded Output (BIBO) Stability](#bounded-input-and-bounded-output-bibo-stability) | Stable if bounded input sequence yields bounded output sequence.                                                                 |
 
 | [11 - Digital Frequency Response](#11---digital-frequency-response)                                                                         |                                                                                                                                                                                                       |
-|---------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [LSI Frequency Response](#lsi-frequency-response)                                                                                           | Output in response to a sinusoid input of unit magnitude and some specified freq...                                                                                                                   |
 | [Discrete-Time Fourier Transform (DTFT) - Digital Frequency Response](#discrete-time-fourier-transform-dtft---digital-frequency-response)   | $F(e^{j\Omega}) = F(\Omega) = \sum _{k=0}^{\infty}f[k]e^{-jk\Omega}$                                                                                                                                  |
 | [Inverse Discrete-Time Fourier Transform (Inverse DTFT)](#inverse-discrete-time-fourier-transform-inverse-dtft)                             | $f[k] = \frac{1}{2\pi}\int_{-\pi}^{\pi}F(e^{j\Omega})e^{jk\Omega}d\Omega$                                                                                                                             |
@@ -113,32 +114,52 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Phase Angle of Frequency Response (PAFR) $\angle H(e^{j\Omega})$ - $K > 0$](#phase-angle-of-frequency-response-pafr-angle-hejomega---k--0) | $\angle H(e^{j\Omega}) = \sum _{i=1}^{M}\angle(e^{j\Omega} -z_i) - \sum _{i=1}^{N}\angle(e^{j\Omega} -p_i)$                                                                                           |
 | [Example 11.1 - Simple Digital High Pass Filter](#example-111---simple-digital-high-pass-filter)                                            | See image...                                                                                                                                                                                          |
 
-| [12 - Filter Difference equations and Impulse responses](#12---filter-difference-equations-and-impulse-responses)  | | 
-| ----------- | -----------  | 
+| [12 - Filter Difference equations and Impulse responses](#12---filter-difference-equations-and-impulse-responses)    |                                                                                                                       |
+| -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| [Z-Domain Transfer Function](#z-domain-transfer-function-1)                                                          | $H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$ |
+| [General Difference Equation](#general-difference-equation-1)                                                        | $y[n] = \sum_{k=0}^{M}b[k]x[n-k] - \sum_{k=0}^{N}a[k]y[n-k]$                                                          |
+| [Example 12.1 Proof y[n] can be obtained directly from H[z]](#example-121-proof-yn-can-be-obtained-directly-from-hz) | See image...                                                                                                          |
+| [Order of a filter](#order-of-a-filter)                                                                              | $order = max(N,M)$                                                                                                    |
+| [Taps in a filter](#taps-in-a-filter)                                                                                | Minimum number of unit delay blocks required. Equal to the order of the filter.                                       |
+| [Example 12.2 Filter Order and Taps](#example-122-filter-order-and-taps)                                             | See example...                                                                                                        |
+| [Tabular Method for Difference Equations](#tabular-method-for-difference-equations)                                  | Given a difference equation, and its input x[n], can write specific output y[n] ...                                   |
+| [Example 12.3 Tabular Method Example](#example-123-tabular-method-example)                                           | See example                                                                                                           |
+| [Infinite Impulse Response (IIR) Filters](#infinite-impulse-response-iir-filters)                                    | IIR filters have                                                                                                      |
+| [Example 12.4 IIR Filter](#example-124-iir-filter)                                                                   | See example                                                                                                           |
+| [Finite Impulse Response (FIR) Filters](#finite-impulse-response-fir-filters)                                        | FIR Filter are none recursive (ie, no feedback components), so a[k] = 0 for k!=0...                                   |
+| [FIR Difference Equation](#fir-difference-equation)                                                                  | $y[n] = \sum_{k=0}^{M}b[k]x[n-k]$                                                                                     |
+| [FIR Transfer function](#fir-transfer-function)                                                                      | $H(z) = b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]$                                                          |
+| [FIR Transfer Function - Roots](#fir-transfer-function---roots)                                                      | $H(z) = \frac{b[M] + b[M-1]z+\cdots + b[1]z^{M-1}+b[0]z^M}{z^M} = K \frac{\prod_{k=0}^{M}(z-z_k)}{z^M}$               |
+| [FIR Stability](#fir-stability)                                                                                      | FIR FILTERS ARE ALWAYS STABLE. As in transfer function, all M poles are all on t...                                   |
+| [FIR Linear Phase Response](#fir-linear-phase-response)                                                              | Often have a linear phase response. The phase shift at the output corresponds to...                                   |
+| [FIR Filter Example](#fir-filter-example)                                                                            | See example 12.5                                                                                                      |
+| [Ideal Digital Filters](#ideal-digital-filters)                                                                      | Four main types of filter magnitude responses (defined over $0 \le \Omega \le \p...$                                  |
+| [Realising Ideal Digital Filters](#realising-ideal-digital-filters)                                                  | Use poles and zeros to create simple filters. Only need to consider response ove...                                   |
+| [Example 12.6 - Simple High Pass Filter Design](#example-126---simple-high-pass-filter-design)                       | See diagram                                                                                                           |
 
-| [13 - FIR Digital Filter Design](#13---fir-digital-filter-design)  | | 
-| ----------- | -----------  | 
+| [13 - FIR Digital Filter Design](#13---fir-digital-filter-design) |     |
+| ----------------------------------------------------------------- | --- |
 
-| [14 - Discrete fourier transform and FFT](#14---discrete-fourier-transform-and-fft)  | | 
-| ----------- | -----------  | 
+| [14 - Discrete fourier transform and FFT](#14---discrete-fourier-transform-and-fft) |     |
+| ----------------------------------------------------------------------------------- | --- |
 
-| [15 - Computing Digital Signals](#15---computing-digital-signals)  | | 
-| ----------- | -----------  | 
+| [15 - Computing Digital Signals](#15---computing-digital-signals) |     |
+| ----------------------------------------------------------------- | --- |
 
-| [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap)  | | 
-| ----------- | -----------  | 
+| [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap) |     |
+| ----------------------------------------------------------------- | --- |
 
-| [17 - Probabilities and random signals](#17---probabilities-and-random-signals)  | | 
-| ----------- | -----------  | 
+| [17 - Probabilities and random signals](#17---probabilities-and-random-signals) |     |
+| ------------------------------------------------------------------------------- | --- |
 
-| [18 - Signal estimation](#18---signal-estimation)  | | 
-| ----------- | -----------  | 
+| [18 - Signal estimation](#18---signal-estimation) |     |
+| ------------------------------------------------- | --- |
 
-| [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density)  | | 
-| ----------- | -----------  | 
+| [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density) |     |
+| ------------------------------------------------------------------------------------------- | --- |
 
-| [20 - Image Processing](#20---image-processing)  | | 
-| ----------- | -----------  | 
+| [20 - Image Processing](#20---image-processing) |     |
+| ----------------------------------------------- | --- |
 
 </equation-table>
 
@@ -580,6 +601,9 @@ $$H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} +
 
 No constraint on $M$ and $N$to be real (unlike analogue) but often assume $M=N$
 
+### General Difference Equation
+$$y[n] = \sum_{k=0}^{M}b[k]x[n-k] - \sum_{k=0}^{N}a[k]y[n-k] $$
+
 ### Poles and Zeros of Transfer Function
 $$ H(z) = K\frac{(z-z_1)(z-z_2)\cdots (z-z_M)}{(z-p_1)(z-p_2)\cdots (z-p_M)} = K\frac{\prod_{i=1}^{M}z-z_i}{\prod_{i=1}^{N}z-p_i} $$
 
@@ -670,6 +694,136 @@ See image...
 
 ## 12 - Filter Difference equations and Impulse responses
 
+### Z-Domain Transfer Function
+$$H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$$
+
+### General Difference Equation
+$$y[n] = \sum_{k=0}^{M}b[k]x[n-k] - \sum_{k=0}^{N}a[k]y[n-k] $$
+
+Real coefficients $b[\dot]$ and $a[\dot]$ are the same. (Note $a[0]$ = 1, so no coefficient corresponding to $y[n]$).
+
+Easier to convert directly between transfer function $H(z)$ (with negative powers of z) and the difference equation for output $y[n]$, ideal for *implementation* of the system. (rather than use time-domain impulse response $h[n]$)
+
+### Example 12.1 Proof y[n] can be obtained directly from H[z]
+See image...
+
+![](img/12.1-proof.png)
+
+### Order of a filter
+$$ order = max(N,M)$$
+
+### Taps in a filter
+Minimum number of unit delay blocks required. Equal to the order of the filter.
+
+![](img/12.1-geneal-diff-implementation.png)
+
+
+### Example 12.2 Filter Order and Taps
+See example...
+
+![](img/12.2a-taps.png)
+![](img/12.2b-taps.png)
+
+### Tabular Method for Difference Equations
+Given a difference equation, and its input x[n], can write specific output y[n] using tabular method.
+
+1. Starting with input $x[n]$, make a **column** for every input and output that appears in difference equation
+2. ASsume every output and delayed input is **initially zero** (ie the filter is *causal*, initially no memory, hence system is **quiescent**)
+3. Fill in column for $x[n]$ with given system input for all rows needed, and fill in delayed versions of $x[n]$ 
+4. **Evaluate** $y[0]$ from inital input, and **propagate** the value of y[0] to delayed outputs (as relavent)
+5. **Evaluate** $y[1]$ from $x[\dot]$s and $y[0]$
+6. Continue evaluating output and propagating delayed outputs.
+
+Can be alternative method for finding time-domain impulse response $h[n]$
+
+### Example 12.3 Tabular Method Example
+See example
+
+![](img/12.1a-example.png)
+![](img/12.1b-example.png)
+
+### Infinite Impulse Response (IIR) Filters 
+IIR filters have **infinite length** impulse responses because they are **recursive** (ie feedback terms associated with non-zero poles in transfer function, hence $y[n-k]$ exists.)
+
+**Standard** transfer function and difference equation can be used to represent.
+$$H(z) = \frac{b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]}{a[N]z^{-N} + a[N-1]z^{1-N}+\cdots + a[1]z^{-1}+1}$$
+$$y[n] = \sum_{k=0}^{M}b[k]x[n-k] - \sum_{k=0}^{N}a[k]y[n-k] $$
+
+**Not possible** to have a **linear phase response** (so there are different delays associated with different frequencies, and they are not always stable (depending on the exact locations of poles.))
+
+IIR filters are **more efficient** than FIR designs at controlling **gain** of response.
+
+Although response is *technically infinite*, in practice decays towards zero or can be truncated to zero (assume response is $h[n] = 0$ beyond some value $n$)
+
+### Example 12.4 IIR Filter
+See example
+
+![](img/12.4a-example.png)
+![](img/12.4b-example.png)
+
+### Finite Impulse Response (FIR) Filters
+FIR Filter are none recursive (ie, no feedback components), so a[k] = 0 for k!=0.
+
+Finite in length, and strictly zero beyond that ($h[n] = 0$ for $n \gt M$). Therefore *the number of filter taps dictates the length of an FIR impulse response*
+
+Since there is no feedback, can write impulse response $h[n]$ as:
+$$ h[n] = b[n] $$
+
+### FIR Difference Equation
+$$y[n] = \sum_{k=0}^{M}b[k]x[n-k] $$
+
+### FIR Transfer function
+$$H(z) = b[M]z^{-M} + b[M-1]z^{1-M}+\cdots + b[1]z^{-1}+b[0]$$
+
+Simplified from general differernce equation tranfer function. 
+
+### FIR Transfer Function - Roots
+$$H(z) = \frac{b[M] + b[M-1]z+\cdots + b[1]z^{M-1}+b[0]z^M}{z^M} = K \frac{\prod_{k=0}^{M}(z-z_k)}{z^M}$$ 
+
+More convenient to work with positive powers of z, so multiply top and bottom by $z^M$ then factor.
+
+### FIR Stability
+FIR FILTERS ARE ALWAYS STABLE. As in transfer function, all M poles are all on the origin (z =0) and so always in the unit circle.
+
+### FIR Linear Phase Response
+Often have a linear phase response. The phase shift at the output corresponds to a time delay.
+
+### FIR Filter Example
+See example 12.5
+
+![](img/12.5a-example.png)
+![](img/12.5b-example.png)
+
+### Ideal Digital Filters
+Four main types of filter magnitude responses (defined over $0 \le \Omega \le \pi$, mirrored over $\pi \le \Omega \lt 2\pi$ and repeated every $2\pi$)
+
+- **Low Pass** - pass frequencies less than cut-off frequency $\Omega_c$ and reject frequencies greater.
+- **High Pass** - rejects frequencies less than cut-off frequency $\Omega_c$ and pass frequencies greater.
+- **Band Pass** - Passes frequency within specified range, ie between $\Omega_1$ and $\Omega_2$, and reject frequencies that are either below or above the band within $[0,\pi]$
+- **Band Stop** - Rejects frequency within specified range, ie between $\Omega_1$ and $\Omega_2$, and passes all other frequencies within $[0,\pi]$
+
+Ideal response appear to be fundamentally different from ideal analogue, however we only care over **fundamental band** $[-\pi,\pi)$ where behaviour is **identical**
+
+![](img/12.7-ideal-filters.png)
+
+### Realising Ideal Digital Filters
+Use poles and zeros to create simple filters. Only need to consider response over the fixed $[-\pi,\pi)$ band. 
+
+**Key Concepts:**
+- To be physically realisable, complex poles and zeros need to be in conjugate pairs
+- Can place zeros anywhere, so will often place directly on unit circle when frequency / range of frequency needs to be **attenuated**
+- Poles on the unit circle should generally be avoided (conditionally stable). Can try to keep all poles at origin so can be **FIR**, otherwise IIR, so feedback. Poles used to amplify response in the neighbourhood of some frequency.
+
+- **Low Pass** - zeros at or near $\Omega=\pi$, poles near $\Omega = 0$ which can amplify maximum gain, or be used at a higher frequency to increase size of pass band.
+- **High Pass** - literally inverse of *low pass*. Zeros at or near $\Omega=0$, poles near $\Omega = \pi$ which can amplify maximum gain, or be used at a lower frequency to increase size of pass band.
+- **Band Pass** - Place zeros at or near both $\Omega = 0$ and $\Omega = \pi$; so must be atleast second order. Place pole if needed to amplify the signal in the neighbourood of the pass band.
+- **Band Stop** - Place zeros at or near the stop band. Zeros must be complex so such a filter must be atelast second order. Place poles at or near both $\Omega = 0$ and $\Omega = \pi$ if needed.
+
+### Example 12.6 - Simple High Pass Filter Design
+See diagram
+
+![](img/12.6-example.png)
+![](img/12.6b-example.png)
 
 </div>
 <div class="equations">
