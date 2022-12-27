@@ -147,8 +147,14 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Practical FIR Filter Design Example 13.2](#practical-fir-filter-design-example-132)     | See example...                                                                      |
 | [Specification for FIR Filters Example 13.3](#specification-for-fir-filters-example-133) | See example...                                                                      |
 
-| [14 - Discrete fourier transform and FFT](#14---discrete-fourier-transform-and-fft) |     |
-| ----------------------------------------------------------------------------------- | --- |
+| [14 - Discrete Fourier Transform and FFT](#14---discrete-fourier-transform-and-fft) |                                                                                                             |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [Discrete Fourier Transform DFT](#discrete-fourier-transform-dft)                   | $X[k] = \sum_{n=0}^{N-1}x[n]e^{-jnk\frac{2\pi}{N}}$                                                         |
+| [Inverse DFT](#inverse-dft)                                                         | $x[n] = \frac{1}{N}\sum_{k=0}^{N-1}X[k]e^{jnk\frac{2\pi}{N}}, \quad n=\left { 0,1,2, \cdots , N-1 \right }$ |
+| [Example 14.1 DFT of Sinusoid](#example-141-dft-of-sinusoid)                        | See example                                                                                                 |
+| [Zero Padding](#zero-padding)                                                       | Artificially increase the length of the time domain signal $x[n]$ by adding zero...                         |
+| [Example 14.2 Effect of Zero Padding](#example-142-effect-of-zero-padding)          | See example                                                                                                 |
+| [Fast Fourier Transform FFT](#fast-fourier-transform-fft)                           | Family of alogrithms that evaluate DFT with complexity of $O(N log_2 N)$ compare...                         |
 
 | [15 - Computing Digital Signals](#15---computing-digital-signals) |     |
 | ----------------------------------------------------------------- | --- |
@@ -891,8 +897,64 @@ See example...
 
 <div class="equations">
 
-## 14 - Discrete fourier transform and FFT
+## 14 - Discrete Fourier Transform and FFT
 
+### Discrete Fourier Transform DFT
+$$ X[k] = \sum_{n=0}^{N-1}x[n]e^{-jnk\frac{2\pi}{N}} $$ 
+
+For $k = \{0,1,2...,N-1\}$
+
+This is  Forward discrete Fourier transform. (Not discrete time transform, but samples of it over interval $[0,2\pi)$
+
+**Explanation:**
+
+Discrete-time Fourier Transfomr (DTFT), takes discrete time signal, provides continous spectrem that repeats every $2\pi$. Defined for **infinite** length sequency $x[n]$, gives continous spectrum with *values at all frequencies*.
+
+$$ X(e^{j\Omega}) = \sum_{n=0}^{\infty}x[n]e^{jn\Omega}$$
+
+Digital often has **finite** length sequences. (Also inverse DTFT, uses intergration thus approximated). So assume sequence $x[n]$ is length $N$.
+
+$$ X(e^{j\Omega}) = \sum_{n=0}^{N-1}x[n]e^{jn\Omega}$$
+
+Sample spectrum $X[e^{j\Omega}]$. Repeats every $2\pi$, can sample over $[0,2\pi)$.
+
+Take same number of samples in frequency domain as length of time domain signal.So $N$ evenly spaced samples of $X(e^{j\Omega})$. (Aka **bins**)
+
+Occur at **fundemental frequency** $\Omega_0 = 2\pi /N$
+$$ \Omega = \left \{ 0, \frac{2\pi}{N}, \frac{4\pi}{N}, \cdots, \frac{2\pi(N-1)}{N} \right \} $$
+
+Substitude into the DTFT.
+
+$$ X[k] = \sum_{n=0}^{N-1}x[n]e^{-jnk\frac{2\pi}{N}} $$ 
+
+For $k = \{0,1,2...,N-1\}$
+
+$$ f_k = k\frac{f_s}{N},\quad 0 \le k \le N-1$$
+
+### Inverse DFT 
+
+$$ x[n] = \frac{1}{N}\sum_{k=0}^{N-1}X[k]e^{jnk\frac{2\pi}{N}}, \quad n=\left \{ 0,1,2, \cdots , N-1 \right \} $$
+
+### Example 14.1 DFT of Sinusoid
+See example
+
+![](img/14.1a-example.png)
+![](img/14.1b-example.png)
+
+### Zero Padding
+Artificially increase the length of the time domain signal $x[n]$ by adding zeros to the end to see more **detail** in the DTFT as DFT provides sampled view of DTFT, only see DTFT at $N$ frequencies.
+
+### Example 14.2 Effect of Zero Padding
+See example
+
+![](img/14.2a-example.png)
+![](img/14.2b-example.png)
+![](img/14.2c-example.png)
+
+### Fast Fourier Transform FFT
+Family of alogrithms that evaluate DFT with complexity of $O(N log_2 N)$ compared to $O(N^2)$. Achieved with **no approximations**.
+
+Details are beyond module, but can be used in matlab with `fft` function.
 
 </div>
 <div class="equations">
