@@ -137,8 +137,15 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Realising Ideal Digital Filters](#realising-ideal-digital-filters)                                                  | Use poles and zeros to create simple filters. Only need to consider response ove...                                   |
 | [Example 12.6 - Simple High Pass Filter Design](#example-126---simple-high-pass-filter-design)                       | See diagram                                                                                                           |
 
-| [13 - FIR Digital Filter Design](#13---fir-digital-filter-design) |     |
-| ----------------------------------------------------------------- | --- |
+| [13 - FIR Digital Filter Design](#13---fir-digital-filter-design)                        |                                                                                     |
+| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Discrete Time Radial Frequency](#discrete-time-radial-frequency)                        | $\Omega = \frac{\omega}{f_s} = \frac{2\pi f}{f_s}$                                  |
+| [Realising Ideal Digital Filter](#realising-ideal-digital-filter)                        | Aim is to get as close as possible to                                               |
+| [Practical Digital Filters](#practical-digital-filters)                                  | Good digital low pass filter will try to realise the (unrealisable) ideal respon... |
+| [Windowing](#windowing)                                                                  | Window Method - design process: start with ideal $h_i[n]$ and windowing infinite... |
+| [Windowing Criteria](#windowing-criteria)                                                |                                                                                     |
+| [Practical FIR Filter Design Example 13.2](#practical-fir-filter-design-example-132)     | See example...                                                                      |
+| [Specification for FIR Filters Example 13.3](#specification-for-fir-filters-example-133) | See example...                                                                      |
 
 | [14 - Discrete fourier transform and FFT](#14---discrete-fourier-transform-and-fft) |     |
 | ----------------------------------------------------------------------------------- | --- |
@@ -830,6 +837,55 @@ See diagram
 
 ## 13 - FIR Digital Filter Design
 
+### Discrete Time Radial Frequency
+$$ \Omega = \frac{\omega}{f_s} = \frac{2\pi f}{f_s} $$
+
+As long as $\Omega \le \pi$ - otherwise there will be an alias at a lower frequency. So $2f \le f_s$ to avoid aliasing.
+
+### Realising Ideal Digital Filter
+Aim is to get as close as possible to *ideal behaviour*. But when using **Inverse DTFT**, the *ideal impulse* response is $\frac{\Omega_c}{\pi}sinc(n\Omega_c)$.
+
+This is analogous to the inverse Fourier transform of the ideal analogue low pass frequency response. 
+
+Sampled a *scaled* sinc function, **non-zero** values for $n \lt 0$. So needs to respond to an input before the input is applied, thus **unrealisable**.
+
+![](img/13.1-example.png)
+
+### Practical Digital Filters
+Good digital low pass filter will try to realise the (unrealisable) ideal response. Will try to do this with FIR filters (always stable, tend to have greater flexibility to implement different frequency responses).
+
+- Need to induce a **delay** to capture most of the ideal signal energy in causal time, ie: use $h_i[n-k]u[n]$
+- **Truncate** response to delay tolerance $k_d$, such that $h[n] = 0$ for $n \gt k_d$. Also limits complexity of filter: shorter = smaller order
+- **Window** response, *scales* each sample, attempt to mitigate **negative effects of truncation**
+
+### Windowing
+Window Method - design process: start with ideal $h_i[n]$ and windowing infinite time-domain response to obtain a realsiable $h[n]$ that can be implemented.
+
+![](img/13.2-windowing.png)
+![](img/13.2-band-characteristic.png)
+
+### Windowing Criteria
+- **Main Lobe Width** - Width in frequency of the main lobe. 
+- **Roll-off rate** - how sharply main lobe decreases, measured in dB/dec (db per decade).
+- **Peak side lobe level** - Peak magnitude of the largest side lobe relative to the main lobe, measured in dB.
+- **Pass Band ripple** - The amount the gain over the pass band can vary about unity $1-\delta_p/2$ and $1+\delta_p/2$
+- **Pass Band Ripple Parameter, dB**- $r_p = 20log_{10}(\frac{1+\delta_p/2}{1-\delta_p/2})$
+- **Stop Band ripple** - Gain over the stop band, must be less than the stop band ripple $\delta_s$
+- **Transition Band** - $\Omega_\Delta = \Omega_s - \Omega_p$
+  
+
+### Practical FIR Filter Design Example 13.2
+See example...
+
+![](img/13.2a-example.png)
+![](img/13.2b-example.png)
+![](img/13.2c-example.png)
+
+### Specification for FIR Filters Example 13.3
+See example...
+
+![](img/13.3a-example.png)
+![](img/13.3b-example.png)
 
 </div>
 
