@@ -159,8 +159,14 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [15 - Computing Digital Signals](#15---computing-digital-signals) |     |
 | ----------------------------------------------------------------- | --- |
 
-| [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap) |     |
-| ----------------------------------------------------------------- | --- |
+| [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap)                                               |                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Aperiodic (simple periodic) continuous-time signal f(t)](#aperiodic-simple-periodic-continuous-time-signal-ft) | Laplace, fourier transform.                                                         |
+| [More Complex Continuous-time signal f(t)](#more-complex-continuous-time-signal-ft)                             | Fourier series, multiples of fundemental, samples of frequency response.            |
+| [Discrete-time signal f[n] (infinite length)](#discrete-time-signal-fn-infinite-length)                         | Z-Domain, Discrete-time fourier transform                                           |
+| [Discrete-time signal f[n] (finite length)](#discrete-time-signal-fn-finite-length)                             | Finite Length N, convert to frequency domain (DFT), N points distributed over 2 ... |
+| [Stability](#stability)                                                                                         | S-domain: negative real component, Z domain: poles within unit circle.              |
+| [Bi-Linearity](#bi-linearity)                                                                                   | Not core module content.                                                            |
 
 | [17 - Probabilities and random signals](#17---probabilities-and-random-signals) |     |
 | ------------------------------------------------------------------------------- | --- |
@@ -968,6 +974,50 @@ Details are beyond module, but can be used in matlab with `fft` function.
 
 ## 16 - Digital vs Analogue Recap
 
+### Aperiodic (simple periodic) continuous-time signal f(t)
+Laplace, fourier transform.
+- **APeriodic** (**simple** periodic) **continuous** time signal $f(t)$
+- Convert to **Laplace** domain (s domain) via Laplace transform
+- Which $s=jw$ is the (continuous) **Fourier transform**.
+- Fourier transform of the signal is its frequency response $F(j\omega)$, generally defined for all $\omega$
+- Laplace and fourier transform, have corresponding inverse transforms, convert $F(s)$ or $F(j\omega)$ back to $f(t)$
+
+### More Complex Continuous-time signal f(t)
+Fourier series, multiples of fundemental, samples of frequency response.
+- For a more **complex** periodic **continuous**-time signal f (t)
+- **Fourier series** representation decomposes the signal into its *frequency components* $F_k$ at multiples of the **fundamental** frequency $\omega_0$.
+- Can be interpreted as **samples** of the frequency response $F(j\omega)$, 
+- which then corresponds to periodicity of $f (t)$ over time.
+- The coefficients $F_k$ are found over one period of $f (t)$.
+
+
+### Discrete-time signal f[n] (infinite length)
+Z-Domain, Discrete-time fourier transform
+- **Discrete-time** signal $f[n]$, we can convert to the **z-domain** via the Z-transform,
+- Which for $z = e^{j\Omega}$ is the **discrete-time Fourier transform** **DTFT**. 
+- The discrete-time Fourier transform of the signal is its **frequency response** $F(e^{j\Omega})$
+- **Repeats** every $2\pi$ (i.e., sampling in time corresponds to periodicity in frequency).
+- There are corresponding inverse transforms to convert $F (z)$ or $F(e^{j\Omega})$ back to $f[n]$
+
+###  Discrete-time signal f[n] (finite length)
+Finite Length N, convert to frequency domain (DFT), N points distributed over 2 pi (periodic)
+- For **discrete-time signal** $f [n]$ with **finite** length (or truncated to) N,
+- Can convert to the **frequency domain** using the **discrete Fourier transform**,
+- which is also discrete in frequency. 
+- The discrete Fourier transform also has **N** points **distributed** over $2\pi$ and is otherwise periodic. 
+- Here, we see **sampling** in both **frequency** and **time**, corresponding to periodicity in the other domain (that we
+usually ignore in analysis and design because we define both the time domain signal $f [n]$ and frequency domain signal $F [k]$ over one period of length N).
+
+![](img/16.1-frequency.png)
+
+
+### Stability
+S-domain: negative real component, Z domain: poles within unit circle.
+
+![](16.2-stability.png)
+
+### Bi-Linearity
+Not core module content.
 
 </div>
 <div class="equations">
