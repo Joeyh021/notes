@@ -162,14 +162,26 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap)                                               |                                                                                     |
 | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | [Aperiodic (simple periodic) continuous-time signal f(t)](#aperiodic-simple-periodic-continuous-time-signal-ft) | Laplace, fourier transform.                                                         |
-| [More Complex Continuous-time signal f(t)](#more-complex-continuous-time-signal-ft)                             | Fourier series, multiples of fundemental, samples of frequency response.            |
+| [More Complex Continuous-time signal f(t)](#more-complex-continuous-time-signal-ft)                             | Fourier series, multiples of fundamental, samples of frequency response.            |
 | [Discrete-time signal f[n] (infinite length)](#discrete-time-signal-fn-infinite-length)                         | Z-Domain, Discrete-time fourier transform                                           |
 | [Discrete-time signal f[n] (finite length)](#discrete-time-signal-fn-finite-length)                             | Finite Length N, convert to frequency domain (DFT), N points distributed over 2 ... |
 | [Stability](#stability)                                                                                         | S-domain: negative real component, Z domain: poles within unit circle.              |
 | [Bi-Linearity](#bi-linearity)                                                                                   | Not core module content.                                                            |
 
-| [17 - Probabilities and random signals](#17---probabilities-and-random-signals) |     |
-| ------------------------------------------------------------------------------- | --- |
+| [17 - Probabilities and random signals](#17---probabilities-and-random-signals)                                                     |                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [Random Variable](#random-variable)                                                                                                 | A quantity that takes a non-deterministic values (ie we don't know what the valu...                  |
+| [Probability Distribution](#probability-distribution)                                                                               | Defines the probability that a random variable will take some value.                                 |
+| [Probability Density Function (PDF) - Continuous random variables](#probability-density-function-pdf---continuous-random-variables) | $\int_{x=x_{min}}^{x_{max}} p(x)dx = 1$                                                              |
+| [Probability mass function (PMF) - Discrete random variables](#probability-mass-function-pmf---discrete-random-variables)           | $\sum_{x=x_{min}}^{x_{max}} p(x) = 1$                                                                |
+| [Moments](#moments)                                                                                                                 | $E[X^n] = \sum_{x=x_{min}}^{x_{max}}x^np(x)\quad \quad E[X^n] = \int_{x=x_{min}}^{x_{max}}x^np(x)dx$ |
+| [Uniform Distribution](#uniform-distribution)                                                                                       | Equal probability for a random variable to take any value in its domain, ie over...                  |
+| [Bernoulli](#bernoulli)                                                                                                             | Discrete probability distribution with only 2 possible values (yes no, 1 0, etc)...                  |
+| [Gaussian (Normal) Distribution](#gaussian-normal-distribution)                                                                     | Continuous probability distribution over $(-\infty,\infty)$, where values closer...                  |
+| [Central Limit Theorem (CLT)](#central-limit-theorem-clt)                                                                           | Sum of independent random variables can be approximated with Gaussian distributi...                  |
+| [Independent Random Variables](#independent-random-variables)                                                                       | No dependency on each other (i.e., if knowing the value of one random variable g...                  |
+| [Empirical Distributions](#empirical-distributions)                                                                                 | Scaled histogram by total number of samples.                                                         |
+| [Random Signals](#random-signals)                                                                                                   | Random variables can appear in signals in different ways, eg:                                        |
 
 | [18 - Signal estimation](#18---signal-estimation) |     |
 | ------------------------------------------------- | --- |
@@ -983,7 +995,7 @@ Laplace, fourier transform.
 - Laplace and fourier transform, have corresponding inverse transforms, convert $F(s)$ or $F(j\omega)$ back to $f(t)$
 
 ### More Complex Continuous-time signal f(t)
-Fourier series, multiples of fundemental, samples of frequency response.
+Fourier series, multiples of fundamental, samples of frequency response.
 - For a more **complex** periodic **continuous**-time signal f (t)
 - **Fourier series** representation decomposes the signal into its *frequency components* $F_k$ at multiples of the **fundamental** frequency $\omega_0$.
 - Can be interpreted as **samples** of the frequency response $F(j\omega)$, 
@@ -1024,7 +1036,90 @@ Not core module content.
 
 ## 17 - Probabilities and random signals
 
+### Random Variable
+A quantity that takes a non-deterministic values (ie we don't know what the value will be in advance). 
 
+### Probability Distribution
+Defines the probability that a random variable will take some value.
+
+### Probability Density Function (PDF) - Continuous random variables
+$$\int_{x=x_{min}}^{x_{max}} p(x)dx = 1$$
+
+For a random variable $X$, take values between $x_{min}$ and $x_{max}$ (could be $\pm \infty$), $p(x)$ is the probability that $X=x$. 
+
+The integration of these probabilities is equal to 1.
+
+Can take integral over *subset* to calculate the probability of X being within that subset.
+
+### Probability mass function (PMF) - Discrete random variables
+$$\sum_{x=x_{min}}^{x_{max}} p(x) = 1$$
+
+For a random variable $X$, take values between $x_{min}$ and $x_{max}$ (could be $\pm \infty$), $p(x)$ is the probability that $X=x$.
+
+ The sum of these probabilities is equal to 1.
+
+Can take summation over *subset* to calculate the probability of X being within that subset.
+
+
+### Moments
+$$E[X^n] = \sum_{x=x_{min}}^{x_{max}}x^np(x)\quad \quad E[X^n] = \int_{x=x_{min}}^{x_{max}}x^np(x)dx $$
+
+Of PMF and PDF respectively.
+
+- $n=1$, called the **mean** $\mu_x$ - Expected (average) value
+- $n=2$, called the **mean-squared** value, describes spread of random variable. 
+  
+Often refer second order moments to as **variance** $\sigma_X^2$. *mean-squared value*, with **correction** for the mean
+$$ \sigma_X^2 = E[(X-\mu_x)^2] = E[X^2] - (E[X])^2 $$ 
+
+Standard deviation $\sigma = \sqrt{\sigma_X^2}$
+
+### Uniform Distribution
+Equal probability for a random variable to take any value in its domain, ie over $x_{min} \le x \le x_{max}$.
+
+PDF continuous version:
+
+![](img/17.1-uniform.png)
+
+Discrete uniform distributions: result of dice roll, coin toss etc. Averege is average of min and max. 
+
+### Bernoulli
+Discrete probability distribution with only 2 possible values (yes no, 1 0, etc). Values have different probabilities, in general $p(1) = 1 - p(0)$.
+
+Mean: $\mu_x = p(1)$, Variance: $\sigma_X^2 = p(1)p(0)$
+
+### Gaussian (Normal) Distribution
+Continuous probability distribution over $(-\infty,\infty)$, where values closer to mean are more likely.
+
+Arguably most important continuos distribution as appears everywhere.
+
+PDF is
+
+$$p(x) = \frac{1}{\sqrt{2\pi\sigma_X^2}}exp(-\frac{(x-\mu_x)^2}{2\sigma_X^2}) $$
+
+![](img/17.2-gaussian.png)
+
+
+### Central Limit Theorem (CLT)
+Sum of independent random variables can be approximated with Gaussian distribution. Approximation improves with as more random variables are included in the sum. True for any probability distributions.
+
+### Independent Random Variables
+No dependency on each other (i.e., if knowing the value of one random variable gives you no information to be able to better guess another random variable, then those random variables are independent of each other).
+
+### Empirical Distributions
+Scaled histogram by total number of samples.
+
+![](img/17.3-empirical.png)
+
+To observe behaviour that would match a PDF or PMF, require *infinite* number of samples. In practice can make histogram.
+
+### Random Signals
+Random variables can appear in signals in different ways, eg:
+
+- Thermal noise - in all electronics, from agitation electrons. Often modelled by adding gaussian random variable to signal
+- Signal processing techniques introduce noise - aliasing, quantisation, non-ideal filters.
+- Random variables can be used to store information, e.g., data can be encoded into bits and delivered across a communication channel. A receiver does not know the information in advance and can treat each bit as a Bernoulli random variable that it needs to estimate. 
+- Signals can be drastically transformed by the world (wireless signals obstructed by buildings trees etc) - Analogue signals passing through *unknown system $h(t)$*, which can vary with time etc
 </div>
 
 <div class="equations">
