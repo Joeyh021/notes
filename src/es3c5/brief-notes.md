@@ -183,8 +183,20 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Empirical Distributions](#empirical-distributions)                                                                                 | Scaled histogram by total number of samples.                                                         |
 | [Random Signals](#random-signals)                                                                                                   | Random variables can appear in signals in different ways, eg:                                        |
 
-| [18 - Signal estimation](#18---signal-estimation) |     |
-| ------------------------------------------------- | --- |
+| [18 - Signal estimation](#18---signal-estimation)                         |                                                                                     |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Signal Estimation](#signal-estimation)                                   | Signal estimation, refers to estimating the values of parameters embedded in a s... |
+| [Linear Model](#linear-model)                                             | See equation                                                                        |
+| [Generalised Linear From](#generalised-linear-from)                       | See equation                                                                        |
+| [Optimal estimate](#optimal-estimate)                                     | See equation                                                                        |
+| [Predicted estimate](#predicted-estimate)                                 | See equation                                                                        |
+| [Observation Matrix $\Theta$](#observation-matrix-theta)                  | See below                                                                           |
+| [Mean Square Error (MSE)](#mean-square-error-mse)                         | See equation                                                                        |
+| [Example 18.1](#example-181)                                              | See example                                                                         |
+| [Example 18.2](#example-182)                                              | See example                                                                         |
+| [Linear Regression](#linear-regression)                                   | $theta = Obs\setminus  y$                                                           |
+| [Weighted Least Squares Estimate](#weighted-least-squares-estimate)       | Weighted least squares, includes a weight matrix W, where each sample associated... |
+| [Maximum Likelihood Estimation (MLE)](#maximum-likelihood-estimation-mle) | See equation                                                                        |
 
 | [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density) |     |
 | ------------------------------------------------------------------------------------------- | --- |
@@ -1125,6 +1137,122 @@ Random variables can appear in signals in different ways, eg:
 <div class="equations">
 
 ## 18 - Signal estimation
+
+### Signal Estimation
+Signal estimation, refers to estimating the values of parameters embedded in a signal. Signals have noise, so can't just *calculate* parameters.
+
+### Linear Model
+See equation
+
+$$\vec{y} = \Theta \vec{\phi}+ \vec{w}$$
+
+Polynomial terms,, linearity means y[n] must be linear function of unknown parameters.
+
+EG:
+$$ y[n] = A + Bn + w[n]$$
+- A,B are unknown parameters
+- $w[n]$ refers to noise - assume gaussian random variables with mean $\mu_w = 0$ and varience $\sigma_w^2$ - also assume white noise.
+
+Write as column vector for each n.
+
+Create observation matrix $\Theta$.
+
+Since there are 2 parameters, $N\times 2$ matrix.
+
+Can therefore be written as
+
+$$\vec{y} = \Theta \vec{\phi}+ \vec{w}$$
+
+With Optimal estimate $\hat{\vec{\phi}}$:
+$$\hat{\vec{\phi}} = (\Theta^T\Theta)^{-1}\Theta^T \vec{y}$$
+
+Can write prediction:
+$$ \hat{\vec{y}} = \Theta \hat{\vec{\phi}} $$
+
+Calculate MSE
+
+### Generalised Linear From
+See equation
+
+$$\vec{y} = \Theta \vec{\phi}+ \vec{s} + \vec{w}$$
+
+Where $\vec{s}$ is a vector of known samples. Convenient when our signal is contaminated by some large interference with known characteristics.
+
+To account for this in the estimator but subtracting by s from both sides.
+
+$$\hat{\vec{\phi}} = (\Theta^T\Theta)^{-1}\Theta^T (\vec{y} - \vec{s})$$
+
+### Optimal estimate 
+See equation
+
+$$\hat{\vec{\phi}} = (\Theta^T\Theta)^{-1}\Theta^T \vec{y}$$
+
+### Predicted estimate
+See equation
+
+$$ \hat{\vec{y}} = \Theta \hat{\vec{\phi}} $$
+
+Without noise.
+
+### Observation Matrix $\Theta$
+See below
+
+$N\times P$ matrix where $P$ is the number of parameters, and $N$ is the number of time steps.
+
+Each column is the coefficients of the corresponding parameter at the given timestamp (per row).
+
+### Mean Square Error (MSE)
+See equation
+
+$$ MSE( \hat{\vec{y}}) = \frac{1}{N} \sum_{n=0}^{N-1} ( \hat{y}[n] - y[n] )^2 $$
+
+### Example 18.1
+See example
+
+![](img/18.1-example.png)
+![](img/18.1b-example.png)
+
+### Example 18.2
+See example
+
+![](img/18.2a-example.png)
+![](img/18.2b-example.png)
+
+
+### Linear Regression
+$$theta = Obs\setminus  y$$
+
+AKA Ordinary least squares (OLS). 
+
+Form of observation matrix had to be assumed but may be unknown. If so can try different ones and find simplest that has best MSE.
+
+### Weighted Least Squares Estimate
+Weighted least squares, includes a weight matrix W, where each sample associated with positive weight.
+
+Places more emphasis on more reliable samples.
+
+Good choice of weight $W[n]$:
+$$ W[n] = \frac{1}{\sigma_n^2}$$
+
+Therefore resulting in:
+
+$$\hat{\vec{\phi}} = (\Theta^T W \Theta)^{-1}\Theta^T W \vec{y}$$
+
+Using equation, where W is the column vector of weights.
+``` 
+theta = lscov(Obs, y,W);
+```
+
+### Maximum Likelihood Estimation (MLE)
+See equation
+
+Found by determining $\hat{\vec{\phi}}$, maximises the PDF of the signal $y[n]$, which depends on the statistics of the noise $w[n]$.
+
+Given some type of probability distribution, the MLE can be found.
+
+MATLAB `mle` function from the *Statistics and Machine Learning Toolbox*.
+
+
 
 
 </div>
