@@ -198,8 +198,14 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Weighted Least Squares Estimate](#weighted-least-squares-estimate)       | Weighted least squares, includes a weight matrix W, where each sample associated... |
 | [Maximum Likelihood Estimation (MLE)](#maximum-likelihood-estimation-mle) | See equation                                                                        |
 
-| [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density) |     |
-| ------------------------------------------------------------------------------------------- | --- |
+| [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density) |                                                                                |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Correlation](#correlation)                                                                 | Correlation gives a measure of time-domain similarity between two signals.     |
+| [Cross Correlation](#cross-correlation)                                                     | $R_{x_1x_2}[k] \approx \frac{1}{N-k} \sum_{n=0}^{N-k} x_1[n] x_2[k+n]$         |
+| [Example 19.1 - Discrete Cross-Correlation](#example-191---discrete-cross-correlation)      | See example                                                                    |
+| [Autocorrelation](#autocorrelation)                                                         | Correlation of a signal with itself, ie $x_2[n] = x_1[n]$ or $x_2(t) = x_1(t)$ |
+| [Example 19.2 - Discrete Autocorrelation](#example-192---discrete-autocorrelation)          | See example                                                                    |
+| [Example 19.3 - Correlation in MATLAB](#example-193---correlation-in-matlab)                | See example                                                                    |
 
 | [20 - Image Processing](#20---image-processing) |     |
 | ----------------------------------------------- | --- |
@@ -1260,6 +1266,47 @@ MATLAB `mle` function from the *Statistics and Machine Learning Toolbox*.
 
 ## 19 - Correlation and Power spectral density
 
+### Correlation
+Correlation gives a measure of time-domain similarity between two signals.
+
+### Cross Correlation
+$$R_{x_1x_2}[k] \approx \frac{1}{N-k} \sum_{n=0}^{N-k} x_1[n] x_2[k+n]  $$ 
+
+$$ R_{x_1x_2}[k] \approx \frac{1}{N-k} (x_1[0]x_2[k] + x_1[1]x_2[k+1]  + \cdots + x_1[N]x_2[k+N]) $$
+
+- $k$ is the time shift of $x_2[n]$ sequence relative to the $x_1[n]$ sequence.
+- Approximation as signal lengths are finite and the signals could be random. 
+
+### Example 19.1 - Discrete Cross-Correlation
+See example
+
+![](img/19.1-example.png)
+
+
+### Autocorrelation
+Correlation of a signal with itself, ie $x_2[n] = x_1[n]$ or $x_2(t) = x_1(t)$
+
+- Gives a measure of whether the current value of the signal says anything about a future value. Especially good for random signals.
+
+**Key Properties**
+1. Autocorrelation for zero delay is the same as the signals **mean square** value. The auto correlation is never bigger for any non-zero delay.
+2. Auto correlation is an **even function** of $k$ or $\tau$, ie $R_{x_1x_2}[k] = R_{x_1x_2}[-k]$
+3. Autocorrelation of sum of two **uncorrelated signals** is the same as the sums fo the autocorrelations of the two individual signals.
+
+For $x_1[n]$ and $x_2[n]$ are uncorrelated,
+
+$$ y[n] = x_1[n] + x_2[n] \Rightarrow R_{YY}[k] = R_{x_1x_1}[k] + R_{x_2x_2}[k]$$
+
+### Example 19.2 - Discrete Autocorrelation
+See example
+
+![](img/19.2-example.png)
+
+### Example 19.3 - Correlation in MATLAB
+See example
+
+![](img/19.3a-example.png)
+![](img/19.3b-example.png)
 
 </div>
 
