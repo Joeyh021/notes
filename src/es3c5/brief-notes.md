@@ -159,20 +159,65 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [15 - Computing Digital Signals](#15---computing-digital-signals) |     |
 | ----------------------------------------------------------------- | --- |
 
-| [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap) |     |
-| ----------------------------------------------------------------- | --- |
+| [16 - Digital vs Analogue Recap](#16---digital-vs-analogue-recap)                                               |                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Aperiodic (simple periodic) continuous-time signal f(t)](#aperiodic-simple-periodic-continuous-time-signal-ft) | Laplace, fourier transform.                                                         |
+| [More Complex Continuous-time signal f(t)](#more-complex-continuous-time-signal-ft)                             | Fourier series, multiples of fundamental, samples of frequency response.            |
+| [Discrete-time signal f[n] (infinite length)](#discrete-time-signal-fn-infinite-length)                         | Z-Domain, Discrete-time fourier transform                                           |
+| [Discrete-time signal f[n] (finite length)](#discrete-time-signal-fn-finite-length)                             | Finite Length N, convert to frequency domain (DFT), N points distributed over 2 ... |
+| [Stability](#stability)                                                                                         | S-domain: negative real component, Z domain: poles within unit circle.              |
+| [Bi-Linearity](#bi-linearity)                                                                                   | Not core module content.                                                            |
 
-| [17 - Probabilities and random signals](#17---probabilities-and-random-signals) |     |
-| ------------------------------------------------------------------------------- | --- |
+| [17 - Probabilities and random signals](#17---probabilities-and-random-signals)                                                     |                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [Random Variable](#random-variable)                                                                                                 | A quantity that takes a non-deterministic values (ie we don't know what the valu...                  |
+| [Probability Distribution](#probability-distribution)                                                                               | Defines the probability that a random variable will take some value.                                 |
+| [Probability Density Function (PDF) - Continuous random variables](#probability-density-function-pdf---continuous-random-variables) | $\int_{x=x_{min}}^{x_{max}} p(x)dx = 1$                                                              |
+| [Probability mass function (PMF) - Discrete random variables](#probability-mass-function-pmf---discrete-random-variables)           | $\sum_{x=x_{min}}^{x_{max}} p(x) = 1$                                                                |
+| [Moments](#moments)                                                                                                                 | $E[X^n] = \sum_{x=x_{min}}^{x_{max}}x^np(x)\quad \quad E[X^n] = \int_{x=x_{min}}^{x_{max}}x^np(x)dx$ |
+| [Uniform Distribution](#uniform-distribution)                                                                                       | Equal probability for a random variable to take any value in its domain, ie over...                  |
+| [Bernoulli](#bernoulli)                                                                                                             | Discrete probability distribution with only 2 possible values (yes no, 1 0, etc)...                  |
+| [Gaussian (Normal) Distribution](#gaussian-normal-distribution)                                                                     | Continuous probability distribution over $(-\infty,\infty)$, where values closer...                  |
+| [Central Limit Theorem (CLT)](#central-limit-theorem-clt)                                                                           | Sum of independent random variables can be approximated with Gaussian distributi...                  |
+| [Independent Random Variables](#independent-random-variables)                                                                       | No dependency on each other (i.e., if knowing the value of one random variable g...                  |
+| [Empirical Distributions](#empirical-distributions)                                                                                 | Scaled histogram by total number of samples.                                                         |
+| [Random Signals](#random-signals)                                                                                                   | Random variables can appear in signals in different ways, eg:                                        |
 
-| [18 - Signal estimation](#18---signal-estimation) |     |
-| ------------------------------------------------- | --- |
+| [18 - Signal estimation](#18---signal-estimation)                         |                                                                                     |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Signal Estimation](#signal-estimation)                                   | Signal estimation, refers to estimating the values of parameters embedded in a s... |
+| [Linear Model](#linear-model)                                             | See equation                                                                        |
+| [Generalised Linear From](#generalised-linear-from)                       | See equation                                                                        |
+| [Optimal estimate](#optimal-estimate)                                     | See equation                                                                        |
+| [Predicted estimate](#predicted-estimate)                                 | See equation                                                                        |
+| [Observation Matrix $\Theta$](#observation-matrix-theta)                  | See below                                                                           |
+| [Mean Square Error (MSE)](#mean-square-error-mse)                         | See equation                                                                        |
+| [Example 18.1](#example-181)                                              | See example                                                                         |
+| [Example 18.2](#example-182)                                              | See example                                                                         |
+| [Linear Regression](#linear-regression)                                   | $theta = Obs\setminus  y$                                                           |
+| [Weighted Least Squares Estimate](#weighted-least-squares-estimate)       | Weighted least squares, includes a weight matrix W, where each sample associated... |
+| [Maximum Likelihood Estimation (MLE)](#maximum-likelihood-estimation-mle) | See equation                                                                        |
 
-| [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density) |     |
-| ------------------------------------------------------------------------------------------- | --- |
+| [19 - Correlation and Power spectral density](#19---correlation-and-power-spectral-density) |                                                                                |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Correlation](#correlation)                                                                 | Correlation gives a measure of time-domain similarity between two signals.     |
+| [Cross Correlation](#cross-correlation)                                                     | $R_{x_1x_2}[k] \approx \frac{1}{N-k} \sum_{n=0}^{N-k} x_1[n] x_2[k+n]$         |
+| [Example 19.1 - Discrete Cross-Correlation](#example-191---discrete-cross-correlation)      | See example                                                                    |
+| [Autocorrelation](#autocorrelation)                                                         | Correlation of a signal with itself, ie $x_2[n] = x_1[n]$ or $x_2(t) = x_1(t)$ |
+| [Example 19.2 - Discrete Autocorrelation](#example-192---discrete-autocorrelation)          | See example                                                                    |
+| [Example 19.3 - Correlation in MATLAB](#example-193---correlation-in-matlab)                | See example                                                                    |
 
-| [20 - Image Processing](#20---image-processing) |     |
-| ----------------------------------------------- | --- |
+| [20 - Image Processing](#20---image-processing)                                                |                                                                                |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Types of colour encoding](#types-of-colour-encoding)                                          | Binary (0, 1), Indexed (colour map), Greyscale (range 0->1), True Colour (RGB) |
+| [Notation](#notation)                                                                          | See below                                                                      |
+| [Digital Convolution](#digital-convolution)                                                    | $y[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k] = x[n] * h[n] = h[n] * x[n]$      |
+| [Example 20.1 - 1D Discrete Convolution](#example-201---1d-discrete-convolution)               | See example                                                                    |
+| [Example 20.2 - Visual 1D Discrete Convolution](#example-202---visual-1d-discrete-convolution) | See example                                                                    |
+| [Image Filtering](#image-filtering)                                                            | Determine output y[i][j] from input x[i][j] through filter (kernel) h[i][j]    |
+| [Edge Handling](#edge-handling)                                                                | Zero-padding and replicating                                                   |
+| [Kernels](#kernels)                                                                            | Different types of kernels.                                                    |
+| [Example 20.3 - Image Filtering](#example-203---image-filtering)                               | See example                                                                    |
 
 </equation-table>
 
@@ -968,18 +1013,261 @@ Details are beyond module, but can be used in matlab with `fft` function.
 
 ## 16 - Digital vs Analogue Recap
 
+### Aperiodic (simple periodic) continuous-time signal f(t)
+Laplace, fourier transform.
+- **APeriodic** (**simple** periodic) **continuous** time signal $f(t)$
+- Convert to **Laplace** domain (s domain) via Laplace transform
+- Which $s=jw$ is the (continuous) **Fourier transform**.
+- Fourier transform of the signal is its frequency response $F(j\omega)$, generally defined for all $\omega$
+- Laplace and fourier transform, have corresponding inverse transforms, convert $F(s)$ or $F(j\omega)$ back to $f(t)$
+
+### More Complex Continuous-time signal f(t)
+Fourier series, multiples of fundamental, samples of frequency response.
+- For a more **complex** periodic **continuous**-time signal f (t)
+- **Fourier series** representation decomposes the signal into its *frequency components* $F_k$ at multiples of the **fundamental** frequency $\omega_0$.
+- Can be interpreted as **samples** of the frequency response $F(j\omega)$, 
+- which then corresponds to periodicity of $f (t)$ over time.
+- The coefficients $F_k$ are found over one period of $f (t)$.
+
+
+### Discrete-time signal f[n] (infinite length)
+Z-Domain, Discrete-time fourier transform
+- **Discrete-time** signal $f[n]$, we can convert to the **z-domain** via the Z-transform,
+- Which for $z = e^{j\Omega}$ is the **discrete-time Fourier transform** **DTFT**. 
+- The discrete-time Fourier transform of the signal is its **frequency response** $F(e^{j\Omega})$
+- **Repeats** every $2\pi$ (i.e., sampling in time corresponds to periodicity in frequency).
+- There are corresponding inverse transforms to convert $F (z)$ or $F(e^{j\Omega})$ back to $f[n]$
+
+###  Discrete-time signal f[n] (finite length)
+Finite Length N, convert to frequency domain (DFT), N points distributed over 2 pi (periodic)
+- For **discrete-time signal** $f [n]$ with **finite** length (or truncated to) N,
+- Can convert to the **frequency domain** using the **discrete Fourier transform**,
+- which is also discrete in frequency. 
+- The discrete Fourier transform also has **N** points **distributed** over $2\pi$ and is otherwise periodic. 
+- Here, we see **sampling** in both **frequency** and **time**, corresponding to periodicity in the other domain (that we
+usually ignore in analysis and design because we define both the time domain signal $f [n]$ and frequency domain signal $F [k]$ over one period of length N).
+
+![](img/16.1-frequency.png)
+
+
+### Stability
+S-domain: negative real component, Z domain: poles within unit circle.
+
+![](16.2-stability.png)
+
+### Bi-Linearity
+Not core module content.
 
 </div>
 <div class="equations">
 
 ## 17 - Probabilities and random signals
 
+### Random Variable
+A quantity that takes a non-deterministic values (ie we don't know what the value will be in advance). 
 
+### Probability Distribution
+Defines the probability that a random variable will take some value.
+
+### Probability Density Function (PDF) - Continuous random variables
+$$\int_{x=x_{min}}^{x_{max}} p(x)dx = 1$$
+
+For a random variable $X$, take values between $x_{min}$ and $x_{max}$ (could be $\pm \infty$), $p(x)$ is the probability that $X=x$. 
+
+The integration of these probabilities is equal to 1.
+
+Can take integral over *subset* to calculate the probability of X being within that subset.
+
+### Probability mass function (PMF) - Discrete random variables
+$$\sum_{x=x_{min}}^{x_{max}} p(x) = 1$$
+
+For a random variable $X$, take values between $x_{min}$ and $x_{max}$ (could be $\pm \infty$), $p(x)$ is the probability that $X=x$.
+
+ The sum of these probabilities is equal to 1.
+
+Can take summation over *subset* to calculate the probability of X being within that subset.
+
+
+### Moments
+$$E[X^n] = \sum_{x=x_{min}}^{x_{max}}x^np(x)\quad \quad E[X^n] = \int_{x=x_{min}}^{x_{max}}x^np(x)dx $$
+
+Of PMF and PDF respectively.
+
+- $n=1$, called the **mean** $\mu_x$ - Expected (average) value
+- $n=2$, called the **mean-squared** value, describes spread of random variable. 
+  
+Often refer second order moments to as **variance** $\sigma_X^2$. *mean-squared value*, with **correction** for the mean
+$$ \sigma_X^2 = E[(X-\mu_x)^2] = E[X^2] - (E[X])^2 $$ 
+
+Standard deviation $\sigma = \sqrt{\sigma_X^2}$
+
+### Uniform Distribution
+Equal probability for a random variable to take any value in its domain, ie over $x_{min} \le x \le x_{max}$.
+
+PDF continuous version:
+
+![](img/17.1-uniform.png)
+
+Discrete uniform distributions: result of dice roll, coin toss etc. Averege is average of min and max. 
+
+### Bernoulli
+Discrete probability distribution with only 2 possible values (yes no, 1 0, etc). Values have different probabilities, in general $p(1) = 1 - p(0)$.
+
+Mean: $\mu_x = p(1)$, Variance: $\sigma_X^2 = p(1)p(0)$
+
+### Gaussian (Normal) Distribution
+Continuous probability distribution over $(-\infty,\infty)$, where values closer to mean are more likely.
+
+Arguably most important continuos distribution as appears everywhere.
+
+PDF is
+
+$$p(x) = \frac{1}{\sqrt{2\pi\sigma_X^2}}exp(-\frac{(x-\mu_x)^2}{2\sigma_X^2}) $$
+
+![](img/17.2-gaussian.png)
+
+
+### Central Limit Theorem (CLT)
+Sum of independent random variables can be approximated with Gaussian distribution. Approximation improves with as more random variables are included in the sum. True for any probability distributions.
+
+### Independent Random Variables
+No dependency on each other (i.e., if knowing the value of one random variable gives you no information to be able to better guess another random variable, then those random variables are independent of each other).
+
+### Empirical Distributions
+Scaled histogram by total number of samples.
+
+![](img/17.3-empirical.png)
+
+To observe behaviour that would match a PDF or PMF, require *infinite* number of samples. In practice can make histogram.
+
+### Random Signals
+Random variables can appear in signals in different ways, eg:
+
+- Thermal noise - in all electronics, from agitation electrons. Often modelled by adding gaussian random variable to signal
+- Signal processing techniques introduce noise - aliasing, quantisation, non-ideal filters.
+- Random variables can be used to store information, e.g., data can be encoded into bits and delivered across a communication channel. A receiver does not know the information in advance and can treat each bit as a Bernoulli random variable that it needs to estimate. 
+- Signals can be drastically transformed by the world (wireless signals obstructed by buildings trees etc) - Analogue signals passing through *unknown system $h(t)$*, which can vary with time etc
 </div>
 
 <div class="equations">
 
 ## 18 - Signal estimation
+
+### Signal Estimation
+Signal estimation, refers to estimating the values of parameters embedded in a signal. Signals have noise, so can't just *calculate* parameters.
+
+### Linear Model
+See equation
+
+$$\vec{y} = \Theta \vec{\phi}+ \vec{w}$$
+
+Polynomial terms,, linearity means y[n] must be linear function of unknown parameters.
+
+EG:
+$$ y[n] = A + Bn + w[n]$$
+- A,B are unknown parameters
+- $w[n]$ refers to noise - assume gaussian random variables with mean $\mu_w = 0$ and varience $\sigma_w^2$ - also assume white noise.
+
+Write as column vector for each n.
+
+Create observation matrix $\Theta$.
+
+Since there are 2 parameters, $N\times 2$ matrix.
+
+Can therefore be written as
+
+$$\vec{y} = \Theta \vec{\phi}+ \vec{w}$$
+
+With Optimal estimate $\hat{\vec{\phi}}$:
+$$\hat{\vec{\phi}} = (\Theta^T\Theta)^{-1}\Theta^T \vec{y}$$
+
+Can write prediction:
+$$ \hat{\vec{y}} = \Theta \hat{\vec{\phi}} $$
+
+Calculate MSE
+
+### Generalised Linear From
+See equation
+
+$$\vec{y} = \Theta \vec{\phi}+ \vec{s} + \vec{w}$$
+
+Where $\vec{s}$ is a vector of known samples. Convenient when our signal is contaminated by some large interference with known characteristics.
+
+To account for this in the estimator but subtracting by s from both sides.
+
+$$\hat{\vec{\phi}} = (\Theta^T\Theta)^{-1}\Theta^T (\vec{y} - \vec{s})$$
+
+### Optimal estimate 
+See equation
+
+$$\hat{\vec{\phi}} = (\Theta^T\Theta)^{-1}\Theta^T \vec{y}$$
+
+### Predicted estimate
+See equation
+
+$$ \hat{\vec{y}} = \Theta \hat{\vec{\phi}} $$
+
+Without noise.
+
+### Observation Matrix $\Theta$
+See below
+
+$N\times P$ matrix where $P$ is the number of parameters, and $N$ is the number of time steps.
+
+Each column is the coefficients of the corresponding parameter at the given timestamp (per row).
+
+### Mean Square Error (MSE)
+See equation
+
+$$ MSE( \hat{\vec{y}}) = \frac{1}{N} \sum_{n=0}^{N-1} ( \hat{y}[n] - y[n] )^2 $$
+
+### Example 18.1
+See example
+
+![](img/18.1-example.png)
+![](img/18.1b-example.png)
+
+### Example 18.2
+See example
+
+![](img/18.2a-example.png)
+![](img/18.2b-example.png)
+
+
+### Linear Regression
+$$theta = Obs\setminus  y$$
+
+AKA Ordinary least squares (OLS). 
+
+Form of observation matrix had to be assumed but may be unknown. If so can try different ones and find simplest that has best MSE.
+
+### Weighted Least Squares Estimate
+Weighted least squares, includes a weight matrix W, where each sample associated with positive weight.
+
+Places more emphasis on more reliable samples.
+
+Good choice of weight $W[n]$:
+$$ W[n] = \frac{1}{\sigma_n^2}$$
+
+Therefore resulting in:
+
+$$\hat{\vec{\phi}} = (\Theta^T W \Theta)^{-1}\Theta^T W \vec{y}$$
+
+Using equation, where W is the column vector of weights.
+``` 
+theta = lscov(Obs, y,W);
+```
+
+### Maximum Likelihood Estimation (MLE)
+See equation
+
+Found by determining $\hat{\vec{\phi}}$, maximises the PDF of the signal $y[n]$, which depends on the statistics of the noise $w[n]$.
+
+Given some type of probability distribution, the MLE can be found.
+
+MATLAB `mle` function from the *Statistics and Machine Learning Toolbox*.
+
+
 
 
 </div>
@@ -987,6 +1275,47 @@ Details are beyond module, but can be used in matlab with `fft` function.
 
 ## 19 - Correlation and Power spectral density
 
+### Correlation
+Correlation gives a measure of time-domain similarity between two signals.
+
+### Cross Correlation
+$$R_{x_1x_2}[k] \approx \frac{1}{N-k} \sum_{n=0}^{N-k} x_1[n] x_2[k+n]  $$ 
+
+$$ R_{x_1x_2}[k] \approx \frac{1}{N-k} (x_1[0]x_2[k] + x_1[1]x_2[k+1]  + \cdots + x_1[N]x_2[k+N]) $$
+
+- $k$ is the time shift of $x_2[n]$ sequence relative to the $x_1[n]$ sequence.
+- Approximation as signal lengths are finite and the signals could be random. 
+
+### Example 19.1 - Discrete Cross-Correlation
+See example
+
+![](img/19.1-example.png)
+
+
+### Autocorrelation
+Correlation of a signal with itself, ie $x_2[n] = x_1[n]$ or $x_2(t) = x_1(t)$
+
+- Gives a measure of whether the current value of the signal says anything about a future value. Especially good for random signals.
+
+**Key Properties**
+1. Autocorrelation for zero delay is the same as the signals **mean square** value. The auto correlation is never bigger for any non-zero delay.
+2. Auto correlation is an **even function** of $k$ or $\tau$, ie $R_{x_1x_2}[k] = R_{x_1x_2}[-k]$
+3. Autocorrelation of sum of two **uncorrelated signals** is the same as the sums fo the autocorrelations of the two individual signals.
+
+For $x_1[n]$ and $x_2[n]$ are uncorrelated,
+
+$$ y[n] = x_1[n] + x_2[n] \Rightarrow R_{YY}[k] = R_{x_1x_1}[k] + R_{x_2x_2}[k]$$
+
+### Example 19.2 - Discrete Autocorrelation
+See example
+
+![](img/19.2-example.png)
+
+### Example 19.3 - Correlation in MATLAB
+See example
+
+![](img/19.3a-example.png)
+![](img/19.3b-example.png)
 
 </div>
 
@@ -994,6 +1323,85 @@ Details are beyond module, but can be used in matlab with `fft` function.
 
 ## 20 - Image Processing
 
+### Types of colour encoding
+Binary (0, 1), Indexed (colour map), Greyscale (range 0->1), True Colour (RGB)
+
+- Binary has value 0 and 1 to represent black and white
+- Indexed each pixel has one value corresponding to pre-determined list of colours (colour map)
+- Greyscale - each pixel has value within 0 (black) and 1 (white) - often write as whole numbers and then normalise
+- True colour - Three associated values, RGB
+
+But focus on binary and greyscale for hand calculations
+
+### Notation
+See below
+
+$f[i][j]$ - follows same indexing conventions as MATLAB
+
+ie: $i$ refers to vertical coordinate (row)
+
+$j$ refers to horizontal coordinate (column)
+
+$(i,j) = (1,1)$ is the top left pixel.
+
+![](img/20.2-representation.png)
+
+### Digital Convolution
+$$y[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k] = x[n] * h[n] = h[n] * x[n] $$
+
+### Example 20.1 - 1D Discrete Convolution
+See example
+
+![](img/20.1-example.png)
+![](img/20.1b-example.png)
+
+### Example 20.2 - Visual 1D Discrete Convolution
+See example
+
+![](img/20.2-example.png)
+![](img/20.2-representation.png)
+
+### Image Filtering
+Determine output y[i][j] from input x[i][j] through filter (kernel) h[i][j]
+
+Filter (Kernel) = $h[i][j]$, assume square matrix with odd rows and columns so obvious *middle*
+
+1. *Flip* impulse response $h[i][j]$ to get $h^*[i][j]$ 
+   1. Achieved by mirroring all elements around center element.
+   2. By symmetry, sometimes $h[i][j] = h^*[i][j]$ 
+2. Move flipped impulse response $h^*[i][j]$ along input image $x[i][j]$.
+3. Each time kernel is moved, multiply all elements of $h^*[i][j]$ by corresponding covered pixels in $x[i][j]$.
+   1. Add together products and store sum in output $y[i][j]$ - corresponds to **middle** pixel covered by kernel
+   2. Only consider overlaps between $h^*[i][j]$ and $x[i][j]$ where the **middle** element of the kernel covers a pixel in the input image
+   
+### Edge Handling
+Zero-padding and replicating
+
+- **Zero Padding** Treat all *off image* pixels as having value 0. $x[i][j] = 0$ beyond defined image. Simplest but may lead to unusual artefacts at the edges of the image. Only option available for `conv2` and default for `imfilter`.
+- **Replicating** the border - Assuming *off image* have same values as nearest element along edge of image. IE: Assume pixels at the outside corner take the value of the corner pixel $x[0][1], x[0][0], x[1][0] = x[1][1]$
+
+### Kernels
+Different types of kernels.
+
+Larger kernels have increased sensitivity but more expensive to compute. 
+
+- Values add to 0 = Removes signal strength to accentuate certain details
+- Values add to 1 = maintain signal strength by redistributing
+
+- **Low Pass Filter** - Equivalent to taking weight average around neighbourhood of pixel. Adds to 1 
+- **Blurring filter** - Similar to low pass, but elements adds uo to more than 1, so *washes out* the image more
+- **High Pass Filter** - Accentuates transitions between colours, can be used as simple **edge detection** (important task, first step to detecting objects)
+- **Sobel operator** - More effective at detecting edges than high pass filter. Do need to apply different kernels for different directions. *X-gradient* = detecting vertical edges, *Y-gradient* = detecting horizontal edges
+
+![](img/20.5-kernals.png)
+
+![](img/20.7-simple-filter-ops.png)
+
+### Example 20.3 - Image Filtering
+See example
+
+![](img/20.3-example.png)
+![](img/20.6-inputoutput-20.3.png)
 
 </div>
 
