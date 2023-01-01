@@ -207,8 +207,17 @@ Use `./generateTables.sh ../src/es2c5/brief-notes.md ` in the scripts folder.
 | [Example 19.2 - Discrete Autocorrelation](#example-192---discrete-autocorrelation)          | See example                                                                    |
 | [Example 19.3 - Correlation in MATLAB](#example-193---correlation-in-matlab)                | See example                                                                    |
 
-| [20 - Image Processing](#20---image-processing) |     |
-| ----------------------------------------------- | --- |
+| [20 - Image Processing](#20---image-processing)                                                |                                                                                |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Types of colour encoding](#types-of-colour-encoding)                                          | Binary (0, 1), Indexed (colour map), Greyscale (range 0->1), True Colour (RGB) |
+| [Notation](#notation)                                                                          | See below                                                                      |
+| [Digital Convolution](#digital-convolution)                                                    | $y[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k] = x[n] * h[n] = h[n] * x[n]$      |
+| [Example 20.1 - 1D Discrete Convolution](#example-201---1d-discrete-convolution)               | See example                                                                    |
+| [Example 20.2 - Visual 1D Discrete Convolution](#example-202---visual-1d-discrete-convolution) | See example                                                                    |
+| [Image Filtering](#image-filtering)                                                            | Determine output y[i][j] from input x[i][j] through filter (kernel) h[i][j]    |
+| [Edge Handling](#edge-handling)                                                                | Zero-padding and replicating                                                   |
+| [Kernels](#kernels)                                                                            | Different types of kernels.                                                    |
+| [Example 20.3 - Image Filtering](#example-203---image-filtering)                               | See example                                                                    |
 
 </equation-table>
 
@@ -1314,6 +1323,85 @@ See example
 
 ## 20 - Image Processing
 
+### Types of colour encoding
+Binary (0, 1), Indexed (colour map), Greyscale (range 0->1), True Colour (RGB)
+
+- Binary has value 0 and 1 to represent black and white
+- Indexed each pixel has one value corresponding to pre-determined list of colours (colour map)
+- Greyscale - each pixel has value within 0 (black) and 1 (white) - often write as whole numbers and then normalise
+- True colour - Three associated values, RGB
+
+But focus on binary and greyscale for hand calculations
+
+### Notation
+See below
+
+$f[i][j]$ - follows same indexing conventions as MATLAB
+
+ie: $i$ refers to vertical coordinate (row)
+
+$j$ refers to horizontal coordinate (column)
+
+$(i,j) = (1,1)$ is the top left pixel.
+
+![](img/20.2-representation.png)
+
+### Digital Convolution
+$$y[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k] = x[n] * h[n] = h[n] * x[n] $$
+
+### Example 20.1 - 1D Discrete Convolution
+See example
+
+![](img/20.1-example.png)
+![](img/20.1b-example.png)
+
+### Example 20.2 - Visual 1D Discrete Convolution
+See example
+
+![](img/20.2-example.png)
+![](img/20.2-representation.png)
+
+### Image Filtering
+Determine output y[i][j] from input x[i][j] through filter (kernel) h[i][j]
+
+Filter (Kernel) = $h[i][j]$, assume square matrix with odd rows and columns so obvious *middle*
+
+1. *Flip* impulse response $h[i][j]$ to get $h^*[i][j]$ 
+   1. Achieved by mirroring all elements around center element.
+   2. By symmetry, sometimes $h[i][j] = h^*[i][j]$ 
+2. Move flipped impulse response $h^*[i][j]$ along input image $x[i][j]$.
+3. Each time kernel is moved, multiply all elements of $h^*[i][j]$ by corresponding covered pixels in $x[i][j]$.
+   1. Add together products and store sum in output $y[i][j]$ - corresponds to **middle** pixel covered by kernel
+   2. Only consider overlaps between $h^*[i][j]$ and $x[i][j]$ where the **middle** element of the kernel covers a pixel in the input image
+   
+### Edge Handling
+Zero-padding and replicating
+
+- **Zero Padding** Treat all *off image* pixels as having value 0. $x[i][j] = 0$ beyond defined image. Simplest but may lead to unusual artefacts at the edges of the image. Only option available for `conv2` and default for `imfilter`.
+- **Replicating** the border - Assuming *off image* have same values as nearest element along edge of image. IE: Assume pixels at the outside corner take the value of the corner pixel $x[0][1], x[0][0], x[1][0] = x[1][1]$
+
+### Kernels
+Different types of kernels.
+
+Larger kernels have increased sensitivity but more expensive to compute. 
+
+- Values add to 0 = Removes signal strength to accentuate certain details
+- Values add to 1 = maintain signal strength by redistributing
+
+- **Low Pass Filter** - Equivalent to taking weight average around neighbourhood of pixel. Adds to 1 
+- **Blurring filter** - Similar to low pass, but elements adds uo to more than 1, so *washes out* the image more
+- **High Pass Filter** - Accentuates transitions between colours, can be used as simple **edge detection** (important task, first step to detecting objects)
+- **Sobel operator** - More effective at detecting edges than high pass filter. Do need to apply different kernels for different directions. *X-gradient* = detecting vertical edges, *Y-gradient* = detecting horizontal edges
+
+![](img/20.5-kernals.png)
+
+![](img/20.7-simple-filter-ops.png)
+
+### Example 20.3 - Image Filtering
+See example
+
+![](img/20.3-example.png)
+![](img/20.6-inputoutput-20.3.png)
 
 </div>
 
