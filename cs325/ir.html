@@ -152,6 +152,182 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="intermediate-representations"><a class="header" href="#intermediate-representations">Intermediate Representations</a></h1>
+<p>An IR is a data structure with all of the compiler's knowledge of a program</p>
+<ul>
+<li>Can be an AST or some sort of machine code (LLVM IR)</li>
+<li>Graphical IRs encode info in a graph
+<ul>
+<li>Nodes, edges, lists, trees, etc</li>
+<li>Memory consuming</li>
+</ul>
+</li>
+<li>Linear IRS are psuedo-code for some abstract machine on varying levels of abstraction</li>
+<li>Hybrid IRs combine elemends of both
+<ul>
+<li>Use LLVM IR to represent blocks and a graph of the control flow between blocks</li>
+</ul>
+</li>
+<li>Parse trees are an IR</li>
+</ul>
+<h2 id="asts"><a class="header" href="#asts">ASTs</a></h2>
+<p>An abstract syntax tree retains the structure of a parse tree but ditches non-terminal nodes</p>
+<ul>
+<li>Can have a DAG to identify common sub-expressions</li>
+<li>Encodes redundancy - basic optimisation</li>
+<li>Must produce pure sub-expression</li>
+<li>Can use SDDs to construct a DAG
+<ul>
+<li>Functions <code>leaf</code> and <code>node</code> create a fresh node each time
+<ul>
+<li>If constructing DAG, then check identical node exists and if so then return that one</li>
+</ul>
+</li>
+<li>Equivalence between nodes <code>node(op, left, right)</code> established if node with label <code>op</code> already exists with same <code>left</code> and <code>right</code>, in that order</li>
+</ul>
+</li>
+<li>CFG models flow of control between basic blocks in program
+<ul>
+<li>A Directed graph</li>
+<li>Typically used in conjunction with another IR</li>
+</ul>
+</li>
+</ul>
+<h2 id="linear-irs"><a class="header" href="#linear-irs">Linear IRs</a></h2>
+<p>Sequences of instructions executed in order. Like asm but with ✨abstraction✨.</p>
+<h3 id="one-address-code"><a class="header" href="#one-address-code">One-address code</a></h3>
+<p>Models the behaviour of an accumulator machine or stack machine</p>
+<ul>
+<li>JVM, CPython do this</li>
+<li>Easy to generate and execute</li>
+</ul>
+<h3 id="three-address-code"><a class="header" href="#three-address-code">Three-address code</a></h3>
+<p>Three-address code is expressions like <code>i = j op k</code></p>
+<ul>
+<li>At most one operator per line
+<ul>
+<li>Unravels multi-op expressions</li>
+</ul>
+</li>
+<li>Compact and can be easily rearranged which is good for optimisation</li>
+<li>Most modern processors implement 3-address ops natively</li>
+<li>Can also be represented as a linearised syntax tree</li>
+<li>An address can be
+<ul>
+<li>A name - pointer to symbol table entry</li>
+<li>A constant</li>
+<li>A compiler-generated temporary</li>
+</ul>
+</li>
+<li>Instructions can be
+<ul>
+<li>Assignment (unary)</li>
+<li>Assignment with a binary op</li>
+<li>Copies</li>
+<li>Jumps (conditional/unconditional)</li>
+<li>Procedure call</li>
+<li>Indexed copy (like index into arrays)</li>
+<li>Address and pointer stuff (think <code>*</code> and <code>&amp;</code>)</li>
+</ul>
+</li>
+<li>Representing linear IRs
+<ul>
+<li>Usually objects/records/structs with fields for operator and operands</li>
+<li>Quadruples have four fields - <code>op</code>, <code>arg1</code>, <code>arg2</code>, <code>result</code></li>
+<li>Triples haver just <code>op</code>, <code>arg1</code>, <code>arg2</code>
+<ul>
+<li>Refers to result by location in array of instruction</li>
+<li>Instructions cannot be easily re-arranged - requires changing references</li>
+</ul>
+</li>
+<li>Indirect triples are similar but use a list of pointers to triples
+<ul>
+<li>Can re-order by reordering instruction list without affecting triples themselves</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Different IRs exist on different levels of abstraction
+<ul>
+<li>Structural IRs are usually high level</li>
+<li>Linear IRs usually lower level</li>
+<li>Can have a lower-level tree showing address calculations and registers n shit</li>
+</ul>
+</li>
+<li>SSA is an IR that facilitates optimisations
+<ul>
+<li>Names correspond uniquely to definition points in the code</li>
+<li>Each name is defined by a single operation</li>
+<li>Uses phi functions to combine definitions of two variables (ternary operators)</li>
+</ul>
+</li>
+</ul>
+<h3 id="sdts-to-generate-ir"><a class="header" href="#sdts-to-generate-ir">SDTs to generate IR</a></h3>
+<p>Actual program storage is runtime allocated, but relative addresses can be computed at compile time for local declarations</p>
+<ul>
+<li>From types we can determine storage size</li>
+<li>Type and relative address are saved in symbol table entry</li>
+<li>Dynamic types are handled by saving a pointer to runtime storage</li>
+<li>Can use an SDT to compute types and their widths
+<ul>
+<li>Synthesised attributes for type and width of nonterminals</li>
+</ul>
+</li>
+</ul>
+<p>Can use an SDT to generate 3-address code for expressions too</p>
+<ul>
+<li>Array addressing is important when generating addresses
+<ul>
+<li>Most languages number 0 to n-1
+<ul>
+<li>Fortran numbers from 1 to n (cringe)</li>
+</ul>
+</li>
+<li>Address of array element is <code>base + (i - low) * width</code></li>
+<li>Can generalise to multiple dimensions
+<ul>
+<li><code>base + i1*w1 + i2*w2 + ... + ik * wk</code></li>
+<li>Based on row- major layout - the way you’d expect
+<ul>
+<li>Fortran uses column-major</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Can use this to generate grammar for array references - semantic actions for generating 3-address code to address arrays</li>
+</ul>
+</li>
+</ul>
+<p>Types are used by compilers to generate code and optimise</p>
+<ul>
+<li>Type synthesis builds type of expression from types of sub-exprs</li>
+<li>Type inference determines the type of an expression from the way it is used</li>
+<li>Type conversion can be explicit casts or implicit coercions</li>
+<li>Can use semantic actions for all of these</li>
+</ul>
+<p>Control flow to IR is tied to translation of bools</p>
+<ul>
+<li>Used for flow of control and for logical values (and, or, not)</li>
+<li>Can use SDDs to evaluate boolean expressions and generate jumps and addresses for control flow</li>
+<li>May need to use backpatching
+<ul>
+<li>Leave jump targets unspecified, do second pass to fill them in</li>
+</ul>
+</li>
+</ul>
+<p>A symbol table is a a data structure that used to hold info about source-program constructs</p>
+<ul>
+<li>May contain:
+<ul>
+<li>Identifiers - data type, addresses, lexeme</li>
+<li>Arrays - dimensions</li>
+<li>Records/structs - fields and types</li>
+<li>Functions - number of params, types,</li>
+</ul>
+</li>
+<li>Localises info - no need to annotate parse trees and makes stuff more efficient</li>
+<li>Scopes handled by having a separate symbol table for each scope</li>
+<li>Can use an SDT with semantic actions to generate a symbol table</li>
+</ul>
 
                     </main>
 
