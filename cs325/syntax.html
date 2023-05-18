@@ -152,6 +152,244 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="syntax-analysis"><a class="header" href="#syntax-analysis">Syntax Analysis</a></h1>
+<ul>
+<li>Take a stream of words and parse it to check it’s correct
+<ul>
+<li>Builds a parse tree</li>
+<li>If invalid then produce a syntax error</li>
+</ul>
+</li>
+</ul>
+<h2 id="context-free-grammars"><a class="header" href="#context-free-grammars">Context Free Grammars</a></h2>
+<ul>
+<li>CFGs are formal mechanism for specifying syntax of source language</li>
+<li>Parsers parse text according to a grammar
+<ul>
+<li>LL(1) top-down recursive descent</li>
+<li>LR(1) bottom up, canonical LR(1), LALR parser</li>
+</ul>
+</li>
+<li>CFGs - <code>stmt -&gt; if (expr) stmt else stmt</code>
+<ul>
+<li>Four components
+<ul>
+<li>Set of terminal symbols</li>
+<li>Set of nonterminal symbols</li>
+<li>One of the terminals is a start symbol</li>
+<li>Set of productions for nonterminals</li>
+</ul>
+</li>
+<li>A grammar derives a sentence</li>
+<li>Parsing is the process of figuring out if a sentence is valid
+<ul>
+<li>Rewrite expressions using grammar</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="parse-trees"><a class="header" href="#parse-trees">Parse Trees</a></h2>
+<ul>
+<li>Parse tree represents derivation as graph
+<ul>
+<li>Terminals at leaves, nonterminals as nodes</li>
+<li>In order gives input, postorder gives evaluation</li>
+<li>Right and leftmost derivations can give different results - grammar is ambiguous
+<ul>
+<li>Bad property for a program to have</li>
+<li>Want to be able to rewrite them to be unambiguous
+<ul>
+<li>Cannot be done automatically</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Also want to give correct mathematical precedence in parse tree
+<ul>
+<li>Create a non-terminal for each level of precedence</li>
+<li>Isolate corresponding part of grammar</li>
+<li>Force parser to recognise high precedence subexpression first</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="top-down-parsing"><a class="header" href="#top-down-parsing">Top-down Parsing</a></h2>
+<p>Top-down parsing starts at the root and grows the tree toward leaves.</p>
+<ul>
+<li>At each step, select a node for some nonterminal and extend it with a subtree that rewrites the nonterminal
+<ul>
+<li>Always expand leftmost fringe of tree</li>
+<li>If choose wrong nonterminal parser must backtrack
+<ul>
+<li>Expensive way to discover errors</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Grammar scan be transformed to make them top-down parsable:</p>
+<ul>
+<li>Eliminate left recursion
+<ul>
+<li>A grammar is left-recursive if it has a nonterminal <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> such that there is some derivation <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">a</span></span></span></span>
+<ul>
+<li>The nonterminal at the head is the leftmost symbol of the body</li>
+<li>Topdown parsers cannot handle this</li>
+</ul>
+</li>
+<li>Can easily eliminate direct left recursion
+<ul>
+<li>Eliminate epsilon productions</li>
+<li>Eliminate cycles</li>
+<li>Given productions <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, replace <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> productions by
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">A</span><span class="mord">’∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">A</span><span class="mord">’</span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">A</span><span class="mord">’</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0019em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">∣...∣</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathnormal">ε</span></span></span></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Indirect left recursion still a problem
+<ul>
+<li>Need a more systematic approach</li>
+<li>Ommitted for sanity, see slide 54 onwards</li>
+</ul>
+</li>
+<li><strong>Symbol is nullable if it can be expanded with epsilon productions</strong> - can dissapear to an empty string
+<ul>
+<li>Find nullable non-terminals, if nullable then create a new production by replacing it with epsilon</li>
+<li>Can increase grammar size</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Recursive descent parsers are programs with one parse function per nonterminal (see courserwork). Backtrack-free grammars are grammars that can be parsed by such parsers without having to backtrack.</p>
+<ul>
+<li>If top-down picks wrong the production it has to backtrack
+<ul>
+<li>Can use a lookahead in input stream and use context to choose correct production</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">FIRST</span></span></span></span></span> set of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> is the set of terminals that begin strings derived from <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>
+<ul>
+<li>If <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> is a terminal then <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FIRST</span></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></li>
+<li>For a nonterminal <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> then <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FIRST</span></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span> is the complete set of terminal symbols that can appear as the leading symbol derived from <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span></li>
+<li>If nonterminal is nullable then <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ε</span></span></span></span> needs to be in first set</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span></span></span></span> set of terminals that can appear immediately to the right of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mclose">)</span></span></span></span> is the symbols that can appear to the right of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span></li>
+<li>If <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> is rightmost symbol in some sentinal form then <code>eof</code> is in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mclose">)</span></span></span></span></li>
+<li>For a production <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal">b</span></span></span></span> everything in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FIRST</span></span><span class="mopen">(</span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span> except <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ε</span></span></span></span> is in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span></span></span></span></li>
+<li>For <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> or <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal">b</span></span></span></span> (where <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> is nullable), everything in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mclose">)</span></span></span></span> is in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+</li>
+<li><strong>These are LL(1) grammars</strong> - can always predict the correct expansion at each point in the parse
+<ul>
+<li>Choose production <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> on a symbol <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> if
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FIRST</span></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> is nullable and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Left factoring - convert grammar to have LL(1) property
+<ul>
+<li>Rewrite nonterminals such that productions with common prefixes are factored into new nonterminals</li>
+</ul>
+</li>
+<li>Table-driven LL(1) parsers are most common
+<ul>
+<li>build first and follow sets</li>
+<li>the production <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> of the form <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> is in the table at <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span> if terminal <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> or <code>eof</code> is in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FIRST</span></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span> OR if <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> is nullable and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> is in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></li>
+<li>if table has conflicts then grammar is not LL(1)</li>
+</ul>
+</li>
+</ul>
+<h2 id="bottom-up-parsing"><a class="header" href="#bottom-up-parsing">Bottom-up parsing</a></h2>
+<p>Bottom-up parsing begins at the leaves and grows towards the root</p>
+<ul>
+<li>Identify a substring of the parse tree’s upper fringe that matches RHS of some production, build node for LHS and connect to tree
+<ul>
+<li>Parser adds layers of nonterminals on top of leaves</li>
+<li>Reduces a string to the start symbol of the grammar</li>
+</ul>
+</li>
+<li>Uses a stack that holds grammar symbols</li>
+<li>Shift reduce parsing:
+<ul>
+<li>Parser shifts zero or more input symbols onto stack until ready to reduce a string <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></li>
+<li>Reduce <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> into head of appropriate production</li>
+<li>Repeat until error detected or until stack contains start symbol and input is exhausted</li>
+</ul>
+</li>
+<li>LR(k) parsers are most prevalent bottom up parsers
+<ul>
+<li>L - scan Left to right, R - Rightmost derivation</li>
+<li>k can be 0, consider both 0 and 1 cases</li>
+<li>More powerful than LL(1) but harder
+<ul>
+<li>Proper superset of predictive or LL methods</li>
+</ul>
+</li>
+<li>For a grammar to be LR(k) must be able to recognise occurence of right side of production in a right-sentinal form, with k input symbols of lookahead</li>
+</ul>
+</li>
+<li>Shift-reduce decisions
+<ul>
+<li>LR parser makes shift-reduce decisions by maintaining state to keep track of where we are in parse</li>
+<li>Each state represents a set of items where item indicates how much of a production we have seen at a given point</li>
+<li>An item of a grammar <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span> is a production of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span>, with a dot at some position of the body - <strong>this is an LR(0) item</strong></li>
+</ul>
+</li>
+<li>Collection of LR(0) items provides the basis for constructing a DFA called the LR(0) automaton that is used to make parsing decisions
+<ul>
+<li>Steps:
+<ul>
+<li>Create augmented grammar - add a $ for end symbol to indicate when it should stop parsing</li>
+<li>Compute closure set of items
+<ul>
+<li>Every possible starting state of the automaton</li>
+</ul>
+</li>
+<li>Compute GOTO functions for the set
+<ul>
+<li>Defines transitions for automaton</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Can codify LR(0) automaton in a table to use for making shift-reduce decisions
+<ul>
+<li>If a string of symbols takes the automaton from state <code>i</code> to state <code>j</code> then shift on the next symbol if state <code>j</code> has a transision on <code>a</code>
+<ul>
+<li>Otherwise reduce</li>
+</ul>
+</li>
+<li>Get shift/reduce conflicts in the table where do not have enough context on what to do</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Can use SLR(1) parsing table to avoid conflits - use next symbol and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span></span></span></span> set
+<ul>
+<li>Uses same LR(0) items but uses an extra symbol of lookahead to make shift-reduce decisions</li>
+<li>Use <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">FOLLOW</span></span></span></span></span> set of nonterminal to determine if a reduction is correct</li>
+</ul>
+</li>
+<li>All LR parsing is the same - table with input string and stack</li>
+<li>There are context-free grammars for which shift-reduce parsing does not work - either get shift/reduce or reduce/reduce conflicts</li>
+<li>More powerful parsers exist also
+<ul>
+<li>LR(1) uses full set of lookahead symbols</li>
+<li>LALR parsers are based on LR(0) sets and carefully introduces lookaheads into LR(0) items</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
