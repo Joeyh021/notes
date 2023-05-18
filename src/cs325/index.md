@@ -1,0 +1,85 @@
+# CS325
+
+The notes here are very brief. Most notably they don't contain a lof of the detail of the methods/algorithms (below) needed for the exam.
+
+## Algorithms you need to know how to do on paper, by hand, in an exam
+
+Because we just invented computers for fun, apparently.
+
+- Lexing
+  - NFA/DFA stuff
+- Parsing
+  - Grammar transformations
+    - Eliminating epsilon productions
+    - Eliminating left recursion
+    - Adding precedence
+    - Left factoring
+    - Removing ambiguity
+  - Computing `First` and `Follow` sets
+  - LL(1) parsing
+    - Constructing LL(1) parse table
+  - LR(k) parsing
+    - Shift-reduce
+    - Constructing set of LR(0) items
+    - Constructing LR(0) automaton
+    - Constructing LR(0) parse table
+  - Constructing SLR(1) parse table
+- Semantic analysis
+  - Annotating parse trees
+  - Constructing attribute grammars
+  - Constructing SDDs
+  - Constructing SDTs
+- IRs
+  - Generating 3-address code for codegen stuff like addressing array elements and control flow
+- Runtime Environments
+  - Working out access links/activation records and displays under different calling mechanisms
+    - Call-by-value
+    - Call-by-reference
+    - Call-by-name
+    - Copy-restore
+  - Garbage collection (less sure about this)
+    - Mark and sweep
+    - Pointer reversal
+- Optimisation
+  - Computing basic blocks of a program
+  - Dataflow analysis algorithms
+    - Reaching definitions
+    - Live variable analysis
+    - Available expressions
+  - Applying various optimisations to code
+    - Algebraic simplification
+    - Constant folding
+    - Unreachable block elimination
+    - Common subexpression elimination
+    - Copy/constant propagation
+    - Dead code elimination
+    - Reduction strength in induction variables
+    - Induction variable elimination
+  - Applying various transformations to loops
+    - Loop unrolling
+    - Loop coalescing
+    - Loop collapsing
+    - Loop peeling
+    - Loop normalisation
+    - Loop invariant code motion
+    - Loop unswitching
+    - Loop interchange
+    - Strip mining
+    - Loop tiling
+    - Loop distribution
+    - Loop fusion
+- Codegen
+  - Instruction selection by replacing operations with sequences of assembly
+    - Using register and address descriptors
+  - Peephole optimisation
+    - Removing redundant loads/stores
+    - Removing jumps over jumps
+    - Algebraic optimisations
+    - Machine idioms
+  - Optimal codegen for expressions using Ershov numbers
+    - Including spilling to memory
+  - Instruction selection by tree rewriting
+    - Optimal tiling
+  - Graph colouring for register allocation
+    - Chaitin's algorithm - graph colouring heuristic
+    - Including spilling to memory
