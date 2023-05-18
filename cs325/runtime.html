@@ -152,6 +152,235 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="runtime-environments"><a class="header" href="#runtime-environments">Runtime Environments</a></h1>
+<p>We need to understand the compute or abstract machine we are generating code for.</p>
+<h2 id="program-layout"><a class="header" href="#program-layout">Program Layout</a></h2>
+<ul>
+<li>Compilers usually assume each executing program runs in own logical address space
+<ul>
+<li>Mapped to physical addresses by OS</li>
+<li>Compiler is responsible for layout and manipulation of data</li>
+</ul>
+</li>
+<li>Code goes at bottom of address space, followed by static storage, followed by heap (grows up towards stack), followed by stack (grows down towards heap)</li>
+<li>Storage layout influenced strongly by addressing constraints
+<ul>
+<li>Alignment - 32 or 64 bit aligned?</li>
+<li>Compiler inserts padding in data types</li>
+</ul>
+</li>
+<li>Static (compile time) and dynamic (runtime) memory are separate
+<ul>
+<li>Stack stores static data local to procedure and sorts out call/return stuff via activation records</li>
+<li>Heap storage is for long lived stuff and may involve GC</li>
+</ul>
+</li>
+<li>Stack allocation assumes execution is sequential and that control flow always return to point of call
+<ul>
+<li>Allocation made possible by activations of procedure nesting in time</li>
+<li>Lifetimes of activations are properly nested
+<ul>
+<li>Can use a tree to represent them
+<ul>
+<li>Sequence of procedure calls corresponds to a pre-order traversal of activation tree</li>
+<li>Sequence of returns is a post-order traversal</li>
+<li>Live activations are those that correspond to a node and it’s ancestors</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Calls and returns managed by control stack - each live activation is a frame on the stack
+<ul>
+<li>Top of stack is the currently active function</li>
+<li>Stack frame for a function contains
+<ul>
+<li>Temporaries</li>
+<li>Local data</li>
+<li>Saved machine info (registers)</li>
+<li>Links: access, control, return</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="procedure-calls"><a class="header" href="#procedure-calls">Procedure Calls</a></h2>
+<p>Calls are implemented by calling and return sequences - code inserted by compiler to push/pop from stack</p>
+<ul>
+<li>Caller evaluates function parameters and pushes
+<ul>
+<li>Pushes return address</li>
+<li>Pushes caller’s local data and temps</li>
+</ul>
+</li>
+<li>Callee saves register values and other status info</li>
+<li>Callee vs caller-svaes registers - designated per-register
+<ul>
+<li>Caller-saves - save only registers that hold live variables
+<ul>
+<li>Caller saves before function call</li>
+<li>May end up saving variables that callee does not use</li>
+</ul>
+</li>
+<li>Callee-saves - save only registers that function actually uses in it’s body
+<ul>
+<li>Save caller before re-using registers in own function body</li>
+<li>May end up saving registers that do not have live values</li>
+</ul>
+</li>
+<li>Cannot avoid unnecessary saves
+<ul>
+<li>Use a mixed strategy to optimise</li>
+<li>Designate some as caller and some as callee</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="variable-length-stack-data"><a class="header" href="#variable-length-stack-data">Variable Length Stack Data</a></h2>
+<p>Memory for data local to a procedure which has dynamic size (like C/C++ variable length arrays) may be stack allocated</p>
+<ul>
+<li>Avoids the expense of heap allocation</li>
+<li>Activation record does not hold storage for arrays - only a pointer to the beginning of each array
+<ul>
+<li>Pointers are at known offsets from top-of-stack pointer</li>
+</ul>
+</li>
+<li><code>top</code> - actual top of stack, points to where next activation record will begin</li>
+<li><code>top_sp</code> - used to find local, fixed-length fields of current top activation record
+<ul>
+<li>Points to end of machine status field</li>
+</ul>
+</li>
+<li>Both of the above can be generated at compile time</li>
+</ul>
+<h2 id="scoping--access-links"><a class="header" href="#scoping--access-links">Scoping &amp; Access Links</a></h2>
+<p>(cringe warning, this is confusing and terrible)</p>
+<p>Accessing non-local stack data - mechanism for finding data within another procedure</p>
+<ul>
+<li>Static/lexical scope - find required data in enclosing scope
+<ul>
+<li>Global vars have static storage - accessed through known addresses</li>
+</ul>
+</li>
+<li>Dynamic scope/runtime binding - leave decision to runtime and look for closest stack frame which has required data</li>
+<li>Access links are pointers to activation records
+<ul>
+<li>If procedure <code>p</code> is nested within procedure <code>q</code>, then access link in any activation of <code>p</code> points to most recent activation of <code>q</code></li>
+<li>Forms a chain from the activation record at top of stack to activations at lower depths</li>
+</ul>
+</li>
+<li>Displays
+<ul>
+<li>Access links inefficient if nesting depth large</li>
+<li>Faster access to nonlocals can be done using an array of pointer to activation records - a display</li>
+<li><code>d[i]</code> is a pointer to the highest activation record on the stack for any procedure at depth <code>i</code></li>
+<li>If procedure <code>p</code> is executing and needs to access element <code>x</code> belonging to some procedure <code>q</code>
+<ul>
+<li>Look in <code>d[i]</code></li>
+<li>Follow the pointer to get the activation record</li>
+<li>Variable is found at known offset</li>
+</ul>
+</li>
+<li>Compiler knows what <code>i</code> is so can generate code for this</li>
+</ul>
+</li>
+<li>Dynamic scope - new activation inherits existing bindings of nonlocal names</li>
+</ul>
+<h2 id="parameter-passing"><a class="header" href="#parameter-passing">Parameter Passing</a></h2>
+<ul>
+<li>Actual parameters are the ones passed into the call</li>
+<li>Formal parameters are those used in the function declaration</li>
+<li>l-values (memory location) vs r-values (expressions (not l-values))</li>
+<li>Call by value
+<ul>
+<li>Treat formal parameters as a local name, storage for formal parameters is activation record, storage within stack frame</li>
+<li>Caller evaluates parameters and puts r-values into storage</li>
+<li>Can pass pointers to affect caller</li>
+</ul>
+</li>
+<li>Call by reference
+<ul>
+<li>Passes a pointer of the storage address of each parameter</li>
+<li>If lvalue, then lvalue is passed</li>
+<li>If rvalue then it’s evaluated and stored in a temporary and that lvalue passed</li>
+</ul>
+</li>
+<li>Copy-restore
+<ul>
+<li>Hybrid of the above two</li>
+<li>Copy-in copy-out</li>
+<li>Rvalues are passed as in call by value</li>
+<li>Lvalues are determined during call</li>
+<li>When control returns, current r-values copied back to lvalues computed earlier</li>
+</ul>
+</li>
+<li>Call by name
+<ul>
+<li>Procedure treated like a macro</li>
+<li>Cody substituted for caller, parameters literally substituted for formal params</li>
+<li>Local names of called procedure are kept distinct from names of calling procedure</li>
+</ul>
+</li>
+<li>Inlining
+<ul>
+<li>Similar to call by name
+<ul>
+<li>Parameter passing becomes assignments</li>
+<li>Scoping managed correctly</li>
+</ul>
+</li>
+<li>(usually) An optimisation to improve execution time</li>
+<li>Increases code size -&gt; different instruction cache performance</li>
+</ul>
+</li>
+</ul>
+<h2 id="memory-management"><a class="header" href="#memory-management">Memory Management</a></h2>
+<ul>
+<li>Values outliving procedure that creates it cannot be kept in activation record</li>
+<li>Heap is used for data that lives indefinitely or for a while</li>
+<li>Memory manager is subsystem that allocates/deallocates space within heap
+<ul>
+<li>Deals with <code>free</code>/<code>delete</code> calls</li>
+<li>Java - GC</li>
+<li>Should be efficient
+<ul>
+<li>Low runtime overhead</li>
+<li>Facilitate performance of programs</li>
+<li>Minimise heap space and fragmentation</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Fragmentaion caused by holes
+<ul>
+<li>When freeing stuff, combine chunks</li>
+<li>Allocate memory in smallest holes possible - not good for spatial locality</li>
+<li>Next-fit placement - allocate in last split hole if enough space available
+<ul>
+<li>Improves spatial locality as chunks allocated at same time are places together</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Manual allocation/deallocation (C/C++) is an issue - forget to free? fuck you.</li>
+<li>GC automatically reclaims free space by deleting unused objects
+<ul>
+<li>Determine reachability of objects by starting from registers and following pointers</li>
+<li>Mark and sweep - mark reachable objects, then collect and free them all
+<ul>
+<li>Coalesce gaps during sweep phase</li>
+</ul>
+</li>
+<li>Requires memory to build list of dead objects but needs to be done when memory runs out
+<ul>
+<li>Use pointer reversal - when a pointer is followed to get a reachable object it is reversed to point at it’s parent</li>
+<li>Gives an implicit stack to enable depth-first search of all reachable objects</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
