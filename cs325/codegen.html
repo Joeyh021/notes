@@ -152,6 +152,266 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="codegen"><a class="header" href="#codegen">Codegen</a></h1>
+<p>Want to take IR and output assembly that is semantically equivalent.</p>
+<ul>
+<li>The main tasks involved are:
+<ul>
+<li>Instruction selection</li>
+<li>Register allocation</li>
+<li>Instruction ordering/scheduling</li>
+</ul>
+</li>
+</ul>
+<p>It is undecidable what the optimal program for any given IR is - we use heuristics.</p>
+<h2 id="instruction-selection"><a class="header" href="#instruction-selection">Instruction selection</a></h2>
+<ul>
+<li>Just translate each IR instruction to one or more machine code instructions
+<ul>
+<li>Not very efficient</li>
+<li>Simple to implement but results in repeated loads/stores</li>
+</ul>
+</li>
+<li>Keep track of values in registers to avoid unnecessary loads/stores</li>
+<li>Consider each instruction in turn
+<ul>
+<li>Work out what loads are needed</li>
+<li>Generate code for loads</li>
+<li>Generate code for operation</li>
+<li>Generate code for stores</li>
+</ul>
+</li>
+<li>Need to keep track of registers and memory locations for variables
+<ul>
+<li>Register descriptor - (register, variable name) pairs</li>
+<li>Address descriptor - (variable name, location) pairs
+<ul>
+<li>Location can be a register, memory address, stack location, etc</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Need some criteria for selecting registers
+<ul>
+<li>If var currently in a register then no load needed</li>
+<li>If var not in a register then pick an empty one</li>
+<li>If y not in register and no empty ones then need to pick one to reuse
+<ul>
+<li>Make sure that the value we reuse is either not needed or stored elsewhere</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Statement-by-statement codegen can be optimised with peephole optimisations
+<ul>
+<li>Load/store pairs of the same instruction can be eliminated
+<ul>
+<li>Only works if instructions are in same basic block</li>
+</ul>
+</li>
+<li>Remove jumps over jumps
+<ul>
+<li>useful in combination with constant propagation</li>
+<li>eg, removing debug info</li>
+</ul>
+</li>
+<li>Flow control optimisations
+<ul>
+<li>jumps-to-jumps can be eliminated</li>
+</ul>
+</li>
+<li>Algebraic optimisations
+<ul>
+<li>Eliminate instructions like <code>x = x + 0</code></li>
+</ul>
+</li>
+<li>Use of machine idioms
+<ul>
+<li>target machine may have auto-increment addressing mode</li>
+<li>May have instructions that implement complex operations</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="optimal-codegen-from-asts"><a class="header" href="#optimal-codegen-from-asts">Optimal codegen from ASTs</a></h2>
+<ul>
+<li>Can use the AST of an expression to generate an optimal code sequence</li>
+<li>Proven to generate shortest sequence of instructions</li>
+<li>Uses Ershov numbers
+<ul>
+<li>Label any leaf <code>1</code></li>
+<li>Label of interior node with one child is the label of it’s child</li>
+<li>Label of an interior node with two children is
+<ul>
+<li>Larger of the labels of it’s children <strong>if</strong> labels differ</li>
+<li>One plus the label of its children <strong>if</strong> labels same</li>
+</ul>
+</li>
+<li>Label of node is the least number of registers in which expression can be evaluated using no stores of temporary results</li>
+</ul>
+</li>
+<li>Can generate code from labelled expression tree
+<ul>
+<li>Start at root of tree</li>
+<li>Registers used are<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mord">...</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>For a node with label <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> and two children with equal labels
+<ul>
+<li><code>gencode(right child)</code> using base register <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>
+<ul>
+<li>Result appears in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li><code>gencode(left child)</code> using base register <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>
+<ul>
+<li>Result appears in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li>Generate instruction <code>OP</code> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li>To generate code for interior node with unequal labels
+<ul>
+<li><code>gencode(big child)</code> using base register <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>
+<ul>
+<li>result appears in<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li><code>gencode(small child)</code> using base register b
+<ul>
+<li>result appears in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Evaluating expressions with insufficient register supply means you need extra memory
+<ul>
+<li>Spill from registers into memory</li>
+<li>For interior node with label <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span></span></span></span> number of registers, work on each side of tree separately and store result in larger subtree</li>
+<li>Generate stores after code to eval registers for big child</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="tree-rewriting"><a class="header" href="#tree-rewriting">Tree Rewriting</a></h2>
+<ul>
+<li>Above algorithm works with RISC instruction sets but CISC instruction sets allow steps to be condensed into one instruction</li>
+<li>Treat instruction selection as a tree rewriting problem</li>
+<li>Machine instructions implement fragments of IR trees
+<ul>
+<li>Match tree patterns with instructions</li>
+<li><code>ind</code> operator is dereferencing, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">a</span></span></span></span> is offset</li>
+<li>Attempt to tile the subtree
+<ul>
+<li>Tiles are set of tree patterns that correspond to legal machine instructions</li>
+<li>Cover the tree with non-overlapping tiles</li>
+<li>If template matches, matching subtree is replaced with replacement node of rule and machine instruction emitted</li>
+</ul>
+</li>
+<li>Has it's issues
+<ul>
+<li>Often multiple possibilities
+<ul>
+<li>Best tiling corresponds to shortest sequence of instructions</li>
+</ul>
+</li>
+<li>If none matches then process blocks</li>
+<li>Need to guard against possibility of single node being rewritten indefinitely</li>
+</ul>
+</li>
+<li>Optimal tiling - maximal munch
+<ul>
+<li>Start at root</li>
+<li>Find largest tile that covers root node</li>
+<li>Generate that instruction</li>
+<li>Goto step 1</li>
+<li>Generates instructions in reverse order</li>
+</ul>
+</li>
+<li>Optimum tiling - dynamic programming
+<ul>
+<li>Bottom up rewrite system</li>
+<li>Omitted for sanity</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="register-allocation"><a class="header" href="#register-allocation">Register allocation</a></h2>
+<p>Decide what to keep in registers and what in memory</p>
+<ul>
+<li>Efficient register use is important</li>
+<li>When code has more live values than registers, spill to memory
+<ul>
+<li>this is costly</li>
+</ul>
+</li>
+<li>Register allocation is NP complete</li>
+<li>Register assignment can be solved in polynomial time</li>
+<li>Can re-order instructions based on dataflow to optimise register assignment and reduce spill</li>
+</ul>
+<h3 id="graph-colouring"><a class="header" href="#graph-colouring">Graph colouring</a></h3>
+<ul>
+<li>Allocate based on liveness</li>
+<li>Works accross basic blocks</li>
+<li>Steps:
+<ul>
+<li>Compute live variables for each point in program</li>
+<li>Generate an interference graph
+<ul>
+<li>Each variable becomes a node</li>
+<li>If variables are live at the same time then make an edge connecting them
+<ul>
+<li>They cannot be in the same register</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Colour the graph
+<ul>
+<li>Nodes connected by edge cannot be the same colour</li>
+<li>A k-colourable graph uses no more than k registers</li>
+<li>NP hard too, use heuristics</li>
+<li>Algorithm to colour graph <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span> with <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> colours - Chaitin’s algorithm</li>
+<li>Step 1:
+<ul>
+<li>While <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span> has some node <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> with neighbours less then <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></li>
+<li>Pick a node <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> with less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> neighbours</li>
+<li>Put <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> on stack and remove from <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span></li>
+<li>Repeat until <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span> is empty</li>
+<li>If all nodes removed then graph k-colourable, else no</li>
+<li>Step 2 - assign colours to nodes
+<ul>
+<li>Start at top of stack</li>
+<li>Add node on stack top to graph including edges</li>
+<li>Pick a new colour</li>
+<li>Repeat until stack empty</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If colouring not found then have to spill to memory
+<ul>
+<li>Will occur when each node has <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> or more neighbours</li>
+<li>Pick candidate node for spilling and remove from graph, continue as before
+<ul>
+<li>Have to insert loads/stores for spilled node</li>
+<li>Which one to spill? Any is fine but affects performance
+<ul>
+<li>Spill those with most conflicts</li>
+<li>Spill those with few uses</li>
+<li>Avoid spilling in loops</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
