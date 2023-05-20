@@ -83,7 +83,7 @@ Recursive descent parsers are programs with one parse function per nonterminal (
   - Rewrite nonterminals such that productions with common prefixes are factored into new nonterminals
 - Table-driven LL(1) parsers are most common
   - build first and follow sets
-  - the production $p$ of the form $N \rightarrow a$ is in the table at $(N, c)$ if terminal $c$ or `eof` is in $\text{FIRST}(a)$ OR if $a$ is nullable and $c$ is in $\text{FOLLOW}(n)$
+  - the production $p$ of the form $N \rightarrow a$ is in the table at $(N, c)$ if terminal $c$ or `eof` is in $\text{FIRST}(a)$ OR if $a$ is nullable and $c$ is in $\text{FOLLOW}(N)$
   - if table has conflicts then grammar is not LL(1)
 
 ## Bottom-up parsing
