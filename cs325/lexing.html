@@ -201,7 +201,7 @@
 <ul>
 <li>Gor <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7955em;vertical-align:-0.136em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> check if <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span></li>
 <li>If true then we remove that string as a token and continue</li>
-<li>Always select the longer sequence - maximal munch</li>
+<li>Always select the longer sequence - <strong>maximal munch</strong></li>
 <li>If more than one token matches use the token class specified first</li>
 <li>If no match then error</li>
 </ul>
@@ -215,11 +215,50 @@
 <li>Kleene’s contruction dervices an RE from a DFA</li>
 </ul>
 </li>
-<li>All of these are long and omitted for sanity
+<li>NFAs allow transitions on the empty string
 <ul>
-<li>I didn’t take formal languages - cry about it</li>
+<li>States may have multiple transitions on the same character.</li>
+<li>Can combine multiple FAs by just joining them with epsilon transisions</li>
 </ul>
 </li>
+<li>DFAs only have a single transition on the each character from each state
+<ul>
+<li>No epsilon transitions</li>
+<li>Can simulate any NFA</li>
+</ul>
+</li>
+</ul>
+<h2 id="thompsons-construction---re-to-nfa"><a class="header" href="#thompsons-construction---re-to-nfa">Thompson's Construction - RE to NFA</a></h2>
+<ul>
+<li>Use a template for building an NFA that corresponds to
+<ul>
+<li>A single letter regex</li>
+<li>Transformation on NFAs that models the effect of regex operators</li>
+<li>Combine fragments using epsilon transitions</li>
+<li>Take into account precedence</li>
+</ul>
+</li>
+</ul>
+<p><img src="./img/thompson.png" alt="" /></p>
+<p>## Subset Construction - NFA to DFA</p>
+<p>Convert NFA to DFA to make it easier to simulate.</p>
+<ul>
+<li>Combine states based on epsilon transitions to eliminate them</li>
+<li>Create subset of states, then only consider transitions between subsets</li>
+<li>Set of states that can be reached from some state <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> along only epsilon transitions is the epsilon closure of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></li>
+</ul>
+<p><strong>Where there are several possible choices of next state, take all choices simultaneously and form a set of the possible next states. This set of NFA states becomes a single DFA state.</strong></p>
+<h2 id="hopcrofts-algorithm---minimising-a-dfa"><a class="header" href="#hopcrofts-algorithm---minimising-a-dfa">Hopcroft's algorithm - Minimising a DFA</a></h2>
+<p>Some states can be merged - partition states into groups of states that produce the same behaviour on any input string.</p>
+<ul>
+<li>Start by partitioning into accepting and non-accepting states</li>
+<li>Consider each subgroup
+<ul>
+<li>Partition into new subgroups such that two states <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> are in the same subgroup iff for all input symbols <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> have transitons on <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> into the same group <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span></li>
+<li>Replace group with new partitioning</li>
+</ul>
+</li>
+<li>Keep going until convergence</li>
 </ul>
 
                     </main>
