@@ -68,7 +68,7 @@ Recursive descent parsers are programs with one parse function per nonterminal (
   - Can use a lookahead in input stream and use context to choose correct production
 - $\text{FIRST}$ set of $a$ is the set of terminals that begin strings derived from $a$
   - If $a$ is a terminal then $\text{FIRST}(a) = a$
-  - For a nonterminal $A$ then $\text{FIRST}(a)$ is the complete set of terminal symbols that can appear as the leading symbol derived from $A$
+  - For a nonterminal $A$ then $\text{FIRST}(A)$ is the complete set of terminal symbols that can appear as the leading symbol derived from $A$
   - If nonterminal is nullable then $\varepsilon$ needs to be in first set
 - $\text{FOLLOW}$ set of terminals that can appear immediately to the right of $A$
   - $\text{FOLLOW}(A)$ is the symbols that can appear to the right of $A$
