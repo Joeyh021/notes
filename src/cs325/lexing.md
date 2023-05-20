@@ -53,7 +53,7 @@ We want to transform a stream of characters into a stream of tokens `(token name
 
 ![](./img/thompson.png)
 
-## Subset Construction - NFA to DFA
+## Subset Construction - NFA to DFA
 
 Convert NFA to DFA to make it easier to simulate.
 
