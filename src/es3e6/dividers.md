@@ -8,7 +8,7 @@ The equal split (3dB) Wilkinson power divider will be considered, although it ca
 
 ![](./img/wilkinson-1.png)
 
-The circuit is formed of two $\lambda /4$ lines of impedance $\sqrt Z_0$, with a resisitor in shunt accross the two lines of impedance $2 \Z_0$. The scattering parameters:
+The circuit is formed of two $\lambda /4$ lines of impedance $\sqrt Z_0$, with a resisitor in shunt accross the two lines of impedance $2 Z_0$. The scattering parameters:
 
 - $S_{11} = 0$
   - $Z_{in} = Z_0$ at port 1, the input
@@ -78,7 +78,7 @@ $$
 The resistors dissipates power $R$, while the inductor and capacitor store energy $W_m$ and $W_e$:
 
 $$
-P_{loss} = \frac{1}{2} |I|^2 R \qquad W_m = \frac{1}[4] = |I|^2 L \qquad W_e = \frac{1}{4} |I|^2 \frac{1}{\omega^2 C}
+P_{loss} = \frac{1}{2} |I|^2 R \qquad W_m = \frac{1}{4} = |I|^2 L \qquad W_e = \frac{1}{4} |I|^2 \frac{1}{\omega^2 C}
 $$
 
 At the resonant frequency of $\omega_0 = 1/\sqrt{LC}$, $W_m = W_e$ and $Z_{in} = R$
